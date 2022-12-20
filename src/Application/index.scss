@@ -40,7 +40,7 @@
         margin-right: 5px;
         span {
           color: red;
-          margin-left: 5px;
+          // margin-left: 5px;
         }
       }
       .contain {
@@ -109,17 +109,13 @@
           }
           span {
             color: red;
-            margin-left: 5px;
+            // margin-left: 5px;
           }
         }
 
         & div {
           display: flex;
           margin-top: 10px;
-          .needInput {
-            padding-left: 5px;
-            padding-right: 5px;
-          }
           .input {
             width: 100%;
             // margin-left: 10px;

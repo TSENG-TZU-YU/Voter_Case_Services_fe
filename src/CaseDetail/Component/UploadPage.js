@@ -266,34 +266,32 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
     }
   };
 
-  const toAcceptFile = async (time) => {
-    let receiveTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    try {
-      let response = await axios.patch(
-        `http://localhost:3001/api/files/acceptFile/${caseNum}`,
-        { receiveTime: receiveTime, create_time: time, handler: handler }
-      );
-      Swal.fire({
-        icon: 'success',
-        title: '成功接收檔案',
-      });
-      setAcceptRender(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const toAcceptFile = async (time) => {
+  //   let receiveTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+  //   try {
+  //     let response = await axios.patch(
+  //       `http://localhost:3001/api/files/acceptFile/${caseNum}`,
+  //       { receiveTime: receiveTime, create_time: time, handler: handler }
+  //     );
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: '成功接收檔案',
+  //     });
+  //     setAcceptRender(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   return (
     <div className="overScr">
       {/* 上傳檔案 */}
-
-      {(member.permissions_id === 1 && status === 7) ||
-      (member.permissions_id === 3 && status === 4) ||
+      {/* TODO: 判斷處理人+權限+狀態 */}
+      {(member.permissions_id === 1 && status === 6) ||
       (member.permissions_id === 3 && status === 5) ||
       (member.permissions_id === 3 && status === 6) ||
       (member.permissions_id === 3 && status === 7) ||
-      (member.permissions_id === 3 && status === 8) ||
-      (member.permissions_id === 3 && status === 12) ||
-      (member.permissions_id === 3 && status === 13) ? (
+      (member.permissions_id === 3 && status === 11) ? (
         <>
           <div className="addUpload">
             <div className="addTitle">
@@ -375,7 +373,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
       )}
 
       {/* 管理者接收檔案 */}
-      {(member.permissions_id === 3 || member.permissions_id === 4) &&
+      {/* {(member.permissions_id === 3 || member.permissions_id === 4) &&
       status === 8 ? (
         <>
           {newGetUpdateFile.map((v, i) => {
@@ -410,7 +408,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
                   <button
                     className="submitBtn"
                     onClick={() => {
-                      toAcceptFile(v.create_time);
+                      // toAcceptFile(v.create_time);
                       setAcceptRender(true);
                     }}
                   >
@@ -423,7 +421,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
         </>
       ) : (
         ''
-      )}
+      )} */}
 
       {/* 雙方檔案 */}
       <div className="viewFilesContainer">
@@ -459,9 +457,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
             {newGetUserFile.map((v, i) => {
               return (
                 <div key={uuidv4()} className="pt-2">
-                  <span className="filesTime">
-                    {v.create_time} (處理人接收時間 : 2022/12/13 12:12)
-                  </span>
+                  <span className="filesTime">{v.create_time}</span>
                   {newGetUserFile[i].item.map((v, i) => {
                     return (
                       <div key={uuidv4()} className="pt-2">

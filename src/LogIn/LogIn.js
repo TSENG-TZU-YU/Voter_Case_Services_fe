@@ -41,13 +41,13 @@ function LogIn() {
     <>
       <div className="logInContainer">
         <div className="container">
-          <div className="title">陽信</div>
+          <div className="title">選民案件服務系統</div>
           <div className="inputContainer">
             <div className="inputContain">
               <AiFillHome className="icons" />
               <select name="company" onChange={doLogin}>
                 <option value="0" selected>
-                  --所屬公司--
+                  --所屬單位--
                 </option>
                 <option>陽信電子商務</option>
               </select>

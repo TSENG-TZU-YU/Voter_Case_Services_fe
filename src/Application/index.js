@@ -40,9 +40,7 @@ function Application({
   //申請表驗證空值
   const [handler, setHandler] = useState(false);
   const [category, setCategory] = useState(false);
-  const [name, setName] = useState(false);
   const [cycle, setCycle] = useState(false);
-  //TODO:需求表單驗證用後端做
   const [need, setNeed] = useState(false);
 
   //表格資料填入
@@ -50,7 +48,6 @@ function Application({
     let newData = [...submitValue];
     if (input === 'handler') newData[0].handler = val;
     if (input === 'category') newData[0].category = val;
-    if (input === 'name') newData[0].name = val;
     if (input === 'cycle') newData[0].cycle = val;
 
     // if(newData.)
@@ -149,6 +146,12 @@ function Application({
 
   //送出表單內容
   async function submit() {
+    for (let i = 0; i < addNeed.length; i++) {
+      if (addNeed[i].title === '' || addNeed[i].text === '') {
+        setNeed(true);
+        return;
+      }
+    }
     try {
       if (submitValue[0].handler === '0' || submitValue[0].handler === '') {
         setHandler(true);
@@ -156,14 +159,9 @@ function Application({
       if (submitValue[0].category === '0' || submitValue[0].category === '') {
         setCategory(true);
       }
-      if (submitValue[0].name === '') {
-        setName(true);
-      }
+
       if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
         setCycle(true);
-      }
-      if (addNeed[0].title === '' || addNeed[0].text === '') {
-        setNeed(true);
       }
 
       if (
@@ -171,10 +169,7 @@ function Application({
         submitValue[0].handler !== '' &&
         submitValue[0].category !== '0' &&
         submitValue[0].category !== '' &&
-        submitValue[0].name !== '' &&
-        submitValue[0].cycle !== '' &&
-        addNeed[0].title !== '' &&
-        addNeed[0].text !== ''
+        submitValue[0].cycle !== ''
       ) {
         for (let i = 0; i < addFile.length; i++) {
           if (addFile[i].file === '') {
@@ -185,6 +180,7 @@ function Application({
             return;
           }
         }
+
         Swal.fire({
           icon: 'success',
           title: '已送出申請',
@@ -194,6 +190,7 @@ function Application({
           setApplication(false);
           setTrial(false);
         });
+
         let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm');
         let response = await axios.post(
           'http://localhost:3001/api/application_post',
@@ -223,14 +220,9 @@ function Application({
       if (submitValue[0].category === '0' || submitValue[0].category === '') {
         setCategory(true);
       }
-      if (submitValue[0].name === '') {
-        setName(true);
-      }
+
       if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
         setCycle(true);
-      }
-      if (addNeed[0].title === '' || addNeed[0].text === '') {
-        setNeed(true);
       }
 
       if (
@@ -238,10 +230,7 @@ function Application({
         submitValue[0].handler !== '' &&
         submitValue[0].category !== '0' &&
         submitValue[0].category !== '' &&
-        submitValue[0].name !== '' &&
-        submitValue[0].cycle !== '' &&
-        addNeed[0].title !== '' &&
-        addNeed[0].text !== ''
+        submitValue[0].cycle !== ''
       ) {
         let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
         let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
@@ -276,7 +265,7 @@ function Application({
         <div className="box">
           {/* 處理人 */}
           <div className="gap">
-            <div>處理人{handler ? <span>*請選擇處理人</span> : ''}</div>
+            <div>處理人</div>
             <select
               className="handler"
               onChange={(e) => {
@@ -302,7 +291,8 @@ function Application({
           {/* 週期 */}
           <div className="gap">
             <div className="cycle">
-              該功能使用次數{cycle ? <span>*請選擇使用次數</span> : ''}
+              需求次數 <span>*</span>
+              {cycle ? <span>請選擇需求次數</span> : ''}
             </div>
             <div className="check handler">
               {getCycle.map((v, i) => {
@@ -330,7 +320,10 @@ function Application({
         <div className="box">
           {/* 申請類別 */}
           <div className="gap">
-            <div>申請類別{category ? <span>*請選擇申請類別</span> : ''}</div>
+            <div>
+              申請類別 <span>*</span>
+              {category ? <span>請選擇申請類別</span> : ''}
+            </div>
             <select
               className="handler"
               onChange={(e) => {
@@ -362,15 +355,12 @@ function Application({
           </div>
           {/* 專案名稱 */}
           <div className="gap">
-            <div> 專案名稱{name ? <span>*請輸入名稱</span> : ''}</div>
+            <div> 專案名稱</div>
             <input
               className="handler"
               type="text"
               onChange={(e) => {
                 handleChange(e.target.value, 'name');
-                if (e.target.value !== '') {
-                  setName(false);
-                }
               }}
             />
           </div>
@@ -392,8 +382,8 @@ function Application({
               <div key={i} className="need">
                 <div className="one">
                   <div>
-                    需求{i + 1}
-                    {need ? <span>*請填寫需求</span> : ''}
+                    需求{i + 1} <span>* </span>
+                    {need ? <span>請填寫需求</span> : ''}
                   </div>
                   <IoMdCloseCircle
                     className="two"
@@ -405,7 +395,6 @@ function Application({
                 </div>
 
                 <div>
-                  <div className="needInput">1.</div>
                   <input
                     className="input"
                     type="text"
@@ -421,7 +410,6 @@ function Application({
                   />
                 </div>
                 <div>
-                  <div className="needInput">2.</div>
                   <textarea
                     className="input"
                     placeholder="請依據標題詳細說明"
