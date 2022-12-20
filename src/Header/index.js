@@ -104,7 +104,7 @@ function Header({
       </div>
       <div className="between">
         <div className="navRight">
-          <div>公司:{member.applicant_unit}</div>
+          <div>單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           <div>職別:{member.job}</div>
 

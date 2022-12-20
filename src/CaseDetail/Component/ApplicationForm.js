@@ -584,10 +584,7 @@ function ApplicationForm({
           return (
             <div key={uuidv4()} className={`needFile ${i < 9 ? 'ps-2' : ''}`}>
               <span>{i + 1}.</span>
-              <div className="files">
-                {v.file_no}
-                {v.name}
-              </div>
+              <div className="files">{v.name}</div>
             </div>
           );
         })}
