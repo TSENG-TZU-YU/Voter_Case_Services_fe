@@ -1,0 +1,78 @@
+@import '../variable';
+
+.userName {
+    //   background: lightblue;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      padding: 0 10px 3px;
+      color: $subClrBrown;
+      font-weight: 600;
+      .userIcon {
+        font-size: 1.6rem;
+        padding-right: 6px;
+      }
+    }
+    .chatContainer {
+    //   background: lightgoldenrodyellow;
+      margin: 0 auto;
+      width: 100%;
+      height: calc(100% - 160px);
+      padding: 0 5px;
+      @include scrollbar;
+      .leftMsgContain,
+      .rightMsgContain {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 15px;
+        .userMsg {
+          max-width: 65%;
+          font-size: 14px;
+          background: lightsalmon;
+          border-radius: 8px;
+          padding: 5px;
+          text-align: justify;
+        }
+        .msgTime {
+          font-size: 12px;
+          padding: 0 5px;
+        }
+      }
+      .rightMsgContain {
+        justify-content: end;
+        .userMsg {
+          background: lightblue;
+        }
+      }
+    }
+    
+    .chatBarContain {
+      // width: 90%;
+      margin: 8px auto 0;
+      @include flexCenter;
+      .submitMsg {
+        resize: none;
+        border: 1.5px solid $subClrBrown;
+        border-radius: 3px;
+        width: 100%;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #ccc;
+          background-clip: padding-box;
+          border-radius: 3px;
+        }
+      }
+      .subnitIcon {
+        font-size: 2rem;
+        margin: 0 5px;
+      }
+      .submitTrue {
+        color: $subClrBrown;
+        cursor: pointer;
+      }
+    }
+    

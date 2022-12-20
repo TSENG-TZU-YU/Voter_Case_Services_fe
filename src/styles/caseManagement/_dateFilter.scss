@@ -1,0 +1,36 @@
+@import '../variable';
+.dateFilterContainer {
+  // height: 60px;
+
+  .dateFilter {
+    display: flex;
+    align-items: center;
+    input {
+      &::-webkit-calendar-picker-indicator {
+        width: 18px;
+        height: 18px;
+        color: $subClrBrown;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+    }
+    button {
+      border: 1.5px solid $subClrBrown;
+      color: $subClrBrown;
+      margin-left: 10px;
+      border-radius: 20px;
+      background-color: #fff;
+      padding: 2px 10px;
+      transition: 0.3s;
+      &:hover {
+        box-shadow: 0.2px 0.2px 6px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+  .dateRemind{
+    position: absolute;
+    color: $focusClrG;
+    font-weight: 600;
+    padding-top: 5px;
+  }
+}

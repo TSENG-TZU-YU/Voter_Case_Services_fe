@@ -1,0 +1,217 @@
+@import '../../src/styles/global.scss';
+@import '../../src/styles/_variable.scss';
+@mixin maxWidth {
+  margin: 0 auto;
+  width: 90%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.scroll {
+  width: 100%;
+  height: calc(100vh - 70px);
+  @include scrollbar;
+  .container {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h3 {
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .vector {
+      width: 80%;
+      border-top: 2px solid black;
+    }
+    .box {
+      display: flex;
+      justify-content: space-around;
+      width: 80%;
+      div {
+        margin-top: 10px;
+      }
+      .gap {
+        margin-left: 5px;
+        margin-right: 5px;
+        span {
+          color: red;
+          margin-left: 5px;
+        }
+      }
+      .contain {
+        height: 100px;
+      }
+      .handler {
+        width: 250px;
+        text-align: center;
+        height: 28px;
+        .form-check {
+          margin-right: 8px;
+          margin-top: 4px;
+        }
+      }
+      .otherText {
+        margin-top: 10px;
+        display: block;
+      }
+      .disNone {
+        display: none;
+      }
+
+      .check {
+        display: flex;
+        margin-top: 0;
+      }
+    }
+
+    .add {
+      width: 80%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      margin-top: 10px;
+      .clearIcon {
+        margin-right: 10px;
+      }
+    }
+
+    .needs {
+      width: 80%;
+      justify-content: start;
+      align-items: center;
+      .addIcon {
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: $focusClrG;
+      }
+
+      & .need:first-child {
+        .two {
+          display: none;
+        }
+      }
+      .need {
+        .one {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: $header;
+          color: aliceblue;
+          padding-left: 5px;
+          div {
+            margin-top: 2px;
+            margin-bottom: 2px;
+          }
+          span {
+            color: red;
+            margin-left: 5px;
+          }
+        }
+
+        & div {
+          display: flex;
+          margin-top: 10px;
+          .needInput {
+            padding-left: 5px;
+            padding-right: 5px;
+          }
+          .input {
+            width: 100%;
+            // margin-left: 10px;
+          }
+        }
+      }
+    }
+    .file {
+      width: 80%;
+      justify-content: start;
+
+      margin-top: 10px;
+      .fileName {
+        display: flex;
+        justify-content: space-between;
+        color: aliceblue;
+        background-color: $header;
+        padding-left: 5px;
+        .fileIcon {
+          align-items: center;
+          .clearIcon {
+            margin-right: 10px;
+          }
+        }
+        div {
+          display: flex;
+          div {
+            margin-right: 10px;
+          }
+        }
+      }
+      .two {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+        .addUploadContainer {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          width: 80%;
+          .addUploadContain {
+            @include flexBetween;
+            width: 100%;
+            padding: 0 5px;
+            margin-top: 2px;
+            background: #eee;
+            border: 1px solid $subClrBrown;
+          }
+          .items {
+            margin: 0 5px;
+          }
+        }
+        .delIcon {
+          position: relative;
+          left: -25px;
+          top: 1px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          margin-left: 5px;
+        }
+        .addFile {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .addIcon {
+            font-size: 1rem;
+            color: $focusClrG;
+          }
+          span {
+            padding: 1px 0 0 5px;
+            color: $focusClrG;
+          }
+        }
+      }
+    }
+    .ps {
+      width: 80%;
+      justify-content: start;
+      // background-color: rgb(231, 246, 22);
+      margin-top: 15px;
+    }
+    .submit {
+      display: flex;
+      justify-content: center;
+      border: 1px solid $subClrBrown;
+      background-color: $header;
+      border-radius: 10px;
+      margin: 30px 0;
+      padding: 5px 10px;
+      cursor: pointer;
+      color: aliceblue;
+    }
+  }
+}

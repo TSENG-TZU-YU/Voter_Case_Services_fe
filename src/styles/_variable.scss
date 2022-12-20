@@ -1,0 +1,50 @@
+// color
+$mainClrW: #fff;
+$subClrBrown: #817161;
+$focusClrY: #F2AC33;
+$focusClrG: #1F9998;
+$focusClrB: #221E73;
+$bcgBlock: #00000080;
+$header:#817161;
+$navBar:#c09e8280;
+
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin flexBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin scrollbar {
+  overflow: auto;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+  &::-webkit-scrollbar {
+    width: 7px;
+    //   height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #807060c0;
+    // background-clip: padding-box;
+    border-radius: 3px;
+  }
+}
+
+@mixin scrollbarContain {
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 7px;
+    //   height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    // background-clip: padding-box;
+    border-radius: 3px;
+  }
+}

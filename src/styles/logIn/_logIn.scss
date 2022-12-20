@@ -1,0 +1,92 @@
+@import '../variable';
+
+.logInContainer {
+  background: #c09e82;
+  width: 100vw;
+  height: 100vh;
+  @include flexCenter;
+  .container {
+    position: relative;
+    width: 60%;
+    height: 67%;
+    background: $bcgBlock;
+    @include flexCenter;
+    flex-direction: column;
+    .title {
+      position: absolute;
+      top: 2%;
+      left: 4%;
+      color: $mainClrW;
+      font-size: 32px;
+    }
+    .inputContainer {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      .inputContain {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid $mainClrW;
+        margin-bottom: 25px;
+        input,
+        select {
+          width: 330px;
+          height: 35px;
+          color: $mainClrW;
+          background: transparent;
+          border: transparent;
+          outline: none;
+          &::placeholder {
+            color: #aaa;
+          }
+          &:focus {
+            &::placeholder {
+              color: $mainClrW;
+            }
+          }
+        }
+        select {
+          cursor: pointer;
+          &:focus {
+            color: $mainClrW;
+          }
+          option {
+            background-color: #aaa;
+            color: $mainClrW;
+          }
+        }
+        .icons {
+          color: $mainClrW;
+          margin: 10px 20px 10px 10px;
+          height: 25px;
+          width: 25px;
+        }
+      }
+      button {
+        position: relative;
+        margin-top: 20px;
+        padding: 10px;
+        border: 0;
+        border-radius: 8px;
+        font-size: 18px;
+        color: $mainClrW;
+        background: $subClrBrown;
+        transition: box-shadow 0.3s;
+        &:hover {
+          box-shadow: 0.2px 0.2px 6px rgba(255, 255, 255, 0.555);
+        }
+        &::before {
+          position: absolute;
+          content: '';
+          width: 15px;
+          height: 15px;
+          border-top: 3px solid $mainClrW;
+          border-right: 3px solid $mainClrW;
+          top: 50%;
+          right: 15px;
+          transform: translateY(-50%) rotate(45deg);
+        }
+      }
+    }
+  }
+}

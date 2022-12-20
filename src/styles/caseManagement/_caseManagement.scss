@@ -1,0 +1,78 @@
+@import '../variable';
+
+.caseContainer {
+  max-width: 95%;
+  height: calc(100vh - 70px);
+  //   background: rgb(231, 190, 151);
+  margin: 0 auto;
+  font-size: 12px;
+  .sortSelect {
+    // background: lemonchiffon;
+    padding: 30px 20px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    .bothFilter {
+      display: flex;
+    }
+  }
+  .caseContain {
+    margin: 20px auto 0;
+    tbody :hover {
+      background: #eee;
+    }
+    thead,
+    tbody {
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      th {
+        padding: 10px 15px;
+        font-size: 14px;
+        .arrow {
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+      td {
+        padding: 15px;
+        .icons {
+          width: 40px;
+          height: 20px;
+          cursor: pointer;
+        }
+        .eyeBcg{
+          color: pink;
+        }
+      }
+      .viewList {
+        cursor: pointer;
+        background: $mainClrW;
+        color: $focusClrG;
+        border: 1px solid $focusClrG;
+        padding: 5px 6px;
+        border-radius: 3px;
+        transition: 0.3s;
+        &:hover {
+          background: $focusClrG;
+          color: #fff;
+        }
+      }
+      // .posClick {
+      //   position: relative;
+      //   .hadClick {
+      //     position: absolute;
+      //     padding: 1px 3.5px;
+      //     z-index: 10;
+      //     background: #ffc0cbb1;
+      //     border-radius: 10px;
+      //     text-align: center;
+      //     font-weight: 600;
+      //     right: 0;
+      //     top: 20%;
+      //   }
+      // }
+      .sortBtn {
+        @include flexCenter;
+      }
+    }
+  }
+}

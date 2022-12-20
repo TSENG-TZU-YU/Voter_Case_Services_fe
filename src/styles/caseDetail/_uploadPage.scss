@@ -1,0 +1,190 @@
+@import '../variable';
+@mixin maxWidth {
+  margin: 0 auto;
+  width: 90%;
+}
+
+// upload
+.overScr {
+  position: relative;
+  height: 88%;
+  @include scrollbar;
+}
+.addUpload {
+  @include maxWidth;
+  @include flexBetween;
+  .addTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: $subClrBrown;
+  }
+  .trashIcon {
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  .addIcon {
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: $focusClrG;
+  }
+}
+.uploadContainer {
+  background: #fffacdb6;
+  border-radius: 5px 5px 0 0;
+  @include maxWidth;
+  height: 160px;
+  @include scrollbarContain;
+  .upload {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    .addUploadContainer {
+      display: flex;
+      align-items: center;
+      padding: 5px 0;
+      .addUploadContain {
+        @include flexBetween;
+        width: 450px;
+        padding: 0 5px;
+        margin-top: 2px;
+        background: #eee;
+        border: 1px solid $subClrBrown;
+      }
+      .items {
+        margin: 0 5px;
+      }
+    }
+    .delIcon {
+      position: relative;
+      left: -25px;
+      top: 1px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    .addFile {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .addIcon {
+        font-size: 1rem;
+        color: $focusClrG;
+      }
+      span {
+        padding: 1px 0 0 5px;
+        color: $focusClrG;
+      }
+    }
+  }
+}
+.subBtn {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 20px;
+  padding: 6px 0;
+  border-radius: 0 0 5px 5px;
+  background: #fffacdb6;
+  .submitBtn {
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 5px;
+    color: $mainClrW;
+    background: $subClrBrown;
+    transition: linear 0.3s;
+    &:hover {
+      box-shadow: 0.2px 0.2px 4px #8a8a8ac9;
+    }
+  }
+}
+.receiveBtn {
+  background: #1f999985;
+}
+// Receive file
+.receiveFileContainer {
+  background: #1f999985;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  @include maxWidth;
+  .receiveFileTime {
+    font-weight: 600;
+    color: $mainClrW;
+    font-size: 14px;
+    padding-bottom: 5px;
+  }
+  .textContain {
+    resize: none;
+    border: 1.5px solid $subClrBrown;
+    border-radius: 3px;
+    height: 60px;
+    width: 100%;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      background-clip: padding-box;
+      border-radius: 3px;
+    }
+  }
+  .files {
+    height: 120px;
+    @include scrollbarContain;
+    .receiveFile {
+      padding-top: 6px;
+    }
+  }
+}
+
+// viewFiles
+.viewFilesContainer {
+  @include maxWidth;
+  height: 65%;
+  //   background: rgba(255, 250, 205, 0.712);
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  .viewBtn {
+    @include flexCenter;
+    // background: lightcoral;
+    border-bottom: 1.5px solid #ccc;
+
+    .btnWidth {
+      @include flexCenter;
+      width: 50%;
+      height: 35px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $subClrBrown;
+      background: $mainClrW;
+      cursor: pointer;
+    }
+    .borderR {
+      border-right: 1px solid #ccc;
+      border-radius: 5px 0 0 0;
+    }
+    .borderL {
+      border-left: 1px solid #ccc;
+      border-radius: 0 5px 0 0;
+    }
+    .clickStyle {
+      background: #817161c7;
+      color: $mainClrW;
+    }
+  }
+  .viewFilesContain {
+    @include scrollbarContain;
+    height: 88%;
+    padding: 0 8px;
+
+    .filesTime {
+      font-size: 14px;
+      color: $subClrBrown;
+      background: rgba(255, 250, 205, 0.712);
+    }
+    .download {
+      color: $focusClrG;
+      cursor: pointer;
+    }
+  }
+}

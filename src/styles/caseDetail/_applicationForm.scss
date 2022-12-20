@@ -1,0 +1,137 @@
+@import '../variable';
+
+// appForm
+@mixin submitBtn($bcg) {
+  border: 0;
+  background: $bcg;
+  padding: 2px 8px;
+  margin-left: 25px;
+  border-radius: 5px;
+  transition: linear 0.3s;
+  &:hover {
+    box-shadow: 0.2px 0.2px 4px #8a8a8aa5;
+  }
+}
+
+.appFormContainer {
+  // background: lemonchiffon;
+  max-width: 100%;
+  height: 85%;
+  margin: 0 auto;
+  @include scrollbar;
+  .editBtn {
+    font-size: 16px;
+    font-weight: 600;
+    max-width: 375px;
+    margin: 0 auto;
+    background: $focusClrY;
+    text-align: center;
+    padding: 5px 0;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .statusFormContainer {
+    background: $subClrBrown;
+    max-width: fit-content;
+    margin: 0 auto;
+    padding: 8px 8px 0;
+    height: 200px;
+    border: 1px solid #ddd;
+    @include scrollbarContain;
+    .statusFormContain {
+      background: $mainClrW;
+      margin-bottom: 8px;
+      padding: 5px;
+      textarea {
+        resize: none;
+        @include scrollbarContain;
+      }
+    }
+  }
+  .tableContainer {
+    // background: lightblue;
+    max-width: fit-content;
+    margin: 20px auto 10px;
+    .gapContain {
+      display: flex;
+      gap: 80px;
+    }
+    .needContain {
+      margin: 12px auto;
+      padding: 5px;
+      background: #fffacdb6;
+      .title {
+        color: $mainClrW;
+        background: $focusClrG;
+        border-radius: 2px;
+        margin-left: 5px;
+        padding: 1px;
+      }
+      .needInput {
+        display: flex;
+        justify-content: start;
+        padding-top: 5px;
+        input {
+          width: 100%;
+        }
+        textarea {
+          resize: none;
+          width: 100%;
+          @include scrollbarContain;
+        }
+      }
+      .center {
+        align-items: center;
+      }
+    }
+    .needFile {
+      display: flex;
+      justify-content: start;
+      margin-bottom: 10px;
+      .files {
+        margin-left: 5px;
+        width: 365px;
+        background: #ddd;
+        border: 1px solid #aaa;
+        text-align: justify;
+      }
+    }
+    .selectContain {
+      // background: lightcoral;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 10px 0 0;
+      font-size: 14px;
+      border-top: 1px dashed $subClrBrown;
+      .selContain {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+      .selectRemind {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        font-size: 12px;
+        color: $focusClrG;
+      }
+      .confirmBtn {
+        @include submitBtn(#ccc);
+      }
+      .finishBtn {
+        color: $mainClrW;
+        @include submitBtn($focusClrG);
+      }
+    }
+    .cancle {
+      display: flex;
+      justify-content: center;
+      .cancleBtn {
+        color: $mainClrW;
+        @include submitBtn($focusClrG);
+      }
+    }
+  }
+}
