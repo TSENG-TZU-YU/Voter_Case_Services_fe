@@ -563,11 +563,11 @@ function ApplicationForm({
                 <span className="title">需求 {i + 1}</span>
               </div>
               <div className="needInput center">
-                <span className="pe-1">1.</span>
+                {/* <span className="pe-1">1.</span> */}
                 <input type="text" placeholder={v.requirement_name} disabled />
               </div>
               <div className="needInput">
-                <span className="pe-1">2.</span>
+                {/* <span className="pe-1">2.</span> */}
                 <textarea
                   name=""
                   rows="3"
