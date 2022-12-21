@@ -38,7 +38,6 @@ function Application({
   const [getCycle, setGetCycle] = useState([]);
 
   //申請表驗證空值
-  const [handler, setHandler] = useState(false);
   const [category, setCategory] = useState(false);
   const [cycle, setCycle] = useState(false);
   const [need, setNeed] = useState(false);
@@ -153,9 +152,6 @@ function Application({
       }
     }
     try {
-      if (submitValue[0].handler === '0' || submitValue[0].handler === '') {
-        setHandler(true);
-      }
       if (submitValue[0].category === '0' || submitValue[0].category === '') {
         setCategory(true);
       }
@@ -165,8 +161,6 @@ function Application({
       }
 
       if (
-        submitValue[0].handler !== '0' &&
-        submitValue[0].handler !== '' &&
         submitValue[0].category !== '0' &&
         submitValue[0].category !== '' &&
         submitValue[0].cycle !== ''
@@ -214,9 +208,6 @@ function Application({
   // 上傳檔案
   async function submitFile() {
     try {
-      if (submitValue[0].handler === '0' || submitValue[0].handler === '') {
-        setHandler(true);
-      }
       if (submitValue[0].category === '0' || submitValue[0].category === '') {
         setCategory(true);
       }
@@ -226,8 +217,6 @@ function Application({
       }
 
       if (
-        submitValue[0].handler !== '0' &&
-        submitValue[0].handler !== '' &&
         submitValue[0].category !== '0' &&
         submitValue[0].category !== '' &&
         submitValue[0].cycle !== ''
@@ -262,6 +251,7 @@ function Application({
       <div className="container">
         <h3>申請表</h3>
         <div className="vector"></div>
+
         <div className="box">
           {/* 處理人 */}
           <div className="gap">
@@ -270,11 +260,6 @@ function Application({
               className="handler"
               onChange={(e) => {
                 handleChange(e.target.value, 'handler');
-              }}
-              onClick={(e) => {
-                if (e.target.value !== '0') {
-                  setHandler(false);
-                }
               }}
             >
               <option value="0"> -----請選擇-----</option>
@@ -353,6 +338,9 @@ function Application({
               placeholder="請輸入類別名稱"
             /> */}
           </div>
+        </div>
+
+        <div className="box">
           {/* 專案名稱 */}
           <div className="gap">
             <div> 專案名稱</div>
@@ -365,6 +353,7 @@ function Application({
             />
           </div>
         </div>
+
         {/* 需求 */}
         <div className="add handler">
           <FaTrashAlt
