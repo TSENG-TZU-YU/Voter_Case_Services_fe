@@ -33,7 +33,7 @@
   }
   .statusFormContainer {
     background: $subClrBrown;
-    max-width: fit-content;
+    max-width: 70%;
     margin: 0 auto;
     padding: 8px 8px 0;
     height: 200px;
@@ -51,11 +51,11 @@
   }
   .tableContainer {
     // background: lightblue;
-    max-width: fit-content;
+    max-width: 70%;
     margin: 20px auto 10px;
     .gapContain {
       display: flex;
-      gap: 80px;
+      gap: 120px;
     }
     .needContain {
       margin: 12px auto;

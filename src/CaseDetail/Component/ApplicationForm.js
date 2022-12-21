@@ -439,19 +439,19 @@ function ApplicationForm({
           {handleData.map((v) => {
             return (
               <div className="statusFormContain" key={uuidv4()}>
-                <div className="mb-1">
+                <div className="mb-2">
                   <span> &emsp;&emsp;處理人員：</span>
                   <span>{v.handler}</span>
                 </div>
-                <div className="mb-1">
+                <div className="mb-2">
                   <span>&emsp;&emsp;處理狀態：</span>
                   <span>{v.select_state}</span>
                 </div>
-                <div className="statusTime mb-1">
+                <div className="statusTime mb-2">
                   <span>&emsp;&emsp;處理時間：</span>
                   <span>{v.create_time}</span>
                 </div>
-                <div className="d-flex mb-1">
+                <div className="d-flex mb-2">
                   <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
                   <textarea
                     name=""
@@ -490,7 +490,7 @@ function ApplicationForm({
               <div className="gapContain my-2">
                 <div>
                   <div className="pb-1">處理人</div>
-                  <input type="text" placeholder={v.user} disabled />
+                  <input type="text" placeholder={v.handler} disabled />
                 </div>
                 <div>
                   <div className="pb-1">申請類別</div>
@@ -507,7 +507,7 @@ function ApplicationForm({
                   <input type="text" placeholder={v.project_name} disabled />
                 </div>
                 <div>
-                  <div className="pb-1">該功能使用次數</div>
+                  <div className="pb-1">需求次數</div>
                   <div className="d-flex align-items-center">
                     {radioInput.map((d) => {
                       return (
