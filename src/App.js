@@ -24,6 +24,8 @@ function App() {
   const [handlerSelect, setHandlerSelect] = useState(true);
   const [caseNum, setCaseNum] = useState('');
   const [caseId, setCaseId] = useState('');
+  const [handlerNull, setHandlerNull] = useState('');
+  const [sender, setSender] = useState('');
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -65,7 +67,12 @@ function App() {
             <Route
               index
               element={
-                <CaseManagement setCaseNum={setCaseNum} setCaseId={setCaseId} />
+                <CaseManagement
+                  setCaseNum={setCaseNum}
+                  setCaseId={setCaseId}
+                  setHandlerNull={setHandlerNull}
+                  setSender={setSender}
+                />
               }
             />
             <Route
@@ -94,6 +101,8 @@ function App() {
                     setHandlerSelect={setHandlerSelect}
                     caseId={caseId}
                     delCheck={delCheck}
+                    handlerNull={handlerNull}
+                    sender={sender}
                   />
                 }
               />

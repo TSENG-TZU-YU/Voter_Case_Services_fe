@@ -14,7 +14,7 @@ import CheckStatePage from './Component/CheckStatePage.js';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
-function CaseManagement({ setCaseNum, setCaseId }) {
+function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
   const [time, setTime] = useState(true);
@@ -70,16 +70,16 @@ function CaseManagement({ setCaseNum, setCaseId }) {
   };
 
   // put 狀態 4 -> 5
-  let handleChangeState = async (caseNum, caseId) => {
-    let response = await axios.post(
-      `${API_URL}/applicationData/changeState/${caseNum}`,
-      { handler: allData[0].handler, id: caseId },
-      {
-        withCredentials: true,
-      }
-    );
-    // console(response.data.result);
-  };
+  // let handleChangeState = async (caseNum, caseId) => {
+  //   let response = await axios.post(
+  //     `${API_URL}/applicationData/changeState/${caseNum}`,
+  //     { handler: allData[0].handler, id: caseId },
+  //     {
+  //       withCredentials: true,
+  //     }
+  //   );
+  //   // console(response.data.result);
+  // };
 
   return (
     <>
@@ -167,8 +167,8 @@ function CaseManagement({ setCaseNum, setCaseId }) {
               <tbody key={uuidv4()}>
                 <tr>
                   <td>
-                    {v.valid === 1 && v.transfer === 1
-                      ? `轉件人:${v.sender}`
+                    {member.permissions_id === 3 && member.name === v.sender
+                      ? `轉件人 : ${v.handler}`
                       : ''}
                   </td>
                   <td>{v.case_number}</td>
@@ -189,19 +189,23 @@ function CaseManagement({ setCaseNum, setCaseId }) {
                     <Link to={`caseDetail/application/${v.case_number}`}>
                       <FaEye
                         className={`icons ${
-                          v.name === '申請中' && member.permissions_id === 3
+                          v.name === '處理人評估中' &&
+                          member.permissions_id === 3
                             ? 'eyeBcg'
                             : ''
                         }`}
                         onClick={() => {
                           setCaseNum(v.case_number);
                           setCaseId(v.id);
-                          if (
-                            v.name === '申請中' &&
-                            member.permissions_id === 3
-                          ) {
-                            handleChangeState(v.case_number, v.id);
-                          }
+                          setHandlerNull(v.handler);
+                          setSender(v.sender);
+
+                          // if (
+                          //   v.name === '處理人評估中' &&
+                          //   member.permissions_id === 3
+                          // ) {
+                          //   handleChangeState(v.case_number, v.id);
+                          // }
                         }}
                       />
                     </Link>

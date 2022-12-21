@@ -30,7 +30,7 @@ export default function CheckStatePage({ setCheckState, caseHistory }) {
                 <tr>
                   <td>{v.case_number}</td>
                   <td>{v.handler}</td>
-                  <td>{v.select_state}</td>
+                  <td>{v.status}</td>
                   <td>{v.create_time}</td>
                 </tr>
               </tbody>
