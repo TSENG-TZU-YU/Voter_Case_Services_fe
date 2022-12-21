@@ -26,6 +26,8 @@ function ApplicationForm({
   caseId,
   caseNum,
   delCheck,
+  handlerNull,
+  sender,
 }) {
   const { num } = useParams();
   const navigate = useNavigate();
@@ -229,9 +231,9 @@ function ApplicationForm({
 
       // selectStatus filter
       if (member.permissions_id === 2) {
-        setSelectData(response.data.selectResult.splice(0, 3));
+        setSelectData(response.data.selectResult.splice(0, 0));
       } else {
-        setSelectData(response.data.selectResult.splice(4));
+        setSelectData(response.data.selectResult.splice(1));
       }
       // setSelectData(response.data.selectResult);
       // 目前狀態
@@ -382,24 +384,24 @@ function ApplicationForm({
   };
 
   // put 確認接收需求
-  const handleCheckAccept = async () => {
-    let response = await axios.post(
-      `${API_URL}/applicationData/putAcceptNeed/${num}`,
-      { caseId },
-      {
-        withCredentials: true,
-      }
-    );
+  // const handleCheckAccept = async () => {
+  //   let response = await axios.post(
+  //     `${API_URL}/applicationData/putAcceptNeed/${num}`,
+  //     { caseId },
+  //     {
+  //       withCredentials: true,
+  //     }
+  //   );
 
-    console.log('put', response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '已確認接收',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
-  };
+  //   console.log('put', response.data);
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: '已確認接收',
+  //   }).then(function () {
+  //     setNeedLoading(!needLoading);
+  //     navigate(`/header`);
+  //   });
+  // };
 
   // put user取消申請
   let handleUserCancle = async () => {
@@ -477,6 +479,63 @@ function ApplicationForm({
     });
   };
 
+  // 沒有指定handler, 確認接收
+  let handleReceiveCase = async () => {
+    let response = await axios.post(
+      `${API_URL}/applicationData/handlerReceiveCase/${num}`,
+      { caseId },
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+    Swal.fire({
+      icon: 'success',
+      title: '已確定接收此案件',
+    }).then(function () {
+      setNeedLoading(!needLoading);
+      navigate(`/header`);
+    });
+  };
+
+  // user 確定完成案件
+  let handleAcceptFinish = async () => {
+    let response = await axios.post(
+      `${API_URL}/applicationData/acceptFinish`,
+      detailData,
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+    Swal.fire({
+      icon: 'success',
+      title: '該案件已完成',
+    }).then(function () {
+      setNeedLoading(!needLoading);
+      navigate(`/header`);
+    });
+  };
+
+  // user 拒絕完成案件
+  let handleRejectFinish = async () => {
+    let response = await axios.post(
+      `${API_URL}/applicationData/rejectFinish`,
+      detailData,
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+    Swal.fire({
+      icon: 'success',
+      title: '該案件未完成，案件進行中',
+    }).then(function () {
+      setNeedLoading(!needLoading);
+      navigate(`/header`);
+    });
+  };
+
   return (
     <div className="appFormContainer">
       {/* 處理人申請狀態btn */}
@@ -519,7 +578,7 @@ function ApplicationForm({
       )}
 
       {/* user  需求修改Btn */}
-      {needState === 12 && addStatus === false ? (
+      {needState === 7 && addStatus === false ? (
         <div
           className="editBtn"
           onClick={() => {
@@ -534,24 +593,47 @@ function ApplicationForm({
       )}
 
       {/* handler  接收需求Btn */}
-      {needState === 13 && handler === false ? (
+      {/* {needState === 13 && handler === false ? (
         <div className="editBtn" onClick={handleCheckAccept}>
           需求已修改完成，請點選確認接收
         </div>
       ) : (
         ''
-      )}
+      )} */}
 
-      {/* handler  是否接件 */}
-      {needState === 11 &&
-      detailData[0].transfer === 1 &&
-      detailData[0].valid === 1 ? (
+      {/* handler轉件  是否接件 */}
+      {member.permissions_id === 3 &&
+      needState === 8 &&
+      member.name === sender ? (
         <>
           <div className="editBtn" onClick={handleAcceptCase}>
             是，確認接收此案件
           </div>
           <div className="editBtn" onClick={handleRejectCase}>
             否，無法接收此案件
+          </div>
+        </>
+      ) : (
+        ''
+      )}
+
+      {/* handler === '' 確認接收此案件 */}
+      {member.permissions_id === 3 && handlerNull === '' ? (
+        <div className="editBtn" onClick={handleReceiveCase}>
+          此案件目前沒有處理人，請點選確認接收此案
+        </div>
+      ) : (
+        ''
+      )}
+
+      {/* handler完成  待user確認 */}
+      {member.permissions_id === 1 && needState === 11 ? (
+        <>
+          <div className="editBtn" onClick={handleAcceptFinish}>
+            是，處理人已完成所有需求項目
+          </div>
+          <div className="editBtn" onClick={handleRejectFinish}>
+            否，處理人尚有需求未完成
           </div>
         </>
       ) : (
@@ -570,7 +652,7 @@ function ApplicationForm({
                 </div>
                 <div className="mb-2">
                   <span>&emsp;&emsp;處理狀態：</span>
-                  <span>{v.select_state}</span>
+                  <span>{v.status}</span>
                 </div>
                 <div className="statusTime mb-2">
                   <span>&emsp;&emsp;處理時間：</span>
@@ -755,15 +837,12 @@ function ApplicationForm({
                     needState !== 1 &&
                     needState !== 2 &&
                     needState !== 3 &&
-                    needState !== 5 &&
+                    needState !== 4 &&
+                    needState !== 8 &&
                     needState !== 9 &&
                     needState !== 10 &&
                     needState !== 11 &&
-                    needState !== 12 &&
-                    needState !== 13 &&
-                    needState !== 14 &&
-                    needState !== 15 &&
-                    needState !== 16
+                    needState !== 12
                       ? false
                       : true
                   }
@@ -830,19 +909,17 @@ function ApplicationForm({
 
         {/* 選擇狀態 */}
         {addStatus &&
+        handlerNull !== '' &&
         needState !== 1 &&
         needState !== 2 &&
         needState !== 3 &&
+        needState !== 6 &&
         needState !== 7 &&
         needState !== 8 &&
         needState !== 9 &&
         needState !== 10 &&
         needState !== 11 &&
-        needState !== 12 &&
-        needState !== 13 &&
-        needState !== 14 &&
-        needState !== 15 &&
-        needState !== 16 ? (
+        needState !== 12 ? (
           <div className="selectContain">
             {/* <StateFilter /> */}
             <div className="selContain">
@@ -897,14 +974,13 @@ function ApplicationForm({
         ) : (
           <>
             {!addStatus &&
-            needState !== 1 &&
             needState !== 2 &&
             needState !== 3 &&
-            needState !== 6 &&
+            needState !== 8 &&
             needState !== 9 &&
             needState !== 10 &&
             needState !== 11 &&
-            needState !== 16 ? (
+            needState !== 12 ? (
               <div className="cancle">
                 <button className="cancleBtn" onClick={handleUserCancle}>
                   取消申請
