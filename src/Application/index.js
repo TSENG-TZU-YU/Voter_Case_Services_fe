@@ -38,7 +38,6 @@ function Application({
   const [getCycle, setGetCycle] = useState([]);
 
   //申請表驗證空值
-  const [handler, setHandler] = useState(false);
   const [category, setCategory] = useState(false);
   const [cycle, setCycle] = useState(false);
   const [need, setNeed] = useState(false);
@@ -261,11 +260,6 @@ function Application({
               className="handler"
               onChange={(e) => {
                 handleChange(e.target.value, 'handler');
-              }}
-              onClick={(e) => {
-                if (e.target.value !== '0') {
-                  setHandler(false);
-                }
               }}
             >
               <option value="0"> -----請選擇-----</option>
