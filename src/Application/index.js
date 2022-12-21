@@ -14,6 +14,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
+// import { SubmitCheck } from '../SweetComponent/SubmitCheck';
 
 function Application({
   setApplication,
@@ -48,6 +49,7 @@ function Application({
     if (input === 'handler') newData[0].handler = val;
     if (input === 'category') newData[0].category = val;
     if (input === 'cycle') newData[0].cycle = val;
+    if (input === 'name') newData[0].name = val;
 
     // if(newData.)
     console.log(newData);
@@ -142,6 +144,28 @@ function Application({
     category();
     cycle();
   }, []);
+  // 送出申請表sweet
+  function submitCheck(tit) {
+    Swal.fire({
+      title: tit,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '確定送出',
+      denyButtonText: `取消送出`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('送出成功', '', 'success');
+        submitFile();
+        navigate('/header');
+        setCaseManagement(true);
+        setApplication(false);
+        setTrial(false);
+      } else if (result.isDenied) {
+        Swal.fire('已取消送出', '', 'info');
+      }
+    });
+  }
 
   //送出表單內容
   async function submit() {
@@ -175,17 +199,8 @@ function Application({
           }
         }
 
-        Swal.fire({
-          icon: 'success',
-          title: '已送出申請',
-        }).then(function () {
-          navigate('/header');
-          setCaseManagement(true);
-          setApplication(false);
-          setTrial(false);
-        });
-
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm');
+        submitCheck('確定要送出申請表?');
+        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
         let response = await axios.post(
           'http://localhost:3001/api/application_post',
           {
@@ -195,7 +210,7 @@ function Application({
             id: member.id,
             user: member.name,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status: 1,
+            status: 2,
             create_time: endTime,
           }
         );
@@ -246,6 +261,68 @@ function Application({
     }
   }
 
+  //儲存表單內容
+  async function store() {
+    for (let i = 0; i < addNeed.length; i++) {
+      if (addNeed[i].title === '' || addNeed[i].text === '') {
+        setNeed(true);
+        return;
+      }
+    }
+    try {
+      if (submitValue[0].category === '0' || submitValue[0].category === '') {
+        setCategory(true);
+      }
+
+      if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
+        setCycle(true);
+      }
+
+      if (
+        submitValue[0].category !== '0' &&
+        submitValue[0].category !== '' &&
+        submitValue[0].cycle !== ''
+      ) {
+        for (let i = 0; i < addFile.length; i++) {
+          if (addFile[i].file === '') {
+            Swal.fire({
+              icon: 'error',
+              title: '無檔案',
+            });
+            return;
+          }
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: '已儲存申請',
+        }).then(function () {
+          navigate('/header');
+          setCaseManagement(true);
+          setApplication(false);
+          setTrial(false);
+        });
+
+        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+        let response = await axios.post(
+          'http://localhost:3001/api/application_post',
+          {
+            ...submitValue[0],
+            need: addNeed,
+            number: parseInt(Date.now() / 10000),
+            id: member.id,
+            user: member.name,
+            // TODO: 申請狀態 一般職員跟主管送出的狀態不同
+            status: 1,
+            create_time: endTime,
+          }
+        );
+      }
+    } catch (err) {
+      console.log('sub', err);
+    }
+  }
+
   return (
     <div className="scroll">
       <div className="container">
@@ -253,26 +330,44 @@ function Application({
         <div className="vector"></div>
 
         <div className="box">
-          {/* 處理人 */}
+          {/* 申請類別 */}
           <div className="gap">
-            <div>處理人</div>
+            <div>
+              申請類別 <span>*</span>
+              {category ? <span>請選擇申請類別</span> : ''}
+            </div>
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'handler');
+                handleChange(e.target.value, 'category');
+                setAddNo(e.target.value);
+              }}
+              onClick={(e) => {
+                if (e.target.value !== '0') {
+                  setCategory(false);
+                }
               }}
             >
-              <option value="0"> -----請選擇-----</option>
-              {getHandler.map((v, i) => {
+              <option value="0" selected disabled hidden>
+                -----請選擇類別-----
+              </option>
+              {getCategory.map((v, i) => {
                 return (
-                  <option key={i}>
+                  <option key={i} value={v.number}>
                     {v.name}
-                    {/* <p>(由單位主管分配)</p> */}
                   </option>
                 );
               })}
             </select>
+            {/* <input
+              type="text"
+              className={`handler otherText mt-2 ${
+                submitValue[0].category !== 'OTH' ? 'disNone' : ''
+              }`}
+              placeholder="請輸入類別名稱"
+            /> */}
           </div>
+
           {/* 週期 */}
           <div className="gap">
             <div className="cycle">
@@ -303,44 +398,21 @@ function Application({
           </div>
         </div>
         <div className="box">
-          {/* 申請類別 */}
+          {/* 處理人 */}
           <div className="gap">
-            <div>
-              申請類別 <span>*</span>
-              {category ? <span>請選擇申請類別</span> : ''}
-            </div>
+            <div>處理人</div>
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'category');
-                setAddNo(e.target.value);
-              }}
-              onClick={(e) => {
-                if (e.target.value !== '0') {
-                  setCategory(false);
-                }
+                handleChange(e.target.value, 'handler');
               }}
             >
-              <option value="0">-----請選擇類別-----</option>
-              {getCategory.map((v, i) => {
-                return (
-                  <option key={i} value={v.number}>
-                    {v.name}
-                  </option>
-                );
+              <option value=" "> -----請選擇-----</option>
+              {getHandler.map((v, i) => {
+                return <option key={i}>{v.name}</option>;
               })}
             </select>
-            {/* <input
-              type="text"
-              className={`handler otherText mt-2 ${
-                submitValue[0].category !== 'OTH' ? 'disNone' : ''
-              }`}
-              placeholder="請輸入類別名稱"
-            /> */}
           </div>
-        </div>
-
-        <div className="box">
           {/* 專案名稱 */}
           <div className="gap">
             <div> 專案名稱</div>
@@ -366,21 +438,24 @@ function Application({
           <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
         </div>
         <div className="needs">
+          {need ? <span>請填寫需求</span> : ''}
           {addNeed.map((v, i) => {
             return (
               <div key={i} className="need">
                 <div className="one">
                   <div>
                     需求{i + 1} <span>* </span>
-                    {need ? <span>請填寫需求</span> : ''}
                   </div>
-                  <IoMdCloseCircle
-                    className="two"
-                    size="20"
-                    onClick={() => {
-                      delCheck('確定要刪除此需求?', deleteNeed, i);
-                    }}
-                  />
+                  {i !== 0 ? (
+                    <IoMdCloseCircle
+                      size="20"
+                      onClick={() => {
+                        delCheck('確定要刪除此需求?', deleteNeed, i);
+                      }}
+                    />
+                  ) : (
+                    ''
+                  )}
                 </div>
 
                 <div>
@@ -483,14 +558,24 @@ function Application({
           備註: 將由處理人員主動與您聯繫討論預計完成時間。
         </div>
 
-        <div
-          className="submit"
-          onClick={() => {
-            submit();
-            submitFile();
-          }}
-        >
-          送出
+        <div className="submitBtn">
+          <div
+            className="submit"
+            onClick={() => {
+              store();
+              submitFile();
+            }}
+          >
+            儲存
+          </div>
+          <div
+            className="submit"
+            onClick={() => {
+              submit();
+            }}
+          >
+            送出
+          </div>
         </div>
       </div>
     </div>

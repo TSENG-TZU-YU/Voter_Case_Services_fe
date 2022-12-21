@@ -44,6 +44,25 @@ function App() {
     });
   }
 
+  // 送出申請表sweet
+  function submitCheck(tit, submitFile, navigate) {
+    Swal.fire({
+      title: tit,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '確定送出',
+      denyButtonText: `取消送出`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('送出成功', '', 'success');
+        submitFile();
+      } else if (result.isDenied) {
+        Swal.fire('已取消送出', '', 'info');
+      }
+    });
+  }
+
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -76,6 +95,7 @@ function App() {
                   setCaseManagement={setCaseManagement}
                   setTrial={setTrial}
                   delCheck={delCheck}
+                  submitCheck={submitCheck}
                 />
               }
             />

@@ -11,6 +11,13 @@ import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
 
+//react-icons
+import { MdOutlineAddBox } from 'react-icons/md';
+import { IoMdCloseCircle } from 'react-icons/io';
+import { HiOutlineDocumentPlus } from 'react-icons/hi2';
+import { FaTrashAlt } from 'react-icons/fa';
+import { AiFillCloseCircle, AiFillCloseSquare } from 'react-icons/ai';
+
 function ApplicationForm({
   setAddStatus,
   addStatus,
@@ -60,8 +67,6 @@ function ApplicationForm({
     { title: '長期', value: '3' },
   ];
 
-  // console.log('selectData', selectData);
-
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -84,6 +89,126 @@ function ApplicationForm({
     if (member.permissions_id === 3) {
       setHandler(false);
     }
+  }, []);
+
+  // 修改申請表
+  const [edit, setEdit] = useState(true);
+  const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
+  const [addFile, setAddFile] = useState([{ file: '' }]);
+  const [submitValue, setSubmitValue] = useState([
+    { handler: '', category: '', name: '', cycle: '' },
+  ]);
+
+  console.log('submitValue', submitValue);
+
+  const [addNo, setAddNo] = useState('');
+  //抓取後端資料
+  const [getHandler, setGetHandler] = useState([]);
+  const [getCategory, setGetCategory] = useState([]);
+  const [getCycle, setGetCycle] = useState([]);
+
+  //表格資料填入
+  const handleChange = (val, input) => {
+    let newData = [...submitValue];
+    if (input === 'handler') newData[0].handler = val;
+    if (input === 'category') newData[0].category = val;
+    if (input === 'cycle') newData[0].cycle = val;
+    if (input === 'name') newData[0].name = val;
+    console.log('newData', newData);
+    setSubmitValue(newData);
+  };
+  //申請表驗證空值
+  const [category, setCategory] = useState(false);
+  const [cycle, setCycle] = useState(false);
+  const [need, setNeed] = useState(false);
+
+  //增加需求
+  const addN = () => {
+    const newAdd = { title: '', text: '' };
+    const newAdds = [...addNeed, newAdd];
+    setAddNeed(newAdds);
+  };
+  //填入需求
+  const needChangerHandler = (val, i, input) => {
+    let newData = [...addNeed];
+    if (input === 'tt') newData[i].title = val;
+    if (input === 'ttt') newData[i].text = val;
+    setAddNeed(newData);
+  };
+  //刪除需求
+  const deleteNeed = (i) => {
+    let newData = [...addNeed];
+    newData.splice(i, 1);
+    if (newData.length === 0) return;
+    setAddNeed(newData);
+  };
+  // 清空檔案
+  const handleClearNeed = () => {
+    let newData = [{ title: '', text: '' }];
+    setAddNeed(newData);
+  };
+
+  //增加上傳檔案
+  const addF = () => {
+    const newAdds = [...addFile, { file: '' }];
+    setAddFile(newAdds);
+  };
+  //刪除檔案
+  const deleteFile = (i) => {
+    let newData = [...addFile];
+    newData.splice(i, 1); //刪除1個
+    if (addFile.length === 0) return; //if長度=0 無法再刪除
+    setAddFile(newData);
+  };
+  // 清空檔案
+  const handleClearFile = () => {
+    let newData = [{ file: '' }];
+    setAddFile(newData);
+  };
+  //單個檔案上傳
+  const onFileUpload = (val, i, input) => {
+    let newData = [...addFile];
+    if (input === 'file') newData[i].file = val;
+
+    setAddFile(newData);
+  };
+  useEffect(() => {
+    //抓取處理人
+    let handler = async () => {
+      try {
+        let res = await axios.get(
+          'http://localhost:3001/api/application_get/handler'
+        );
+        setGetHandler(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    //抓取申請類別
+    let category = async () => {
+      try {
+        let res = await axios.get(
+          'http://localhost:3001/api/application_get/category'
+        );
+        setGetCategory(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    //抓取週期
+    let cycle = async () => {
+      try {
+        let res = await axios.get(
+          'http://localhost:3001/api/application_get/cycle'
+        );
+        setGetCycle(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    handler();
+    category();
+    cycle();
   }, []);
 
   // 取得detail Id 的值
@@ -482,34 +607,58 @@ function ApplicationForm({
       <div className="tableContainer">
         {detailData.map((v) => {
           return (
-            <div key={uuidv4()}>
+            <div key={v.id}>
               <div>
                 <div className="pb-1">案件編號</div>
-                <input type="text" placeholder={v.case_number} disabled />
+
+                <input
+                  type="text"
+                  placeholder={v.case_number}
+                  disabled
+                  defaultChecked={true} //不受控制的組件的使用
+                />
               </div>
               <div className="gapContain my-2">
                 <div>
-                  <div className="pb-1">處理人</div>
-                  <input type="text" placeholder={v.handler} disabled />
-                </div>
-                <div>
                   <div className="pb-1">申請類別</div>
-                  <input
-                    type="text"
-                    placeholder={v.application_category}
-                    disabled
-                  />
-                </div>
-              </div>
-              <div className="gapContain">
-                <div>
-                  <div className="pb-1">專案名稱</div>
-                  <input type="text" placeholder={v.project_name} disabled />
+                  {edit ? (
+                    <input
+                      type="text"
+                      placeholder={v.application_category}
+                      disabled
+                      defaultChecked={true}
+                    />
+                  ) : (
+                    <select
+                      className="handler"
+                      onChange={(e) => {
+                        handleChange(e.target.value, 'category');
+                        setAddNo(e.target.value);
+                      }}
+                      onClick={(e) => {
+                        if (e.target.value !== '0') {
+                          setCategory(false);
+                        }
+                      }}
+                    >
+                      <option selected disabled hidden>
+                        {v.application_category}
+                      </option>
+                      <option value="0">-----請選擇類別-----</option>
+                      {getCategory.map((v, i) => {
+                        return (
+                          <option key={i} value={v.number}>
+                            {v.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  )}
                 </div>
                 <div>
                   <div className="pb-1">需求次數</div>
                   <div className="d-flex align-items-center">
-                    {radioInput.map((d) => {
+                    {radioInput.map((d, i) => {
                       return (
                         <div
                           className="d-flex align-items-center"
@@ -517,8 +666,17 @@ function ApplicationForm({
                         >
                           <input
                             type="radio"
-                            disabled
+                            disabled={edit}
+                            //TODO:無法更改
                             checked={v.cycle === d.value ? true : false}
+                            defaultChecked={true}
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'cycle');
+                              if (e.target.value !== '') {
+                                setCycle(false);
+                              }
+                            }}
+                            value={i + 1}
                           />
                           <label>{d.title}</label>
                         </div>
@@ -527,14 +685,68 @@ function ApplicationForm({
                   </div>
                 </div>
               </div>
+              <div className="gapContain">
+                <div>
+                  <div className="pb-1">處理人</div>
+                  {edit ? (
+                    <input
+                      type="text"
+                      placeholder={v.handler}
+                      disabled
+                      defaultChecked={true}
+                    />
+                  ) : (
+                    <select
+                      className="handler"
+                      onChange={(e) => {
+                        handleChange(e.target.value, 'handler');
+                      }}
+                    >
+                      <option selected disabled hidden>
+                        {v.handler}
+                      </option>
+                      <option value="0">-----請選擇-----</option>
+                      {getHandler.map((v, i) => {
+                        return <option key={i}>{v.name}</option>;
+                      })}
+                    </select>
+                  )}
+                </div>
+                <div>
+                  <div className="pb-1">專案名稱</div>
+                  <input
+                    type="text"
+                    // placeholder={v.project_name}
+                    disabled={edit}
+                    defaultValue={true}
+                    value={v.project_name}
+                    onChange={(e) => {
+                      handleChange((v.project_name = e.target.value), 'name');
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           );
         })}
-
+        {edit ? (
+          ''
+        ) : (
+          <div className="add handler">
+            <FaTrashAlt
+              size="17"
+              onClick={() => {
+                delCheck('確定要刪除所有需求內容?', handleClearNeed);
+              }}
+              className="clearIcon"
+            />
+            <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
+          </div>
+        )}
         {/* 需求 */}
         {needData.map((v, i) => {
           return (
-            <div className="needContain" key={uuidv4()}>
+            <div className="needContain" key={i}>
               <div className="d-flex">
                 <input
                   type="checkbox"
@@ -560,19 +772,46 @@ function ApplicationForm({
                     handleNeedChecked(v.id, e.target.checked);
                   }}
                 />
+
                 <span className="title">需求 {i + 1}</span>
+                {edit ? (
+                  ''
+                ) : (
+                  <>
+                    {i !== 0 ? (
+                      <AiFillCloseCircle
+                        className="delNeedIcon"
+                        onClick={() => {
+                          delCheck('確定要刪除此需求內容?', handleDelNeed, i);
+                        }}
+                      />
+                    ) : (
+                      ''
+                    )}
+                  </>
+                )}
               </div>
               <div className="needInput center">
-                {/* <span className="pe-1">1.</span> */}
-                <input type="text" placeholder={v.requirement_name} disabled />
+                <input
+                  type="text"
+                  value={v.requirement_name}
+                  name="tit"
+                  disabled={edit}
+                  defaultValue={true}
+                  onChange={(e) => {
+                    handlerUpdateNeed(e.target.value, i, 'tit');
+                  }}
+                />
               </div>
               <div className="needInput">
-                {/* <span className="pe-1">2.</span> */}
                 <textarea
-                  name=""
+                  name="dir"
                   rows="3"
                   placeholder={v.directions}
-                  disabled
+                  disabled={edit}
+                  onChange={(e) => {
+                    handlerUpdateNeed(e.target.value, i, 'dir');
+                  }}
                 ></textarea>
               </div>
             </div>
@@ -677,6 +916,45 @@ function ApplicationForm({
           </>
         )}
       </div>
+      {needState === 1 ? (
+        <div className="submitBtn">
+          {edit ? (
+            <div
+              className="submit"
+              onClick={() => {
+                setEdit(false);
+              }}
+            >
+              修改
+            </div>
+          ) : (
+            <div
+              className="submit"
+              onClick={() => {
+                // store();
+                // submitFile();
+                setEdit(true);
+              }}
+            >
+              儲存
+            </div>
+          )}
+
+          <div
+            className="submit"
+            onClick={() => {
+              // submitCheck('確定要刪?', submit, submitFile);
+            }}
+          >
+            送出
+          </div>
+          <div className="submit" onClick={() => {}}>
+            刪除申請
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

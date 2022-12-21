@@ -71,7 +71,7 @@
     }
 
     .add {
-      width: 80%;
+      width: 70%;
       display: flex;
       justify-content: end;
       align-items: center;
@@ -82,7 +82,7 @@
     }
 
     .needs {
-      width: 80%;
+      width: 70%;
       justify-content: start;
       align-items: center;
       .addIcon {
@@ -91,12 +91,10 @@
         color: $focusClrG;
       }
 
-      & .need:first-child {
-        .two {
-          display: none;
-        }
-      }
       .need {
+        span {
+          color: red;
+        }
         .one {
           display: flex;
           justify-content: space-between;
@@ -110,7 +108,6 @@
           }
           span {
             color: red;
-          
           }
         }
 
@@ -119,13 +116,12 @@
           margin-top: 10px;
           .input {
             width: 100%;
-           
           }
         }
       }
     }
     .file {
-      width: 80%;
+      width: 70%;
       justify-content: start;
 
       margin-top: 10px;
@@ -194,21 +190,26 @@
       }
     }
     .ps {
-      width: 80%;
+      width: 70%;
       justify-content: start;
       // background-color: rgb(231, 246, 22);
       margin-top: 15px;
     }
-    .submit {
+    .submitBtn {
       display: flex;
       justify-content: center;
-      border: 1px solid $subClrBrown;
-      background-color: $header;
-      border-radius: 10px;
-      margin: 30px 0;
-      padding: 5px 10px;
-      cursor: pointer;
-      color: aliceblue;
+      gap: 20px;
+      .submit {
+        display: flex;
+        justify-content: center;
+        border: 1px solid $subClrBrown;
+        background-color: $header;
+        border-radius: 10px;
+        margin: 30px 0;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: aliceblue;
+      }
     }
   }
 }

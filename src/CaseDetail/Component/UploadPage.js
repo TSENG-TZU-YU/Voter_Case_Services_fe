@@ -81,26 +81,26 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
         setNo(response.data[0].application_category);
         setStatus(response.data[0].status_id);
         setHandler(response.data[0].handler);
-        // setId(response.data[0].valid);
+      
       } catch (err) {
         console.log(err);
       }
     }
-    async function toGetUpdateFile() {
-      try {
-        let response = await axios.get(
-          ` http://localhost:3001/api/files/getUpdateFile/${caseNum}`
-        );
-        setGetUpdateFile(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // async function toGetUpdateFile() {
+    //   try {
+    //     let response = await axios.get(
+    //       ` http://localhost:3001/api/files/getUpdateFile/${caseNum}`
+    //     );
+    //     setGetUpdateFile(response.data);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
 
     toGetUserFile();
     toGetHandlerFile();
     toGetHandlerFileNo();
-    toGetUpdateFile();
+    // toGetUpdateFile();
   }, [render, acceptRender]);
 
   // function getFileNameFromContentDisposition(contentDisposition) {
