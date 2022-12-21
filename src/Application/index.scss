@@ -28,10 +28,11 @@
       width: 80%;
       border-top: 2px solid black;
     }
+
     .box {
       display: flex;
-      justify-content: space-around;
-      width: 80%;
+      justify-content: space-between;
+      width: 70%;
       div {
         margin-top: 10px;
       }
@@ -109,7 +110,7 @@
           }
           span {
             color: red;
-            // margin-left: 5px;
+          
           }
         }
 
@@ -118,7 +119,7 @@
           margin-top: 10px;
           .input {
             width: 100%;
-            // margin-left: 10px;
+           
           }
         }
       }
