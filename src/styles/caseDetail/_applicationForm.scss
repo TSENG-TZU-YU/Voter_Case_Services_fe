@@ -67,22 +67,37 @@
       display: flex;
       justify-content: end;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 20px;
+      margin-bottom: -10px;
       .clearIcon {
         margin-right: 10px;
+      }
+      .addIcon,
+      .clearIcon {
+        cursor: pointer;
       }
     }
     .needContain {
       margin: 12px auto;
       padding: 5px;
       background: #fffacdb6;
-      .title {
-        color: $mainClrW;
-        background: $focusClrG;
-        border-radius: 2px;
-        margin-left: 5px;
-        padding: 1px;
+      .needTit {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .title {
+          color: $mainClrW;
+          background: $focusClrG;
+          border-radius: 2px;
+          margin-left: 5px;
+          padding: 1px;
+        }
+        .delNeedIcon {
+          cursor: pointer;
+          font-size: 1rem;
+        }
       }
+
       .needInput {
         display: flex;
         justify-content: start;
