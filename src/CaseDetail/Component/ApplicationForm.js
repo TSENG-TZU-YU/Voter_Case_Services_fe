@@ -270,6 +270,8 @@ function ApplicationForm({
       );
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
+      // 修改儲存用
+      setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
       setGetFile(response.data.getFile);
@@ -326,6 +328,7 @@ function ApplicationForm({
         case_number_id: detailData[0].case_number,
       },
     ];
+    console.log(newData);
     setEditNeed(newData);
   };
 
@@ -334,6 +337,21 @@ function ApplicationForm({
     if (editNeed.length === 1) return;
     let newData = [...editNeed];
     newData.splice(i, 1);
+    console.log(newData);
+
+    setEditNeed(newData);
+  };
+
+  // del all need
+  const handleDelAllNeed = () => {
+    let newData = [
+      {
+        requirement_name: '',
+        directions: '',
+        case_number_id: detailData[0].case_number,
+      },
+    ];
+    console.log(newData);
     setEditNeed(newData);
   };
 
@@ -342,6 +360,7 @@ function ApplicationForm({
     let newData = [...editNeed];
     if (input === 'tit') newData[i].requirement_name = val;
     if (input === 'dir') newData[i].directions = val;
+    console.log('n', newData);
     setEditNeed(newData);
     setEditVerifyPage(false);
   };
@@ -374,7 +393,7 @@ function ApplicationForm({
       }
     );
 
-    console.log('add', response.data);
+    // console.log('add', response.data);
     Swal.fire({
       icon: 'success',
       title: '申請成功',
@@ -428,6 +447,40 @@ function ApplicationForm({
     });
   };
 
+  // post 修改需求
+  async function hanleEditAddNeed(e) {
+    e.preventDefault();
+
+    for (let i = 0; i < editNeed.length; i++) {
+      if (
+        editNeed[i].requirement_name === '' ||
+        editNeed[i].directions === ''
+      ) {
+        setEditVerifyPage(true);
+        return;
+      }
+    }
+
+    let response = await axios.post(
+      `${API_URL}/applicationData/postEditAddNeed`,
+      [detailData[0].handler, editNeed, caseId],
+      {
+        withCredentials: true,
+      }
+    );
+
+    // console.log('add', response.data);
+    Swal.fire({
+      icon: 'success',
+      title: '修改成功',
+    }).then(function () {
+      setNeedLoading(!needLoading);
+      setEditPage(false);
+
+      navigate(`/header`);
+    });
+  }
+
   // put 確認接收需求
   // const handleCheckAccept = async () => {
   //   let response = await axios.post(
@@ -476,7 +529,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '已接收此案件',
@@ -495,7 +548,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '已拒絕接收此案件',
@@ -514,7 +567,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '案件已完成',
@@ -533,7 +586,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '已確定接收此案件',
@@ -552,7 +605,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '該案件已完成',
@@ -571,7 +624,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     Swal.fire({
       icon: 'success',
       title: '該案件未完成，案件進行中',
@@ -858,45 +911,53 @@ function ApplicationForm({
         {edit ? (
           ''
         ) : (
-          <div className="add handler">
+          <div className="add">
             <FaTrashAlt
               size="17"
               onClick={() => {
-                delCheck('確定要刪除所有需求內容?', handleClearNeed);
+                delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
               }}
               className="clearIcon"
             />
-            {/* <MdOutlineAddBox size="20" onClick={addN} className="addIcon" /> */}
+            <MdOutlineAddBox
+              size="20"
+              onClick={handleAddNeed}
+              className="addIcon"
+            />
           </div>
         )}
+
         {/* 需求 */}
-        {needData.map((v, i) => {
+        {editNeed.map((v, i) => {
           return (
             <div className="needContain" key={i}>
-              <div className="d-flex">
-                <input
-                  type="checkbox"
-                  disabled={
-                    addStatus &&
-                    needState !== 1 &&
-                    needState !== 2 &&
-                    needState !== 3 &&
-                    needState !== 4 &&
-                    needState !== 8 &&
-                    needState !== 9 &&
-                    needState !== 10 &&
-                    needState !== 11 &&
-                    needState !== 12
-                      ? false
-                      : true
-                  }
-                  checked={v.checked === 1 ? true : false}
-                  onChange={(e) => {
-                    handleNeedChecked(v.id, e.target.checked);
-                  }}
-                />
+              <div className="needTit">
+                <div className="d-flex">
+                  <input
+                    type="checkbox"
+                    disabled={
+                      addStatus &&
+                      needState !== 1 &&
+                      needState !== 2 &&
+                      needState !== 3 &&
+                      needState !== 4 &&
+                      needState !== 8 &&
+                      needState !== 9 &&
+                      needState !== 10 &&
+                      needState !== 11 &&
+                      needState !== 12
+                        ? false
+                        : true
+                    }
+                    checked={v.checked === 1 ? true : false}
+                    onChange={(e) => {
+                      handleNeedChecked(v.id, e.target.checked);
+                    }}
+                  />
 
-                <span className="title">需求 {i + 1}</span>
+                  <span className="title">需求 {i + 1}</span>
+                </div>
+
                 {edit ? (
                   ''
                 ) : (
@@ -917,10 +978,10 @@ function ApplicationForm({
               <div className="needInput center">
                 <input
                   type="text"
-                  value={needData[i].requirement_name}
+                  value={editNeed[i].requirement_name}
                   name="tit"
                   disabled={edit}
-                  defaultValue={true}
+                  // defaultValue={true}
                   onChange={(e) => {
                     handlerUpdateNeed(e.target.value, i, 'tit');
                   }}
@@ -930,6 +991,7 @@ function ApplicationForm({
                 <textarea
                   name="dir"
                   rows="3"
+                  value={editNeed[i].directions}
                   placeholder={v.directions}
                   disabled={edit}
                   onChange={(e) => {
@@ -1018,6 +1080,7 @@ function ApplicationForm({
         ) : (
           <>
             {!addStatus &&
+            needState !== 1 &&
             needState !== 2 &&
             needState !== 3 &&
             needState !== 8 &&
@@ -1064,8 +1127,9 @@ function ApplicationForm({
 
           <div
             className="submit"
-            onClick={() => {
+            onClick={(e) => {
               submit();
+              hanleEditAddNeed(e);
             }}
           >
             送出
