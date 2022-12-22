@@ -127,6 +127,75 @@
         text-align: justify;
       }
     }
+    .file {
+      width: 100%;
+      justify-content: start;
+
+      margin-top: 10px;
+      .fileName {
+        display: flex;
+        justify-content: space-between;
+        color: aliceblue;
+        background-color: $header;
+        padding-left: 5px;
+        .fileIcon {
+          align-items: center;
+          .clearIcon {
+            margin-right: 10px;
+          }
+        }
+        div {
+          display: flex;
+          div {
+            margin-right: 10px;
+          }
+        }
+      }
+      .two {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+        .addUploadContainer {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          width: 80%;
+          .addUploadContain {
+            @include flexBetween;
+            width: 100%;
+            padding: 0 5px;
+            margin-top: 2px;
+            background: #eee;
+            border: 1px solid $subClrBrown;
+          }
+          .items {
+            margin: 0 5px;
+          }
+        }
+        .delIcon {
+          position: relative;
+          left: -25px;
+          top: 1px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          margin-left: 5px;
+        }
+        .addFile {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .addIcon {
+            font-size: 1rem;
+            color: $focusClrG;
+          }
+          span {
+            padding: 1px 0 0 5px;
+            color: $focusClrG;
+          }
+        }
+      }
+    }
     .selectContain {
       // background: lightcoral;
       display: flex;

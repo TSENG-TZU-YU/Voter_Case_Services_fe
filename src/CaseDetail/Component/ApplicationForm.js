@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useAuth } from '../../utils/use_auth';
 import { API_URL } from '../../utils/config';
 import { ViewCheck } from '../../SweetComponent/ViewCheck';
+import moment from 'moment';
 
 import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
@@ -65,11 +66,14 @@ function ApplicationForm({
 
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
+  const [getDbFileTime, setGetDbFileTime] = useState([]);
   const radioInput = [
     { title: '一次性', value: '1' },
     { title: '短期', value: '2' },
     { title: '長期', value: '3' },
   ];
+
+  console.log('getFile', getFile);
 
   // 檢查會員
   useEffect(() => {
@@ -110,9 +114,10 @@ function ApplicationForm({
   const handleChange = (val, input) => {
     let newData = [...detailData];
     if (input === 'handler') newData[0].handler = val;
-    if (input === 'category') newData[0].category = val;
+    if (input === 'category') newData[0].application_category = val;
     if (input === 'cycle') newData[0].cycle = val;
-    if (input === 'name') newData[0].name = val;
+    if (input === 'name') newData[0].project_name = val;
+    console.log('detailData', newData);
     setDetailData(newData);
   };
   //申請表驗證空值
@@ -127,27 +132,28 @@ function ApplicationForm({
 
   //增加上傳檔案
   const addF = () => {
-    const newAdds = [...addFile, { file: '' }];
-    setAddFile(newAdds);
+    const newAdds = [...getFile, { file: '' }];
+    console.log('newAdds', newAdds);
+    setGetFile(newAdds);
   };
   //刪除檔案
   const deleteFile = (i) => {
-    let newData = [...addFile];
+    let newData = [...getFile];
     newData.splice(i, 1); //刪除1個
-    if (addFile.length === 0) return; //if長度=0 無法再刪除
-    setAddFile(newData);
+    if (setGetFile.length === 0) return; //if長度=0 無法再刪除
+    setGetFile(newData);
   };
   // 清空檔案
   const handleClearFile = () => {
     let newData = [{ file: '' }];
-    setAddFile(newData);
+    setGetFile(newData);
   };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
-    let newData = [...addFile];
+    let newData = [...getFile];
     if (input === 'file') newData[i].file = val;
 
-    setAddFile(newData);
+    setGetFile(newData);
   };
   useEffect(() => {
     //抓取處理人
@@ -260,6 +266,57 @@ function ApplicationForm({
       console.log('sub', err);
     }
   }
+
+  // 上傳檔案
+  async function submitFile() {
+    try {
+      // if (detailData[0].category === '0' || detailData[0].category === '') {
+      //   setCategory(true);
+      // }
+
+      // if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
+      //   setCycle(true);
+      // }
+
+      // if (
+      //   detailData[0].category !== '0' &&
+      //   detailData[0].category !== '' &&
+      //   detailData[0].cycle !== ''
+      // ) {
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
+      const formData = new FormData();
+      //取得刪除後端檔案的年份
+      // if (getFile.length !== 0) {
+      //   let str = getDbFileTime.indexOf('-');
+      //   let dbTime = getDbFileTime.substr(str + 1, 6);
+      //   formData.append('dbTime', dbTime);
+      //   console.log('dbTime', getDbFileTime);
+      // }
+      for (let i = 0; i < getFile.length; i++) {
+        formData.append(i, getFile[i].file);
+        console.log('getFile[i].file', getFile[i].file);
+      }
+
+      formData.append('fileNo', '-' + noTime);
+      formData.append('No', detailData[0].application_category);
+      formData.append('number', caseNum);
+      formData.append('create_time', endTime);
+      let response = await axios.post(
+        `http://localhost:3001/api/application_edit/file/${caseNum}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      // }
+    } catch (err) {
+      console.log('sub', err);
+    }
+  }
+
   // 取得detail Id 的值
   useEffect(() => {
     let getCampingDetailData = async () => {
@@ -277,6 +334,7 @@ function ApplicationForm({
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
       setGetFile(response.data.getFile);
+      // setGetDbFileTime(response.data.getFile[0].file_no);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -750,7 +808,7 @@ function ApplicationForm({
 
       {/* 申請表單 */}
       <div className="tableContainer">
-        {detailData.map((v) => {
+        {detailData.map((v, i) => {
           return (
             <div key={v.id}>
               <div>
@@ -775,7 +833,7 @@ function ApplicationForm({
                     />
                   ) : (
                     <select
-                      className="handler"
+                      className="category"
                       onChange={(e) => {
                         handleChange(e.target.value, 'category');
                       }}
@@ -790,11 +848,7 @@ function ApplicationForm({
                       </option>
                       <option value="0">-----請選擇類別-----</option>
                       {getCategory.map((v, i) => {
-                        return (
-                          <option key={i} value={v.number}>
-                            {v.name}
-                          </option>
-                        );
+                        return <option key={i}>{v.name}</option>;
                       })}
                     </select>
                   )}
@@ -811,7 +865,6 @@ function ApplicationForm({
                           <input
                             type="radio"
                             disabled={edit}
-                            //TODO:無法更改
                             checked={v.cycle === d.value ? true : false}
                             // defaultChecked={true}
                             onChange={(e) => {
@@ -946,7 +999,6 @@ function ApplicationForm({
                   value={editNeed[i].requirement_name}
                   name="tit"
                   disabled={edit}
-                  // defaultValue={true}
                   onChange={(e) => {
                     handlerUpdateNeed(e.target.value, i, 'tit');
                   }}
@@ -969,14 +1021,92 @@ function ApplicationForm({
         })}
 
         {/* 檔案 */}
-        {getFile.map((v, i) => {
+        {/* {getFile.map((v, i) => {
           return (
             <div key={uuidv4()} className={`needFile ${i < 9 ? 'ps-2' : ''}`}>
               <span>{i + 1}.</span>
               <div className="files">{v.name}</div>
             </div>
           );
-        })}
+        })} */}
+        {/* 檔案上傳 */}
+        <div className="file">
+          {edit ? (
+            ''
+          ) : (
+            <div className="fileName">
+              <div>
+                <div>附件上傳</div>
+                <div>(可上傳副檔名.pdf / img...)</div>
+                {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
+              </div>
+              <div className="fileIcon">
+                <FaTrashAlt
+                  size="17"
+                  onClick={() => {
+                    delCheck('確定要刪除所有上傳檔案?', handleClearFile);
+                  }}
+                  className="clearIcon"
+                />
+                <MdOutlineAddBox size="20" onClick={addF} className="addIcon" />
+              </div>
+            </div>
+          )}
+          {getFile.map((v, i) => {
+            return (
+              <div key={uuidv4()} className="two">
+                <label className="addUploadContainer" htmlFor={`file${i}`}>
+                  {/* 數字大於10 會因大小移位 */}
+                  <span className={`items ${i < 9 ? 'ps-2' : ''}`}>
+                    {i + 1}.
+                  </span>
+
+                  <div className="addUploadContain">
+                    <div className="files">
+                      {i <= v.id ? (
+                        <>{v.name}</>
+                      ) : (
+                        <>
+                          {v.file !== '' ? (
+                            v.file.name
+                          ) : (
+                            <div className="addFile">
+                              <HiOutlineDocumentPlus className="addIcon" />
+                              <span>點擊新增檔案</span>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </label>
+
+                {edit ? (
+                  ''
+                ) : (
+                  <>
+                    <input
+                      className="input d-none"
+                      type="file"
+                      name="file"
+                      id={`file${i}`}
+                      accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
+                      onChange={(e) => {
+                        onFileUpload(e.target.files[0], i, 'file');
+                      }}
+                    />
+                    <IoMdCloseCircle
+                      size="20"
+                      onClick={() => {
+                        delCheck('確定要刪除此上傳檔案?', deleteFile, i);
+                      }}
+                    />
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
 
         {/* 選擇狀態 */}
         {addStatus &&
@@ -1081,7 +1211,7 @@ function ApplicationForm({
               className="submit"
               onClick={(e) => {
                 // store();
-                // submitFile();
+                submitFile();
                 setEdit(true);
                 store();
                 hanleAddNeed(e, 'edit');
