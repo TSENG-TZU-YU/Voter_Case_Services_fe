@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LogIn from './LogIn/LogIn.js';
@@ -26,6 +27,7 @@ function App() {
   const [caseId, setCaseId] = useState('');
   const [handlerNull, setHandlerNull] = useState('');
   const [sender, setSender] = useState('');
+  // const navigate = useNavigate();
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -45,6 +47,17 @@ function App() {
       }
     });
   }
+
+  // 新增 sweet
+  // function viewCheck(tit, nav, fun, i, fun2, i2) {
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: tit,
+  //   }).then(function () {
+  //     fun(!i);
+  //     // navigate(nav);
+  //   });
+  // }
 
   // 送出申請表sweet
   function submitCheck(tit, submitFile, navigate) {
@@ -123,6 +136,7 @@ function App() {
                     delCheck={delCheck}
                     handlerNull={handlerNull}
                     sender={sender}
+                    // viewCheck={viewCheck}
                   />
                 }
               />

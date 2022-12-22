@@ -84,7 +84,12 @@ function EditNeedPage({
           })}
         </div>
         <div className="submitBtn">
-          <button className="finishBtn" onClick={hanleAddNeed}>
+          <button
+            className="finishBtn"
+            onClick={(e) => {
+              hanleAddNeed(e, 'finish');
+            }}
+          >
             修改完成
           </button>
           {editVerifyPage ? (
