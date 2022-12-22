@@ -81,7 +81,6 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
         setNo(response.data[0].application_category);
         setStatus(response.data[0].status_id);
         setHandler(response.data[0].handler);
-      
       } catch (err) {
         console.log(err);
       }

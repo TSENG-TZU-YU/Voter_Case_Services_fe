@@ -64,11 +64,14 @@ function ApplicationForm({
 
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
+  const [getDbFileTime, setGetDbFileTime] = useState([]);
   const radioInput = [
     { title: '一次性', value: '1' },
     { title: '短期', value: '2' },
     { title: '長期', value: '3' },
   ];
+
+  console.log('getFile', getFile);
 
   // 檢查會員
   useEffect(() => {
@@ -262,40 +265,48 @@ function ApplicationForm({
   // 上傳檔案
   async function submitFile() {
     try {
-      if (detailData[0].category === '0' || detailData[0].category === '') {
-        setCategory(true);
+      // if (detailData[0].category === '0' || detailData[0].category === '') {
+      //   setCategory(true);
+      // }
+
+      // if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
+      //   setCycle(true);
+      // }
+
+      // if (
+      //   detailData[0].category !== '0' &&
+      //   detailData[0].category !== '' &&
+      //   detailData[0].cycle !== ''
+      // ) {
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
+      const formData = new FormData();
+      //取得刪除後端檔案的年份
+      // if (getFile.length !== 0) {
+      //   let str = getDbFileTime.indexOf('-');
+      //   let dbTime = getDbFileTime.substr(str + 1, 6);
+      //   formData.append('dbTime', dbTime);
+      //   console.log('dbTime', getDbFileTime);
+      // }
+      for (let i = 0; i < getFile.length; i++) {
+        formData.append(i, getFile[i].file);
+        console.log('getFile[i].file', getFile[i].file);
       }
 
-      if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
-        setCycle(true);
-      }
-
-      if (
-        detailData[0].category !== '0' &&
-        detailData[0].category !== '' &&
-        detailData[0].cycle !== ''
-      ) {
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
-        const formData = new FormData();
-        for (let i = 0; i < setGetFile.length; i++) {
-          formData.append(i, setGetFile[i].file);
+      formData.append('fileNo', '-' + noTime);
+      formData.append('No', detailData[0].application_category);
+      formData.append('number', caseNum);
+      formData.append('create_time', endTime);
+      let response = await axios.post(
+        `http://localhost:3001/api/application_edit/file/${caseNum}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         }
-
-        formData.append('fileNo', '-' + noTime);
-        formData.append('No', detailData[0].application_category);
-        formData.append('number', parseInt(Date.now() / 10000));
-        formData.append('create_time', endTime);
-        let response = await axios.post(
-          'http://localhost:3001/api/application_post/file',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
-      }
+      );
+      // }
     } catch (err) {
       console.log('sub', err);
     }
@@ -318,6 +329,7 @@ function ApplicationForm({
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
       setGetFile(response.data.getFile);
+      // setGetDbFileTime(response.data.getFile[0].file_no);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -1078,7 +1090,6 @@ function ApplicationForm({
 
                   <div className="addUploadContain">
                     <div className="files">
-                      {' '}
                       {i <= v.id ? (
                         <>{v.name}</>
                       ) : (
@@ -1097,22 +1108,28 @@ function ApplicationForm({
                   </div>
                 </label>
 
-                <input
-                  className="input d-none"
-                  type="file"
-                  name="file"
-                  id={`file${i}`}
-                  accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
-                  onChange={(e) => {
-                    onFileUpload(e.target.files[0], i, 'file');
-                  }}
-                />
-                <IoMdCloseCircle
-                  size="20"
-                  onClick={() => {
-                    delCheck('確定要刪除此上傳檔案?', deleteFile, i);
-                  }}
-                />
+                {edit ? (
+                  ''
+                ) : (
+                  <>
+                    <input
+                      className="input d-none"
+                      type="file"
+                      name="file"
+                      id={`file${i}`}
+                      accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
+                      onChange={(e) => {
+                        onFileUpload(e.target.files[0], i, 'file');
+                      }}
+                    />
+                    <IoMdCloseCircle
+                      size="20"
+                      onClick={() => {
+                        delCheck('確定要刪除此上傳檔案?', deleteFile, i);
+                      }}
+                    />
+                  </>
+                )}
               </div>
             );
           })}
@@ -1220,10 +1237,9 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={() => {
-                // store();
-                // submitFile();
+                submitFile();
                 setEdit(true);
-                store();
+                // store();
               }}
             >
               儲存
@@ -1234,7 +1250,7 @@ function ApplicationForm({
             className="submit"
             onClick={(e) => {
               submit();
-              // hanleEditAddNeed(e);
+              hanleEditAddNeed(e);
             }}
           >
             送出
