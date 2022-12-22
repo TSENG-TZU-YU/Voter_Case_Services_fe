@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 export const SubmitCheck = (tit, submitFile) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // 送出申請表sweet
   Swal.fire({
     title: tit,
@@ -16,12 +16,12 @@ export const SubmitCheck = (tit, submitFile) => {
     if (result.isConfirmed) {
       Swal.fire('送出成功', '', 'success');
       submitFile();
-      navigate('/header');
+      // navigate('/header');
     } else if (result.isDenied) {
       Swal.fire('已取消送出', '', 'info');
     }
   });
-  return <></>;
+  return;
 };
 // export const successToast = (title, confirmBtnName) => {
 //   Swal.fire({

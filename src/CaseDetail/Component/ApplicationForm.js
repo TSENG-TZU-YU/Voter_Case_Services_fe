@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../utils/use_auth';
 import { API_URL } from '../../utils/config';
+import { ViewCheck } from '../../SweetComponent/ViewCheck';
 
 import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
@@ -28,6 +29,7 @@ function ApplicationForm({
   delCheck,
   handlerNull,
   sender,
+  // viewCheck,
 }) {
   const { num } = useParams();
   const navigate = useNavigate();
@@ -98,7 +100,7 @@ function ApplicationForm({
   const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
   const [addFile, setAddFile] = useState([{ file: '' }]);
 
-  console.log('detailData', detailData);
+  // console.log('detailData', detailData);
 
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
@@ -409,7 +411,7 @@ function ApplicationForm({
   };
 
   // post 修改需求
-  const hanleAddNeed = async (e) => {
+  const hanleAddNeed = async (e, input) => {
     e.preventDefault();
 
     for (let i = 0; i < editNeed.length; i++) {
@@ -424,77 +426,30 @@ function ApplicationForm({
 
     let response = await axios.post(
       `${API_URL}/applicationData/postAddNeed`,
-      [detailData[0].handler, editNeed, caseId],
+      [detailData[0].handler, editNeed, caseId, input],
       {
         withCredentials: true,
       }
     );
 
     // console.log('add', response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '修改成功',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      setEditPage(false);
-
+    if (input === 'finish') {
+      ViewCheck('修改成功', setNeedLoading, needLoading, setEditPage, false);
       navigate(`/header`);
-    });
-  };
-
-  // post edit修改需求
-  async function hanleEditAddNeed(e) {
-    e.preventDefault();
-
-    for (let i = 0; i < editNeed.length; i++) {
-      if (
-        editNeed[i].requirement_name === '' ||
-        editNeed[i].directions === ''
-      ) {
-        setEditVerifyPage(true);
-        return;
-      }
     }
 
-    let response = await axios.post(
-      `${API_URL}/applicationData/postEditAddNeed`,
-      [detailData[0].handler, editNeed, caseId],
-      {
-        withCredentials: true,
-      }
-    );
+    // if (input === 'finish') {
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: '修改成功',
+    //   }).then(function () {
+    //     setNeedLoading(!needLoading);
+    //     setEditPage(false);
 
-    // console.log('add', response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '修改成功',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      setEditPage(false);
-
-      navigate(`/header`);
-    });
-  }
-
-  // put 確認接收需求
-  // const handleCheckAccept = async () => {
-  //   let response = await axios.post(
-  //     `${API_URL}/applicationData/putAcceptNeed/${num}`,
-  //     { caseId },
-  //     {
-  //       withCredentials: true,
-  //     }
-  //   );
-
-  //   console.log('put', response.data);
-  //   Swal.fire({
-  //     icon: 'success',
-  //     title: '已確認接收',
-  //   }).then(function () {
-  //     setNeedLoading(!needLoading);
-  //     navigate(`/header`);
-  //   });
-  // };
+    //     navigate(`/header`);
+    //   });
+    // }
+  };
 
   // put user取消申請
   let handleUserCancle = async () => {
@@ -506,13 +461,16 @@ function ApplicationForm({
       }
     );
     // console(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '申請案件已取消',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('申請案件已取消', setNeedLoading, needLoading);
+    navigate(`/header`);
+
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '申請案件已取消',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // 確認接收轉件
@@ -525,13 +483,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '已接收此案件',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('已接收此案件', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '已接收此案件',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // 拒絕接收轉件
@@ -544,13 +504,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '已拒絕接收此案件',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('已拒絕接收此案件', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '已拒絕接收此案件',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // finish
@@ -563,13 +525,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '案件已完成',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('案件已完成', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '案件已完成',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // 沒有指定handler, 確認接收
@@ -582,13 +546,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '已確定接收此案件',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('已確定接收此案件', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '已確定接收此案件',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // user 確定完成案件
@@ -601,13 +567,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '該案件已完成',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('該案件已完成', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '該案件已完成',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   // user 拒絕完成案件
@@ -620,13 +588,15 @@ function ApplicationForm({
       }
     );
     // console.log(response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '該案件未完成，案件進行中',
-    }).then(function () {
-      setNeedLoading(!needLoading);
-      navigate(`/header`);
-    });
+    ViewCheck('該案件未完成，案件進行中', setNeedLoading, needLoading);
+    navigate(`/header`);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '該案件未完成，案件進行中',
+    // }).then(function () {
+    //   setNeedLoading(!needLoading);
+    //   navigate(`/header`);
+    // });
   };
 
   return (
@@ -843,7 +813,7 @@ function ApplicationForm({
                             disabled={edit}
                             //TODO:無法更改
                             checked={v.cycle === d.value ? true : false}
-                            defaultChecked={true}
+                            // defaultChecked={true}
                             onChange={(e) => {
                               handleChange(e.target.value, 'cycle');
                               if (e.target.value !== '') {
@@ -892,7 +862,7 @@ function ApplicationForm({
                     type="text"
                     // placeholder={v.project_name}
                     disabled={edit}
-                    defaultValue={true}
+                    // defaultValue={true}
                     value={v.project_name}
                     onChange={(e) => {
                       handleChange((v.project_name = e.target.value), 'name');
@@ -1094,7 +1064,7 @@ function ApplicationForm({
           </>
         )}
       </div>
-      {needState === 1 ? (
+      {member.permissions_id === 1 && needState === 1 ? (
         <div className="submitBtn">
           {edit ? (
             <div
@@ -1109,11 +1079,12 @@ function ApplicationForm({
           ) : (
             <div
               className="submit"
-              onClick={() => {
+              onClick={(e) => {
                 // store();
                 // submitFile();
                 setEdit(true);
                 store();
+                hanleAddNeed(e, 'edit');
               }}
             >
               儲存
@@ -1124,7 +1095,7 @@ function ApplicationForm({
             className="submit"
             onClick={(e) => {
               submit();
-              hanleEditAddNeed(e);
+              hanleAddNeed(e, 'submit');
             }}
           >
             送出
