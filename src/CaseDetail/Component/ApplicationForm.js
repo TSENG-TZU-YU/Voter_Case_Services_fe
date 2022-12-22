@@ -91,59 +91,32 @@ function ApplicationForm({
     if (member.permissions_id === 3) {
       setHandler(false);
     }
-  }, []);
+  }, [detailData]);
 
   // 修改申請表
   const [edit, setEdit] = useState(true);
   const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
   const [addFile, setAddFile] = useState([{ file: '' }]);
-  const [submitValue, setSubmitValue] = useState([
-    { handler: '', category: '', name: '', cycle: '' },
-  ]);
 
-  console.log('submitValue', submitValue);
+  console.log('detailData', detailData);
 
-  const [addNo, setAddNo] = useState('');
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
-  const [getCycle, setGetCycle] = useState([]);
 
   //表格資料填入
   const handleChange = (val, input) => {
-    let newData = [...submitValue];
+    let newData = [...detailData];
     if (input === 'handler') newData[0].handler = val;
     if (input === 'category') newData[0].category = val;
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].name = val;
-    console.log('newData', newData);
-    setSubmitValue(newData);
+    setDetailData(newData);
   };
   //申請表驗證空值
   const [category, setCategory] = useState(false);
   const [cycle, setCycle] = useState(false);
-  const [need, setNeed] = useState(false);
 
-  //增加需求
-  const addN = () => {
-    const newAdd = { title: '', text: '' };
-    const newAdds = [...addNeed, newAdd];
-    setAddNeed(newAdds);
-  };
-  //填入需求
-  const needChangerHandler = (val, i, input) => {
-    let newData = [...addNeed];
-    if (input === 'tt') newData[i].title = val;
-    if (input === 'ttt') newData[i].text = val;
-    setAddNeed(newData);
-  };
-  //刪除需求
-  const deleteNeed = (i) => {
-    let newData = [...addNeed];
-    newData.splice(i, 1);
-    if (newData.length === 0) return;
-    setAddNeed(newData);
-  };
   // 清空檔案
   const handleClearNeed = () => {
     let newData = [{ title: '', text: '' }];
@@ -197,22 +170,94 @@ function ApplicationForm({
         console.log(err);
       }
     };
-    //抓取週期
-    let cycle = async () => {
-      try {
-        let res = await axios.get(
-          'http://localhost:3001/api/application_get/cycle'
-        );
-        setGetCycle(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+
     handler();
     category();
-    cycle();
-  }, []);
+  }, [edit]);
 
+  // 送出申請表sweet
+  function submitCheck(tit) {
+    Swal.fire({
+      title: tit,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '確定送出',
+      denyButtonText: `取消送出`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('送出成功', '', 'success');
+        // submitFile();
+        navigate('/header');
+      } else if (result.isDenied) {
+        Swal.fire('已取消送出', '', 'info');
+      }
+    });
+  }
+
+  //送出表單內容
+  async function submit() {
+    try {
+      if (detailData[0].category === '0' || detailData[0].category === '') {
+        setCategory(true);
+      }
+
+      if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
+        setCycle(true);
+      }
+
+      if (
+        detailData[0].category !== '0' &&
+        detailData[0].category !== '' &&
+        detailData[0].cycle !== ''
+      ) {
+        // for (let i = 0; i < addFile.length; i++) {
+        //   if (addFile[i].file === '') {
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: '無檔案',
+        //     });
+        //     return;
+        //   }
+        // }
+
+        submitCheck('確定要送出申請表?');
+
+        let response = await axios.patch(
+          `http://localhost:3001/api/application_edit/submit/${caseNum}`,
+          {
+            ...detailData[0],
+            need: addNeed,
+            id: member.id,
+            user: member.name,
+            // TODO: 申請狀態 一般職員跟主管送出的狀態不同
+            status: 2,
+          }
+        );
+      }
+    } catch (err) {
+      console.log('sub', err);
+    }
+  }
+
+  //儲存表單內容
+  async function store() {
+    try {
+      let response = await axios.patch(
+        `http://localhost:3001/api/application_edit/store/${caseNum}`,
+        {
+          ...detailData[0],
+          need: addNeed,
+          id: member.id,
+          user: member.name,
+          // TODO: 申請狀態 一般職員跟主管送出的狀態不同
+          status: 1,
+        }
+      );
+    } catch (err) {
+      console.log('sub', err);
+    }
+  }
   // 取得detail Id 的值
   useEffect(() => {
     let getCampingDetailData = async () => {
@@ -715,7 +760,6 @@ function ApplicationForm({
                       className="handler"
                       onChange={(e) => {
                         handleChange(e.target.value, 'category');
-                        setAddNo(e.target.value);
                       }}
                       onClick={(e) => {
                         if (e.target.value !== '0') {
@@ -787,7 +831,7 @@ function ApplicationForm({
                       <option selected disabled hidden>
                         {v.handler}
                       </option>
-                      <option value="0">-----請選擇-----</option>
+                      <option value=" ">-----請選擇-----</option>
                       {getHandler.map((v, i) => {
                         return <option key={i}>{v.name}</option>;
                       })}
@@ -822,7 +866,7 @@ function ApplicationForm({
               }}
               className="clearIcon"
             />
-            <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
+            {/* <MdOutlineAddBox size="20" onClick={addN} className="addIcon" /> */}
           </div>
         )}
         {/* 需求 */}
@@ -873,7 +917,7 @@ function ApplicationForm({
               <div className="needInput center">
                 <input
                   type="text"
-                  value={v.requirement_name}
+                  value={needData[i].requirement_name}
                   name="tit"
                   disabled={edit}
                   defaultValue={true}
@@ -999,6 +1043,7 @@ function ApplicationForm({
               className="submit"
               onClick={() => {
                 setEdit(false);
+                // toEdit();
               }}
             >
               修改
@@ -1010,6 +1055,7 @@ function ApplicationForm({
                 // store();
                 // submitFile();
                 setEdit(true);
+                store();
               }}
             >
               儲存
@@ -1019,7 +1065,7 @@ function ApplicationForm({
           <div
             className="submit"
             onClick={() => {
-              // submitCheck('確定要刪?', submit, submitFile);
+              submit();
             }}
           >
             送出
