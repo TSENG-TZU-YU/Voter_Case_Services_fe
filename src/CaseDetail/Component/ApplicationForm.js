@@ -283,7 +283,6 @@ function ApplicationForm({
         case_number_id: detailData[0].case_number,
       },
     ];
-    console.log(newData);
     setEditNeed(newData);
   };
 
@@ -292,8 +291,6 @@ function ApplicationForm({
     if (editNeed.length === 1) return;
     let newData = [...editNeed];
     newData.splice(i, 1);
-    console.log(newData);
-
     setEditNeed(newData);
   };
 
@@ -306,7 +303,6 @@ function ApplicationForm({
         case_number_id: detailData[0].case_number,
       },
     ];
-    console.log(newData);
     setEditNeed(newData);
   };
 
@@ -315,7 +311,6 @@ function ApplicationForm({
     let newData = [...editNeed];
     if (input === 'tit') newData[i].requirement_name = val;
     if (input === 'dir') newData[i].directions = val;
-    console.log('n', newData);
     setEditNeed(newData);
     setEditVerifyPage(false);
   };
@@ -402,7 +397,7 @@ function ApplicationForm({
     });
   };
 
-  // post 修改需求
+  // post edit修改需求
   async function hanleEditAddNeed(e) {
     e.preventDefault();
 
