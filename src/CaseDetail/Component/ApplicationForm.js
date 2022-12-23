@@ -241,7 +241,6 @@ function ApplicationForm({
           `http://localhost:3001/api/application_edit/submit/${caseNum}`,
           {
             ...detailData[0],
-            id: member.id,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
             status_id: 2,
             create_time: endTime,
@@ -261,8 +260,6 @@ function ApplicationForm({
         `http://localhost:3001/api/application_edit/store/${caseNum}`,
         {
           ...detailData[0],
-          id: member.id,
-          user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
           status_id: 1,
           create_time: endTime,
@@ -372,7 +369,7 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, caseNum]);
+  }, [num, needLoading, needState, caseId, caseNum, edit]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
@@ -866,7 +863,7 @@ function ApplicationForm({
                       <option selected disabled hidden>
                         {v.application_category}
                       </option>
-                      <option value="0">-----請選擇類別-----</option>
+                      <option value=" ">-----請選擇類別-----</option>
                       {getCategory.map((v, i) => {
                         return <option key={i}>{v.name}</option>;
                       })}
@@ -1102,7 +1099,7 @@ function ApplicationForm({
                       type="file"
                       name="file"
                       id={`file${i}`}
-                      accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
+                      accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx,.text/plain"
                       onChange={(e) => {
                         onFileUpload(e.target.files[0], i, 'file');
                         setFileUpdate(true);
@@ -1224,8 +1221,8 @@ function ApplicationForm({
               className="submit"
               onClick={(e) => {
                 submitFile();
-                setEdit(true);
                 store();
+                setEdit(true);
                 hanleAddNeed(e, 'edit');
               }}
             >
