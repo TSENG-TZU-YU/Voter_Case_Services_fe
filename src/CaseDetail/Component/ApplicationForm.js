@@ -153,13 +153,12 @@ function ApplicationForm({
   };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
-    console.log('aaa', val);
-    console.log('i', i);
+    // console.log('aaa', val);
+    // console.log('i', i);
 
     let newData = [...getFile];
     if (input === 'file') newData[i].file = val;
-
-    console.log('n', newData);
+    // console.log('n', newData[0].file.name);
     setGetFile(newData);
   };
   useEffect(() => {
@@ -345,20 +344,19 @@ function ApplicationForm({
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
       let a = response.data.getFile;
-      // setGetFile(response.data.getFile);
       let newFiles = [];
       for (let i = 0; i < a.length; i++) {
         let data = { file: a[i] };
-        let d = newFiles.push(data);
+        newFiles.push(data);
       }
       // console.log('n',newFiles)
       setGetFile(newFiles);
 
-      // setGetDbFileTime(response.data.getFile[0].file_no);
-      // if (getFile.length > 0) {
-      //   setGetDbFileTime(response.data.getFile[0].file_no);
-      // }
-      // console.log('getDbFileTime', getDbFileTime);
+      setGetDbFileTime(response.data.getFile[0].file_no);
+      if (getFile.length > 0) {
+        setGetDbFileTime(response.data.getFile[0].file_no);
+      }
+      console.log('getDbFileTime', getDbFileTime);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -1076,7 +1074,7 @@ function ApplicationForm({
               </div>
             </div>
           )}
-          {/* <>{fileUpdate ? v.file.name : v.name}</> */}
+
           {getFile.map((v, i) => {
             return (
               <div key={uuidv4()} className="two">

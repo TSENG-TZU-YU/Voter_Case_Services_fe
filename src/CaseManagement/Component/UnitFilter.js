@@ -2,20 +2,17 @@ import React from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ allCategoryData, setNowCategory }) {
+function ActivitySelect({ allUnit, setNowUnit }) {
   // const [selectSortOption, setSelectSortOption] = useState(null);
   let newData = [];
-  for (let i = 0; i < allCategoryData.length; i++) {
+  for (let i = 0; i < allUnit.length; i++) {
     newData.push({
-      value: allCategoryData[i].name,
-      label: allCategoryData[i].name,
+      value: allUnit[i].name,
+      label: allUnit[i].name,
     });
   }
   // console.log('n', newData);
-  const sortOption = [
-    { value: '', label: '----請選擇申請類別----' },
-    ...newData,
-  ];
+  const sortOption = [{ value: '', label: '----請選擇單位----' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -51,7 +48,7 @@ function ActivitySelect({ allCategoryData, setNowCategory }) {
       border: '1px solid #817161',
       // borderRadius: '0px',
       minHeight: '32px',
-      width: '170px',
+      width: '150px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {
@@ -70,11 +67,10 @@ function ActivitySelect({ allCategoryData, setNowCategory }) {
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
-          console.log(e.value);
-          setNowCategory(e.value);
+          // console.log(e.value);
+          setNowUnit(e.value);
         }}
         options={sortOption}
         styles={customStyles}

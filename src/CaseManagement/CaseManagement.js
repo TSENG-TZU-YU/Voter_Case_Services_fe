@@ -9,6 +9,7 @@ import '../styles/caseManagement/_caseManagement.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
+import UnitFilter from './Component/UnitFilter.js';
 import CheckStatePage from './Component/CheckStatePage.js';
 
 import { FaEye } from 'react-icons/fa';
@@ -22,12 +23,21 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState('');
   const [minDateValue, setMinDateValue] = useState('');
+  const [memberId, setMemberId] = useState('');
+
+  // 篩選
+  const [nowStatus, setNowStatus] = useState('');
+  const [nowCategory, setNowCategory] = useState('');
+  const [nowUnit, setNowUnit] = useState('');
   const [maxDate, setMaxDate] = useState('');
   const [minDate, setMinDate] = useState('');
-  const [memberId, setMemberId] = useState('');
+
+  // get data
   const [allData, setAllData] = useState([]);
   const [caseHistory, setCaseHistory] = useState([]);
-  const [nowState, setNowState] = useState('');
+  const [allUnit, setAllUnitData] = useState([]);
+  const [allStatusData, setAllStatusData] = useState([]);
+  const [allCategoryData, setAllCategoryData] = useState([]);
 
   // 檢查會員
   useEffect(() => {
@@ -54,6 +64,9 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       });
       // console.log(response.data.result);
       setAllData(response.data.result);
+      setAllCategoryData(response.data.categoryResult);
+      setAllUnitData(response.data.unitResult);
+      setAllStatusData(response.data.statusResult);
     };
     getCampingData();
   }, [member]);
@@ -97,8 +110,15 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
         {/* 篩選 */}
         <div className="sortSelect">
           <div className="bothFilter">
-            <CategoryFilter />
-            <StatusFilter />
+            <CategoryFilter
+              allCategoryData={allCategoryData}
+              setNowCategory={setNowCategory}
+            />
+            <StatusFilter
+              allStatusData={allStatusData}
+              setNowStatus={setNowStatus}
+            />
+            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
           </div>
           <DateFilter
             dateRemind={dateRemind}
