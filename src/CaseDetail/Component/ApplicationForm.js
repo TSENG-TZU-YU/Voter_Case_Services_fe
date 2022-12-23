@@ -244,7 +244,7 @@ function ApplicationForm({
             ...detailData[0],
             id: member.id,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status: 1,
+            status_id: 1,
             create_time: endTime,
           }
         );
@@ -305,7 +305,8 @@ function ApplicationForm({
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
         // console.log('getFile[i].file', getFile[i].file);
-        console.log(i, getFile[i].id);
+        formData.append('file', getFile[i].file.file_no);
+        console.log('file', getFile[i].file.file_no);
       }
 
       formData.append('fileNo', '-' + noTime);
@@ -343,20 +344,19 @@ function ApplicationForm({
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
-      setGetFile(response.data.getFile);
-
-      // let newFiles = [];
-      // for (let i = 0; i < getFile.length; i++) {
-      //   let data = { file: getFile[i] };
-      //   let d = newFiles.push(data);
-      // }
-      // setGetFile(newFiles);
-
-      // setGetDbFileTime(response.data.getFile[0].file_no);
+      let a = response.data.getFile;
+      let newFiles = [];
+      for (let i = 0; i < a.length; i++) {
+        let data = { file: a[i] };
+        let d = newFiles.push(data);
+      }
+      // console.log('n',newFiles)
+      setGetFile(newFiles);
+      // console.log('getFile111', getFile);
       if (getFile.length > 0) {
         setGetDbFileTime(response.data.getFile[0].file_no);
+        console.log('getDbFileTime', response.data.getFile[0].file_no);
       }
-      console.log('getDbFileTime', getDbFileTime);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -1065,6 +1065,7 @@ function ApplicationForm({
               </div>
             </div>
           )}
+          {/* <>{fileUpdate ? v.file.name : v.name}</> */}
           {getFile.map((v, i) => {
             return (
               <div key={uuidv4()} className="two">
@@ -1224,7 +1225,6 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={(e) => {
-                // store();
                 submitFile();
                 setEdit(true);
                 store();
