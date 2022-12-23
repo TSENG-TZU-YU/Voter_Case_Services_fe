@@ -237,7 +237,7 @@ function ApplicationForm({
         // }
 
         submitCheck('確定要送出申請表?');
-
+        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
         let response = await axios.patch(
           `http://localhost:3001/api/application_edit/submit/${caseNum}`,
           {
@@ -247,6 +247,7 @@ function ApplicationForm({
             user: member.name,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
             status: 2,
+            create_time: endTime,
           }
         );
       }
@@ -258,6 +259,7 @@ function ApplicationForm({
   //儲存表單內容
   async function store() {
     try {
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
         `http://localhost:3001/api/application_edit/store/${caseNum}`,
         {
@@ -267,6 +269,7 @@ function ApplicationForm({
           user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
           status: 1,
+          create_time: endTime,
         }
       );
     } catch (err) {
@@ -293,13 +296,15 @@ function ApplicationForm({
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
       const formData = new FormData();
-      //取得刪除後端檔案的年份
-      // if (getFile.length !== 0) {
-      //   let str = getDbFileTime.indexOf('-');
-      //   let dbTime = getDbFileTime.substr(str + 1, 6);
-      //   formData.append('dbTime', dbTime);
-      //   console.log('dbTime', getDbFileTime);
-      // }
+      // 取得刪除後端檔案的年份
+      if (getDbFileTime.length > 0) {
+        let str = getDbFileTime.indexOf('-');
+        let dbTime = getDbFileTime.substr(str + 1, 6);
+        formData.append('dbTime', dbTime);
+       
+      } else {
+        formData.append('dbTime', 0);
+      }
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
         console.log('getFile[i].file', getFile[i].file);
@@ -350,6 +355,10 @@ function ApplicationForm({
       setGetFile(newFiles);
 
       // setGetDbFileTime(response.data.getFile[0].file_no);
+      if (getFile.length > 0) {
+        setGetDbFileTime(response.data.getFile[0].file_no);
+      }
+      console.log('getDbFileTime', getDbFileTime);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
