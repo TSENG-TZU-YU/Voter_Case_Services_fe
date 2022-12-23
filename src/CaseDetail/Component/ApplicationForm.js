@@ -301,7 +301,6 @@ function ApplicationForm({
         let str = getDbFileTime.indexOf('-');
         let dbTime = getDbFileTime.substr(str + 1, 6);
         formData.append('dbTime', dbTime);
-       
       } else {
         formData.append('dbTime', 0);
       }
@@ -345,20 +344,21 @@ function ApplicationForm({
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
       setHandlerData(response.data.handlerResult);
-      setGetFile(response.data.getFile);
-
+      let a = response.data.getFile;
+      // setGetFile(response.data.getFile);
       let newFiles = [];
-      for (let i = 0; i < getFile.length; i++) {
-        let data = { file: getFile[i] };
+      for (let i = 0; i < a.length; i++) {
+        let data = { file: a[i] };
         let d = newFiles.push(data);
       }
+      // console.log('n',newFiles)
       setGetFile(newFiles);
 
       // setGetDbFileTime(response.data.getFile[0].file_no);
-      if (getFile.length > 0) {
-        setGetDbFileTime(response.data.getFile[0].file_no);
-      }
-      console.log('getDbFileTime', getDbFileTime);
+      // if (getFile.length > 0) {
+      //   setGetDbFileTime(response.data.getFile[0].file_no);
+      // }
+      // console.log('getDbFileTime', getDbFileTime);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -1076,6 +1076,7 @@ function ApplicationForm({
               </div>
             </div>
           )}
+          {/* <>{fileUpdate ? v.file.name : v.name}</> */}
           {getFile.map((v, i) => {
             return (
               <div key={uuidv4()} className="two">
