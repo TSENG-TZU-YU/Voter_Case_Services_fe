@@ -244,7 +244,7 @@ function ApplicationForm({
             ...detailData[0],
             id: member.id,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status_id: 1,
+            status_id: 2,
             create_time: endTime,
           }
         );
@@ -262,11 +262,10 @@ function ApplicationForm({
         `http://localhost:3001/api/application_edit/store/${caseNum}`,
         {
           ...detailData[0],
-          need: addNeed,
           id: member.id,
           user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-          status: 1,
+          status_id: 1,
           create_time: endTime,
         }
       );
