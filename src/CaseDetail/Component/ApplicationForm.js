@@ -103,6 +103,7 @@ function ApplicationForm({
   const [edit, setEdit] = useState(true);
   const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
   const [addFile, setAddFile] = useState([{ file: '' }]);
+  const [fileUpdate, setFileUpdate] = useState(false);
 
   // console.log('detailData', detailData);
 
@@ -133,6 +134,8 @@ function ApplicationForm({
   //增加上傳檔案
   const addF = () => {
     const newAdds = [...getFile, { file: '' }];
+    // const newAdds = [...getFile, {}];
+
     console.log('newAdds', newAdds);
     setGetFile(newAdds);
   };
@@ -150,9 +153,13 @@ function ApplicationForm({
   };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
+    console.log('aaa', val);
+    console.log('i', i);
+
     let newData = [...getFile];
     if (input === 'file') newData[i].file = val;
 
+    console.log('n', newData);
     setGetFile(newData);
   };
   useEffect(() => {
@@ -342,6 +349,14 @@ function ApplicationForm({
       setHandlerData(response.data.handlerResult);
       setGetFile(response.data.getFile);
 
+      let newFiles = [];
+      for (let i = 0; i < getFile.length; i++) {
+        let data = { file: getFile[i] };
+        let d = newFiles.push(data);
+      }
+      setGetFile(newFiles);
+
+      // setGetDbFileTime(response.data.getFile[0].file_no);
       if (getFile.length > 0) {
         setGetDbFileTime(response.data.getFile[0].file_no);
       }
@@ -1075,7 +1090,7 @@ function ApplicationForm({
                   <div className="addUploadContain">
                     <div className="files">
                       {i <= v.id ? (
-                        <>{v.name}</>
+                        <>{fileUpdate ? v.file.name : v.name}</>
                       ) : (
                         <>
                           {v.file !== '' ? (
@@ -1104,6 +1119,7 @@ function ApplicationForm({
                       accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
                       onChange={(e) => {
                         onFileUpload(e.target.files[0], i, 'file');
+                        setFileUpdate(true);
                       }}
                     />
                     <IoMdCloseCircle
