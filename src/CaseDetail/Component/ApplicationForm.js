@@ -307,11 +307,11 @@ function ApplicationForm({
       } else {
         formData.append('dbTime', 0);
       }
+
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
-        // console.log('getFile[i].file', getFile[i].file);
+
         formData.append('file', getFile[i].file.file_no);
-        console.log('file', getFile[i].file.file_no);
       }
 
       formData.append('fileNo', '-' + noTime);
@@ -379,7 +379,7 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, caseNum, edit]);
+  }, [num, needLoading, needState, caseId, caseNum]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
