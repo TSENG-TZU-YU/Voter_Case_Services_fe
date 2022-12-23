@@ -211,6 +211,16 @@ function ApplicationForm({
 
   //送出表單內容
   async function submit() {
+    for (let i = 0; i < editNeed.length; i++) {
+      if (
+        editNeed[i].requirement_name === '' ||
+        editNeed[i].directions === ''
+      ) {
+        setEditVerifyPage(true);
+        return;
+      }
+    }
+
     try {
       if (detailData[0].category === '0' || detailData[0].category === '') {
         setCategory(true);
@@ -261,8 +271,6 @@ function ApplicationForm({
         `http://localhost:3001/api/application_edit/store/${caseNum}`,
         {
           ...detailData[0],
-          id: member.id,
-          user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
           status_id: 1,
           create_time: endTime,
@@ -491,14 +499,15 @@ function ApplicationForm({
   // post 修改需求
   const hanleAddNeed = async (e, input) => {
     e.preventDefault();
-
-    for (let i = 0; i < editNeed.length; i++) {
-      if (
-        editNeed[i].requirement_name === '' ||
-        editNeed[i].directions === ''
-      ) {
-        setEditVerifyPage(true);
-        return;
+    if (input !== 'edit') {
+      for (let i = 0; i < editNeed.length; i++) {
+        if (
+          editNeed[i].requirement_name === '' ||
+          editNeed[i].directions === ''
+        ) {
+          setEditVerifyPage(true);
+          return;
+        }
       }
     }
 
@@ -950,18 +959,23 @@ function ApplicationForm({
           ''
         ) : (
           <div className="add">
-            <FaTrashAlt
-              size="17"
-              onClick={() => {
-                delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
-              }}
-              className="clearIcon"
-            />
-            <MdOutlineAddBox
-              size="20"
-              onClick={handleAddNeed}
-              className="addIcon"
-            />
+            <span className={`${editVerifyPage ? 'view' : ''}`}>
+              *欄位不得為空
+            </span>
+            <div>
+              <FaTrashAlt
+                size="17"
+                onClick={() => {
+                  delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
+                }}
+                className="clearIcon"
+              />
+              <MdOutlineAddBox
+                size="20"
+                onClick={handleAddNeed}
+                className="addIcon"
+              />
+            </div>
           </div>
         )}
 
@@ -1223,10 +1237,10 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={(e) => {
+                hanleAddNeed(e, 'edit');
                 submitFile();
                 setEdit(true);
                 store();
-                hanleAddNeed(e, 'edit');
               }}
             >
               儲存

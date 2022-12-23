@@ -65,10 +65,17 @@
     .add {
       width: 100%;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
       align-items: center;
       margin-top: 20px;
       margin-bottom: -10px;
+      span{
+        opacity: 0;
+        color: $focusClrG;
+      }
+      .view{
+        opacity: 1;
+      }
       .clearIcon {
         margin-right: 10px;
       }
