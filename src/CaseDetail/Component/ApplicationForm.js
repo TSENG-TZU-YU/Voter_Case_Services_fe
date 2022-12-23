@@ -242,11 +242,9 @@ function ApplicationForm({
           `http://localhost:3001/api/application_edit/submit/${caseNum}`,
           {
             ...detailData[0],
-            need: addNeed,
             id: member.id,
-            user: member.name,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status: 2,
+            status: 1,
             create_time: endTime,
           }
         );
@@ -306,8 +304,8 @@ function ApplicationForm({
       }
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
-        console.log('getFile[i].file', getFile[i].file);
-        console.log('getFile[i].file', getFile[i].file_no);
+        // console.log('getFile[i].file', getFile[i].file);
+        console.log(i, getFile[i].id);
       }
 
       formData.append('fileNo', '-' + noTime);
@@ -329,8 +327,6 @@ function ApplicationForm({
     }
   }
 
-
-
   // 取得detail Id 的值
   useEffect(() => {
     let getCampingDetailData = async () => {
@@ -349,12 +345,12 @@ function ApplicationForm({
       setHandlerData(response.data.handlerResult);
       setGetFile(response.data.getFile);
 
-      let newFiles = [];
-      for (let i = 0; i < getFile.length; i++) {
-        let data = { file: getFile[i] };
-        let d = newFiles.push(data);
-      }
-      setGetFile(newFiles);
+      // let newFiles = [];
+      // for (let i = 0; i < getFile.length; i++) {
+      //   let data = { file: getFile[i] };
+      //   let d = newFiles.push(data);
+      // }
+      // setGetFile(newFiles);
 
       // setGetDbFileTime(response.data.getFile[0].file_no);
       if (getFile.length > 0) {
@@ -1046,15 +1042,6 @@ function ApplicationForm({
           );
         })}
 
-        {/* 檔案 */}
-        {/* {getFile.map((v, i) => {
-          return (
-            <div key={uuidv4()} className={`needFile ${i < 9 ? 'ps-2' : ''}`}>
-              <span>{i + 1}.</span>
-              <div className="files">{v.name}</div>
-            </div>
-          );
-        })} */}
         {/* 檔案上傳 */}
         <div className="file">
           {edit ? (
@@ -1253,7 +1240,6 @@ function ApplicationForm({
             onClick={(e) => {
               submit();
               hanleAddNeed(e, 'submit');
-       
             }}
           >
             送出
