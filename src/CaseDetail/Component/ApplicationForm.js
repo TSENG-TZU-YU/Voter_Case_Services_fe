@@ -294,13 +294,13 @@ function ApplicationForm({
         let str = getDbFileTime.indexOf('-');
         let dbTime = getDbFileTime.substr(str + 1, 6);
         formData.append('dbTime', dbTime);
-       
       } else {
         formData.append('dbTime', 0);
       }
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
         console.log('getFile[i].file', getFile[i].file);
+        console.log('getFile[i].file', getFile[i].file_no);
       }
 
       formData.append('fileNo', '-' + noTime);
@@ -321,6 +321,8 @@ function ApplicationForm({
       console.log('sub', err);
     }
   }
+
+
 
   // 取得detail Id 的值
   useEffect(() => {
@@ -1235,6 +1237,7 @@ function ApplicationForm({
             onClick={(e) => {
               submit();
               hanleAddNeed(e, 'submit');
+       
             }}
           >
             送出
