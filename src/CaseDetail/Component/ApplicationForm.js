@@ -241,11 +241,9 @@ function ApplicationForm({
           `http://localhost:3001/api/application_edit/submit/${caseNum}`,
           {
             ...detailData[0],
-            need: addNeed,
             id: member.id,
-            user: member.name,
             // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status: 2,
+            status_id: 2,
             create_time: endTime,
           }
         );
@@ -263,11 +261,10 @@ function ApplicationForm({
         `http://localhost:3001/api/application_edit/store/${caseNum}`,
         {
           ...detailData[0],
-          need: addNeed,
           id: member.id,
           user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-          status: 1,
+          status_id: 1,
           create_time: endTime,
         }
       );
@@ -305,7 +302,9 @@ function ApplicationForm({
       }
       for (let i = 0; i < getFile.length; i++) {
         formData.append(i, getFile[i].file);
-        console.log('getFile[i].file', getFile[i].file);
+        // console.log('getFile[i].file', getFile[i].file);
+        formData.append('file', getFile[i].file.file_no);
+        console.log('file', getFile[i].file.file_no);
       }
 
       formData.append('fileNo', '-' + noTime);
@@ -351,12 +350,11 @@ function ApplicationForm({
       }
       // console.log('n',newFiles)
       setGetFile(newFiles);
-
-      setGetDbFileTime(response.data.getFile[0].file_no);
+      // console.log('getFile111', getFile);
       if (getFile.length > 0) {
         setGetDbFileTime(response.data.getFile[0].file_no);
+        console.log('getDbFileTime', response.data.getFile[0].file_no);
       }
-      console.log('getDbFileTime', getDbFileTime);
 
       // selectStatus filter
       if (member.permissions_id === 2) {
@@ -1042,15 +1040,6 @@ function ApplicationForm({
           );
         })}
 
-        {/* 檔案 */}
-        {/* {getFile.map((v, i) => {
-          return (
-            <div key={uuidv4()} className={`needFile ${i < 9 ? 'ps-2' : ''}`}>
-              <span>{i + 1}.</span>
-              <div className="files">{v.name}</div>
-            </div>
-          );
-        })} */}
         {/* 檔案上傳 */}
         <div className="file">
           {edit ? (
@@ -1234,7 +1223,6 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={(e) => {
-                // store();
                 submitFile();
                 setEdit(true);
                 store();
