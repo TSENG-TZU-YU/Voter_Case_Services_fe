@@ -767,7 +767,7 @@ function ApplicationForm({
       )}
 
       {/* handler === '' 確認接收此案件 */}
-      {member.permissions_id === 3 && handlerNull === '' ? (
+      {member.permissions_id === 3 && handlerNull === '' && needState === 4 ? (
         <div className="editBtn" onClick={handleReceiveCase}>
           此案件目前沒有處理人，請點選確認接收此案
         </div>
