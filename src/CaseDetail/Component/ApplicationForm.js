@@ -189,6 +189,30 @@ function ApplicationForm({
     category();
   }, [edit]);
 
+  //確認儲存
+  function storeCheck(tit, e) {
+    Swal.fire({
+      title: tit,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '確定送出',
+      denyButtonText: `取消送出`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('儲存成功', '', 'success').then(() => {
+          setEdit(true);
+        });
+        hanleAddNeed(e, 'edit');
+        submitFile();
+        store();
+        // navigate('/header');
+      } else if (result.isDenied) {
+        Swal.fire('已取消儲存', '', 'info');
+      }
+    });
+  }
+
   // 送出申請表sweet
   function submitCheck(tit) {
     Swal.fire({
@@ -379,7 +403,7 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, caseNum]);
+  }, [num, needLoading, needState, caseId, caseNum, edit]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
@@ -1236,10 +1260,11 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={(e) => {
-                hanleAddNeed(e, 'edit');
-                submitFile();
-                store();
-                setEdit(true);
+                // hanleAddNeed(e, 'edit');
+                // submitFile();
+                // setEdit(true);
+                // store();
+                storeCheck('確認儲存表單?', e);
               }}
             >
               儲存

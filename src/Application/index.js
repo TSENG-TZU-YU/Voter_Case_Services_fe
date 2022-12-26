@@ -14,7 +14,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
-// import { SubmitCheck } from '../SweetComponent/SubmitCheck';
+import { SubmitCheck } from '../SweetComponent/SubmitCheck';
 
 function Application({
   setApplication,
@@ -292,7 +292,7 @@ function Application({
             return;
           }
         }
-
+      
         Swal.fire({
           icon: 'success',
           title: '已儲存申請',
