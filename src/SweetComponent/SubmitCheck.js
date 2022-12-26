@@ -23,23 +23,3 @@ export const SubmitCheck = (tit, submitFile) => {
   });
   return;
 };
-// export const successToast = (title, confirmBtnName) => {
-//   Swal.fire({
-//     customClass: {
-//       confirmButton: 'btn btn-primary',
-//     },
-//     confirm: true,
-//     icon: 'success',
-//     title: title,
-//     showConfirmButton: true,
-//     confirmButtonText: confirmBtnName,
-//     confirmButtonColor: '#8CD4F5',
-//     buttonsStyling: false,
-//     color: '#00323d',
-//     background: '#f2f2f2',
-//     iconColor: '#86a8ae',
-//     timer: 2000,
-//     position: 'top',
-//   });
-// };
-// export default SubmitCheck;
