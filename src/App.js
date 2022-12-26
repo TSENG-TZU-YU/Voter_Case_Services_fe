@@ -17,6 +17,7 @@ import ApplicationForm from './CaseDetail/Component/ApplicationForm';
 import UploadPage from './CaseDetail/Component/UploadPage';
 import ChatPage from './CaseDetail/Component/ChatPage';
 import CountPage from './Count/CountPage';
+import Permissions from './Permissions';
 
 function App() {
   const [application, setApplication] = useState(false);
@@ -28,7 +29,6 @@ function App() {
   const [caseId, setCaseId] = useState('');
   const [handlerNull, setHandlerNull] = useState('');
   const [sender, setSender] = useState('');
-  // const navigate = useNavigate();
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -48,17 +48,6 @@ function App() {
       }
     });
   }
-
-  // 新增 sweet
-  // function viewCheck(tit, nav, fun, i, fun2, i2) {
-  //   Swal.fire({
-  //     icon: 'success',
-  //     title: tit,
-  //   }).then(function () {
-  //     fun(!i);
-  //     // navigate(nav);
-  //   });
-  // }
 
   // 送出申請表sweet
   function submitCheck(tit, submitFile, navigate) {
@@ -122,6 +111,11 @@ function App() {
             />
 
             <Route path="countPage" element={<CountPage />} />
+            <Route
+              // index
+              path="permissions"
+              element={<Permissions />}
+            />
 
             {/* detail */}
             <Route path="caseDetail" element={<CaseDetail caseNum={caseNum} />}>
@@ -143,6 +137,7 @@ function App() {
                   />
                 }
               />
+
               <Route path="chatPage/:num" element={<ChatPage />} />
               <Route
                 path="uploadPage/:num"

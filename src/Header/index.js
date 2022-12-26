@@ -150,6 +150,14 @@ function Header({
                   案件統計
                 </div>
               </Link>
+
+              <Link to="permissions">
+                {/* 處理人/協理/主管 */}
+                <div>
+                  <RiPhoneFindFill size="20" />
+                  權限管理
+                </div>
+              </Link>
             </>
           ) : (
             ''
