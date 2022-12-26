@@ -16,6 +16,7 @@ import CaseDetail from './CaseDetail/CaseDetail';
 import ApplicationForm from './CaseDetail/Component/ApplicationForm';
 import UploadPage from './CaseDetail/Component/UploadPage';
 import ChatPage from './CaseDetail/Component/ChatPage';
+import CountPage from './Count/CountPage';
 
 function App() {
   const [application, setApplication] = useState(false);
@@ -119,8 +120,10 @@ function App() {
                 />
               }
             />
-            {/* detail */}
 
+            <Route path="countPage" element={<CountPage />} />
+
+            {/* detail */}
             <Route path="caseDetail" element={<CaseDetail caseNum={caseNum} />}>
               <Route
                 // index

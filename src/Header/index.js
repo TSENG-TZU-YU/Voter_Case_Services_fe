@@ -143,6 +143,13 @@ function Header({
                   案件審理作業
                 </div>
               </Link>
+              <Link to="countPage">
+                {/* 處理人/協理/主管 */}
+                <div>
+                  <RiPhoneFindFill size="20" />
+                  案件統計
+                </div>
+              </Link>
             </>
           ) : (
             ''
