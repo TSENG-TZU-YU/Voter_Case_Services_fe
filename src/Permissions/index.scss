@@ -1,0 +1,68 @@
+@import '../../src/styles/global.scss';
+@import '../../src/styles/_variable.scss';
+@mixin maxWidth {
+  margin: 0 auto;
+  width: 90%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.background {
+  width: 70%;
+  margin-top: 3%;
+
+  .permissions {
+    background-color: rgb(246, 203, 157);
+    display: flex;
+    gap: 20px;
+    div {
+      display: flex;
+      align-items: center;
+
+      .select {
+        margin-right: 5px;
+        width: 53px;
+        display: flex;
+        justify-content: end;
+      }
+      select {
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        text-align: center;
+      }
+    }
+    .btn {
+      border: 1px solid $subClrBrown;
+      background-color: $header;
+      border-radius: 10px;
+      margin: 0 15px;
+      padding: 4px 5px;
+      height: 40px;
+      cursor: pointer;
+      color: aliceblue;
+    }
+  }
+  .container {
+    margin: 20px 0;
+    padding-left: 0;
+    padding-right: 0;
+    .vector {
+      width: 100%;
+      border-top: 2px solid black;
+    }
+    .mt {
+      margin: 15px 0;
+    }
+    .row {
+      background-color: aquamarine;
+      .getPermissions {
+        white-space: nowrap;
+      }
+    }
+  }
+}
