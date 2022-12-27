@@ -52,7 +52,7 @@ function ApplicationForm({
     remark: '',
     finishTime: '',
   });
-
+  console.log('needState', needState);
   const [selectRemind, setSelectRemind] = useState(false);
   const [postValRemind, setPostValRemind] = useState(false);
   const [editVerifyPage, setEditVerifyPage] = useState(false);
@@ -72,8 +72,6 @@ function ApplicationForm({
     { title: '短期', value: '2' },
     { title: '長期', value: '3' },
   ];
-
-  console.log('getFile', getFile);
 
   // 檢查會員
   useEffect(() => {
@@ -340,10 +338,10 @@ function ApplicationForm({
 
       formData.append('fileNo', '-' + noTime);
       formData.append('No', detailData[0].application_category);
-      formData.append('number', caseNum);
+      formData.append('number', num);
       formData.append('create_time', endTime);
       let response = await axios.post(
-        `http://localhost:3001/api/application_edit/file/${caseNum}`,
+        `http://localhost:3001/api/application_edit/file/${num}`,
         formData,
         {
           headers: {
@@ -356,7 +354,8 @@ function ApplicationForm({
       console.log('sub', err);
     }
   }
-
+  console.log('caseId', caseId);
+  //TODO: caseId 刷新後抓不到
   // 取得detail Id 的值
   useEffect(() => {
     let getCampingDetailData = async () => {
@@ -367,6 +366,7 @@ function ApplicationForm({
           withCredentials: true,
         }
       );
+
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
       // 修改儲存用
@@ -390,9 +390,16 @@ function ApplicationForm({
       // selectStatus filter
       if (member.permissions_id === 2) {
         setSelectData(response.data.selectResult.splice(0, 0));
+      }
+      if (member.manage === 1 && member.name !== handlerNull) {
+        setSelectData(response.data.selectResult.splice(2, 3));
       } else {
         setSelectData(response.data.selectResult.splice(1));
       }
+      if (member.permissions_id !== 2 && member.manage !== 1) {
+        setSelectData(response.data.selectResult.splice(1));
+      }
+
       // setSelectData(response.data.selectResult);
       // 目前狀態
       setNeedState(response.data.result[0].status_id);
@@ -791,7 +798,9 @@ function ApplicationForm({
       )}
 
       {/* handler === '' 確認接收此案件 */}
-      {member.permissions_id === 3 && handlerNull === '' && needState === 4 ? (
+      {(member.permissions_id === 3 || member.manage === 1) &&
+      handlerNull === '' &&
+      needState === 4 ? (
         <div className="editBtn" onClick={handleReceiveCase}>
           此案件目前沒有處理人，請點選確認接收此案
         </div>

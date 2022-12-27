@@ -210,7 +210,9 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                     <span className="viewList">{v.name}</span>
                   </td>
                   <td className="posClick">
-                    <Link to={`caseDetail/application/${v.case_number}`}>
+                    <Link
+                      to={`caseDetail/application/${v.case_number}?id=${v.id}`}
+                    >
                       <FaEye
                         className={`icons ${
                           v.name === '處理人評估中' &&

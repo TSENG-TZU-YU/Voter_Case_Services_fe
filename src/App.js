@@ -111,17 +111,12 @@ function App() {
             />
 
             <Route path="countPage" element={<CountPage />} />
-            <Route
-              // index
-              path="permissions"
-              element={<Permissions />}
-            />
+            <Route path="permissions" element={<Permissions />} />
 
             {/* detail */}
             <Route path="caseDetail" element={<CaseDetail caseNum={caseNum} />}>
               <Route
-                // index
-                path="application/:num?id="
+                path="application/:num"
                 element={
                   <ApplicationForm
                     setAddStatus={setAddStatus}

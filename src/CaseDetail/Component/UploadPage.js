@@ -7,11 +7,12 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
 import '../../styles/caseDetail/_uploadPage.scss';
 import { useAuth } from '../../utils/use_auth';
 
-function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
+function UploadPage({ setAddStatus, delCheck }) {
   const [userFilesPage, setUserFilesPage] = useState(true);
   const [mgtFilesPage, setMgtUserFilesPage] = useState(false);
   const [filesData, setFilesData] = useState([{ fileName: '' }]);
@@ -21,7 +22,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
   const [render, setRender] = useState(false);
   const [No, setNo] = useState([]);
   const [status, setStatus] = useState([]);
-  // const [id, setId] = useState([]);
+  const { num } = useParams();
   const [handler, setHandler] = useState([]);
   const [valid, setValid] = useState('');
   const [getUpdateFile, setGetUpdateFile] = useState([]);
@@ -55,7 +56,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
     async function toGetUserFile() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getUserFile/${caseNum}`
+          `http://localhost:3001/api/files/getUserFile/${num}`
         );
         setGetUserTotalFile(response.data);
       } catch (err) {
@@ -65,7 +66,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
     async function toGetHandlerFile() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getHandlerFile/${caseNum}`
+          `http://localhost:3001/api/files/getHandlerFile/${num}`
         );
         setGetHandlerTotalFile(response.data);
       } catch (err) {
@@ -75,7 +76,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
     async function toGetHandlerFileNo() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getHandlerFileNo/${caseNum}`
+          `http://localhost:3001/api/files/getHandlerFileNo/${num}`
         );
 
         setNo(response.data[0].application_category);
@@ -119,7 +120,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
     let dbTime = fileNo.substr(str + 1, 6);
 
     await axios({
-      url: `http://localhost:3001/api/files/${caseNum}`,
+      url: `http://localhost:3001/api/files/${num}`,
       data: {
         name: fileName,
         dbTime: dbTime,
@@ -236,7 +237,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
       formData.append('number', parseInt(Date.now() / 10000));
       formData.append('create_time', endTime);
       let response = await axios.post(
-        `http://localhost:3001/api/1.0/applicationData/postHandleFile/${caseNum}`,
+        `http://localhost:3001/api/1.0/applicationData/postHandleFile/${num}`,
         formData,
         {
           headers: {
@@ -258,7 +259,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
   const fileSubmitStatus = async () => {
     try {
       let response = await axios.patch(
-        `http://localhost:3001/api/files/patchStatus/${caseNum}`
+        `http://localhost:3001/api/files/patchStatus/${num}`
       );
     } catch (err) {
       console.log(err);
@@ -372,7 +373,7 @@ function UploadPage({ setAddStatus, addStatus, caseNum, caseId, delCheck }) {
       )}
 
       {/* 管理者接收檔案 */}
-      {/* {(member.permissions_id === 3 || member.permissions_id === 4) &&
+      {/* {(member.permissions_id === 3 || member.manage === 1) &&
       status === 8 ? (
         <>
           {newGetUpdateFile.map((v, i) => {
