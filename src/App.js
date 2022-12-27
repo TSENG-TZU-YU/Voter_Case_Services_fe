@@ -121,7 +121,7 @@ function App() {
             <Route path="caseDetail" element={<CaseDetail caseNum={caseNum} />}>
               <Route
                 // index
-                path="application/:num"
+                path="application/:num?id="
                 element={
                   <ApplicationForm
                     setAddStatus={setAddStatus}

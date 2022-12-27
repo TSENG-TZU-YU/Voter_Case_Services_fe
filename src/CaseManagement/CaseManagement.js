@@ -56,11 +56,12 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     getMember();
   }, []);
 
+  // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
         {
           withCredentials: true,
         }
@@ -72,7 +73,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setAllStatusData(response.data.statusResult);
     };
     getCampingData();
-  }, [member]);
+  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
 
   // 審查 history
   let handleCaseHistory = async (caseNum) => {

@@ -114,9 +114,26 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     setCaseHistory(response.data.result);
   };
 
+  // %
   const percent = (ttl, num) => {
     let p = Math.floor((parseInt(num) / parseInt(ttl)) * 100);
     return p;
+  };
+
+  const sortOption = [
+    { id: '12', name: '案件已完成' },
+    { id: '2', name: '案件未完成' },
+  ];
+  // state name
+  const nowSt = (arr, now) => {
+    if (now === '') return;
+
+    let st = arr.filter((v) => {
+      if (parseInt(v.id) === parseInt(now)) {
+        return v.name;
+      }
+    });
+    return st[0].name;
   };
 
   return (
@@ -155,88 +172,110 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
           setMinDateValue={setMinDateValue}
         />
         <hr />
-        <div>表單總筆次 ： {allTotal} 件</div>
-        <div>篩選總筆次 ： {total} 件</div>
-        <div>
+        <div>總案件數 ： {allTotal} 件</div>
+        {nowCategory ||
+        nowStatus ||
+        nowUnit ||
+        minDate ||
+        maxDate ||
+        finish ||
+        handler ||
+        nowUser ? (
+          <>
+            <div>搜尋件數 ： {total} 件</div>
+            {/* <div>
           根據 {nowCategory},{nowStatus},{nowUnit},{minDate},{maxDate},{finish},
           {handler},{nowUser},為總筆數的 {percent(allTotal, total)}%
-        </div>
+        </div> */}
 
-        {/* 總計% */}
-        <table className="countContainer">
-          <thead>
-            <tr>
-              <th>申請單位</th>
-              <th>申請人</th>
-              <th>處理人</th>
-              <th>申請類別</th>
-              <th>申請時間</th>
-              <th>申請狀態</th>
-              <th>需求進度</th>
-              <th>總%</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{nowUnit}</td>
-              <td>{nowUser}</td>
-              <td>{handler}</td>
-              <td>{nowCategory}</td>
-              <td>
-                {minDate} - {maxDate}
-              </td>
-              <td>{nowStatus}</td>
-              <td>{finish}</td>
-              <td>{percent(allTotal, total)}%</td>
-            </tr>
-          </tbody>
-        </table>
+            {/* 總計% */}
+            <div className="stateTit">搜尋的條件(總件數的%)</div>
+            <table className="countContainer">
+              <thead>
+                <tr>
+                  <th>申請單位</th>
+                  <th>申請人</th>
+                  <th>處理人</th>
+                  <th>申請類別</th>
+                  <th>申請時間</th>
+                  <th>申請狀態</th>
+                  <th>需求進度</th>
+                  <th>總%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{nowUnit}</td>
+                  <td>{nowUser}</td>
+                  <td>{handler}</td>
+                  <td>{nowCategory}</td>
+                  <td>
+                    {minDate} ~ {maxDate}
+                  </td>
+                  <td>{nowSt(allStatusData, nowStatus)}</td>
+                  <td>{nowSt(sortOption, finish)}</td>
+                  <td>{percent(allTotal, total)}%</td>
+                </tr>
+              </tbody>
+            </table>
 
-        {/* 申請單位% */}
-        <table className="countContainer">
-          <thead>
-            <tr>
-              {/* {allStatusData.map((v) => {
+            {/* 申請單位% */}
+            <div className="stateTit">依搜尋結果的條件(搜尋件數的%)</div>
+            <table className="countContainer">
+              <thead>
+                <tr>
+                  {/* {allStatusData.map((v) => {
                 return <th key={v.id}>{v.name}</th>;
               })} */}
-              <th>主管審核中</th>
-              <th>處理人評估中</th>
-              <th>案件進行中</th>
-              {/* <th>總%</th> */}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {/* {stateTtl.map((v, i) => {
+                  <th>主管審核中</th>
+                  <th>處理人評估中</th>
+                  <th>案件進行中</th>
+                  {/* <th>總%</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {/* {stateTtl.map((v, i) => {
                 return <td>{v.status_id === i + 1 ? '1++' : ''}</td>;
               })} */}
-              <td>
-                {stateTtl.state2 !== undefined ? `${stateTtl.state2}件` : '0件'}
-                <br />
-                {stateTtl.state2 !== undefined
-                  ? `${percent(total, stateTtl.state2)}%`
-                  : '0%'}
-              </td>
-              <td>
-                {stateTtl.state4 !== undefined ? `${stateTtl.state4}件` : '0件'}
-                <br />
-                {stateTtl.state4 !== undefined
-                  ? `${percent(total, stateTtl.state4)}%`
-                  : 0}
-              </td>
-              <td>
-                {stateTtl.state5 !== undefined ? `${stateTtl.state5}件` : '0件'}
-                <br />
-                {stateTtl.state5 !== undefined
-                  ? `${percent(total, stateTtl.state5)}%`
-                  : 0}
-              </td>
-              {/* <td>{percent(total, total)}%</td> */}
-            </tr>
-          </tbody>
-        </table>
-        <hr />
+                  <td>
+                    {stateTtl.state2 !== undefined
+                      ? `${stateTtl.state2}件`
+                      : '0件'}
+                    <br />
+                    {stateTtl.state2 !== undefined
+                      ? `${percent(total, stateTtl.state2)}%`
+                      : '0%'}
+                  </td>
+                  <td>
+                    {stateTtl.state4 !== undefined
+                      ? `${stateTtl.state4}件`
+                      : '0件'}
+                    <br />
+                    {stateTtl.state4 !== undefined
+                      ? `${percent(total, stateTtl.state4)}%`
+                      : '0%'}
+                  </td>
+                  <td>
+                    {stateTtl.state5 !== undefined
+                      ? `${stateTtl.state5}件`
+                      : '0件'}
+                    <br />
+                    {stateTtl.state5 !== undefined
+                      ? `${percent(total, stateTtl.state5)}%`
+                      : '0%'}
+                  </td>
+                  {/* <td>{percent(total, total)}%</td> */}
+                </tr>
+              </tbody>
+            </table>
+            <hr />
+          </>
+        ) : (
+          ''
+        )}
 
+        {/* 列表 */}
         <table className="caseContain">
           <thead>
             <tr>
