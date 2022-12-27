@@ -11,7 +11,11 @@ function ActivitySelect({ setHandler, allHandlerData }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '----請選擇管理人----' }, ...newData];
+  const sortOption = [
+    { value: '', label: '----請選擇管理人----' },
+    { value: '1', label: '尚無管理人' },
+    ...newData,
+  ];
 
   const customStyles = {
     option: (provided, state) => ({

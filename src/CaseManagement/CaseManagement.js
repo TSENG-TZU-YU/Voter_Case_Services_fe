@@ -59,9 +59,12 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   // 取得所有資料
   useEffect(() => {
     let getCampingData = async () => {
-      let response = await axios.get(`${API_URL}/applicationData`, {
-        withCredentials: true,
-      });
+      let response = await axios.get(
+        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        {
+          withCredentials: true,
+        }
+      );
       // console.log(response.data.result);
       setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);

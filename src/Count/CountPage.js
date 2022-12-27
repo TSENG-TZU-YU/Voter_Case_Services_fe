@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../utils/use_auth';
 
 import '../styles/caseManagement/_caseManagement.scss';
+import '../styles/count/_countPage.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
@@ -46,7 +47,9 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [allUserData, setAllUserData] = useState([]);
 
   // get total
+  const [allTotal, setAllTotal] = useState('');
   const [total, setTotal] = useState('');
+  const [stateTtl, setStateTtl] = useState([]);
 
   // 檢查會員
   useEffect(() => {
@@ -75,13 +78,17 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
         }
       );
       //   console.log(response.data.pagination.total);
-      setTotal(response.data.pagination.total);
       setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
       setAllHandlerData(response.data.handlerResult);
       setAllUserData(response.data.userResult);
+      // total
+      setAllTotal(response.data.pagination.allTotal);
+      setTotal(response.data.pagination.total);
+      setStateTtl(response.data.pagination.counts);
+      // console.log(stateTtl);
     };
     getAllData();
   }, [
@@ -105,6 +112,11 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       }
     );
     setCaseHistory(response.data.result);
+  };
+
+  const percent = (ttl, num) => {
+    let p = Math.floor((parseInt(num) / parseInt(ttl)) * 100);
+    return p;
   };
 
   return (
@@ -143,7 +155,86 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
           setMinDateValue={setMinDateValue}
         />
         <hr />
-        <div>總筆次 ： {total}</div>
+        <div>表單總筆次 ： {allTotal} 件</div>
+        <div>篩選總筆次 ： {total} 件</div>
+        <div>
+          根據 {nowCategory},{nowStatus},{nowUnit},{minDate},{maxDate},{finish},
+          {handler},{nowUser},為總筆數的 {percent(allTotal, total)}%
+        </div>
+
+        {/* 總計% */}
+        <table className="countContainer">
+          <thead>
+            <tr>
+              <th>申請單位</th>
+              <th>申請人</th>
+              <th>處理人</th>
+              <th>申請類別</th>
+              <th>申請時間</th>
+              <th>申請狀態</th>
+              <th>需求進度</th>
+              <th>總%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{nowUnit}</td>
+              <td>{nowUser}</td>
+              <td>{handler}</td>
+              <td>{nowCategory}</td>
+              <td>
+                {minDate} - {maxDate}
+              </td>
+              <td>{nowStatus}</td>
+              <td>{finish}</td>
+              <td>{percent(allTotal, total)}%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* 申請單位% */}
+        <table className="countContainer">
+          <thead>
+            <tr>
+              {/* {allStatusData.map((v) => {
+                return <th key={v.id}>{v.name}</th>;
+              })} */}
+              <th>主管審核中</th>
+              <th>處理人評估中</th>
+              <th>案件進行中</th>
+              {/* <th>總%</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {/* {stateTtl.map((v, i) => {
+                return <td>{v.status_id === i + 1 ? '1++' : ''}</td>;
+              })} */}
+              <td>
+                {stateTtl.state2 !== undefined ? `${stateTtl.state2}件` : '0件'}
+                <br />
+                {stateTtl.state2 !== undefined
+                  ? `${percent(total, stateTtl.state2)}%`
+                  : '0%'}
+              </td>
+              <td>
+                {stateTtl.state4 !== undefined ? `${stateTtl.state4}件` : '0件'}
+                <br />
+                {stateTtl.state4 !== undefined
+                  ? `${percent(total, stateTtl.state4)}%`
+                  : 0}
+              </td>
+              <td>
+                {stateTtl.state5 !== undefined ? `${stateTtl.state5}件` : '0件'}
+                <br />
+                {stateTtl.state5 !== undefined
+                  ? `${percent(total, stateTtl.state5)}%`
+                  : 0}
+              </td>
+              {/* <td>{percent(total, total)}%</td> */}
+            </tr>
+          </tbody>
+        </table>
         <hr />
 
         <table className="caseContain">
