@@ -73,7 +73,6 @@ function ApplicationForm({
     { title: '長期', value: '3' },
   ];
 
-  
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -355,10 +354,10 @@ function ApplicationForm({
       console.log('sub', err);
     }
   }
-
+  console.log('caseId', caseId);
+  //TODO: caseId 刷新後抓不到
   // 取得detail Id 的值
   useEffect(() => {
-    alert('重新render')
     let getCampingDetailData = async () => {
       let response = await axios.post(
         `${API_URL}/applicationData/${num}`,
@@ -367,6 +366,7 @@ function ApplicationForm({
           withCredentials: true,
         }
       );
+
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
       // 修改儲存用
