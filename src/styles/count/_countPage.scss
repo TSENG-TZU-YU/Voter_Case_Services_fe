@@ -1,0 +1,15 @@
+@import '../variable';
+
+.countContainer {
+  margin-bottom: 10px;
+  tr,
+  th,
+  td {
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  th,
+  td {
+    padding: 5px 8px;
+  }
+}
