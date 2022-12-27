@@ -358,6 +358,7 @@ function ApplicationForm({
 
   // 取得detail Id 的值
   useEffect(() => {
+    alert('重新render')
     let getCampingDetailData = async () => {
       let response = await axios.post(
         `${API_URL}/applicationData/${num}`,
