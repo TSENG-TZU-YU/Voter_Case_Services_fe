@@ -29,9 +29,9 @@ function Header({
   const { member, setMember } = useAuth();
 
   //權限
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(false);
 
-  const [handler, setHandler] = useState();
+  const [handler, setHandler] = useState(false);
 
   //會員登入狀態判斷
   useEffect(() => {
@@ -51,15 +51,15 @@ function Header({
 
     if (member.permissions_id === 1) {
       setUser(true);
-      setHandler(false);
+      // setHandler(false);
     }
     if (member.permissions_id === 2) {
       setUser(true);
       setHandler(true);
     }
-    if (member.permissions_id === 3 || member.permissions_id === 4) {
+    if (member.permissions_id === 3 || member.manage === 1) {
       setHandler(true);
-      setUser(false);
+      // setUser(false);
     }
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
   }, [member.permissions_id]);
@@ -145,7 +145,7 @@ function Header({
               </Link>
               <Link to="countPage">
                 {/* 處理人/協理/主管 */}
-                <div>
+                <div className="bold">
                   <RiPhoneFindFill size="20" />
                   案件統計
                 </div>
@@ -153,7 +153,7 @@ function Header({
 
               <Link to="permissions">
                 {/* 處理人/協理/主管 */}
-                <div>
+                <div className="bold">
                   <RiPhoneFindFill size="20" />
                   權限管理
                 </div>
