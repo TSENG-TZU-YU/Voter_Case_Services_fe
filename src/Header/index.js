@@ -136,7 +136,7 @@ function Header({
           )}
           {handler ? (
             <>
-              <Link to="">
+              <Link to="caseManagement_handler">
                 {/* 處理人/協理/主管 */}
                 <div className={`bold ${trial ? 'link' : ''}`} onClick={tri}>
                   <RiPhoneFindFill size="20" />

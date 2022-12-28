@@ -1,0 +1,21 @@
+@import '../variable';
+.pagination {
+    display: inline-block;
+  }
+  .pagination-btn{
+    padding: 8px 16px;
+  }
+  
+  .pagination .pagination-btn {
+    color: #6a777a;
+    float: left;
+    text-decoration: none;
+    transition: background-color .3s;
+  }
+  
+  .pagination .pagination-btn.pagination-active {
+    background-color: #6a777a;
+    color: white;
+  }
+  
+  .pagination .pagination-btn:hover:not(.active) {background-color: #ddd;}

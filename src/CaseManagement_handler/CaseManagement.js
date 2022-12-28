@@ -42,11 +42,11 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [allCategoryData, setAllCategoryData] = useState([]);
 
   // 分頁
-  const [pageCase, setPageCase] = useState([]);
-  const [pageNow, setPageNow] = useState(1);
-  const [perPage] = useState(10);
-  const [pageTotal, setPageTotal] = useState(5);
-  console.log('pageNow', pageNow);
+  const [pageCase, setPageCase] = useState([]); // 設定 page_.chunk
+  const [pageNow, setPageNow] = useState(1); // 目前頁號
+  const [perPage] = useState(8); // 每頁多少筆資料
+  const [pageTotal, setPageTotal] = useState(5); //總共幾頁
+
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -79,19 +79,15 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
-    };
 
+      const newPageCase = _.chunk(allData, perPage);
+      setPageTotal(newPageCase.length);
+      setPageCase(newPageCase);
+      console.log('pageCase', pageCase);
+    };
+    setPageNow(1);
     getCampingData();
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
-
-  useEffect(() => {
-    const newPageCase = _.chunk(allData, perPage);
-    setPageNow(1);
-    setPageTotal(newPageCase.length);
-    setPageCase(newPageCase);
-    console.log('allData', allData);
-    console.log('pageCase', pageCase);
-  },[allData]);
 
   // 審查 history
   let handleCaseHistory = async (caseNum) => {
@@ -266,7 +262,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             })}
         </table>
         {/* 頁碼 */}
-        <div className="d-flex justify-content-center align-items-end">
+        <div className="d-flex justify-content-center align-items-center">
           <PaginationBar
             pageNow={pageNow}
             setPageNow={setPageNow}

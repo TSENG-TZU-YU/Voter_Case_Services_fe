@@ -101,7 +101,6 @@ function ApplicationForm({
   // 修改申請表
   const [edit, setEdit] = useState(true);
   const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
-  const [addFile, setAddFile] = useState([{ file: '' }]);
   const [fileUpdate, setFileUpdate] = useState(false);
 
   // console.log('detailData', detailData);
@@ -205,7 +204,6 @@ function ApplicationForm({
         hanleAddNeed(e, 'edit');
         submitFile();
         store();
-        // navigate('/header');
       } else if (result.isDenied) {
         Swal.fire('已取消儲存', '', 'info');
       }
@@ -213,27 +211,7 @@ function ApplicationForm({
   }
 
   // 送出申請表sweet
-  function submitCheck(tit) {
-    Swal.fire({
-      title: tit,
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: '確定送出',
-      denyButtonText: `取消送出`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire('送出成功', '', 'success');
-        // submitFile();
-        navigate('/header');
-      } else if (result.isDenied) {
-        Swal.fire('已取消送出', '', 'info');
-      }
-    });
-  }
-
-  //送出表單內容
-  async function submit() {
+  function submitCheck(tit, e) {
     for (let i = 0; i < editNeed.length; i++) {
       if (
         editNeed[i].requirement_name === '' ||
@@ -243,43 +221,62 @@ function ApplicationForm({
         return;
       }
     }
-
-    try {
-      if (detailData[0].category === '0' || detailData[0].category === '') {
-        setCategory(true);
+    for (let i = 0; i < getFile.length; i++) {
+      if (getFile[i].file === '') {
+        Swal.fire({
+          icon: 'error',
+          title: '無檔案',
+        });
+        return;
       }
+    }
 
-      if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
-        setCycle(true);
-      }
+    if (detailData[0].category === '0' || detailData[0].category === '') {
+      setCategory(true);
+    }
 
-      if (
-        detailData[0].category !== '0' &&
-        detailData[0].category !== '' &&
-        detailData[0].cycle !== ''
-      ) {
-        for (let i = 0; i < addFile.length; i++) {
-          if (addFile[i].file === '') {
-            Swal.fire({
-              icon: 'error',
-              title: '無檔案',
-            });
-            return;
-          }
+    if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
+      setCycle(true);
+    }
+
+    if (
+      detailData[0].category !== '0' &&
+      detailData[0].category !== '' &&
+      detailData[0].cycle !== ''
+    ) {
+      Swal.fire({
+        title: tit,
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: '確定送出',
+        denyButtonText: `取消送出`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('送出成功', '', 'success');
+          submitFile();
+          hanleAddNeed(e, 'submit');
+          submit();
+          navigate('/header');
+        } else if (result.isDenied) {
+          Swal.fire('已取消送出', '', 'info');
         }
+      });
+    }
+  }
 
-        submitCheck('確定要送出申請表?');
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let response = await axios.patch(
-          `http://localhost:3001/api/application_edit/submit/${caseNum}`,
-          {
-            ...detailData[0],
-            // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status_id: 2,
-            create_time: endTime,
-          }
-        );
-      }
+  //送出表單內容
+  async function submit() {
+    try {
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let response = await axios.patch(
+        `http://localhost:3001/api/application_edit/submit/${caseNum}`,
+        {
+          ...detailData[0],
+          // TODO: 申請狀態 一般職員跟主管送出的狀態不同
+          status_id: 2,
+          create_time: endTime,
+        }
+      );
     } catch (err) {
       console.log('sub', err);
     }
@@ -306,19 +303,6 @@ function ApplicationForm({
   // 上傳檔案
   async function submitFile() {
     try {
-      // if (detailData[0].category === '0' || detailData[0].category === '') {
-      //   setCategory(true);
-      // }
-
-      // if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
-      //   setCycle(true);
-      // }
-
-      // if (
-      //   detailData[0].category !== '0' &&
-      //   detailData[0].category !== '' &&
-      //   detailData[0].cycle !== ''
-      // ) {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
       const formData = new FormData();
@@ -350,7 +334,6 @@ function ApplicationForm({
           },
         }
       );
-      // }
     } catch (err) {
       console.log('sub', err);
     }
@@ -914,7 +897,6 @@ function ApplicationForm({
                       <option selected disabled hidden>
                         {v.application_category}
                       </option>
-                      <option value=" ">-----請選擇類別-----</option>
                       {getCategory.map((v, i) => {
                         return <option key={i}>{v.name}</option>;
                       })}
@@ -1276,10 +1258,6 @@ function ApplicationForm({
             <div
               className="submit"
               onClick={(e) => {
-                // hanleAddNeed(e, 'edit');
-                // submitFile();
-                // setEdit(true);
-                // store();
                 storeCheck('確認儲存表單?', e);
               }}
             >
@@ -1290,8 +1268,7 @@ function ApplicationForm({
           <div
             className="submit"
             onClick={(e) => {
-              submit();
-              hanleAddNeed(e, 'submit');
+              submitCheck('確定要送出申請表?', e);
             }}
           >
             送出

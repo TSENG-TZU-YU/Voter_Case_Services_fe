@@ -14,7 +14,6 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
-import { SubmitCheck } from '../SweetComponent/SubmitCheck';
 
 function Application({
   setApplication,
@@ -144,8 +143,62 @@ function Application({
     category();
     cycle();
   }, []);
+
   // 送出申請表sweet
   function submitCheck(tit) {
+    for (let i = 0; i < addNeed.length; i++) {
+      if (addNeed[i].title === '' || addNeed[i].text === '') {
+        setNeed(true);
+        return;
+      }
+    }
+    for (let i = 0; i < addFile.length; i++) {
+      if (addFile[i].file === '') {
+        Swal.fire({
+          icon: 'error',
+          title: '無檔案',
+        });
+        return;
+      }
+    }
+
+    if (submitValue[0].category === '0' || submitValue[0].category === '') {
+      setCategory(true);
+    }
+
+    if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
+      setCycle(true);
+    }
+
+    if (
+      submitValue[0].category !== '0' &&
+      submitValue[0].category !== '' &&
+      submitValue[0].cycle !== ''
+    ) {
+      Swal.fire({
+        title: tit,
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: '確定送出',
+        denyButtonText: `取消送出`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('送出成功', '', 'success');
+          submitFile();
+          submit();
+          navigate('/header');
+          setCaseManagement(true);
+          setApplication(false);
+          setTrial(false);
+        } else if (result.isDenied) {
+          Swal.fire('已取消送出', '', 'info');
+        }
+      });
+    }
+  }
+
+  // 儲存申請表sweet
+  function storeCheck(tit) {
     Swal.fire({
       title: tit,
       showDenyButton: true,
@@ -153,68 +206,36 @@ function Application({
       confirmButtonText: '確定送出',
       denyButtonText: `取消送出`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('送出成功', '', 'success');
+        Swal.fire('儲存成功', '', 'success');
         submitFile();
         navigate('/header');
         setCaseManagement(true);
         setApplication(false);
         setTrial(false);
       } else if (result.isDenied) {
-        Swal.fire('已取消送出', '', 'info');
+        Swal.fire('已取消儲存', '', 'info');
       }
     });
   }
 
   //送出表單內容
   async function submit() {
-    for (let i = 0; i < addNeed.length; i++) {
-      if (addNeed[i].title === '' || addNeed[i].text === '') {
-        setNeed(true);
-        return;
-      }
-    }
     try {
-      if (submitValue[0].category === '0' || submitValue[0].category === '') {
-        setCategory(true);
-      }
-
-      if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
-        setCycle(true);
-      }
-
-      if (
-        submitValue[0].category !== '0' &&
-        submitValue[0].category !== '' &&
-        submitValue[0].cycle !== ''
-      ) {
-        for (let i = 0; i < addFile.length; i++) {
-          if (addFile[i].file === '') {
-            Swal.fire({
-              icon: 'error',
-              title: '無檔案',
-            });
-            return;
-          }
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let response = await axios.post(
+        'http://localhost:3001/api/application_post',
+        {
+          ...submitValue[0],
+          need: addNeed,
+          number: parseInt(Date.now() / 10000),
+          id: member.id,
+          user: member.name,
+          // TODO: 申請狀態 一般職員跟主管送出的狀態不同
+          status: 2,
+          create_time: endTime,
         }
-
-        submitCheck('確定要送出申請表?');
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let response = await axios.post(
-          'http://localhost:3001/api/application_post',
-          {
-            ...submitValue[0],
-            need: addNeed,
-            number: parseInt(Date.now() / 10000),
-            id: member.id,
-            user: member.name,
-            // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-            status: 2,
-            create_time: endTime,
-          }
-        );
-      }
+      );
     } catch (err) {
       console.log('sub', err);
     }
@@ -223,39 +244,25 @@ function Application({
   // 上傳檔案
   async function submitFile() {
     try {
-      if (submitValue[0].category === '0' || submitValue[0].category === '') {
-        setCategory(true);
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
+      const formData = new FormData();
+      for (let i = 0; i < addFile.length; i++) {
+        formData.append(i, addFile[i].file);
       }
+      formData.append('fileNo', addNo + '-' + noTime);
 
-      if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
-        setCycle(true);
-      }
-
-      if (
-        submitValue[0].category !== '0' &&
-        submitValue[0].category !== '' &&
-        submitValue[0].cycle !== ''
-      ) {
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
-        const formData = new FormData();
-        for (let i = 0; i < addFile.length; i++) {
-          formData.append(i, addFile[i].file);
+      formData.append('number', parseInt(Date.now() / 10000));
+      formData.append('create_time', endTime);
+      let response = await axios.post(
+        'http://localhost:3001/api/application_post/file',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         }
-        formData.append('fileNo', addNo + '-' + noTime);
-
-        formData.append('number', parseInt(Date.now() / 10000));
-        formData.append('create_time', endTime);
-        let response = await axios.post(
-          'http://localhost:3001/api/application_post/file',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
-      }
+      );
     } catch (err) {
       console.log('sub', err);
     }
@@ -292,16 +299,8 @@ function Application({
             return;
           }
         }
-      
-        Swal.fire({
-          icon: 'success',
-          title: '已儲存申請',
-        }).then(function () {
-          navigate('/header');
-          setCaseManagement(true);
-          setApplication(false);
-          setTrial(false);
-        });
+
+        storeCheck('確認儲存申請表?');
 
         let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
         let response = await axios.post(
@@ -334,7 +333,7 @@ function Application({
           <div className="gap">
             <div>
               申請類別 <span>*</span>
-              {category ? <span>請選擇申請類別</span> : ''}
+              {category ? <span>欄位不得為空</span> : ''}
             </div>
             <select
               className="handler"
@@ -372,7 +371,7 @@ function Application({
           <div className="gap">
             <div className="cycle">
               需求次數 <span>*</span>
-              {cycle ? <span>請選擇需求次數</span> : ''}
+              {cycle ? <span>欄位不得為空</span> : ''}
             </div>
             <div className="check handler">
               {getCycle.map((v, i) => {
@@ -427,18 +426,21 @@ function Application({
         </div>
 
         {/* 需求 */}
-        <div className="add handler">
-          <FaTrashAlt
-            size="17"
-            onClick={() => {
-              delCheck('確定要刪除所有需求內容?', handleClearNeed);
-            }}
-            className="clearIcon"
-          />
-          <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
+        <div className="add">
+          <span className={`${need ? 'view' : ''}`}>*欄位不得為空</span>
+          <div>
+            <FaTrashAlt
+              size="17"
+              onClick={() => {
+                delCheck('確定要刪除所有需求內容?', handleClearNeed);
+              }}
+              className="clearIcon"
+            />
+            <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
+          </div>
         </div>
+
         <div className="needs">
-          {need ? <span>請填寫需求</span> : ''}
           {addNeed.map((v, i) => {
             return (
               <div key={i} className="need">
@@ -563,7 +565,6 @@ function Application({
             className="submit"
             onClick={() => {
               store();
-              submitFile();
             }}
           >
             儲存
@@ -571,7 +572,7 @@ function Application({
           <div
             className="submit"
             onClick={() => {
-              submit();
+              submitCheck('確定要送出申請表?');
             }}
           >
             送出

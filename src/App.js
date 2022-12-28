@@ -12,6 +12,7 @@ import { AuthProvider } from './utils/use_auth';
 //子頁面
 import Application from './Application';
 import CaseManagement from './CaseManagement/CaseManagement.js';
+import CaseManagement_handler from './CaseManagement_handler/CaseManagement';
 import CaseDetail from './CaseDetail/CaseDetail';
 import ApplicationForm from './CaseDetail/Component/ApplicationForm';
 import UploadPage from './CaseDetail/Component/UploadPage';
@@ -90,6 +91,17 @@ function App() {
               index
               element={
                 <CaseManagement
+                  setCaseNum={setCaseNum}
+                  setCaseId={setCaseId}
+                  setHandlerNull={setHandlerNull}
+                  setSender={setSender}
+                />
+              }
+            />
+            <Route
+              path="caseManagement_handler"
+              element={
+                <CaseManagement_handler
                   setCaseNum={setCaseNum}
                   setCaseId={setCaseId}
                   setHandlerNull={setHandlerNull}

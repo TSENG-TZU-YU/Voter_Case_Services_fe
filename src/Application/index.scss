@@ -40,8 +40,8 @@
         margin-left: 5px;
         margin-right: 5px;
         span {
-          color: red;
-          // margin-left: 5px;
+          color: $focusClrY;
+     
         }
       }
       .contain {
@@ -73,11 +73,18 @@
     .add {
       width: 70%;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
       align-items: center;
       margin-top: 10px;
       .clearIcon {
         margin-right: 10px;
+      }
+      span {
+        opacity: 0;
+        color: $focusClrY;
+      }
+      .view {
+        opacity: 1;
       }
     }
 
@@ -93,7 +100,7 @@
 
       .need {
         span {
-          color: red;
+          color: $focusClrY;
         }
         .one {
           display: flex;
@@ -107,7 +114,7 @@
             margin-bottom: 2px;
           }
           span {
-            color: red;
+            color: $focusClrY;
           }
         }
 
@@ -194,6 +201,7 @@
       justify-content: start;
       // background-color: rgb(231, 246, 22);
       margin-top: 15px;
+      font-weight: bold;
     }
     .submitBtn {
       display: flex;
