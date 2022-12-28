@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../utils/use_auth';
 import { API_URL } from '../../utils/config';
@@ -33,6 +33,7 @@ function ApplicationForm({
   // viewCheck,
 }) {
   const { num } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [editPage, setEditPage] = useState(false);
   const [addStateForm, setAddStateForm] = useState(false);
@@ -257,15 +258,15 @@ function ApplicationForm({
         detailData[0].category !== '' &&
         detailData[0].cycle !== ''
       ) {
-        // for (let i = 0; i < addFile.length; i++) {
-        //   if (addFile[i].file === '') {
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: '無檔案',
-        //     });
-        //     return;
-        //   }
-        // }
+        for (let i = 0; i < addFile.length; i++) {
+          if (addFile[i].file === '') {
+            Swal.fire({
+              icon: 'error',
+              title: '無檔案',
+            });
+            return;
+          }
+        }
 
         submitCheck('確定要送出申請表?');
         let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
@@ -354,10 +355,16 @@ function ApplicationForm({
       console.log('sub', err);
     }
   }
+
   console.log('caseId', caseId);
+
   //TODO: caseId 刷新後抓不到
+
   // 取得detail Id 的值
   useEffect(() => {
+    let params = new URLSearchParams(location.search);
+    let caseId = params.get('id');
+    console.log('ID', caseId);
     let getCampingDetailData = async () => {
       let response = await axios.post(
         `${API_URL}/applicationData/${num}`,
