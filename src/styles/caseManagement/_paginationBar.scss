@@ -7,14 +7,16 @@
   }
   
   .pagination .pagination-btn {
-    color: #6a777a;
+    color: $focusClrG;
     float: left;
     text-decoration: none;
     transition: background-color .3s;
+    border-radius: 10px;
+    cursor: pointer;
   }
   
   .pagination .pagination-btn.pagination-active {
-    background-color: #6a777a;
+    background-color: $focusClrG;
     color: white;
   }
   

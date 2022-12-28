@@ -276,7 +276,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
         )}
 
         {/* 列表 */}
-        <table className="caseContain">
+        {/* <table className="caseContain">
           <thead>
             <tr>
               <th></th>
@@ -373,7 +373,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                       />
                     </Link>
 
-                    {/* <div className="hadClick">NEW</div> */}
+            
                   </td>
                   <td>
                     進度({v.cou}/{v.sum})
@@ -382,7 +382,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
               </tbody>
             );
           })}
-        </table>
+        </table> */}
       </div>
       {/* </Header> */}
     </>

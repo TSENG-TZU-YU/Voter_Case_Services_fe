@@ -42,10 +42,10 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [allCategoryData, setAllCategoryData] = useState([]);
 
   // 分頁
-  const [pageCase, setPageCase] = useState([]); // 設定 page_.chunk
-  const [pageNow, setPageNow] = useState(1); // 目前頁號
-  const [perPage] = useState(8); // 每頁多少筆資料
-  const [pageTotal, setPageTotal] = useState(5); //總共幾頁
+  const [pageCase, setPageCase] = useState([]);
+  const [pageNow, setPageNow] = useState(1);
+  const [perPage] = useState(7);
+  const [pageTotal, setPageTotal] = useState(5);
 
   // 檢查會員
   useEffect(() => {
@@ -262,7 +262,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             })}
         </table>
         {/* 頁碼 */}
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center align-items-center mt-3">
           <PaginationBar
             pageNow={pageNow}
             setPageNow={setPageNow}

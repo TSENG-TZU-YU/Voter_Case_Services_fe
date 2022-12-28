@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './index.scss';
+import './_index.scss';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import moment from 'moment';
@@ -232,7 +232,7 @@ function Application({
           id: member.id,
           user: member.name,
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-          status: 2,
+          status: 4,
           create_time: endTime,
         }
       );
