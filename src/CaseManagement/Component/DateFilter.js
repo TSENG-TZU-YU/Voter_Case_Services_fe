@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../utils/use_auth';
+
 import '../../styles/caseManagement/_dateFilter.scss';
 
 function DateFilter({
@@ -10,13 +13,33 @@ function DateFilter({
   setMinDateValue,
   maxDateValue,
   minDateValue,
+  dateAgo,
+  nowDate,
 }) {
+  const { member, setMember } = useAuth();
+
+  useEffect(() => {
+    async function getMember() {
+      try {
+        // console.log('檢查是否登入');
+        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+          withCredentials: true,
+        });
+        // console.log(response.data);
+        setMember(response.data);
+      } catch (err) {
+        console.log(err.response.data.message);
+      }
+    }
+    getMember();
+  }, []);
   return (
     <>
       <div className="dateFilterContainer">
         <div className="dateFilter">
           <input
             type="date"
+            defaultValue={dateAgo}
             onChange={(e) => {
               let newDate = e.target.value;
               setMinDateValue(newDate);
@@ -26,6 +49,7 @@ function DateFilter({
           <div className="mx-2">-</div>
           <input
             type="date"
+            defaultValue={nowDate}
             onChange={(e) => {
               let newDate = e.target.value;
               setMaxDateValue(newDate);

@@ -389,7 +389,7 @@ function ApplicationForm({
 
       // selectStatus filter
       if (member.permissions_id === 2) {
-        setSelectData(response.data.selectResult.splice(0, 0));
+        setSelectData(response.data.selectResult.splice(1, 1));
       }
       if (member.manage === 1 && member.name !== handlerNull) {
         setSelectData(response.data.selectResult.splice(2, 3));

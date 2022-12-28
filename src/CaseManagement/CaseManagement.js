@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 import axios from 'axios';
 import { useAuth } from '../utils/use_auth';
+import moment from 'moment';
 
 import '../styles/caseManagement/_caseManagement.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
@@ -16,21 +17,36 @@ import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
 function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
+  let nowDate = moment().format(`YYYY-MM-DD`);
+  // 取前六個月
+  let dateObj = new Date(nowDate);
+  dateObj.setMonth(dateObj.getMonth() - 6);
+
+  // 將日期轉換為指定格式的字串
+  let newDateString = dateObj.toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  let dateAgo = newDateString.replace(/\//g, '-');
+  // console.log('d', dateObj);
+
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
   const [time, setTime] = useState(true);
   const [checkState, setCheckState] = useState(false);
   const [dateRemind, setDateRemind] = useState('');
-  const [maxDateValue, setMaxDateValue] = useState('');
-  const [minDateValue, setMinDateValue] = useState('');
-  const [memberId, setMemberId] = useState('');
+  const [maxDateValue, setMaxDateValue] = useState(nowDate);
+  const [minDateValue, setMinDateValue] = useState(dateAgo);
 
   // 篩選
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
-  const [maxDate, setMaxDate] = useState('');
-  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState(nowDate);
+  const [minDate, setMinDate] = useState(dateAgo);
+  const [order, setOrder] = useState('');
 
   // get data
   const [allData, setAllData] = useState([]);
@@ -61,7 +77,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   useEffect(() => {
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}`,
         {
           withCredentials: true,
         }
@@ -73,7 +89,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setAllStatusData(response.data.statusResult);
     };
     getCampingData();
-  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
+  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate, order]);
 
   // 審查 history
   let handleCaseHistory = async (caseNum) => {
@@ -121,6 +137,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             <StatusFilter
               allStatusData={allStatusData}
               setNowStatus={setNowStatus}
+              member={member}
             />
             <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
           </div>
@@ -133,6 +150,8 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             setMaxDateValue={setMaxDateValue}
             minDateValue={minDateValue}
             setMinDateValue={setMinDateValue}
+            dateAgo={dateAgo}
+            nowDate={nowDate}
           />
         </div>
 
@@ -146,6 +165,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                   <MdArrowDropDown
                     className="arrow"
                     onClick={() => {
+                      setOrder(1);
                       setNumber(false);
                     }}
                   />
@@ -153,6 +173,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                   <MdArrowDropUp
                     className="arrow"
                     onClick={() => {
+                      setOrder(2);
                       setNumber(true);
                     }}
                   />
@@ -168,6 +189,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                   <MdArrowDropDown
                     className="arrow"
                     onClick={() => {
+                      setOrder(3);
                       setTime(false);
                     }}
                   />
@@ -175,6 +197,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                   <MdArrowDropUp
                     className="arrow"
                     onClick={() => {
+                      setOrder(4);
                       setTime(true);
                     }}
                   />

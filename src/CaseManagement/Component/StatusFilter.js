@@ -2,17 +2,22 @@ import React from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ allStatusData, setNowStatus }) {
+function ActivitySelect({ allStatusData, setNowStatus, member }) {
   // const [selectSortOption, setSelectSortOption] = useState(null);
+  // console.log('m',member.manage)
   let newData = [];
-  for (let i = 0; i < allStatusData.length; i++) {
+  for (let i = 1; i < allStatusData.length; i++) {
     newData.push({
       value: allStatusData[i].id,
       label: allStatusData[i].name,
     });
   }
-  // console.log('n', newData);
-  const sortOption = [{ value: '', label: '----請選擇狀態----' }, ...newData];
+  const sortOption = [
+    { value: '', label: '----請選擇狀態----' },
+    // { value: '', label: '評估中' },
+    ...newData,
+  ];
+  // console.log('n', sortOption);
 
   const customStyles = {
     option: (provided, state) => ({
@@ -66,7 +71,11 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
     <>
       <Select
         className="me-2"
-        defaultValue={sortOption[0]}
+        defaultValue={
+          // member.manage === 1 || member.handler === 1
+          //   ? '處理人評估中'
+          sortOption[0]
+        }
         onChange={(e) => {
           // console.log(e.value);
           setNowStatus(e.value);
