@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/logIn/_logIn.scss';
 import { AiFillHome } from 'react-icons/ai';
 import { BsPersonCircle } from 'react-icons/bs';
@@ -14,12 +14,26 @@ function LogIn() {
   const navigate = useNavigate();
   const [login, setIogin] = useState([]);
   const { member, setMember, isLogin, setIsLogin } = useAuth();
+  const [unit, setUnit] = useState([]);
 
   // const [check, setCheck] = useState([]);
 
   const doLogin = (e) => {
     setIogin({ ...login, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    async function unit() {
+      try {
+        let res = await axios.get('http://localhost:3001/api/login/unit');
+        setUnit(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    unit();
+  }, []);
 
   const submit = async () => {
     try {
@@ -46,10 +60,12 @@ function LogIn() {
             <div className="inputContain">
               <AiFillHome className="icons" />
               <select name="company" onChange={doLogin}>
-                <option value="0" selected>
+                <option value="0" selected disabled hidden>
                   --所屬單位--
                 </option>
-                <option>陽信電子商務</option>
+                {unit.map((v) => {
+                  return <option key={v.id}>{v.name}</option>;
+                })}
               </select>
             </div>
             <div className="inputContain">

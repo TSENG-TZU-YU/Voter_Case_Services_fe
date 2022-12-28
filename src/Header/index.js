@@ -33,6 +33,8 @@ function Header({
 
   const [handler, setHandler] = useState(false);
 
+  const [manage, setManage] = useState(false);
+
   //會員登入狀態判斷
   useEffect(() => {
     async function getMember() {
@@ -51,16 +53,18 @@ function Header({
 
     if (member.permissions_id === 1) {
       setUser(true);
-      // setHandler(false);
     }
     if (member.permissions_id === 2) {
       setUser(true);
       setHandler(true);
     }
-    if (member.permissions_id === 3 || member.manage === 1) {
+    if (member.permissions_id === 3) {
       setHandler(true);
-      // setUser(false);
     }
+    if (member.permissions_id === 4 || member.manage === 1) {
+      setManage(true);
+    }
+
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
   }, [member.permissions_id]);
 
@@ -143,6 +147,13 @@ function Header({
                   案件審理作業
                 </div>
               </Link>
+            </>
+          ) : (
+            ''
+          )}
+          {manage ? (
+            <>
+              {' '}
               <Link to="countPage">
                 {/* 處理人/協理/主管 */}
                 <div className="bold">
@@ -150,7 +161,6 @@ function Header({
                   案件統計
                 </div>
               </Link>
-
               <Link to="permissions">
                 {/* 處理人/協理/主管 */}
                 <div className="bold">
