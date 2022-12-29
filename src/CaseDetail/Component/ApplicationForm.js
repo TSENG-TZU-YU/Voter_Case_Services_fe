@@ -98,6 +98,8 @@ function ApplicationForm({
     }
   }, [detailData]);
 
+  console.log('manager', member.permissions_id);
+
   // 修改申請表
   const [edit, setEdit] = useState(true);
   const [addNeed, setAddNeed] = useState([{ title: '', text: '' }]);
@@ -383,8 +385,6 @@ function ApplicationForm({
       }
       if (member.manage === 1 && member.name !== handlerNull) {
         setSelectData(response.data.selectResult.splice(2, 3));
-      } else {
-        setSelectData(response.data.selectResult.splice(1));
       }
       if (member.permissions_id !== 2 && member.manage !== 1) {
         setSelectData(response.data.selectResult.splice(1));

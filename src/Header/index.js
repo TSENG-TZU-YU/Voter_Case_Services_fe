@@ -121,7 +121,7 @@ function Header({
                   onClick={app}
                 >
                   <HiPencilAlt size="20" />
-                  申請表
+                  申請表新增
                 </div>
               </Link>
               <Link
