@@ -81,7 +81,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
     };
-    setPageNow(1);
+
     getCampingData();
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
   console.log('allData', allData);
@@ -231,7 +231,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                     </td>
                     <td className="posClick">
                       <Link
-                        to={`caseDetail/application/${v.case_number}?id=${v.id}`}
+                        to={`/header/caseDetail/application/${v.case_number}?id=${v.id}`}
                       >
                         <FaEye
                           className={`icons ${

@@ -41,7 +41,6 @@
         margin-right: 5px;
         span {
           color: $focusClrY;
-     
         }
       }
       .contain {
@@ -55,6 +54,11 @@
           margin-right: 8px;
           margin-top: 4px;
         }
+      }
+      .hide-arrows::-webkit-outer-spin-button,
+      .hide-arrows::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
       .otherText {
         margin-top: 10px;
@@ -195,6 +199,10 @@
           }
         }
       }
+    }
+    .textarea {
+      // width: 200px;
+      resize: none;
     }
     .ps {
       width: 70%;
