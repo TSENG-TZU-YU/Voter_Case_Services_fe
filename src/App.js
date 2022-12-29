@@ -1,10 +1,12 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LogIn from './LogIn/LogIn.js';
+import { useAuth } from './utils/use_auth';
+import axios from 'axios';
 
 // 登入元件
 import { AuthProvider } from './utils/use_auth';
@@ -21,6 +23,9 @@ import CountPage from './Count/CountPage';
 import Permissions from './Permissions';
 
 function App() {
+  // const { member, setMember } = useAuth();
+  const [member, setMember] = useState('');
+
   const [application, setApplication] = useState(false);
   const [caseManagement, setCaseManagement] = useState(false);
   const [trial, setTrial] = useState(false);
@@ -30,6 +35,23 @@ function App() {
   const [caseId, setCaseId] = useState('');
   const [handlerNull, setHandlerNull] = useState('');
   const [sender, setSender] = useState('');
+
+  // 檢查會員
+  useEffect(() => {
+    async function getMember() {
+      try {
+        // console.log('檢查是否登入');
+        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+          withCredentials: true,
+        });
+        // console.log(response.data);
+        setMember(response.data);
+      } catch (err) {
+        console.log(err.response.data.message);
+      }
+    }
+    getMember();
+  }, []);
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -75,7 +97,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LogIn />} />
           <Route
-            path="header"
+          // ?member=${member.permissions_id}
+            path={`header`}
             element={
               <Header
                 setApplication={setApplication}

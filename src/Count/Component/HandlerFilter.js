@@ -70,7 +70,6 @@ function ActivitySelect({ setHandler, allHandlerData }) {
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

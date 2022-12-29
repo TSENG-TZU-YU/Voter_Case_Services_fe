@@ -10,6 +10,8 @@ function DateFilter({
   setMinDateValue,
   maxDateValue,
   minDateValue,
+  dateAgo,
+  nowDate,
 }) {
   return (
     <>
@@ -17,6 +19,7 @@ function DateFilter({
         <div className="dateFilter">
           <input
             type="date"
+            defaultValue={dateAgo}
             onChange={(e) => {
               let newDate = e.target.value;
               setMinDateValue(newDate);
@@ -26,6 +29,7 @@ function DateFilter({
           <div className="mx-2">-</div>
           <input
             type="date"
+            defaultValue={nowDate}
             onChange={(e) => {
               let newDate = e.target.value;
               setMaxDateValue(newDate);

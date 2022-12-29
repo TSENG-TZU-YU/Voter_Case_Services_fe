@@ -60,7 +60,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   // 分頁
   const [pageCase, setPageCase] = useState([]);
   const [pageNow, setPageNow] = useState(1);
-  const [perPage] = useState(10);
+  const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
   console.log('pageNow', pageNow);
   // 檢查會員
