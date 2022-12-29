@@ -138,7 +138,7 @@ function Header({
           ) : (
             ''
           )}
-          {handler ? (
+          {handler || manage ? (
             <>
               <Link to="caseManagement_handler">
                 {/* 處理人/協理/主管 */}
@@ -153,7 +153,6 @@ function Header({
           )}
           {manage ? (
             <>
-              {' '}
               <Link to="countPage">
                 {/* 處理人/協理/主管 */}
                 <div className="bold">

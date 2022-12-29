@@ -62,7 +62,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [pageNow, setPageNow] = useState(1);
   const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
-  console.log('pageNow', pageNow);
+
   // 檢查會員
   useEffect(() => {
     async function getMember() {

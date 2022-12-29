@@ -69,26 +69,31 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   useEffect(() => {
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
         {
           withCredentials: true,
         }
       );
+
       // console.log(response.data.result);
       setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
-
-      const newPageCase = _.chunk(allData, perPage);
-      setPageTotal(newPageCase.length);
-      setPageCase(newPageCase);
-      console.log('pageCase', pageCase);
     };
     setPageNow(1);
     getCampingData();
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
+  console.log('allData', allData);
 
+  useEffect(() => {
+    const newPageCase = _.chunk(allData, perPage);
+    setPageNow(1);
+    setPageTotal(newPageCase.length);
+    setPageCase(newPageCase);
+    console.log('allData', allData);
+    console.log('pageCase', pageCase);
+  }, [allData]);
   // 審查 history
   let handleCaseHistory = async (caseNum) => {
     let response = await axios.get(
