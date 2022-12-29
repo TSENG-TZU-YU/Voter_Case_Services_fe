@@ -7,7 +7,7 @@ function ActivitySelect({ setNowUser, allUserData }) {
   for (let i = 0; i < allUserData.length; i++) {
     newData.push({
       value: allUserData[i].id,
-      label: allUserData[i].name,
+      label: `${allUserData[i].staff_code} ${allUserData[i].name}`,
     });
   }
   // console.log('n', newData);

@@ -48,7 +48,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [nowUnit, setNowUnit] = useState('');
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
-  const [finish, setFinish] = useState('');
+  // const [finish, setFinish] = useState('');
   const [handler, setHandler] = useState('');
   const [nowUser, setNowUser] = useState('');
   const [nowUserUnit, setNowUserUnit] = useState('');
@@ -68,6 +68,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [stateTtl, setStateTtl] = useState([]);
   const [categoryTtl, setCategoryTtl] = useState([]);
   const [unitTtl, setUnitTtl] = useState([]);
+  const [handlerTtl, setHandlerTtl] = useState([]);
 
   // 檢查會員
   useEffect(() => {
@@ -90,7 +91,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   useEffect(() => {
     let getAllData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&finish=${finish}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}`,
+        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}`,
         {
           withCredentials: true,
         }
@@ -108,6 +109,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setStateTtl(response.data.pagination.counts);
       setCategoryTtl(response.data.pagination.categoryCounts);
       setUnitTtl(response.data.pagination.unitCounts);
+      setHandlerTtl(response.data.pagination.handlerCounts);
     };
     getAllData();
   }, [
@@ -117,7 +119,6 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     nowUnit,
     minDate,
     maxDate,
-    finish,
     handler,
     nowUser,
     nowUserUnit,
@@ -140,21 +141,21 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     return p;
   };
 
-  const sortOption = [
-    { id: '12', name: '案件已完成' },
-    { id: '2', name: '案件未完成' },
-  ];
-  // state name
-  const nowSt = (arr, now) => {
-    if (now === '') return;
+  // const sortOption = [
+  //   { id: '12', name: '案件已完成' },
+  //   { id: '2', name: '案件未完成' },
+  // ];
+  // // state name
+  // const nowSt = (arr, now) => {
+  //   if (now === '') return;
 
-    let st = arr.filter((v) => {
-      if (parseInt(v.id) === parseInt(now)) {
-        return v.name;
-      }
-    });
-    return st[0].name;
-  };
+  //   let st = arr.filter((v) => {
+  //     if (parseInt(v.id) === parseInt(now)) {
+  //       return v.name;
+  //     }
+  //   });
+  //   return st[0].name;
+  // };
 
   return (
     <>
@@ -173,7 +174,6 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
               setNowStatus={setNowStatus}
             />
             <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-            <FinishFilter setFinish={setFinish} />
             <HandlerFilter
               setHandler={setHandler}
               allHandlerData={allHandlerData}
@@ -215,18 +215,21 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
         <hr />
         <div className="allConutContainer">
-          <div className="allTit">總申請案件 ： {allTotal} 件</div>
+          <div className="d-flex">
+            <div className="allTit">總申請案件 ： {allTotal} 件</div>
+            <div className="allTit">搜尋件數 ： {total} 件</div>
+          </div>
+
           {nowCategory ||
           nowStatus ||
           nowUnit ||
           minDate ||
           maxDate ||
-          finish ||
           handler ||
           nowUser ? (
             <>
               {/* 總計% */}
-              <div className="stateTit">搜尋的條件(總件數的%)</div>
+              {/* <div className="stateTit">搜尋的條件(總件數的%)</div>
               <table className="countContainer">
                 <thead>
                   <tr>
@@ -254,15 +257,14 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                     <td>{percent(allTotal, total)}%</td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
 
-              {/* 申請類別% */}
+              {/* 申請類別% (搜尋件數的%)*/}
               {nowCategory ? (
                 ''
               ) : (
                 <>
-                  <div className="allTit">搜尋件數 ： {total} 件</div>
-                  <div className="stateTit">申請類別(搜尋件數的%)</div>
+                  <div className="stateTit">申請類別</div>
                   <table className="countContainer">
                     <thead>
                       <tr>
@@ -466,6 +468,129 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                         <td>
                           {unitTtl.state服務處C !== undefined
                             ? `${percent(total, unitTtl.state服務處C)} %`
+                            : '0 %'}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </>
+              )}
+
+              {/* 處理人% */}
+              {nowUnit ? (
+                ''
+              ) : (
+                <>
+                  <div className="stateTit">處理人</div>
+                  <table className="countContainer">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        {allHandlerData.map((v, i) => {
+                          return <th key={i}>{v.name}</th>;
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* 件數 */}
+                      <tr>
+                        <th>案件量</th>
+                        {/* {allHandlerData.map((v, i) => {
+                          return handlerTtl.filter((val, i) => {
+                            if (val === v) {
+                              return val.v !== undefined ? `${val} 件` : '0 件';
+                            }
+                          });
+                        })} */}
+
+                        {allHandlerData.map((v, i) => {
+                          let arr = handlerTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          {/* console.log('a', arr[0][`${v.name}`]); */}
+                          console.log('r', v);
+
+                          return (
+                            <td key={i}>
+                              {arr[v.name] !== undefined
+                                ? `${arr.v} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
+                        {/* <td>
+                          {handlerTtl.state !== undefined
+                            ? `${handlerTtl.state} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state郭彥岐 !== undefined
+                            ? `${handlerTtl.state郭彥岐} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state連佳豪 !== undefined
+                            ? `${handlerTtl.state連佳豪} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state王裕億 !== undefined
+                            ? `${handlerTtl.state王裕億} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state林祐生 !== undefined
+                            ? `${handlerTtl.state林祐生} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state曾子瑜 !== undefined
+                            ? `${handlerTtl.state曾子瑜} 件`
+                            : '0 件'}
+                        </td>
+                        <td>
+                          {handlerTtl.state林鈺珊 !== undefined
+                            ? `${handlerTtl.state林鈺珊} 件`
+                            : '0 件'}
+                        </td> */}
+                      </tr>
+
+                      {/* %% */}
+                      <tr>
+                        <th>案件%</th>
+                        <td>
+                          {handlerTtl.state !== undefined
+                            ? `${percent(total, handlerTtl.state)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state郭彥岐 !== undefined
+                            ? `${percent(total, handlerTtl.state郭彥岐)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state連佳豪 !== undefined
+                            ? `${percent(total, handlerTtl.state連佳豪)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state王裕億 !== undefined
+                            ? `${percent(total, handlerTtl.state王裕億)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state林祐生 !== undefined
+                            ? `${percent(total, handlerTtl.state林祐生)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state曾子瑜 !== undefined
+                            ? `${percent(total, handlerTtl.state曾子瑜)} %`
+                            : '0 %'}
+                        </td>
+                        <td>
+                          {handlerTtl.state林鈺珊 !== undefined
+                            ? `${percent(total, handlerTtl.state林鈺珊)} %`
                             : '0 %'}
                         </td>
                       </tr>
