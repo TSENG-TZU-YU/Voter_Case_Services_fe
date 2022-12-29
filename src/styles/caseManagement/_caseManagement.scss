@@ -18,7 +18,7 @@
   }
   .caseContain {
     margin: 20px auto 0;
- 
+
     tbody :hover {
       background: #eee;
     }
@@ -41,7 +41,7 @@
           height: 20px;
           cursor: pointer;
         }
-        .eyeBcg{
+        .eyeBcg {
           color: pink;
         }
       }
@@ -77,5 +77,10 @@
       }
     }
   }
+  .page {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    margin-top: 20px;
+  }
 }
-

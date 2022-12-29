@@ -16,24 +16,21 @@
   margin-top: 3%;
 
   .permissions {
-    background-color: rgb(246, 203, 157);
+    background-color: $navBar;
     display: flex;
-    gap: 20px;
-    div {
+    gap: 10px;
+    justify-content: center;
+    // height: 30px;
+    .container {
       display: flex;
       align-items: center;
 
       .select {
         margin-right: 5px;
-        width: 53px;
+        width: 46px;
         display: flex;
         justify-content: end;
-      }
-      select {
-        width: 100px;
-        height: 40px;
-        border-radius: 10px;
-        text-align: center;
+        white-space: nowrap;
       }
     }
     .btn {
@@ -42,12 +39,12 @@
       border-radius: 10px;
       margin: 0 15px;
       padding: 4px 5px;
-      height: 40px;
+      white-space: nowrap;
       cursor: pointer;
       color: aliceblue;
     }
   }
-  .container {
+  .container1 {
     margin: 20px 0;
     padding-left: 0;
     padding-right: 0;
@@ -59,9 +56,20 @@
       margin: 15px 0;
     }
     .row {
-      background-color: aquamarine;
+      background-color: #29d7d7;
+      align-items: center;
       .getPermissions {
         white-space: nowrap;
+      }
+      .btn {
+        border: 1px solid $subClrBrown;
+        background-color: $header;
+        border-radius: 10px;
+        margin: 0 15px;
+        padding: 4px 5px;
+        white-space: nowrap;
+        cursor: pointer;
+        color: aliceblue;
       }
     }
   }
