@@ -577,6 +577,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                       />
                     </Link>
 
+            
                   </td>
                   <td>
                     進度({v.cou}/{v.sum})

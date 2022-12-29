@@ -62,7 +62,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [pageNow, setPageNow] = useState(1);
   const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
-  console.log('pageNow', pageNow);
+
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -289,7 +289,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             })}
         </table>
         {/* 頁碼 */}
-        <div className="d-flex justify-content-center align-items-end">
+        <div className="d-flex justify-content-center mt-3">
           <PaginationBar
             pageNow={pageNow}
             setPageNow={setPageNow}

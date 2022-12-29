@@ -272,8 +272,8 @@ function ApplicationForm({
         `http://localhost:3001/api/application_edit/submit/${caseNum}`,
         {
           ...detailData[0],
-          // TODO: 申請狀態 一般職員跟主管送出的狀態不同
-          status_id: 2,
+          // TODO: 申請狀態 主管權限是1 || 0 判斷
+          status_id: 4,
           create_time: endTime,
         }
       );

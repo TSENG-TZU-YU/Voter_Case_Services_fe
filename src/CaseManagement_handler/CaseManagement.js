@@ -42,10 +42,10 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [allCategoryData, setAllCategoryData] = useState([]);
 
   // 分頁
-  const [pageCase, setPageCase] = useState([]); // 設定 page_.chunk
-  const [pageNow, setPageNow] = useState(1); // 目前頁號
-  const [perPage] = useState(8); // 每頁多少筆資料
-  const [pageTotal, setPageTotal] = useState(5); //總共幾頁
+  const [pageCase, setPageCase] = useState([]);
+  const [pageNow, setPageNow] = useState(1);
+  const [perPage] = useState(7);
+  const [pageTotal, setPageTotal] = useState(5);
 
   // 檢查會員
   useEffect(() => {
@@ -69,26 +69,31 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   useEffect(() => {
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
         {
           withCredentials: true,
         }
       );
+
       // console.log(response.data.result);
       setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
-
-      const newPageCase = _.chunk(allData, perPage);
-      setPageTotal(newPageCase.length);
-      setPageCase(newPageCase);
-      console.log('pageCase', pageCase);
     };
     setPageNow(1);
     getCampingData();
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
+  console.log('allData', allData);
 
+  useEffect(() => {
+    const newPageCase = _.chunk(allData, perPage);
+    setPageNow(1);
+    setPageTotal(newPageCase.length);
+    setPageCase(newPageCase);
+    console.log('allData', allData);
+    console.log('pageCase', pageCase);
+  }, [allData]);
   // 審查 history
   let handleCaseHistory = async (caseNum) => {
     let response = await axios.get(
@@ -262,7 +267,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             })}
         </table>
         {/* 頁碼 */}
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center align-items-center mt-3">
           <PaginationBar
             pageNow={pageNow}
             setPageNow={setPageNow}
