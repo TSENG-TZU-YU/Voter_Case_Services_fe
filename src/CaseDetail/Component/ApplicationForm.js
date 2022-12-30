@@ -1055,6 +1055,7 @@ function ApplicationForm({
                           <input
                             className="handler"
                             type="text"
+                            value={v.relation}
                             onChange={(e) => {
                               handleChange(
                                 (v.relation = e.target.value),
@@ -1105,6 +1106,7 @@ function ApplicationForm({
                           <input
                             className="handler"
                             type="text"
+                            value={v.litigant}
                             onChange={(e) => {
                               handleChange(
                                 (v.litigant = e.target.value),
@@ -1137,6 +1139,7 @@ function ApplicationForm({
                           <input
                             className=" hide-arrows"
                             type="text"
+                            value={v.litigant_phone}
                             onChange={(e) => {
                               handleChange(
                                 (v.litigant_phone = e.target.value),
@@ -1225,6 +1228,7 @@ function ApplicationForm({
                         ) : (
                           <input
                             type="text"
+                            value={v.litigant_rimin}
                             onChange={(e) => {
                               handleChange(
                                 (v.litigant_rimin = e.target.value),
@@ -1250,6 +1254,7 @@ function ApplicationForm({
                         ) : (
                           <input
                             type="text"
+                            value={v.litigant_address}
                             onChange={(e) => {
                               handleChange(
                                 (v.litigant_address = e.target.value),
@@ -1277,6 +1282,7 @@ function ApplicationForm({
                         ) : (
                           <input
                             type="text"
+                            value={v.client_name}
                             onChange={(e) => {
                               handleChange(
                                 (v.client_name = e.target.value),
@@ -1309,6 +1315,7 @@ function ApplicationForm({
                           <input
                             className="hide-arrows"
                             type="text"
+                            value={v.client_phone}
                             oninput="if(value.length>11)value=value.slice(0,11)"
                             onChange={(e) => {
                               handleChange(
@@ -1338,6 +1345,7 @@ function ApplicationForm({
                           <input
                             className="handler"
                             type="text"
+                            value={v.client_address}
                             onChange={(e) => {
                               handleChange(
                                 (v.client_address = e.target.value),

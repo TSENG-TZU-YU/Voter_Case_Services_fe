@@ -7,7 +7,6 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
-
 function CaseDetail({ caseNum, setCaseNum }) {
   const navigate = useNavigate();
   // 把網址上的 :detailedID 拿出來
@@ -27,7 +26,8 @@ function CaseDetail({ caseNum, setCaseNum }) {
   // console.log('num', num);
   return (
     <div className="caseDetailContainer">
-      <Link to={navigate(-1)} className="prePage">
+      {/* navigate(+1) */}
+      <Link to="/header" className="prePage">
         <FaArrowLeft className="preIcon" /> <span>返回列表頁</span>
       </Link>
 
