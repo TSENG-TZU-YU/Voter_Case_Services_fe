@@ -20,6 +20,9 @@ import { HiOutlineDocumentPlus } from 'react-icons/hi2';
 import { FaTrashAlt } from 'react-icons/fa';
 import { AiFillCloseCircle, AiFillCloseSquare } from 'react-icons/ai';
 
+// 元件
+import Loader from '../../Loader';
+
 function ApplicationForm({
   setAddStatus,
   addStatus,
@@ -35,6 +38,7 @@ function ApplicationForm({
   const { num } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
   const [addStateForm, setAddStateForm] = useState(false);
   const { member, setMember } = useAuth();
@@ -413,6 +417,7 @@ function ApplicationForm({
 
   // 取得detail Id 的值
   useEffect(() => {
+    setIsLoading(true);
     let params = new URLSearchParams(location.search);
     let caseId = params.get('id');
     let getCampingDetailData = async () => {
@@ -465,6 +470,10 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
   }, [num, needLoading, needState, caseId, caseNum, edit]);
 
   // 需求 checked
@@ -772,896 +781,913 @@ function ApplicationForm({
   };
 
   return (
-    <div className="appFormContainer">
-      {/* 處理人申請狀態btn */}
-      {addStateForm ? (
-        <AddStateForm
-          setAddStateForm={setAddStateForm}
-          handlePostVal={handlePostVal}
-          handlerSelect={handlerSelect}
-          setHandlerSelect={setHandlerSelect}
-          handlerData={handlerData}
-          setHandlerVal={setHandlerVal}
-          handlerVal={handlerVal}
-          postVal={postVal}
-          handlePostHandle={handlePostHandle}
-          postValRemind={postValRemind}
-          setPostValRemind={setPostValRemind}
-        />
+    <>
+      {isLoading ? (
+        <Loader />
       ) : (
-        ''
-      )}
+        <div className="appFormContainer">
+          {/* 處理人申請狀態btn */}
+          {addStateForm ? (
+            <AddStateForm
+              setAddStateForm={setAddStateForm}
+              handlePostVal={handlePostVal}
+              handlerSelect={handlerSelect}
+              setHandlerSelect={setHandlerSelect}
+              handlerData={handlerData}
+              setHandlerVal={setHandlerVal}
+              handlerVal={handlerVal}
+              postVal={postVal}
+              handlePostHandle={handlePostHandle}
+              postValRemind={postValRemind}
+              setPostValRemind={setPostValRemind}
+            />
+          ) : (
+            ''
+          )}
 
-      {/* 修改表單btn */}
-      {editPage ? (
-        <EditNeedPage
-          setEditPage={setEditPage}
-          handleAddNeed={handleAddNeed}
-          editNeed={editNeed}
-          handleDelNeed={handleDelNeed}
-          handlerUpdateNeed={handlerUpdateNeed}
-          detailData={detailData}
-          needData={needData}
-          hanleAddNeed={hanleAddNeed}
-          editVerifyPage={editVerifyPage}
-          setEditVerifyPage={setEditVerifyPage}
-          caseId={caseId}
-          delCheck={delCheck}
-        />
-      ) : (
-        ''
-      )}
+          {/* 修改表單btn */}
+          {editPage ? (
+            <EditNeedPage
+              setEditPage={setEditPage}
+              handleAddNeed={handleAddNeed}
+              editNeed={editNeed}
+              handleDelNeed={handleDelNeed}
+              handlerUpdateNeed={handlerUpdateNeed}
+              detailData={detailData}
+              needData={needData}
+              hanleAddNeed={hanleAddNeed}
+              editVerifyPage={editVerifyPage}
+              setEditVerifyPage={setEditVerifyPage}
+              caseId={caseId}
+              delCheck={delCheck}
+            />
+          ) : (
+            ''
+          )}
 
-      {/* user  需求修改Btn */}
-      {needState === 7 && addStatus === false ? (
-        <div
-          className="editBtn"
-          onClick={() => {
-            setEditNeed([...needData]);
-            setEditPage(true);
-          }}
-        >
-          請點選按鈕進行需求修改
-        </div>
-      ) : (
-        ''
-      )}
-
-      {/* handler  接收需求Btn */}
-      {/* {needState === 13 && handler === false ? (
-        <div className="editBtn" onClick={handleCheckAccept}>
-          需求已修改完成，請點選確認接收
-        </div>
-      ) : (
-        ''
-      )} */}
-
-      {/* handler轉件  是否接件 */}
-      {member.permissions_id === 3 &&
-      needState === 8 &&
-      member.name === sender ? (
-        <>
-          <div className="editBtn" onClick={handleAcceptCase}>
-            是，確認接收此案件
-          </div>
-          <div className="editBtn" onClick={handleRejectCase}>
-            否，無法接收此案件
-          </div>
-        </>
-      ) : (
-        ''
-      )}
-
-      {/* handler === '' 確認接收此案件 */}
-      {(member.permissions_id === 3 || member.manage === 1) &&
-      handlerNull === '' &&
-      needState === 4 ? (
-        <div className="editBtn" onClick={handleReceiveCase}>
-          此案件目前沒有處理人，請點選確認接收此案
-        </div>
-      ) : (
-        ''
-      )}
-
-      {/* handler完成  待user確認 */}
-      {member.permissions_id === 1 && needState === 11 ? (
-        <>
-          <div className="editBtn" onClick={handleAcceptFinish}>
-            是，處理人已完成所有需求項目
-          </div>
-          <div className="editBtn" onClick={handleRejectFinish}>
-            否，處理人尚有需求未完成
-          </div>
-        </>
-      ) : (
-        ''
-      )}
-
-      {/* 處理狀態 */}
-      {handleData.length !== 0 ? (
-        <div className="statusFormContainer">
-          {handleData.map((v) => {
-            return (
-              <div className="statusFormContain" key={uuidv4()}>
-                <div className="mb-2">
-                  <span> &emsp;&emsp;處理人員：</span>
-                  <span>{v.handler}</span>
-                </div>
-                <div className="mb-2">
-                  <span>&emsp;&emsp;處理狀態：</span>
-                  <span>{v.status}</span>
-                </div>
-                <div className="statusTime mb-2">
-                  <span>&emsp;&emsp;處理時間：</span>
-                  <span>{v.create_time}</span>
-                </div>
-                <div className="d-flex mb-2">
-                  <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
-                  <textarea
-                    name=""
-                    cols="40"
-                    rows="3"
-                    placeholder={v.remark}
-                    disabled
-                  ></textarea>
-                </div>
-                {v.select_state === '案件進行中' &&
-                v.estimated_time !== undefined ? (
-                  <div>
-                    <span>預計完成時間：</span>
-                    <span>{v.estimated_time}</span>
-                  </div>
-                ) : (
-                  ''
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="editBtn">尚無狀態資料</div>
-      )}
-
-      {/* 申請表單 */}
-      <div className="tableContainer">
-        {detailData.map((v, i) => {
-          return (
-            <div key={v.id}>
-              <div className="gapContain my-2">
-                <div>
-                  <div className="pb-1">申請類別</div>
-                  {edit ? (
-                    <input
-                      type="text"
-                      placeholder={v.application_category}
-                      disabled
-                      defaultChecked={true}
-                    />
-                  ) : (
-                    <select
-                      className="category"
-                      onChange={(e) => {
-                        handleChange(e.target.value, 'category');
-                      }}
-                      onClick={(e) => {
-                        if (e.target.value !== '0') {
-                          setCategory(false);
-                        }
-                      }}
-                    >
-                      <option selected disabled hidden>
-                        {v.application_category}
-                      </option>
-                      {getCategory.map((v, i) => {
-                        return <option key={i}>{v.name}</option>;
-                      })}
-                    </select>
-                  )}
-                </div>
-                <div>
-                  <div className="pb-1">案件編號</div>
-
-                  <input
-                    type="text"
-                    placeholder={v.case_number}
-                    disabled
-                    defaultChecked={true} //不受控制的組件的使用
-                  />
-                </div>
-              </div>
-              <div className="gapContain">
-                <div>
-                  <div className="pb-1">處理人</div>
-                  {edit ? (
-                    <input
-                      type="text"
-                      placeholder={v.handler}
-                      disabled
-                      defaultChecked={true}
-                    />
-                  ) : (
-                    <select
-                      className="handler"
-                      onChange={(e) => {
-                        handleChange(e.target.value, 'handler');
-                      }}
-                    >
-                      <option selected disabled hidden>
-                        {v.handler}
-                      </option>
-                      <option value=" ">-----請選擇-----</option>
-                      {getHandler.map((v, i) => {
-                        return <option key={i}>{v.name}</option>;
-                      })}
-                    </select>
-                  )}
-                </div>
-                <div>
-                  <div className="pb-1">需求次數</div>
-                  <div className="d-flex align-items-center">
-                    {radioInput.map((d, i) => {
-                      return (
-                        <div
-                          className="d-flex align-items-center"
-                          key={uuidv4()}
-                        >
-                          <input
-                            type="radio"
-                            disabled={edit}
-                            checked={v.cycle === d.value ? true : false}
-                            // defaultChecked={true}
-                            onChange={(e) => {
-                              handleChange(e.target.value, 'cycle');
-                              if (e.target.value !== '') {
-                                setCycle(false);
-                              }
-                            }}
-                            value={i + 1}
-                          />
-                          <label>{d.title}</label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-              <div className="gapContain my-2">
-                {v.relation === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">友好程度(A-D)</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.relation}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        className="handler"
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.relation = e.target.value),
-                            'relation'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-                {v.project_name === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">案件名稱</div>
-                    <input
-                      type="text"
-                      // placeholder={v.project_name}
-                      disabled={edit}
-                      // defaultValue={true}
-                      value={v.project_name}
-                      onChange={(e) => {
-                        handleChange((v.project_name = e.target.value), 'name');
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-              {/* 當事人 */}
-
-              <div className="gapContain my-2">
-                {v.litigant === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.litigant}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        className="handler"
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.litigant = e.target.value),
-                            'litigant'
-                          );
-                          // eslint-disable-next-line no-lone-blocks
-                          // {
-                          //   e.target.value.length > 0
-                          //     ? setLitigant(true)
-                          //     : setLitigant(false);
-                          // }
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-                {v.litigant_phone === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人聯絡電話</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.litigant_phone}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        className=" hide-arrows"
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.litigant_phone = e.target.value),
-                            'litigantPhone'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="gapContain my-2">
-                {v.litigant_county_id === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人縣市</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        placeholder={v.litigant_county_id}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <select
-                        onChange={(e) => {
-                          handleChange(e.target.value, 'litigantCounty');
-                          areaPost(e.target.value);
-                        }}
-                      >
-                        <option selected disabled hidden>
-                          {v.litigant_county_id}
-                        </option>
-                        <option value=" "> -----請選擇-----</option>
-                        {getCounty.map((v, i) => {
-                          return <option key={i}>{v.name}</option>;
-                        })}
-                      </select>
-                    )}
-                  </div>
-                )}
-                {v.litigant_area_id === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人區</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        placeholder={v.litigant_area_id}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <select
-                        onChange={(e) => {
-                          handleChange(e.target.value, 'litigantArea');
-                        }}
-                      >
-                        <option selected disabled hidden>
-                          {v.litigant_area_id}
-                        </option>
-                        <option value=" "> -----請選擇-----</option>
-                        {getArea.map((v, i) => {
-                          return <option key={i}>{v.name}</option>;
-                        })}
-                      </select>
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="gapContain my-2">
-                {v.litigant_rimin === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人里</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.litigant_rimin}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.litigant_rimin = e.target.value),
-                            'litigantRimin'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-                {v.litigant_address === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">當事人地址</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.litigant_address}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.litigant_address = e.target.value),
-                            'litigantAddress'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="gapContain my-2">
-                {v.client_name === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">請託人</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.client_name}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.client_name = e.target.value),
-                            'client'
-                          );
-                          // eslint-disable-next-line no-lone-blocks
-                          // {
-                          //   e.target.value.length > 0
-                          //     ? setClient(true)
-                          //     : setClient(false);
-                          // }
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-                {v.client_phone === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">請託人聯絡電話</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.client_phone}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        className="hide-arrows"
-                        type="text"
-                        oninput="if(value.length>11)value=value.slice(0,11)"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.client_phone = e.target.value),
-                            'clientPhone'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="gapContain my-2">
-                {v.client_address === '' && v.status_id !== 1 ? (
-                  ''
-                ) : (
-                  <div>
-                    <div className="pb-1">請託人地址</div>
-                    {edit ? (
-                      <input
-                        type="text"
-                        value={v.client_address}
-                        disabled
-                        defaultChecked={true}
-                      />
-                    ) : (
-                      <input
-                        className="handler"
-                        type="text"
-                        onChange={(e) => {
-                          handleChange(
-                            (v.client_address = e.target.value),
-                            'clientAddress'
-                          );
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
+          {/* user  需求修改Btn */}
+          {needState === 7 && addStatus === false ? (
+            <div
+              className="editBtn"
+              onClick={() => {
+                setEditNeed([...needData]);
+                setEditPage(true);
+              }}
+            >
+              請點選按鈕進行需求修改
             </div>
-          );
-        })}
-        {edit ? (
-          ''
-        ) : (
-          <div className="add">
-            <span className={`${editVerifyPage ? 'view' : ''}`}>
-              *欄位不得為空
-            </span>
-            <div>
-              <FaTrashAlt
-                size="17"
-                onClick={() => {
-                  delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
-                }}
-                className="clearIcon"
-              />
-              <MdOutlineAddBox
-                size="20"
-                onClick={handleAddNeed}
-                className="addIcon"
-              />
+          ) : (
+            ''
+          )}
+
+          {/* handler  接收需求Btn */}
+          {/* {needState === 13 && handler === false ? (
+      <div className="editBtn" onClick={handleCheckAccept}>
+        需求已修改完成，請點選確認接收
+      </div>
+    ) : (
+      ''
+    )} */}
+
+          {/* handler轉件  是否接件 */}
+          {member.permissions_id === 3 &&
+          needState === 8 &&
+          member.name === sender ? (
+            <>
+              <div className="editBtn" onClick={handleAcceptCase}>
+                是，確認接收此案件
+              </div>
+              <div className="editBtn" onClick={handleRejectCase}>
+                否，無法接收此案件
+              </div>
+            </>
+          ) : (
+            ''
+          )}
+
+          {/* handler === '' 確認接收此案件 */}
+          {(member.permissions_id === 3 || member.manage === 1) &&
+          handlerNull === '' &&
+          needState === 4 ? (
+            <div className="editBtn" onClick={handleReceiveCase}>
+              此案件目前沒有處理人，請點選確認接收此案
             </div>
-          </div>
-        )}
+          ) : (
+            ''
+          )}
 
-        {/* 需求 */}
-        {editNeed.map((v, i) => {
-          return (
-            <div className="needContain" key={i}>
-              <div className="needTit">
-                <div className="d-flex">
-                  <input
-                    type="checkbox"
-                    disabled={
-                      addStatus &&
-                      needState !== 1 &&
-                      needState !== 2 &&
-                      needState !== 3 &&
-                      needState !== 4 &&
-                      needState !== 8 &&
-                      needState !== 9 &&
-                      needState !== 10 &&
-                      needState !== 11 &&
-                      needState !== 12
-                        ? false
-                        : true
-                    }
-                    checked={v.checked === 1 ? true : false}
-                    onChange={(e) => {
-                      handleNeedChecked(v.id, e.target.checked);
-                    }}
-                  />
+          {/* handler完成  待user確認 */}
+          {member.permissions_id === 1 && needState === 11 ? (
+            <>
+              <div className="editBtn" onClick={handleAcceptFinish}>
+                是，處理人已完成所有需求項目
+              </div>
+              <div className="editBtn" onClick={handleRejectFinish}>
+                否，處理人尚有需求未完成
+              </div>
+            </>
+          ) : (
+            ''
+          )}
 
-                  <span className="title">需求 {i + 1}</span>
-                </div>
-
-                {edit ? (
-                  ''
-                ) : (
-                  <>
-                    {i !== 0 ? (
-                      <AiFillCloseCircle
-                        className="delNeedIcon"
-                        onClick={() => {
-                          delCheck('確定要刪除此需求內容?', handleDelNeed, i);
-                        }}
-                      />
+          {/* 處理狀態 */}
+          {handleData.length !== 0 ? (
+            <div className="statusFormContainer">
+              {handleData.map((v) => {
+                return (
+                  <div className="statusFormContain" key={uuidv4()}>
+                    <div className="mb-2">
+                      <span> &emsp;&emsp;處理人員：</span>
+                      <span>{v.handler}</span>
+                    </div>
+                    <div className="mb-2">
+                      <span>&emsp;&emsp;處理狀態：</span>
+                      <span>{v.status}</span>
+                    </div>
+                    <div className="statusTime mb-2">
+                      <span>&emsp;&emsp;處理時間：</span>
+                      <span>{v.create_time}</span>
+                    </div>
+                    <div className="d-flex mb-2">
+                      <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
+                      <textarea
+                        name=""
+                        cols="40"
+                        rows="3"
+                        placeholder={v.remark}
+                        disabled
+                      ></textarea>
+                    </div>
+                    {v.select_state === '案件進行中' &&
+                    v.estimated_time !== undefined ? (
+                      <div>
+                        <span>預計完成時間：</span>
+                        <span>{v.estimated_time}</span>
+                      </div>
                     ) : (
                       ''
                     )}
-                  </>
-                )}
-              </div>
-              <div className="needInput center">
-                <input
-                  type="text"
-                  value={editNeed[i].requirement_name}
-                  name="tit"
-                  disabled={edit}
-                  onChange={(e) => {
-                    handlerUpdateNeed(e.target.value, i, 'tit');
-                  }}
-                />
-              </div>
-              <div className="needInput">
-                <textarea
-                  name="dir"
-                  rows="3"
-                  value={editNeed[i].directions}
-                  placeholder={v.directions}
-                  disabled={edit}
-                  onChange={(e) => {
-                    handlerUpdateNeed(e.target.value, i, 'dir');
-                  }}
-                ></textarea>
-              </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-
-        {/* 檔案上傳 */}
-        <div className="file">
-          {edit ? (
-            ''
           ) : (
-            <div className="fileName">
-              <div>
-                <div>附件上傳</div>
-                <div>(可上傳副檔名.pdf / img...)</div>
-                {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
-              </div>
-              <div className="fileIcon">
-                <FaTrashAlt
-                  size="17"
-                  onClick={() => {
-                    delCheck('確定要刪除所有上傳檔案?', handleClearFile);
-                  }}
-                  className="clearIcon"
-                />
-                <MdOutlineAddBox size="20" onClick={addF} className="addIcon" />
-              </div>
-            </div>
+            <div className="editBtn">尚無狀態資料</div>
           )}
 
-          {getFile.map((v, i) => {
-            return (
-              <div key={uuidv4()} className="two">
-                <label className="addUploadContainer" htmlFor={`file${i}`}>
-                  {/* 數字大於10 會因大小移位 */}
-                  <span className={`items ${i < 9 ? 'ps-2' : ''}`}>
-                    {i + 1}.
-                  </span>
-
-                  <div className="addUploadContain">
-                    <div className="files">
-                      {i <= v.id ? (
-                        <>{fileUpdate ? v.file.name : v.name}</>
+          {/* 申請表單 */}
+          <div className="tableContainer">
+            {detailData.map((v, i) => {
+              return (
+                <div key={v.id}>
+                  <div className="gapContain my-2">
+                    <div>
+                      <div className="pb-1">申請類別</div>
+                      {edit ? (
+                        <input
+                          type="text"
+                          placeholder={v.application_category}
+                          disabled
+                          defaultChecked={true}
+                        />
                       ) : (
-                        <>
-                          {v.file !== '' ? (
-                            v.file.name
-                          ) : (
-                            <div className="addFile">
-                              <HiOutlineDocumentPlus className="addIcon" />
-                              <span>點擊新增檔案</span>
-                            </div>
-                          )}
-                        </>
+                        <select
+                          className="category"
+                          onChange={(e) => {
+                            handleChange(e.target.value, 'category');
+                          }}
+                          onClick={(e) => {
+                            if (e.target.value !== '0') {
+                              setCategory(false);
+                            }
+                          }}
+                        >
+                          <option selected disabled hidden>
+                            {v.application_category}
+                          </option>
+                          {getCategory.map((v, i) => {
+                            return <option key={i}>{v.name}</option>;
+                          })}
+                        </select>
                       )}
                     </div>
+                    <div>
+                      <div className="pb-1">案件編號</div>
+
+                      <input
+                        type="text"
+                        placeholder={v.case_number}
+                        disabled
+                        defaultChecked={true} //不受控制的組件的使用
+                      />
+                    </div>
                   </div>
-                </label>
+                  <div className="gapContain">
+                    <div>
+                      <div className="pb-1">處理人</div>
+                      {edit ? (
+                        <input
+                          type="text"
+                          placeholder={v.handler}
+                          disabled
+                          defaultChecked={true}
+                        />
+                      ) : (
+                        <select
+                          className="handler"
+                          onChange={(e) => {
+                            handleChange(e.target.value, 'handler');
+                          }}
+                        >
+                          <option selected disabled hidden>
+                            {v.handler}
+                          </option>
+                          <option value=" ">-----請選擇-----</option>
+                          {getHandler.map((v, i) => {
+                            return <option key={i}>{v.name}</option>;
+                          })}
+                        </select>
+                      )}
+                    </div>
+                    <div>
+                      <div className="pb-1">需求次數</div>
+                      <div className="d-flex align-items-center">
+                        {radioInput.map((d, i) => {
+                          return (
+                            <div
+                              className="d-flex align-items-center"
+                              key={uuidv4()}
+                            >
+                              <input
+                                type="radio"
+                                disabled={edit}
+                                checked={v.cycle === d.value ? true : false}
+                                // defaultChecked={true}
+                                onChange={(e) => {
+                                  handleChange(e.target.value, 'cycle');
+                                  if (e.target.value !== '') {
+                                    setCycle(false);
+                                  }
+                                }}
+                                value={i + 1}
+                              />
+                              <label>{d.title}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="gapContain my-2">
+                    {v.relation === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">友好程度(A-D)</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.relation}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            className="handler"
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.relation = e.target.value),
+                                'relation'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {v.project_name === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">案件名稱</div>
+                        <input
+                          type="text"
+                          // placeholder={v.project_name}
+                          disabled={edit}
+                          // defaultValue={true}
+                          value={v.project_name}
+                          onChange={(e) => {
+                            handleChange(
+                              (v.project_name = e.target.value),
+                              'name'
+                            );
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {/* 當事人 */}
 
-                {edit ? (
-                  ''
-                ) : (
-                  <>
-                    <input
-                      className="input d-none"
-                      type="file"
-                      name="file"
-                      id={`file${i}`}
-                      accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx,.text/plain"
-                      onChange={(e) => {
-                        onFileUpload(e.target.files[0], i, 'file');
-                        setFileUpdate(true);
-                      }}
-                    />
-                    <IoMdCloseCircle
-                      size="20"
-                      onClick={() => {
-                        delCheck('確定要刪除此上傳檔案?', deleteFile, i);
-                      }}
-                    />
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        {/* 備註 */}
-        {detailData.map((v, i) => {
-          return (
-            <div key={i} className="textareaGap">
-              <div> 備註</div>
-              <textarea
-                className="textarea"
-                maxLength="300"
-                value={v.remark}
-                onChange={(e) => {
-                  handleChange((v.remark = e.target.value), 'remark');
-                }}
-              ></textarea>
-            </div>
-          );
-        })}
-
-        {/* 選擇狀態 */}
-        {addStatus &&
-        handlerNull !== '' &&
-        needState !== 1 &&
-        needState !== 2 &&
-        needState !== 3 &&
-        needState !== 6 &&
-        needState !== 7 &&
-        needState !== 8 &&
-        needState !== 9 &&
-        needState !== 10 &&
-        needState !== 11 &&
-        needState !== 12 ? (
-          <div className="selectContain">
-            {/* <StateFilter /> */}
-            <div className="selContain">
-              <select
-                name="status"
-                value={postVal.status}
-                onChange={(e) => {
-                  setSelectRemind(false);
-                  handlePostVal(e);
-                }}
-              >
-                <option value="" selected>
-                  ----請選擇申請狀態----
-                </option>
-                {selectData.map((v) => {
-                  return (
-                    <option value={v.name} key={uuidv4()}>
-                      {v.name}
-                    </option>
-                  );
-                })}
-              </select>
-              {selectRemind ? (
-                <div className="selectRemind">*請選擇申請狀態</div>
-              ) : (
-                ''
-              )}
-            </div>
-
-            <button
-              className="confirmBtn"
-              onClick={() => {
-                if (postVal.status === '') {
-                  setSelectRemind(true);
-                  return;
-                }
-                setAddStateForm(true);
-              }}
-            >
-              確認
-            </button>
-            {needSumLen === needLen ? (
-              <button className="finishBtn" onClick={handleFinish}>
-                完成
-              </button>
-            ) : (
+                  <div className="gapContain my-2">
+                    {v.litigant === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.litigant}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            className="handler"
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.litigant = e.target.value),
+                                'litigant'
+                              );
+                              // eslint-disable-next-line no-lone-blocks
+                              // {
+                              //   e.target.value.length > 0
+                              //     ? setLitigant(true)
+                              //     : setLitigant(false);
+                              // }
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {v.litigant_phone === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人聯絡電話</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.litigant_phone}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            className=" hide-arrows"
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.litigant_phone = e.target.value),
+                                'litigantPhone'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="gapContain my-2">
+                    {v.litigant_county_id === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人縣市</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            placeholder={v.litigant_county_id}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'litigantCounty');
+                              areaPost(e.target.value);
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.litigant_county_id}
+                            </option>
+                            <option value=" "> -----請選擇-----</option>
+                            {getCounty.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
+                    )}
+                    {v.litigant_area_id === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人區</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            placeholder={v.litigant_area_id}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'litigantArea');
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.litigant_area_id}
+                            </option>
+                            <option value=" "> -----請選擇-----</option>
+                            {getArea.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="gapContain my-2">
+                    {v.litigant_rimin === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人里</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.litigant_rimin}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.litigant_rimin = e.target.value),
+                                'litigantRimin'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {v.litigant_address === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">當事人地址</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.litigant_address}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.litigant_address = e.target.value),
+                                'litigantAddress'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="gapContain my-2">
+                    {v.client_name === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">請託人</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.client_name}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.client_name = e.target.value),
+                                'client'
+                              );
+                              // eslint-disable-next-line no-lone-blocks
+                              // {
+                              //   e.target.value.length > 0
+                              //     ? setClient(true)
+                              //     : setClient(false);
+                              // }
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {v.client_phone === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">請託人聯絡電話</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.client_phone}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            className="hide-arrows"
+                            type="text"
+                            oninput="if(value.length>11)value=value.slice(0,11)"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.client_phone = e.target.value),
+                                'clientPhone'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="gapContain my-2">
+                    {v.client_address === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">請託人地址</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.client_address}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <input
+                            className="handler"
+                            type="text"
+                            onChange={(e) => {
+                              handleChange(
+                                (v.client_address = e.target.value),
+                                'clientAddress'
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            {edit ? (
               ''
+            ) : (
+              <div className="add">
+                <span className={`${editVerifyPage ? 'view' : ''}`}>
+                  *欄位不得為空
+                </span>
+                <div>
+                  <FaTrashAlt
+                    size="17"
+                    onClick={() => {
+                      delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
+                    }}
+                    className="clearIcon"
+                  />
+                  <MdOutlineAddBox
+                    size="20"
+                    onClick={handleAddNeed}
+                    className="addIcon"
+                  />
+                </div>
+              </div>
             )}
-          </div>
-        ) : addStatus ? (
-          ''
-        ) : (
-          <>
-            {!addStatus &&
+
+            {/* 需求 */}
+            {editNeed.map((v, i) => {
+              return (
+                <div className="needContain" key={i}>
+                  <div className="needTit">
+                    <div className="d-flex">
+                      <input
+                        type="checkbox"
+                        disabled={
+                          addStatus &&
+                          needState !== 1 &&
+                          needState !== 2 &&
+                          needState !== 3 &&
+                          needState !== 4 &&
+                          needState !== 8 &&
+                          needState !== 9 &&
+                          needState !== 10 &&
+                          needState !== 11 &&
+                          needState !== 12
+                            ? false
+                            : true
+                        }
+                        checked={v.checked === 1 ? true : false}
+                        onChange={(e) => {
+                          handleNeedChecked(v.id, e.target.checked);
+                        }}
+                      />
+
+                      <span className="title">需求 {i + 1}</span>
+                    </div>
+
+                    {edit ? (
+                      ''
+                    ) : (
+                      <>
+                        {i !== 0 ? (
+                          <AiFillCloseCircle
+                            className="delNeedIcon"
+                            onClick={() => {
+                              delCheck(
+                                '確定要刪除此需求內容?',
+                                handleDelNeed,
+                                i
+                              );
+                            }}
+                          />
+                        ) : (
+                          ''
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <div className="needInput center">
+                    <input
+                      type="text"
+                      value={editNeed[i].requirement_name}
+                      name="tit"
+                      disabled={edit}
+                      onChange={(e) => {
+                        handlerUpdateNeed(e.target.value, i, 'tit');
+                      }}
+                    />
+                  </div>
+                  <div className="needInput">
+                    <textarea
+                      name="dir"
+                      rows="3"
+                      value={editNeed[i].directions}
+                      placeholder={v.directions}
+                      disabled={edit}
+                      onChange={(e) => {
+                        handlerUpdateNeed(e.target.value, i, 'dir');
+                      }}
+                    ></textarea>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* 檔案上傳 */}
+            <div className="file">
+              {edit ? (
+                ''
+              ) : (
+                <div className="fileName">
+                  <div>
+                    <div>附件上傳</div>
+                    <div>(可上傳副檔名.pdf / img...)</div>
+                    {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
+                  </div>
+                  <div className="fileIcon">
+                    <FaTrashAlt
+                      size="17"
+                      onClick={() => {
+                        delCheck('確定要刪除所有上傳檔案?', handleClearFile);
+                      }}
+                      className="clearIcon"
+                    />
+                    <MdOutlineAddBox
+                      size="20"
+                      onClick={addF}
+                      className="addIcon"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {getFile.map((v, i) => {
+                return (
+                  <div key={uuidv4()} className="two">
+                    <label className="addUploadContainer" htmlFor={`file${i}`}>
+                      {/* 數字大於10 會因大小移位 */}
+                      <span className={`items ${i < 9 ? 'ps-2' : ''}`}>
+                        {i + 1}.
+                      </span>
+
+                      <div className="addUploadContain">
+                        <div className="files">
+                          {i <= v.id ? (
+                            <>{fileUpdate ? v.file.name : v.name}</>
+                          ) : (
+                            <>
+                              {v.file !== '' ? (
+                                v.file.name
+                              ) : (
+                                <div className="addFile">
+                                  <HiOutlineDocumentPlus className="addIcon" />
+                                  <span>點擊新增檔案</span>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </label>
+
+                    {edit ? (
+                      ''
+                    ) : (
+                      <>
+                        <input
+                          className="input d-none"
+                          type="file"
+                          name="file"
+                          id={`file${i}`}
+                          accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx,.text/plain"
+                          onChange={(e) => {
+                            onFileUpload(e.target.files[0], i, 'file');
+                            setFileUpdate(true);
+                          }}
+                        />
+                        <IoMdCloseCircle
+                          size="20"
+                          onClick={() => {
+                            delCheck('確定要刪除此上傳檔案?', deleteFile, i);
+                          }}
+                        />
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {/* 備註 */}
+            {detailData.map((v, i) => {
+              return (
+                <div key={i} className="textareaGap">
+                  <div> 備註</div>
+                  <textarea
+                    className="textarea"
+                    maxLength="300"
+                    value={v.remark}
+                    onChange={(e) => {
+                      handleChange((v.remark = e.target.value), 'remark');
+                    }}
+                  ></textarea>
+                </div>
+              );
+            })}
+
+            {/* 選擇狀態 */}
+            {addStatus &&
+            handlerNull !== '' &&
             needState !== 1 &&
             needState !== 2 &&
             needState !== 3 &&
+            needState !== 6 &&
+            needState !== 7 &&
             needState !== 8 &&
             needState !== 9 &&
             needState !== 10 &&
             needState !== 11 &&
             needState !== 12 ? (
-              <div className="cancle">
-                <button className="cancleBtn" onClick={handleUserCancle}>
-                  取消申請
+              <div className="selectContain">
+                {/* <StateFilter /> */}
+                <div className="selContain">
+                  <select
+                    name="status"
+                    value={postVal.status}
+                    onChange={(e) => {
+                      setSelectRemind(false);
+                      handlePostVal(e);
+                    }}
+                  >
+                    <option value="" selected>
+                      ----請選擇申請狀態----
+                    </option>
+                    {selectData.map((v) => {
+                      return (
+                        <option value={v.name} key={uuidv4()}>
+                          {v.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {selectRemind ? (
+                    <div className="selectRemind">*請選擇申請狀態</div>
+                  ) : (
+                    ''
+                  )}
+                </div>
+
+                <button
+                  className="confirmBtn"
+                  onClick={() => {
+                    if (postVal.status === '') {
+                      setSelectRemind(true);
+                      return;
+                    }
+                    setAddStateForm(true);
+                  }}
+                >
+                  確認
                 </button>
+                {needSumLen === needLen ? (
+                  <button className="finishBtn" onClick={handleFinish}>
+                    完成
+                  </button>
+                ) : (
+                  ''
+                )}
               </div>
-            ) : (
+            ) : addStatus ? (
               ''
+            ) : (
+              <>
+                {!addStatus &&
+                needState !== 1 &&
+                needState !== 2 &&
+                needState !== 3 &&
+                needState !== 8 &&
+                needState !== 9 &&
+                needState !== 10 &&
+                needState !== 11 &&
+                needState !== 12 ? (
+                  <div className="cancle">
+                    <button className="cancleBtn" onClick={handleUserCancle}>
+                      取消申請
+                    </button>
+                  </div>
+                ) : (
+                  ''
+                )}
+              </>
             )}
-          </>
-        )}
-      </div>
-      {member.permissions_id === 1 && needState === 1 ? (
-        <div className="submitBtn">
-          {edit ? (
-            <div
-              className="submit"
-              onClick={() => {
-                setEdit(false);
-                // toEdit();
-              }}
-            >
-              修改
+          </div>
+          {member.permissions_id === 1 && needState === 1 ? (
+            <div className="submitBtn">
+              {edit ? (
+                <div
+                  className="submit"
+                  onClick={() => {
+                    setEdit(false);
+                    // toEdit();
+                  }}
+                >
+                  修改
+                </div>
+              ) : (
+                <div
+                  className="submit"
+                  onClick={(e) => {
+                    storeCheck('確認儲存表單?', e);
+                  }}
+                >
+                  儲存
+                </div>
+              )}
+
+              <div
+                className="submit"
+                onClick={(e) => {
+                  submitCheck('確定要送出申請表?', e);
+                }}
+              >
+                送出
+              </div>
+              <div
+                className="submit"
+                onClick={() => {
+                  deleteCheck('確認刪除申請表?');
+                }}
+              >
+                刪除申請
+              </div>
             </div>
           ) : (
-            <div
-              className="submit"
-              onClick={(e) => {
-                storeCheck('確認儲存表單?', e);
-              }}
-            >
-              儲存
-            </div>
+            ''
           )}
-
-          <div
-            className="submit"
-            onClick={(e) => {
-              submitCheck('確定要送出申請表?', e);
-            }}
-          >
-            送出
-          </div>
-          <div
-            className="submit"
-            onClick={() => {
-              deleteCheck('確認刪除申請表?');
-            }}
-          >
-            刪除申請
-          </div>
         </div>
-      ) : (
-        ''
       )}
-    </div>
+    </>
   );
 }
 

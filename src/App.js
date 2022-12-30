@@ -20,6 +20,10 @@ import ApplicationForm from './CaseDetail/Component/ApplicationForm';
 import UploadPage from './CaseDetail/Component/UploadPage';
 import ChatPage from './CaseDetail/Component/ChatPage';
 import CountPage from './Count/CountPage';
+import CategoryPage from './CountALL/CategoryPage';
+import StatusPage from './CountALL/StatusPage';
+import UnitPage from './CountALL/UnitPage';
+import UserPage from './CountALL/UserPage';
 import Permissions from './Permissions';
 
 function App() {
@@ -97,7 +101,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LogIn />} />
           <Route
-          // ?member=${member.permissions_id}
+            // ?member=${member.permissions_id}
             path={`header`}
             element={
               <Header
@@ -147,6 +151,11 @@ function App() {
             />
 
             <Route path="countPage" element={<CountPage />} />
+            <Route path="categoryPage" element={<CategoryPage />} />
+            <Route path="statusPage" element={<StatusPage />} />
+            <Route path="unitPage" element={<UnitPage />} />
+            <Route path="UserPage" element={<UserPage />} />
+
             <Route path="permissions" element={<Permissions />} />
 
             {/* detail */}

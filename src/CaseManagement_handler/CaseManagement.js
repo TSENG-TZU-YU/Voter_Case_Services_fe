@@ -15,6 +15,8 @@ import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import moment from 'moment';
 
+import Loader from '../Loader';
+
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
@@ -41,7 +43,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
-
+  const [isLoading, setIsLoading] = useState(false);
   // 篩選
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
@@ -83,6 +85,7 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
+   
     let getCampingData = async () => {
       let response = await axios.get(
         `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
@@ -103,12 +106,16 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   console.log('allData', allData);
 
   useEffect(() => {
+    // setIsLoading(true);
     const newPageCase = _.chunk(allData, perPage);
     setPageNow(1);
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
     console.log('allData', allData);
     console.log('pageCase', pageCase);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 800);
   }, [allData]);
   // 審查 history
   let handleCaseHistory = async (caseNum) => {
@@ -135,166 +142,171 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
   return (
     <>
-      {/* <Header> */}
-      {checkState ? (
-        <CheckStatePage
-          setCheckState={setCheckState}
-          caseHistory={caseHistory}
-        />
+      {isLoading ? (
+        <Loader />
       ) : (
-        ''
-      )}
-
-      <div className="caseContainer">
-        {/* 篩選 */}
-        <div className="sortSelect">
-          <div className="bothFilter">
-            <CategoryFilter
-              allCategoryData={allCategoryData}
-              setNowCategory={setNowCategory}
+        <>
+          {' '}
+          {checkState ? (
+            <CheckStatePage
+              setCheckState={setCheckState}
+              caseHistory={caseHistory}
             />
-            <StatusFilter
-              allStatusData={allStatusData}
-              setNowStatus={setNowStatus}
-            />
-            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-          </div>
-          <DateFilter
-            dateRemind={dateRemind}
-            setDateRemind={setDateRemind}
-            setMaxDate={setMaxDate}
-            setMinDate={setMinDate}
-            maxDateValue={maxDateValue}
-            setMaxDateValue={setMaxDateValue}
-            minDateValue={minDateValue}
-            setMinDateValue={setMinDateValue}
-            dateAgo={dateAgo}
-            nowDate={nowDate}
-          />
-        </div>
+          ) : (
+            ''
+          )}
+          <div className="caseContainer">
+            {/* 篩選 */}
+            <div className="sortSelect">
+              <div className="bothFilter">
+                <CategoryFilter
+                  allCategoryData={allCategoryData}
+                  setNowCategory={setNowCategory}
+                />
+                <StatusFilter
+                  allStatusData={allStatusData}
+                  setNowStatus={setNowStatus}
+                />
+                <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+              </div>
+              <DateFilter
+                dateRemind={dateRemind}
+                setDateRemind={setDateRemind}
+                setMaxDate={setMaxDate}
+                setMinDate={setMinDate}
+                maxDateValue={maxDateValue}
+                setMaxDateValue={setMaxDateValue}
+                minDateValue={minDateValue}
+                setMinDateValue={setMinDateValue}
+                dateAgo={dateAgo}
+                nowDate={nowDate}
+              />
+            </div>
 
-        <table className="caseContain">
-          <thead>
-            <tr>
-              <th></th>
-              <th className="sortBtn">
-                案件編號
-                {number ? (
-                  <MdArrowDropDown
-                    className="arrow"
-                    onClick={() => {
-                      setNumber(false);
-                    }}
-                  />
-                ) : (
-                  <MdArrowDropUp
-                    className="arrow"
-                    onClick={() => {
-                      setNumber(true);
-                    }}
-                  />
-                )}
-              </th>
-              <th>申請單位</th>
-              <th>申請人</th>
-              <th>處理人</th>
-              <th>申請類別</th>
-              <th className="sortBtn">
-                申請時間
-                {time ? (
-                  <MdArrowDropDown
-                    className="arrow"
-                    onClick={() => {
-                      setTime(false);
-                    }}
-                  />
-                ) : (
-                  <MdArrowDropUp
-                    className="arrow"
-                    onClick={() => {
-                      setTime(true);
-                    }}
-                  />
-                )}
-              </th>
-              <th>申請狀態</th>
-              <th></th>
-              <th>需求進度</th>
-            </tr>
-          </thead>
+            <table className="caseContain">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th className="sortBtn">
+                    案件編號
+                    {number ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setNumber(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setNumber(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>申請單位</th>
+                  <th>申請人</th>
+                  <th>處理人</th>
+                  <th>申請類別</th>
+                  <th className="sortBtn">
+                    申請時間
+                    {time ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setTime(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setTime(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>申請狀態</th>
+                  <th></th>
+                  <th>需求進度</th>
+                </tr>
+              </thead>
 
-          {pageCase.length > 0 &&
-            pageCase[pageNow - 1].map((v) => {
-              return (
-                <tbody key={uuidv4()}>
-                  <tr>
-                    <td>
-                      {member.permissions_id === 3 && member.name === v.sender
-                        ? `轉件人 : ${v.handler}`
-                        : ''}
-                    </td>
-                    <td>{v.case_number}</td>
-                    <td>{v.applicant_unit}</td>
-                    <td>{v.user}</td>
-                    <td>{v.handler}</td>
-                    <td>{v.application_category}</td>
-                    <td>{v.create_time}</td>
-                    <td
-                      onClick={() => {
-                        setCheckState(true);
-                        handleCaseHistory(v.case_number);
-                      }}
-                    >
-                      <span className="viewList">{v.name}</span>
-                    </td>
-                    <td className="posClick">
-                      <Link
-                        to={`/header/caseDetail/application/${v.case_number}?id=${v.id}`}
-                      >
-                        <FaEye
-                          className={`icons ${
-                            v.name === '處理人評估中' &&
-                            member.permissions_id === 3
-                              ? 'eyeBcg'
-                              : ''
-                          }`}
+              {pageCase.length > 0 &&
+                pageCase[pageNow - 1].map((v) => {
+                  return (
+                    <tbody key={uuidv4()}>
+                      <tr>
+                        <td>
+                          {member.permissions_id === 3 &&
+                          member.name === v.sender
+                            ? `轉件人 : ${v.handler}`
+                            : ''}
+                        </td>
+                        <td>{v.case_number}</td>
+                        <td>{v.applicant_unit}</td>
+                        <td>{v.user}</td>
+                        <td>{v.handler}</td>
+                        <td>{v.application_category}</td>
+                        <td>{v.create_time}</td>
+                        <td
                           onClick={() => {
-                            setCaseNum(v.case_number);
-                            setCaseId(v.id);
-                            setHandlerNull(v.handler);
-                            setSender(v.sender);
-
-                            // if (
-                            //   v.name === '處理人評估中' &&
-                            //   member.permissions_id === 3
-                            // ) {
-                            //   handleChangeState(v.case_number, v.id);
-                            // }
+                            setCheckState(true);
+                            handleCaseHistory(v.case_number);
                           }}
-                        />
-                      </Link>
+                        >
+                          <span className="viewList">{v.name}</span>
+                        </td>
+                        <td className="posClick">
+                          <Link
+                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}`}
+                          >
+                            <FaEye
+                              className={`icons ${
+                                v.name === '處理人評估中' &&
+                                member.permissions_id === 3
+                                  ? 'eyeBcg'
+                                  : ''
+                              }`}
+                              onClick={() => {
+                                setCaseNum(v.case_number);
+                                setCaseId(v.id);
+                                setHandlerNull(v.handler);
+                                setSender(v.sender);
 
-                      {/* <div className="hadClick">NEW</div> */}
-                    </td>
-                    <td>
-                      進度({v.cou}/{v.sum})
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-        </table>
-        {/* 頁碼 */}
-        <div className="page">
-          <PaginationBar
-            pageNow={pageNow}
-            setPageNow={setPageNow}
-            pageTotal={pageTotal}
-          />
-        </div>
-        {/* 頁碼 end */}
-      </div>
-      {/* </Header> */}
+                                // if (
+                                //   v.name === '處理人評估中' &&
+                                //   member.permissions_id === 3
+                                // ) {
+                                //   handleChangeState(v.case_number, v.id);
+                                // }
+                              }}
+                            />
+                          </Link>
+
+                          {/* <div className="hadClick">NEW</div> */}
+                        </td>
+                        <td>
+                          進度({v.cou}/{v.sum})
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
+            </table>
+            {/* 頁碼 */}
+            <div className="page">
+              <PaginationBar
+                pageNow={pageNow}
+                setPageNow={setPageNow}
+                pageTotal={pageTotal}
+              />
+            </div>
+            {/* 頁碼 end */}
+          </div>
+        </>
+      )}
     </>
   );
 }

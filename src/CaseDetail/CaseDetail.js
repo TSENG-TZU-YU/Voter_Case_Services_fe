@@ -7,6 +7,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
+
 function CaseDetail({ caseNum, setCaseNum }) {
   const navigate = useNavigate();
   // 把網址上的 :detailedID 拿出來

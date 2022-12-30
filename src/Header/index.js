@@ -180,16 +180,28 @@ function Header({
               </Link>
               {active ? (
                 <div className="count">
-                  <Link to="">
+                  <Link to="categoryPage">
                     <div className="bold">
                       <RiPhoneFindFill size="20" />
                       申請類別統計
                     </div>
                   </Link>
-                  <Link to="">
+                  <Link to="statusPage">
                     <div className="bold">
                       <RiPhoneFindFill size="20" />
                       案件狀態統計
+                    </div>
+                  </Link>
+                  <Link to="unitPage">
+                    <div className="bold">
+                      <RiPhoneFindFill size="20" />
+                      申請單位統計
+                    </div>
+                  </Link>
+                  <Link to="UserPage">
+                    <div className="bold">
+                      <RiPhoneFindFill size="20" />
+                      處理人統計
                     </div>
                   </Link>
                 </div>
