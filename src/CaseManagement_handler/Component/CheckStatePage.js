@@ -14,7 +14,8 @@ export default function CheckStatePage({
   member,
   handlerNull,
 }) {
-  // console.log('h', handlerNull, member.name);
+  // console.log('h', handlerNull);
+  // console.log('m', member.name);
 
   return (
     <div className="checkStateContainer">
@@ -30,18 +31,23 @@ export default function CheckStatePage({
         {/* msg */}
         <div
           className={`handleStatus ${
-            member.permissions_id !== 3 ? 'noneHight' : ''
+            member.permissions_id === 3 ||
+            (handlerNull === member.name && member.manage === 1)
+              ? ''
+              : 'noneHight'
           }`}
         >
-          {handleStData.map((v) => {
-            return (
-              <div className="msgContainer" key={uuidv4()}>
-                <div className="handler">處理人：{v.name}</div>
-                <div className="msgContain">{v.content}</div>
-                <div className="time">{v.create_time}</div>
-              </div>
-            );
-          })}
+          {handleStData.length !== 0
+            ? handleStData.map((v) => {
+                return (
+                  <div className="msgContainer" key={uuidv4()}>
+                    <div className="handler">處理人：{v.name}</div>
+                    <div className="msgContain">{v.content}</div>
+                    <div className="time">{v.create_time}</div>
+                  </div>
+                );
+              })
+            : '目前沒有訊息'}
         </div>
 
         {/* bar */}

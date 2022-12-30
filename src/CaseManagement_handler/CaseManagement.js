@@ -297,6 +297,7 @@ function CaseManagement({
                             setCaseNum(v.case_number);
                             setCheckState(true);
                             handleHandleStatus(v.case_number);
+                            setHandlerNull(v.handler);
                           }}
                         >
                           <span className="viewList">{v.name}</span>
