@@ -183,7 +183,6 @@ function CaseManagement({
         <Loader />
       ) : (
         <>
-          {' '}
           {checkState ? (
             <CheckStatePage
               setCheckState={setCheckState}
