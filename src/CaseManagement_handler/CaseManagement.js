@@ -3,7 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useAuth } from '../utils/use_auth';
+import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
 import '../styles/caseManagement/_caseManagement.scss';
@@ -20,7 +22,14 @@ import Loader from '../Loader';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
-function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
+function CaseManagement({
+  caseNum,
+  setCaseNum,
+  setCaseId,
+  setHandlerNull,
+  setSender,
+  handlerNull,
+}) {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月
   let dateObj = new Date(nowDate);
@@ -54,10 +63,14 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
   // get data
   const [allData, setAllData] = useState([]);
-  const [caseHistory, setCaseHistory] = useState([]);
+  const [handleStData, setHandleStData] = useState([]);
   const [allUnit, setAllUnitData] = useState([]);
   const [allStatusData, setAllStatusData] = useState([]);
   const [allCategoryData, setAllCategoryData] = useState([]);
+
+  // 案件處理情形
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [submitMsgTrue, setSubmitMsgTrue] = useState(false);
 
   // 分頁
   const [pageCase, setPageCase] = useState([]);
@@ -85,7 +98,6 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
-   
     let getCampingData = async () => {
       let response = await axios.get(
         `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
@@ -103,7 +115,6 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
     getCampingData();
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
-  console.log('allData', allData);
 
   useEffect(() => {
     // setIsLoading(true);
@@ -111,22 +122,48 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     setPageNow(1);
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
-    console.log('allData', allData);
-    console.log('pageCase', pageCase);
+
     // setTimeout(() => {
     //   setIsLoading(false);
     // }, 800);
   }, [allData]);
-  // 審查 history
-  let handleCaseHistory = async (caseNum) => {
+
+  // 案件處理情形
+  let handleHandleStatus = async (caseNum) => {
     let response = await axios.get(
-      `${API_URL}/applicationData/getCaseHistory/${caseNum}`,
+      `${API_URL}/applicationData/getHandleStatus/${caseNum}`,
       {
         withCredentials: true,
       }
     );
-    setCaseHistory(response.data.result);
+    setHandleStData(response.data.result);
+    // console.log('r',response.data.result)
   };
+
+  // post 案件處理情形
+  let handlePostStatus = async (e) => {
+    e.preventDefault();
+    if (submitMessage === '') return;
+
+    let response = await axios.post(
+      `${API_URL}/applicationData/postHandleStatus`,
+      { caseNum, submitMessage },
+      {
+        withCredentials: true,
+      }
+    );
+
+    // console.log('add', response.data);
+    Swal.fire({
+      icon: 'success',
+      title: '訊息新增成功',
+    }).then(function () {
+      // navigate('/header/caseManagement_handler');
+      setSubmitMessage('');
+      setCheckState(false);
+    });
+  };
+  // console.log('allData', member);
 
   // put 狀態 4 -> 5
   // let handleChangeState = async (caseNum, caseId) => {
@@ -150,7 +187,13 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
           {checkState ? (
             <CheckStatePage
               setCheckState={setCheckState}
-              caseHistory={caseHistory}
+              handleStData={handleStData}
+              handlePostStatus={handlePostStatus}
+              submitMsgTrue={submitMsgTrue}
+              setSubmitMsgTrue={setSubmitMsgTrue}
+              setSubmitMessage={setSubmitMessage}
+              member={member}
+              handlerNull={handlerNull}
             />
           ) : (
             ''
@@ -252,12 +295,14 @@ function CaseManagement({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                         <td>{v.create_time}</td>
                         <td
                           onClick={() => {
+                            setCaseNum(v.case_number);
                             setCheckState(true);
-                            handleCaseHistory(v.case_number);
+                            handleHandleStatus(v.case_number);
                           }}
                         >
                           <span className="viewList">{v.name}</span>
                         </td>
+
                         <td className="posClick">
                           <Link
                             to={`/header/caseDetail/application/${v.case_number}?id=${v.id}`}

@@ -122,6 +122,8 @@ function App() {
                   setCaseId={setCaseId}
                   setHandlerNull={setHandlerNull}
                   setSender={setSender}
+                  caseNum={caseNum}
+                  handlerNull={handlerNull}
                 />
               }
             />
@@ -134,6 +136,8 @@ function App() {
                   setCaseId={setCaseId}
                   setHandlerNull={setHandlerNull}
                   setSender={setSender}
+                  caseNum={caseNum}
+                  handlerNull={handlerNull}
                 />
               }
             />

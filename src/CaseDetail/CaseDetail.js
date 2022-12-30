@@ -24,7 +24,7 @@ function CaseDetail({ caseNum, setCaseNum }) {
     { title: '上傳文件', url: `uploadPage/${num}?id=${ID}` },
   ];
 
-  console.log('num', num);
+  // console.log('num', num);
   return (
     <div className="caseDetailContainer">
       <Link to={navigate(-1)} className="prePage">
