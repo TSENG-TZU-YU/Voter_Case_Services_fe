@@ -42,6 +42,12 @@
     .link {
       color: $focusClrG;
     }
+    .count {
+      div {
+        margin-top: 0px;
+        margin-left: 20px;
+      }
+    }
   }
   .left {
     width: calc(100vw - 200px);

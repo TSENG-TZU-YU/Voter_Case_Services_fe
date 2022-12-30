@@ -30,6 +30,7 @@ function Application({
       category: '',
       name: '',
       cycle: '',
+      relation: '',
       litigant: '',
       litigantPhone: '',
       litigantCounty: '',
@@ -70,6 +71,7 @@ function Application({
     if (input === 'category') newData[0].category = val;
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].name = val;
+    if (input === 'relation') newData[0].relation = val;
     if (input === 'litigant') newData[0].litigant = val;
     if (input === 'litigantPhone') newData[0].litigantPhone = val;
     if (input === 'litigantCounty') newData[0].litigantCounty = val;
@@ -81,8 +83,6 @@ function Application({
     if (input === 'clientAddress') newData[0].clientAddress = val;
     if (input === 'remark') newData[0].remark = val;
 
-    // if(newData.)
-    console.log(newData);
     setSubmitValue(newData);
   };
 
@@ -181,25 +181,26 @@ function Application({
         console.log(err);
       }
     };
-    //抓取區
-    let area = async () => {
-      try {
-        let res = await axios.get(
-          'http://localhost:3001/api/application_get/area'
-          // { area: submitValue.litigantArea }
-        );
-        setGetArea(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    // console.log('submitValue.litigantArea',submitValue.litigantArea)
+
     handler();
     category();
     cycle();
     county();
-    area();
   }, []);
+
+  //抓取區
+  async function areaPost(county) {
+    try {
+      let res = await axios.post(
+        'http://localhost:3001/api/application_get/area',
+        { area: county }
+      );
+
+      setGetArea(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // 送出申請表sweet
   function submitCheck(tit) {
@@ -389,7 +390,7 @@ function Application({
           <div className="gap">
             <div>
               申請類別 <span>*</span>
-              {category ? <span>欄位不得為空</span> : ''}
+              {category ? <span>欄位不得為空</span> : <span>必填</span>}
             </div>
             <select
               className="handler"
@@ -436,7 +437,7 @@ function Application({
           <div className="gap">
             <div className="cycle">
               需求次數 <span>*</span>
-              {cycle ? <span>欄位不得為空</span> : ''}
+              {cycle ? <span>欄位不得為空</span> : <span>必填</span>}
             </div>
             <div className="check handler">
               {getCycle.map((v, i) => {
@@ -461,23 +462,21 @@ function Application({
             </div>
           </div>
         </div>
-
-        {/* TODO: 新增欄位 */}
         <div className="box">
           {/* 友好程度 */}
           <div className="gap">
-            <div> 友好程度</div>
+            <div> 友好程度(A-D)</div>
             <input
               className="handler"
               type="text"
               onChange={(e) => {
-                handleChange(e.target.value, 'name');
+                handleChange(e.target.value, 'relation');
               }}
             />
           </div>
           {/* 專案名稱 */}
           <div className="gap">
-            <div> 專案名稱</div>
+            <div> 案件名稱</div>
             <input
               className="handler"
               type="text"
@@ -507,7 +506,7 @@ function Application({
           </div>
           {litigant ? (
             <div className="gap">
-              <div> 聯絡電話</div>
+              <div> 當事人聯絡電話</div>
               <input
                 className="handler hide-arrows"
                 type="number"
@@ -526,26 +525,23 @@ function Application({
             <div className="box">
               {/* 縣市*/}
               <div className="gap">
-                <div>縣市</div>
+                <div>當事人縣市</div>
                 <select
                   className="handler"
                   onChange={(e) => {
                     handleChange(e.target.value, 'litigantCounty');
+                    areaPost(e.target.value);
                   }}
                 >
                   <option value=" "> -----請選擇-----</option>
                   {getCounty.map((v, i) => {
-                    return (
-                      <option key={i} value={i + 1}>
-                        {v.name}
-                      </option>
-                    );
+                    return <option key={i}>{v.name}</option>;
                   })}
                 </select>
               </div>
               {/* 區*/}
               <div className="gap">
-                <div>區</div>
+                <div>當事人區</div>
                 <select
                   className="handler"
                   onChange={(e) => {
@@ -562,7 +558,7 @@ function Application({
             <div className="box">
               {/* 里 */}
               <div className="gap">
-                <div>里</div>
+                <div>當事人里</div>
                 <input
                   className="handler"
                   type="text"
@@ -573,7 +569,7 @@ function Application({
               </div>
               {/* 地址 */}
               <div className="gap">
-                <div> 地址</div>
+                <div> 當事人地址</div>
                 <input
                   className="handler"
                   type="text"
@@ -607,7 +603,7 @@ function Application({
           </div>
           {client ? (
             <div className="gap">
-              <div> 聯絡電話</div>
+              <div> 請託人聯絡電話</div>
               <input
                 className="handler hide-arrows"
                 type="number"
@@ -627,7 +623,7 @@ function Application({
             <div className="box">
               {/* 地址 */}
               <div className="gap">
-                <div> 地址</div>
+                <div> 請託人地址</div>
                 <input
                   className="handler"
                   type="text"
@@ -665,7 +661,7 @@ function Application({
               <div key={i} className="need">
                 <div className="one">
                   <div>
-                    需求{i + 1} <span>* </span>
+                    需求{i + 1} <span>*必填</span>
                   </div>
                   {i !== 0 ? (
                     <IoMdCloseCircle
@@ -775,22 +771,23 @@ function Application({
             );
           })}
         </div>
-        <div className="box">
-          {/* 備註 */}
-          <div className="gap">
-            <div> 備註</div>
 
-            <textarea
-              className="textarea"
-              onChange={(e) => {
-                handleChange(e.target.value, 'remark');
-              }}
-            ></textarea>
-          </div>
+        {/* 備註 */}
+        <div className="textareaGap">
+          <div> 備註</div>
+
+          <textarea
+            className="textarea"
+            maxLength="300"
+            onChange={(e) => {
+              handleChange(e.target.value, 'remark');
+            }}
+          ></textarea>
         </div>
-        <div className="ps">
+
+        {/* <div className="ps">
           備註: 將由處理人員主動與您聯繫討論預計完成時間。
-        </div>
+        </div> */}
 
         <div className="submitBtn">
           <div

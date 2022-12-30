@@ -15,6 +15,7 @@ import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
 import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
+import moment from 'moment';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
@@ -27,22 +28,36 @@ function CaseManagement({
   setSender,
   handlerNull,
 }) {
-  const navigate = useNavigate();
+  let nowDate = moment().format(`YYYY-MM-DD`);
+  // 取前六個月
+  let dateObj = new Date(nowDate);
+  dateObj.setMonth(dateObj.getMonth() - 6);
+
+  // 將日期轉換為指定格式的字串
+  let newDateString = dateObj.toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  let dateAgo = newDateString.replace(/\//g, '-');
+  // console.log('d', dateObj);
+
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
   const [time, setTime] = useState(true);
   const [checkState, setCheckState] = useState(false);
   const [dateRemind, setDateRemind] = useState('');
-  const [maxDateValue, setMaxDateValue] = useState('');
-  const [minDateValue, setMinDateValue] = useState('');
-  const [memberId, setMemberId] = useState('');
+  const [maxDateValue, setMaxDateValue] = useState(nowDate);
+  const [minDateValue, setMinDateValue] = useState(dateAgo);
 
   // 篩選
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
-  const [maxDate, setMaxDate] = useState('');
-  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState(nowDate);
+  const [minDate, setMinDate] = useState(dateAgo);
+  const [order, setOrder] = useState('');
 
   // get data
   const [allData, setAllData] = useState([]);
@@ -169,6 +184,7 @@ function CaseManagement({
           setSubmitMsgTrue={setSubmitMsgTrue}
           setSubmitMessage={setSubmitMessage}
           member={member}
+          handlerNull={handlerNull}
         />
       ) : (
         ''
@@ -197,6 +213,8 @@ function CaseManagement({
             setMaxDateValue={setMaxDateValue}
             minDateValue={minDateValue}
             setMinDateValue={setMinDateValue}
+            dateAgo={dateAgo}
+            nowDate={nowDate}
           />
         </div>
 
