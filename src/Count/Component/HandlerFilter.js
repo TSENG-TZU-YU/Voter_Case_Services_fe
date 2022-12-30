@@ -12,8 +12,8 @@ function ActivitySelect({ setHandler, allHandlerData }) {
   }
   // console.log('n', newData);
   const sortOption = [
-    { value: '', label: '----請選擇管理人----' },
-    { value: '尚無管理人', label: '尚無管理人' },
+    { value: '', label: '----請選擇處理人----' },
+    { value: '尚無處理人', label: '尚無處理人' },
     ...newData,
   ];
 

@@ -48,7 +48,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [nowUnit, setNowUnit] = useState('');
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
-  const [finish, setFinish] = useState('');
+  // const [finish, setFinish] = useState('');
   const [handler, setHandler] = useState('');
   const [nowUser, setNowUser] = useState('');
   const [nowUserUnit, setNowUserUnit] = useState('');
@@ -58,6 +58,8 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [caseHistory, setCaseHistory] = useState([]);
   const [allUnit, setAllUnitData] = useState([]);
   const [allStatusData, setAllStatusData] = useState([]);
+  const [countStatusData, setCountStatusData] = useState([]);
+
   const [allCategoryData, setAllCategoryData] = useState([]);
   const [allHandlerData, setAllHandlerData] = useState([]);
   const [allUserData, setAllUserData] = useState([]);
@@ -68,6 +70,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [stateTtl, setStateTtl] = useState([]);
   const [categoryTtl, setCategoryTtl] = useState([]);
   const [unitTtl, setUnitTtl] = useState([]);
+  const [handlerTtl, setHandlerTtl] = useState([]);
 
   // 檢查會員
   useEffect(() => {
@@ -90,7 +93,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   useEffect(() => {
     let getAllData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&finish=${finish}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}`,
+        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}`,
         {
           withCredentials: true,
         }
@@ -100,6 +103,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
+      setCountStatusData(response.data.statusResult.splice(1));
       setAllHandlerData(response.data.handlerResult);
       setAllUserData(response.data.userResult);
       // total
@@ -108,6 +112,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setStateTtl(response.data.pagination.counts);
       setCategoryTtl(response.data.pagination.categoryCounts);
       setUnitTtl(response.data.pagination.unitCounts);
+      setHandlerTtl(response.data.pagination.handlerCounts);
     };
     getAllData();
   }, [
@@ -117,7 +122,6 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
     nowUnit,
     minDate,
     maxDate,
-    finish,
     handler,
     nowUser,
     nowUserUnit,
@@ -136,25 +140,33 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
   // %
   const percent = (ttl, num) => {
-    let p = Math.floor((parseInt(num) / parseInt(ttl)) * 100);
+    let p = Math.round((parseInt(num) / parseInt(ttl)) * 10000) / 100;
     return p;
   };
 
-  const sortOption = [
-    { id: '12', name: '案件已完成' },
-    { id: '2', name: '案件未完成' },
-  ];
-  // state name
-  const nowSt = (arr, now) => {
-    if (now === '') return;
+  let handleNull = '';
+  for (let i = 0; i < handlerTtl.length; i++) {
+    // console.log(handlerTtl[i]['']);
+    if (Object.keys(handlerTtl[i])[0] === '') {
+      handleNull = handlerTtl[i][''];
+    }
+  }
+  // console.log('v', handleNull);
+  // const sortOption = [
+  //   { id: '12', name: '案件已完成' },
+  //   { id: '2', name: '案件未完成' },
+  // ];
+  // // state name
+  // const nowSt = (arr, now) => {
+  //   if (now === '') return;
 
-    let st = arr.filter((v) => {
-      if (parseInt(v.id) === parseInt(now)) {
-        return v.name;
-      }
-    });
-    return st[0].name;
-  };
+  //   let st = arr.filter((v) => {
+  //     if (parseInt(v.id) === parseInt(now)) {
+  //       return v.name;
+  //     }
+  //   });
+  //   return st[0].name;
+  // };
 
   return (
     <>
@@ -173,7 +185,6 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
               setNowStatus={setNowStatus}
             />
             <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-            <FinishFilter setFinish={setFinish} />
             <HandlerFilter
               setHandler={setHandler}
               allHandlerData={allHandlerData}
@@ -215,18 +226,21 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 
         <hr />
         <div className="allConutContainer">
-          <div className="allTit">總申請案件 ： {allTotal} 件</div>
+          <div className="d-flex">
+            <div className="allTit">總申請案件 ： {allTotal} 件</div>
+            <div className="allTit">搜尋件數 ： {total} 件</div>
+          </div>
+
           {nowCategory ||
           nowStatus ||
           nowUnit ||
           minDate ||
           maxDate ||
-          finish ||
           handler ||
           nowUser ? (
             <>
               {/* 總計% */}
-              <div className="stateTit">搜尋的條件(總件數的%)</div>
+              {/* <div className="stateTit">搜尋的條件(總件數的%)</div>
               <table className="countContainer">
                 <thead>
                   <tr>
@@ -254,66 +268,59 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                     <td>{percent(allTotal, total)}%</td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
 
-              {/* 申請類別% */}
+              {/* 申請類別% (搜尋件數的%)*/}
               {nowCategory ? (
                 ''
               ) : (
                 <>
-                  <div className="allTit">搜尋件數 ： {total} 件</div>
-                  <div className="stateTit">申請類別(搜尋件數的%)</div>
+                  <div className="stateTit">申請類別</div>
                   <table className="countContainer">
                     <thead>
                       <tr>
                         <th></th>
-                        <th>新專案建置</th>
-                        <th>現有系統增修</th>
-                        <th>問題回報</th>
+                        {allCategoryData.map((v) => {
+                          return <th key={uuidv4()}>{v.name}</th>;
+                        })}
                       </tr>
                     </thead>
                     <tbody>
                       {/* 件數 */}
                       <tr>
                         <th>案件量</th>
-                        <td>
-                          {categoryTtl.state新專案建置 !== undefined
-                            ? `${categoryTtl.state新專案建置} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {categoryTtl.state現有系統增修 !== undefined
-                            ? `${categoryTtl.state現有系統增修} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {categoryTtl.state問題回報 !== undefined
-                            ? `${categoryTtl.state問題回報} 件`
-                            : '0 件'}
-                        </td>
+                        {allCategoryData.map((v, i) => {
+                          let arr = categoryTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${arr[0][Object.keys(arr[0])]} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
                       </tr>
 
                       {/* %% */}
                       <tr>
                         <th>案件%</th>
-                        <td>
-                          {categoryTtl.state新專案建置 !== undefined
-                            ? `${percent(total, categoryTtl.state新專案建置)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {categoryTtl.state現有系統增修 !== undefined
-                            ? `${percent(
-                                total,
-                                categoryTtl.state現有系統增修
-                              )} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {categoryTtl.state問題回報 !== undefined
-                            ? `${percent(total, categoryTtl.state問題回報)} %`
-                            : '0 %'}
-                        </td>
+                        {allCategoryData.map((v, i) => {
+                          let arr = categoryTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${percent(
+                                    total,
+                                    arr[0][Object.keys(arr[0])]
+                                  )} %`
+                                : '0 %'}
+                            </td>
+                          );
+                        })}
                       </tr>
                     </tbody>
                   </table>
@@ -329,63 +336,48 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                   <table className="countContainer">
                     <thead>
                       <tr>
-                        {/* {allStatusData.map((v) => {
-                return <th key={v.id}>{v.name}</th>;
-              })} */}
                         <th></th>
-                        <th>主管審核中</th>
-                        <th>處理人評估中</th>
-                        <th>案件進行中</th>
-                        {/* <th>總%</th> */}
+                        {countStatusData.map((v) => {
+                          return <th key={uuidv4()}>{v.name}</th>;
+                        })}
                       </tr>
                     </thead>
                     <tbody>
                       {/* 件數 */}
                       <tr>
-                        {/* {stateTtl.map((v, i) => {
-                return <td>{v.status_id === i + 1 ? '1++' : ''}</td>;
-              })} */}
                         <th>案件量</th>
-                        <td>
-                          {stateTtl.state2 !== undefined
-                            ? `${stateTtl.state2} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {stateTtl.state4 !== undefined
-                            ? `${stateTtl.state4} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {stateTtl.state5 !== undefined
-                            ? `${stateTtl.state5} 件`
-                            : '0 件'}
-                        </td>
-                        {/* <td>{percent(total, total)}%</td> */}
+                        {countStatusData.map((v, i) => {
+                          let arr = stateTtl.filter(
+                            (val) => parseInt(Object.keys(val)[0]) === v.id
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${arr[0][Object.keys(arr[0])]} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
                       </tr>
 
                       {/* %% */}
                       <tr>
-                        {/* {stateTtl.map((v, i) => {
-                return <td>{v.status_id === i + 1 ? '1++' : ''}</td>;
-              })} */}
                         <th>案件%</th>
-                        <td>
-                          {stateTtl.state2 !== undefined
-                            ? `${percent(total, stateTtl.state2)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {stateTtl.state4 !== undefined
-                            ? `${percent(total, stateTtl.state4)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {stateTtl.state5 !== undefined
-                            ? `${percent(total, stateTtl.state5)} %`
-                            : '0 %'}
-                        </td>
-                        {/* <td>{percent(total, total)}%</td> */}
+                        {countStatusData.map((v, i) => {
+                          let arr = stateTtl.filter(
+                            (val) => parseInt(Object.keys(val)[0]) === v.id
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${percent(
+                                    total,
+                                    arr[0][Object.keys(arr[0])]
+                                  )} %`
+                                : '0 %'}
+                            </td>
+                          );
+                        })}
                       </tr>
                     </tbody>
                   </table>
@@ -402,72 +394,115 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
                     <thead>
                       <tr>
                         <th></th>
-                        <th>國會</th>
-                        <th>市議會</th>
-                        <th>服務處A</th>
-                        <th>服務處B</th>
-                        <th>服務處C</th>
+                        {allUnit.map((v, i) => {
+                          return <th key={uuidv4()}>{v.name}</th>;
+                        })}
                       </tr>
                     </thead>
                     <tbody>
                       {/* 件數 */}
                       <tr>
                         <th>案件量</th>
+                        {allUnit.map((v, i) => {
+                          let arr = unitTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={uuidv4()}>
+                              {arr[0] !== undefined
+                                ? `${arr[0][Object.keys(arr[0])]} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+
+                      {/* %% */}
+                      <tr>
+                        <th>案件%</th>
+                        {allUnit.map((v, i) => {
+                          let arr = unitTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${percent(
+                                    total,
+                                    arr[0][Object.keys(arr[0])]
+                                  )} %`
+                                : '0 %'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                </>
+              )}
+
+              {/* 處理人% */}
+              {nowUnit ? (
+                ''
+              ) : (
+                <>
+                  <div className="stateTit">處理人</div>
+                  <table className="countContainer">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>尚無處理人</th>
+                        {allHandlerData.map((v, i) => {
+                          return <th key={uuidv4()}>{v.name}</th>;
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* 件數 */}
+                      <tr>
+                        <th>案件量</th>
+
                         <td>
-                          {unitTtl.state國會 !== undefined
-                            ? `${unitTtl.state國會} 件`
-                            : '0 件'}
+                          {handleNull !== '' ? `${handleNull} 件` : '0 件'}
                         </td>
-                        <td>
-                          {unitTtl.state市議會 !== undefined
-                            ? `${unitTtl.state市議會} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處A !== undefined
-                            ? `${unitTtl.state服務處A} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處B !== undefined
-                            ? `${unitTtl.state服務處B} 件`
-                            : '0 件'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處C !== undefined
-                            ? `${unitTtl.state服務處C} 件`
-                            : '0 件'}
-                        </td>
+
+                        {allHandlerData.map((v, i) => {
+                          let arr = handlerTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${arr[0][Object.keys(arr[0])]} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
                       </tr>
 
                       {/* %% */}
                       <tr>
                         <th>案件%</th>
                         <td>
-                          {unitTtl.state國會 !== undefined
-                            ? `${percent(total, unitTtl.state國會)} %`
+                          {handleNull !== ''
+                            ? `${percent(total, handleNull)} %`
                             : '0 %'}
                         </td>
-                        <td>
-                          {unitTtl.state市議會 !== undefined
-                            ? `${percent(total, unitTtl.state市議會)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處A !== undefined
-                            ? `${percent(total, unitTtl.state服務處A)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處B !== undefined
-                            ? `${percent(total, unitTtl.state服務處B)} %`
-                            : '0 %'}
-                        </td>
-                        <td>
-                          {unitTtl.state服務處C !== undefined
-                            ? `${percent(total, unitTtl.state服務處C)} %`
-                            : '0 %'}
-                        </td>
+                        {allHandlerData.map((v, i) => {
+                          let arr = handlerTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${percent(
+                                    total,
+                                    arr[0][Object.keys(arr[0])]
+                                  )} %`
+                                : '0 %'}
+                            </td>
+                          );
+                        })}
                       </tr>
                     </tbody>
                   </table>
@@ -478,117 +513,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
             ''
           )}
         </div>
-
-        {/* 列表 */}
-        {/* <table className="caseContain">
-          <thead>
-            <tr>
-              <th></th>
-              <th className="sortBtn">
-                案件編號
-                {number ? (
-                  <MdArrowDropDown
-                    className="arrow"
-                    onClick={() => {
-                      setNumber(false);
-                    }}
-                  />
-                ) : (
-                  <MdArrowDropUp
-                    className="arrow"
-                    onClick={() => {
-                      setNumber(true);
-                    }}
-                  />
-                )}
-              </th>
-              <th>申請單位</th>
-              <th>申請人</th>
-              <th>處理人</th>
-              <th>申請類別</th>
-              <th className="sortBtn">
-                申請時間
-                {time ? (
-                  <MdArrowDropDown
-                    className="arrow"
-                    onClick={() => {
-                      setTime(false);
-                    }}
-                  />
-                ) : (
-                  <MdArrowDropUp
-                    className="arrow"
-                    onClick={() => {
-                      setTime(true);
-                    }}
-                  />
-                )}
-              </th>
-              <th>申請狀態</th>
-              <th></th>
-              <th>需求進度</th>
-            </tr>
-          </thead>
-
-          {allData.map((v) => {
-            return (
-              <tbody key={uuidv4()}>
-                <tr>
-                  <td>
-                    {member.permissions_id === 3 && member.name === v.sender
-                      ? `轉件人 : ${v.handler}`
-                      : ''}
-                  </td>
-                  <td>{v.case_number}</td>
-                  <td>{v.applicant_unit}</td>
-                  <td>{v.user}</td>
-                  <td>{v.handler}</td>
-                  <td>{v.application_category}</td>
-                  <td>{v.create_time}</td>
-                  <td
-                    onClick={() => {
-                      handleCaseHistory(v.case_number);
-                    }}
-                  >
-                    <span className="viewList">{v.name}</span>
-                  </td>
-                  <td className="posClick">
-                    <Link to={`caseDetail/application/${v.case_number}`}>
-                      <FaEye
-                        className={`icons ${
-                          v.name === '處理人評估中' &&
-                          member.permissions_id === 3
-                            ? 'eyeBcg'
-                            : ''
-                        }`}
-                        onClick={() => {
-                          setCaseNum(v.case_number);
-                          setCaseId(v.id);
-                          setHandlerNull(v.handler);
-                          setSender(v.sender);
-
-                          // if (
-                          //   v.name === '處理人評估中' &&
-                          //   member.permissions_id === 3
-                          // ) {
-                          //   handleChangeState(v.case_number, v.id);
-                          // }
-                        }}
-                      />
-                    </Link>
-
-            
-                  </td>
-                  <td>
-                    進度({v.cou}/{v.sum})
-                  </td>
-                </tr>
-              </tbody>
-            );
-          })}
-        </table> */}
       </div>
-      {/* </Header> */}
     </>
   );
 }
