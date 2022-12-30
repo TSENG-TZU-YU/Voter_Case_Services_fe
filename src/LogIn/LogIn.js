@@ -60,7 +60,7 @@ function LogIn() {
             <div className="inputContain">
               <AiFillHome className="icons" />
               <select name="company" onChange={doLogin}>
-                <option value="0" selected disabled hidden>
+                <option value="0" selected >
                   --所屬單位--
                 </option>
                 {unit.map((v) => {

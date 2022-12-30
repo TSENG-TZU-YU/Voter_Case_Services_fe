@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FaArrowLeft } from 'react-icons/fa';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
 function CaseDetail({ caseNum, setCaseNum }) {
+  const navigate = useNavigate();
   // 把網址上的 :detailedID 拿出來
   const { num } = useParams();
   // 當 URL 網址改變時useState()會返回一個新的包含有關目前URL的狀態和位置的物件函數。每當URL網址有變更，則 useLocation 資訊也將更新
@@ -25,7 +26,7 @@ function CaseDetail({ caseNum, setCaseNum }) {
   console.log('num', num);
   return (
     <div className="caseDetailContainer">
-      <Link to="/header" className="prePage">
+      <Link to={navigate(-1)} className="prePage">
         <FaArrowLeft className="preIcon" /> <span>返回列表頁</span>
       </Link>
 

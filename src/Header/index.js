@@ -35,6 +35,8 @@ function Header({
 
   const [manage, setManage] = useState(false);
 
+  const [active, setActive] = useState(false);
+
   //會員登入狀態判斷
   useEffect(() => {
     async function getMember() {
@@ -100,10 +102,17 @@ function Header({
     setTrial(true);
   };
 
+  const act = () => {
+    setActive(true);
+  };
+  const acf = () => {
+    setActive(false);
+  };
+
   return (
     <>
       <div className="navTop">
-        <h3>陽信</h3>
+        <h3>選民案件服務系統</h3>
         <MdOutlineLogout size="30" onClick={logOut} />
       </div>
       <div className="between">
@@ -118,7 +127,10 @@ function Header({
               <Link to="application">
                 <div
                   className={`bold ${application ? 'link' : ''}`}
-                  onClick={app}
+                  onClick={() => {
+                    app();
+                    acf();
+                  }}
                 >
                   <HiPencilAlt size="20" />
                   申請表新增
@@ -129,7 +141,7 @@ function Header({
                 to="/header"
                 onClick={cas}
               >
-                <div className="bold">
+                <div className="bold" onClick={acf}>
                   <RiFileTextLine size="20" />
                   申請紀錄查詢
                 </div>
@@ -142,7 +154,13 @@ function Header({
             <>
               <Link to="caseManagement_handler">
                 {/* 處理人/協理/主管 */}
-                <div className={`bold ${trial ? 'link' : ''}`} onClick={tri}>
+                <div
+                  className={`bold ${trial ? 'link' : ''}`}
+                  onClick={() => {
+                    tri();
+                    acf();
+                  }}
+                >
                   <RiPhoneFindFill size="20" />
                   案件審理作業
                 </div>
@@ -155,14 +173,33 @@ function Header({
             <>
               <Link to="countPage">
                 {/* 處理人/協理/主管 */}
-                <div className="bold">
+                <div className="bold" onClick={act}>
                   <RiPhoneFindFill size="20" />
                   案件統計
                 </div>
               </Link>
+              {active ? (
+                <div className="count">
+                  <Link to="">
+                    <div className="bold">
+                      <RiPhoneFindFill size="20" />
+                      申請類別統計
+                    </div>
+                  </Link>
+                  <Link to="">
+                    <div className="bold">
+                      <RiPhoneFindFill size="20" />
+                      案件狀態統計
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                ''
+              )}
+
               <Link to="permissions">
                 {/* 處理人/協理/主管 */}
-                <div className="bold">
+                <div className="bold" onClick={acf}>
                   <RiPhoneFindFill size="20" />
                   權限管理
                 </div>
