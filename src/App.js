@@ -97,7 +97,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LogIn />} />
           <Route
-          // ?member=${member.permissions_id}
+            // ?member=${member.permissions_id}
             path={`header`}
             element={
               <Header
@@ -118,6 +118,8 @@ function App() {
                   setCaseId={setCaseId}
                   setHandlerNull={setHandlerNull}
                   setSender={setSender}
+                  caseNum={caseNum}
+                  handlerNull={handlerNull}
                 />
               }
             />
@@ -130,6 +132,8 @@ function App() {
                   setCaseId={setCaseId}
                   setHandlerNull={setHandlerNull}
                   setSender={setSender}
+                  caseNum={caseNum}
+                  handlerNull={handlerNull}
                 />
               }
             />

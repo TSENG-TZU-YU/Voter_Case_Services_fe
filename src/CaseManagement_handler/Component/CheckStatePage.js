@@ -1,42 +1,80 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { FaTelegramPlane } from 'react-icons/fa';
+import { AiFillCloseSquare } from 'react-icons/ai';
 
 import '../../styles/caseManagement/_checkStatePage.scss';
-export default function CheckStatePage({ setCheckState, caseHistory }) {
+export default function CheckStatePage({
+  setCheckState,
+  handleStData,
+  handlePostStatus,
+  submitMsgTrue,
+  setSubmitMsgTrue,
+  setSubmitMessage,
+  member,
+  handlerNull,
+}) {
+  // console.log('h', handlerNull, member.name);
+
   return (
     <div className="checkStateContainer">
-      <div
-        className="close"
-        onClick={() => {
-          setCheckState(false);
-        }}
-      >
-        關閉
-      </div>
       <div className="checkStateContain">
-        <div className="title">申請狀態列表</div>
-        <table className="checkStateTable">
-          <thead>
-            <tr>
-              <th>案件編號</th>
-              <th>處理人</th>
-              <th>處理狀態</th>
-              <th>處理時間</th>
-            </tr>
-          </thead>
-          {caseHistory.map((v) => {
+        <AiFillCloseSquare
+          className="close"
+          onClick={() => {
+            setCheckState(false);
+          }}
+        />
+        <div className="title">案件處理情形</div>
+
+        {/* msg */}
+        <div
+          className={`handleStatus ${
+            member.permissions_id !== 3 ? 'noneHight' : ''
+          }`}
+        >
+          {handleStData.map((v) => {
             return (
-              <tbody key={uuidv4()}>
-                <tr>
-                  <td>{v.case_number}</td>
-                  <td>{v.handler}</td>
-                  <td>{v.status}</td>
-                  <td>{v.create_time}</td>
-                </tr>
-              </tbody>
+              <div className="msgContainer" key={uuidv4()}>
+                <div className="handler">處理人：{v.name}</div>
+                <div className="msgContain">{v.content}</div>
+                <div className="time">{v.create_time}</div>
+              </div>
             );
           })}
-        </table>
+        </div>
+
+        {/* bar */}
+        {member.permissions_id === 3 ||
+        (handlerNull === member.name && member.manage === 1) ? (
+          <div className="chatBarContain">
+            <textarea
+              className="submitMsg"
+              placeholder="請輸入訊息..."
+              name="ttt"
+              // cols="100"
+              rows="3"
+              onChange={(e) => {
+                let msg = e.target.value;
+                setSubmitMessage(msg);
+                // console.log(msg);
+                if (msg !== '') {
+                  setSubmitMsgTrue(true);
+                } else {
+                  setSubmitMsgTrue(false);
+                }
+              }}
+            ></textarea>
+            <FaTelegramPlane
+              className={`submitIcon ${submitMsgTrue ? 'submitTrue' : ''}`}
+              onClick={(e) => {
+                handlePostStatus(e);
+              }}
+            />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

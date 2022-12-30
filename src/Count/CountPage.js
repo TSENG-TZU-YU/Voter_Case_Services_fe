@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 import axios from 'axios';
 import { useAuth } from '../utils/use_auth';
@@ -17,10 +16,7 @@ import HandlerFilter from './Component/HandlerFilter.js';
 import UserFilter from './Component/UserFilter.js';
 import UserUnitFilter from './Component/UserUnitFilter.js';
 
-import { FaEye, FaFireExtinguisher } from 'react-icons/fa';
-import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
-
-function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
+function CountPage() {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月 ISO
   let dateObj = new Date(nowDate);
@@ -59,10 +55,10 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [allUnit, setAllUnitData] = useState([]);
   const [allStatusData, setAllStatusData] = useState([]);
   const [countStatusData, setCountStatusData] = useState([]);
-
   const [allCategoryData, setAllCategoryData] = useState([]);
   const [allHandlerData, setAllHandlerData] = useState([]);
   const [allUserData, setAllUserData] = useState([]);
+  const [userData, setuserData] = useState([]);
 
   // get total
   const [allTotal, setAllTotal] = useState('');
@@ -71,6 +67,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
   const [categoryTtl, setCategoryTtl] = useState([]);
   const [unitTtl, setUnitTtl] = useState([]);
   const [handlerTtl, setHandlerTtl] = useState([]);
+  const [userTtl, setUserTtl] = useState([]);
 
   // 檢查會員
   useEffect(() => {
@@ -98,7 +95,6 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
           withCredentials: true,
         }
       );
-      //   console.log(response.data.pagination.total);
       setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
@@ -106,6 +102,8 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setCountStatusData(response.data.statusResult.splice(1));
       setAllHandlerData(response.data.handlerResult);
       setAllUserData(response.data.userResult);
+      setuserData(response.data.AllUserResult);
+
       // total
       setAllTotal(response.data.pagination.allTotal);
       setTotal(response.data.pagination.total);
@@ -113,6 +111,8 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setCategoryTtl(response.data.pagination.categoryCounts);
       setUnitTtl(response.data.pagination.unitCounts);
       setHandlerTtl(response.data.pagination.handlerCounts);
+      setUserTtl(response.data.pagination.userCounts);
+      // console.log('object',response.data.userResult);
     };
     getAllData();
   }, [
@@ -181,7 +181,7 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
               setNowCategory={setNowCategory}
             />
             <StatusFilter
-              allStatusData={allStatusData}
+              allStatusData={countStatusData}
               setNowStatus={setNowStatus}
             />
             <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
@@ -271,243 +271,278 @@ function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
               </table> */}
 
               {/* 申請類別% (搜尋件數的%)*/}
-              {nowCategory ? (
-                ''
-              ) : (
-                <>
-                  <div className="stateTit">申請類別</div>
-                  <table className="countContainer">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        {allCategoryData.map((v) => {
-                          return <th key={uuidv4()}>{v.name}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* 件數 */}
-                      <tr>
-                        <th>案件量</th>
-                        {allCategoryData.map((v, i) => {
-                          let arr = categoryTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${arr[0][Object.keys(arr[0])]} 件`
-                                : '0 件'}
-                            </td>
-                          );
-                        })}
-                      </tr>
+              <>
+                <div className="stateTit">申請類別</div>
+                <table className="countContainer">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {allCategoryData.map((v) => {
+                        return <th key={uuidv4()}>{v.name}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 件數 */}
+                    <tr>
+                      <th>案件量</th>
+                      {allCategoryData.map((v, i) => {
+                        let arr = categoryTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${arr[0][Object.keys(arr[0])]} 件`
+                              : '0 件'}
+                          </td>
+                        );
+                      })}
+                    </tr>
 
-                      {/* %% */}
-                      <tr>
-                        <th>案件%</th>
-                        {allCategoryData.map((v, i) => {
-                          let arr = categoryTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${percent(
-                                    total,
-                                    arr[0][Object.keys(arr[0])]
-                                  )} %`
-                                : '0 %'}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    </tbody>
-                  </table>
-                </>
-              )}
-
-              {/* 申請狀態% */}
-              {nowStatus ? (
-                ''
-              ) : (
-                <>
-                  <div className="stateTit">案件狀態</div>
-                  <table className="countContainer">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        {countStatusData.map((v) => {
-                          return <th key={uuidv4()}>{v.name}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* 件數 */}
-                      <tr>
-                        <th>案件量</th>
-                        {countStatusData.map((v, i) => {
-                          let arr = stateTtl.filter(
-                            (val) => parseInt(Object.keys(val)[0]) === v.id
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${arr[0][Object.keys(arr[0])]} 件`
-                                : '0 件'}
-                            </td>
-                          );
-                        })}
-                      </tr>
-
-                      {/* %% */}
-                      <tr>
-                        <th>案件%</th>
-                        {countStatusData.map((v, i) => {
-                          let arr = stateTtl.filter(
-                            (val) => parseInt(Object.keys(val)[0]) === v.id
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${percent(
-                                    total,
-                                    arr[0][Object.keys(arr[0])]
-                                  )} %`
-                                : '0 %'}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    </tbody>
-                  </table>
-                </>
-              )}
+                    {/* %% */}
+                    <tr>
+                      <th>案件%</th>
+                      {allCategoryData.map((v, i) => {
+                        let arr = categoryTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${percent(
+                                  total,
+                                  arr[0][Object.keys(arr[0])]
+                                )} %`
+                              : '0 %'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </>
 
               {/* 申請單位% */}
-              {nowUnit ? (
-                ''
-              ) : (
-                <>
-                  <div className="stateTit">申請單位</div>
-                  <table className="countContainer">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        {allUnit.map((v, i) => {
-                          return <th key={uuidv4()}>{v.name}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* 件數 */}
-                      <tr>
-                        <th>案件量</th>
-                        {allUnit.map((v, i) => {
-                          let arr = unitTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={uuidv4()}>
-                              {arr[0] !== undefined
-                                ? `${arr[0][Object.keys(arr[0])]} 件`
-                                : '0 件'}
-                            </td>
-                          );
-                        })}
-                      </tr>
+              <>
+                <div className="stateTit">申請單位</div>
+                <table className="countContainer">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {allUnit.map((v, i) => {
+                        return <th key={uuidv4()}>{v.name}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 件數 */}
+                    <tr>
+                      <th>案件量</th>
+                      {allUnit.map((v, i) => {
+                        let arr = unitTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={uuidv4()}>
+                            {arr[0] !== undefined
+                              ? `${arr[0][Object.keys(arr[0])]} 件`
+                              : '0 件'}
+                          </td>
+                        );
+                      })}
+                    </tr>
 
-                      {/* %% */}
-                      <tr>
-                        <th>案件%</th>
-                        {allUnit.map((v, i) => {
-                          let arr = unitTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${percent(
-                                    total,
-                                    arr[0][Object.keys(arr[0])]
-                                  )} %`
-                                : '0 %'}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    </tbody>
-                  </table>
-                </>
-              )}
+                    {/* %% */}
+                    <tr>
+                      <th>案件%</th>
+                      {allUnit.map((v, i) => {
+                        let arr = unitTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${percent(
+                                  total,
+                                  arr[0][Object.keys(arr[0])]
+                                )} %`
+                              : '0 %'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </>
 
               {/* 處理人% */}
-              {nowUnit ? (
-                ''
-              ) : (
-                <>
-                  <div className="stateTit">處理人</div>
-                  <table className="countContainer">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>尚無處理人</th>
-                        {allHandlerData.map((v, i) => {
-                          return <th key={uuidv4()}>{v.name}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* 件數 */}
-                      <tr>
-                        <th>案件量</th>
+              <>
+                <div className="stateTit">處理人</div>
+                <table className="countContainer">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>尚無處理人</th>
+                      {allHandlerData.map((v, i) => {
+                        return <th key={uuidv4()}>{v.name}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 件數 */}
+                    <tr>
+                      <th>案件量</th>
 
-                        <td>
-                          {handleNull !== '' ? `${handleNull} 件` : '0 件'}
-                        </td>
+                      <td>{handleNull !== '' ? `${handleNull} 件` : '0 件'}</td>
 
-                        {allHandlerData.map((v, i) => {
-                          let arr = handlerTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${arr[0][Object.keys(arr[0])]} 件`
-                                : '0 件'}
-                            </td>
-                          );
-                        })}
-                      </tr>
+                      {allHandlerData.map((v, i) => {
+                        let arr = handlerTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${arr[0][Object.keys(arr[0])]} 件`
+                              : '0 件'}
+                          </td>
+                        );
+                      })}
+                    </tr>
 
-                      {/* %% */}
-                      <tr>
-                        <th>案件%</th>
-                        <td>
-                          {handleNull !== ''
-                            ? `${percent(total, handleNull)} %`
-                            : '0 %'}
-                        </td>
-                        {allHandlerData.map((v, i) => {
-                          let arr = handlerTtl.filter(
-                            (val) => Object.keys(val)[0] === v.name
-                          );
-                          return (
-                            <td key={i}>
-                              {arr[0] !== undefined
-                                ? `${percent(
-                                    total,
-                                    arr[0][Object.keys(arr[0])]
-                                  )} %`
-                                : '0 %'}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    </tbody>
-                  </table>
-                </>
-              )}
+                    {/* %% */}
+                    <tr>
+                      <th>案件%</th>
+                      <td>
+                        {handleNull !== ''
+                          ? `${percent(total, handleNull)} %`
+                          : '0 %'}
+                      </td>
+                      {allHandlerData.map((v, i) => {
+                        let arr = handlerTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${percent(
+                                  total,
+                                  arr[0][Object.keys(arr[0])]
+                                )} %`
+                              : '0 %'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+
+              {/* 申請人% */}
+              <>
+                <div className="stateTit">申請人</div>
+                <table className="countContainer">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {userData.map((v, i) => {
+                        return <th key={i}>{v.name}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 件數 */}
+                    <tr>
+                      <th>案件量</th>
+                      {userData.map((v, i) => {
+                        let arr = userTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${arr[0][Object.keys(arr[0])]} 件`
+                              : '0 件'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+
+                    {/* %% */}
+                    <tr>
+                      <th>案件%</th>
+                      {userData.map((v, i) => {
+                        let arr = userTtl.filter(
+                          (val) => Object.keys(val)[0] === v.name
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${percent(
+                                  total,
+                                  arr[0][Object.keys(arr[0])]
+                                )} %`
+                              : '0 %'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+
+              {/* 申請狀態% */}
+              <>
+                <div className="stateTit">案件狀態</div>
+                <table className="countContainer">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {countStatusData.map((v) => {
+                        return <th key={uuidv4()}>{v.name}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 件數 */}
+                    <tr>
+                      <th>案件量</th>
+                      {countStatusData.map((v, i) => {
+                        let arr = stateTtl.filter(
+                          (val) => parseInt(Object.keys(val)[0]) === v.id
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${arr[0][Object.keys(arr[0])]} 件`
+                              : '0 件'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+
+                    {/* %% */}
+                    <tr>
+                      <th>案件%</th>
+                      {countStatusData.map((v, i) => {
+                        let arr = stateTtl.filter(
+                          (val) => parseInt(Object.keys(val)[0]) === v.id
+                        );
+                        return (
+                          <td key={i}>
+                            {arr[0] !== undefined
+                              ? `${percent(
+                                  total,
+                                  arr[0][Object.keys(arr[0])]
+                                )} %`
+                              : '0 %'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </>
             </>
           ) : (
             ''
