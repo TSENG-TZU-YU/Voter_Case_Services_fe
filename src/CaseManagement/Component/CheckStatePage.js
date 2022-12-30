@@ -27,52 +27,44 @@ export default function CheckStatePage({
         <div className="title">案件處理情形</div>
 
         {/* msg */}
-        <div
-          className={`handleStatus ${
-            member.permissions_id !== 3 ? 'noneHight' : ''
-          }`}
-        >
-          {handleStData.map((v) => {
-            return (
-              <div className="msgContainer" key={uuidv4()}>
-                <div className="handler">處理人：{v.name}</div>
-                <div className="msgContain">{v.content}</div>
-                <div className="time">{v.create_time}</div>
-              </div>
-            );
-          })}
+        <div className={`handleStatus noneHight`}>
+          {handleStData.length !== 0
+            ? handleStData.map((v) => {
+                return (
+                  <div className="msgContainer" key={uuidv4()}>
+                    <div className="handler">處理人：{v.name}</div>
+                    <div className="msgContain">{v.content}</div>
+                    <div className="time">{v.create_time}</div>
+                  </div>
+                );
+              })
+            : '目前沒有訊息'}
         </div>
 
         {/* bar */}
-        {member.permissions_id === 3 ? (
-          <div className="chatBarContain">
-            <textarea
-              className="submitMsg"
-              placeholder="請輸入訊息..."
-              name="ttt"
-              // cols="100"
-              rows="3"
-              onChange={(e) => {
-                let msg = e.target.value;
-                setSubmitMessage(msg);
-                // console.log(msg);
-                if (msg !== '') {
-                  setSubmitMsgTrue(true);
-                } else {
-                  setSubmitMsgTrue(false);
-                }
-              }}
-            ></textarea>
-            <FaTelegramPlane
-              className={`submitIcon ${submitMsgTrue ? 'submitTrue' : ''}`}
-              onClick={(e) => {
-                handlePostStatus(e);
-              }}
-            />
-          </div>
-        ) : (
-          ''
-        )}
+        {/* <div className="chatBarContain">
+          <textarea
+            className="submitMsg"
+            placeholder="請輸入訊息..."
+            name="ttt"
+            rows="3"
+            onChange={(e) => {
+              let msg = e.target.value;
+              setSubmitMessage(msg);
+              if (msg !== '') {
+                setSubmitMsgTrue(true);
+              } else {
+                setSubmitMsgTrue(false);
+              }
+            }}
+          ></textarea>
+          <FaTelegramPlane
+            className={`submitIcon ${submitMsgTrue ? 'submitTrue' : ''}`}
+            onClick={(e) => {
+              handlePostStatus(e);
+            }}
+          />
+        </div> */}
       </div>
     </div>
   );
