@@ -38,7 +38,10 @@ function CaseDetail({ caseNum, setCaseNum }) {
   // console.log('num', num);
   return (
     <div className="caseDetailContainer">
-      {/* navigate(+1) */}
+      {/* navigate(-1) */}
+      {/*     onClick={() => {
+          navigate(-1);
+        }} */}
       <Link to="/header" className="prePage">
         <FaArrowLeft className="preIcon" /> <span>返回列表頁</span>
       </Link>
