@@ -126,7 +126,7 @@ function Header({
             <>
               <Link to="application">
                 <div
-                  className={`bold ${application ? 'link' : ''}`}
+                  className={` ${application ? 'link' : ''}`}
                   onClick={() => {
                     app();
                     acf();
@@ -141,7 +141,7 @@ function Header({
                 to="/header"
                 onClick={cas}
               >
-                <div className="bold" onClick={acf}>
+                <div className="" onClick={acf}>
                   <RiFileTextLine size="20" />
                   申請紀錄查詢
                 </div>
@@ -155,7 +155,7 @@ function Header({
               <Link to="caseManagement_handler">
                 {/* 處理人/協理/主管 */}
                 <div
-                  className={`bold ${trial ? 'link' : ''}`}
+                  className={` ${trial ? 'link' : ''}`}
                   onClick={() => {
                     tri();
                     acf();
@@ -173,7 +173,7 @@ function Header({
             <>
               <Link to="countPage">
                 {/* 處理人/協理/主管 */}
-                <div className="bold" onClick={act}>
+                <div className="" onClick={act}>
                   <RiPhoneFindFill size="20" />
                   案件統計
                 </div>
@@ -181,25 +181,25 @@ function Header({
               {active ? (
                 <div className="count">
                   <Link to="categoryPage">
-                    <div className="bold">
+                    <div className="">
                       <RiPhoneFindFill size="20" />
                       申請類別統計
                     </div>
                   </Link>
                   <Link to="statusPage">
-                    <div className="bold">
+                    <div className="">
                       <RiPhoneFindFill size="20" />
                       案件狀態統計
                     </div>
                   </Link>
                   <Link to="unitPage">
-                    <div className="bold">
+                    <div className="">
                       <RiPhoneFindFill size="20" />
                       申請單位統計
                     </div>
                   </Link>
                   <Link to="UserPage">
-                    <div className="bold">
+                    <div className="">
                       <RiPhoneFindFill size="20" />
                       處理人統計
                     </div>
@@ -211,7 +211,7 @@ function Header({
 
               <Link to="permissions">
                 {/* 處理人/協理/主管 */}
-                <div className="bold" onClick={acf}>
+                <div className="" onClick={acf}>
                   <RiPhoneFindFill size="20" />
                   權限管理
                 </div>

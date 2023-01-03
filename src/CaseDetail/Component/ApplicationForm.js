@@ -78,6 +78,9 @@ function ApplicationForm({
     { title: '長期', value: '3' },
   ];
 
+  //友好程度
+  const relation = [{ name: 'A' }, { name: 'B' }, { name: 'C' }, { name: 'D' }];
+
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -107,13 +110,16 @@ function ApplicationForm({
   // 修改申請表
   const [edit, setEdit] = useState(true);
   const [fileUpdate, setFileUpdate] = useState(false);
+  const [addUnit, setAddUnit] = useState('');
+  const [editUnit, setEditUnit] = useState(false);
 
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
   const [getCounty, setGetCounty] = useState([]);
   const [getArea, setGetArea] = useState([]);
-  console.log('getArea', getArea);
+  const [getUnit, setGetUnit] = useState([]);
+
   //表格資料填入
   const handleChange = (val, input) => {
     let newData = [...detailData];
@@ -132,6 +138,7 @@ function ApplicationForm({
     if (input === 'clientPhone') newData[0].client_phone = val;
     if (input === 'clientAddress') newData[0].client_address = val;
     if (input === 'remark') newData[0].remark = val;
+    if (input === 'unit') newData[0].unit = val;
     console.log('detailData', newData);
     setDetailData(newData);
   };
@@ -177,8 +184,12 @@ function ApplicationForm({
     //抓取處理人
     let handler = async () => {
       try {
-        let res = await axios.get(
-          'http://localhost:3001/api/application_get/handler'
+        let res = await axios.post(
+          'http://localhost:3001/api/application_get/handler',
+          {
+            unit: addUnit,
+          },
+          { withCredentials: true }
         );
         setGetHandler(res.data);
       } catch (err) {
@@ -192,6 +203,17 @@ function ApplicationForm({
           'http://localhost:3001/api/application_get/category'
         );
         setGetCategory(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    //抓取申請單位
+    let unit = async () => {
+      try {
+        let res = await axios.get(
+          'http://localhost:3001/api/application_get/unit'
+        );
+        setGetUnit(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -211,7 +233,8 @@ function ApplicationForm({
     handler();
     category();
     county();
-  }, [edit]);
+    unit();
+  }, [edit, addUnit]);
 
   //抓取區
   async function areaPost(county) {
@@ -233,8 +256,8 @@ function ApplicationForm({
       title: tit,
       showDenyButton: true,
       showCancelButton: false,
-      confirmButtonText: '確定送出',
-      denyButtonText: `取消送出`,
+      confirmButtonText: '確定儲存',
+      denyButtonText: `取消儲存`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -244,6 +267,7 @@ function ApplicationForm({
         hanleAddNeed(e, 'edit');
         submitFile();
         store();
+        setEditUnit(false);
       } else if (result.isDenied) {
         Swal.fire('已取消儲存', '', 'info');
       }
@@ -407,7 +431,7 @@ function ApplicationForm({
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
-          status_id: 1,
+          // status_id: 1,
         }
       );
     } catch (err) {
@@ -972,6 +996,33 @@ function ApplicationForm({
                       )}
                     </div>
                     <div>
+                      <div className="pb-1">申請單位</div>
+                      {edit ? (
+                        <input
+                          type="text"
+                          placeholder={v.unit}
+                          disabled
+                          defaultChecked={true}
+                        />
+                      ) : (
+                        <select
+                          className="category"
+                          onChange={(e) => {
+                            handleChange(e.target.value, 'unit');
+                            setAddUnit(e.target.value);
+                            setEditUnit(true);
+                          }}
+                        >
+                          <option selected disabled hidden>
+                            {v.unit}
+                          </option>
+                          {getUnit.map((v, i) => {
+                            return <option key={i}>{v.name}</option>;
+                          })}
+                        </select>
+                      )}
+                    </div>
+                    {/* <div>
                       <div className="pb-1">案件編號</div>
 
                       <input
@@ -980,7 +1031,7 @@ function ApplicationForm({
                         disabled
                         defaultChecked={true} //不受控制的組件的使用
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <div className="gapContain">
                     <div>
@@ -999,9 +1050,14 @@ function ApplicationForm({
                             handleChange(e.target.value, 'handler');
                           }}
                         >
-                          <option selected disabled hidden>
-                            {v.handler}
-                          </option>
+                          {editUnit ? (
+                            ''
+                          ) : (
+                            <option selected disabled hidden>
+                              {v.handler}
+                            </option>
+                          )}
+
                           <option value=" ">-----請選擇-----</option>
                           {getHandler.map((v, i) => {
                             return <option key={i}>{v.name}</option>;
@@ -1052,21 +1108,24 @@ function ApplicationForm({
                             defaultChecked={true}
                           />
                         ) : (
-                          <input
+                          <select
                             className="handler"
-                            type="text"
-                            value={v.relation}
                             onChange={(e) => {
-                              handleChange(
-                                (v.relation = e.target.value),
-                                'relation'
-                              );
+                              handleChange(e.target.value, 'relation');
                             }}
-                          />
+                          >
+                            <option selected disabled hidden>
+                              {' '}
+                              {v.relation}
+                            </option>
+                            {relation.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
                         )}
                       </div>
                     )}
-                    {v.project_name === '' && v.status_id !== 1 ? (
+                    {/* {v.project_name === '' && v.status_id !== 1 ? (
                       ''
                     ) : (
                       <div>
@@ -1085,277 +1144,281 @@ function ApplicationForm({
                           }}
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
                   {/* 當事人 */}
-
-                  <div className="gapContain my-2">
-                    {v.litigant === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.litigant}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            className="handler"
-                            type="text"
-                            value={v.litigant}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.litigant = e.target.value),
-                                'litigant'
-                              );
-                              // eslint-disable-next-line no-lone-blocks
-                              // {
-                              //   e.target.value.length > 0
-                              //     ? setLitigant(true)
-                              //     : setLitigant(false);
-                              // }
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
-                    {v.litigant_phone === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人聯絡電話</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.litigant_phone}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            className=" hide-arrows"
-                            type="text"
-                            value={v.litigant_phone}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.litigant_phone = e.target.value),
-                                'litigantPhone'
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
+                  <div className="outGap">
+                    <div className="gapContain my-2">
+                      {v.litigant === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.litigant}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              className="handler"
+                              type="text"
+                              value={v.litigant}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.litigant = e.target.value),
+                                  'litigant'
+                                );
+                                // eslint-disable-next-line no-lone-blocks
+                                // {
+                                //   e.target.value.length > 0
+                                //     ? setLitigant(true)
+                                //     : setLitigant(false);
+                                // }
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                      {v.litigant_phone === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人聯絡電話</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.litigant_phone}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              className=" hide-arrows"
+                              type="text"
+                              value={v.litigant_phone}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.litigant_phone = e.target.value),
+                                  'litigantPhone'
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <div className="gapContain my-2">
+                      {v.litigant_county_id === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人縣市</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              placeholder={v.litigant_county_id}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <select
+                              onChange={(e) => {
+                                handleChange(e.target.value, 'litigantCounty');
+                                areaPost(e.target.value);
+                              }}
+                            >
+                              <option selected disabled hidden>
+                                {v.litigant_county_id}
+                              </option>
+                              <option value=" "> -----請選擇-----</option>
+                              {getCounty.map((v, i) => {
+                                return <option key={i}>{v.name}</option>;
+                              })}
+                            </select>
+                          )}
+                        </div>
+                      )}
+                      {v.litigant_area_id === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人區</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              placeholder={v.litigant_area_id}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <select
+                              onChange={(e) => {
+                                handleChange(e.target.value, 'litigantArea');
+                              }}
+                            >
+                              <option selected disabled hidden>
+                                {v.litigant_area_id}
+                              </option>
+                              <option value=" "> -----請選擇-----</option>
+                              {getArea.map((v, i) => {
+                                return <option key={i}>{v.name}</option>;
+                              })}
+                            </select>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <div className="gapContain my-2">
+                      {v.litigant_rimin === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人里</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.litigant_rimin}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              value={v.litigant_rimin}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.litigant_rimin = e.target.value),
+                                  'litigantRimin'
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                      {v.litigant_address === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">當事人地址</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.litigant_address}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              value={v.litigant_address}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.litigant_address = e.target.value),
+                                  'litigantAddress'
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="gapContain my-2">
-                    {v.litigant_county_id === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人縣市</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            placeholder={v.litigant_county_id}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <select
-                            onChange={(e) => {
-                              handleChange(e.target.value, 'litigantCounty');
-                              areaPost(e.target.value);
-                            }}
-                          >
-                            <option selected disabled hidden>
-                              {v.litigant_county_id}
-                            </option>
-                            <option value=" "> -----請選擇-----</option>
-                            {getCounty.map((v, i) => {
-                              return <option key={i}>{v.name}</option>;
-                            })}
-                          </select>
-                        )}
-                      </div>
-                    )}
-                    {v.litigant_area_id === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人區</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            placeholder={v.litigant_area_id}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <select
-                            onChange={(e) => {
-                              handleChange(e.target.value, 'litigantArea');
-                            }}
-                          >
-                            <option selected disabled hidden>
-                              {v.litigant_area_id}
-                            </option>
-                            <option value=" "> -----請選擇-----</option>
-                            {getArea.map((v, i) => {
-                              return <option key={i}>{v.name}</option>;
-                            })}
-                          </select>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="gapContain my-2">
-                    {v.litigant_rimin === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人里</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.litigant_rimin}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            type="text"
-                            value={v.litigant_rimin}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.litigant_rimin = e.target.value),
-                                'litigantRimin'
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
-                    {v.litigant_address === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">當事人地址</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.litigant_address}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            type="text"
-                            value={v.litigant_address}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.litigant_address = e.target.value),
-                                'litigantAddress'
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="gapContain my-2">
-                    {v.client_name === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">請託人</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.client_name}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            type="text"
-                            value={v.client_name}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.client_name = e.target.value),
-                                'client'
-                              );
-                              // eslint-disable-next-line no-lone-blocks
-                              // {
-                              //   e.target.value.length > 0
-                              //     ? setClient(true)
-                              //     : setClient(false);
-                              // }
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
-                    {v.client_phone === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">請託人聯絡電話</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.client_phone}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            className="hide-arrows"
-                            type="text"
-                            value={v.client_phone}
-                            oninput="if(value.length>11)value=value.slice(0,11)"
-                            onChange={(e) => {
-                              handleChange(
-                                (v.client_phone = e.target.value),
-                                'clientPhone'
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="gapContain my-2">
-                    {v.client_address === '' && v.status_id !== 1 ? (
-                      ''
-                    ) : (
-                      <div>
-                        <div className="pb-1">請託人地址</div>
-                        {edit ? (
-                          <input
-                            type="text"
-                            value={v.client_address}
-                            disabled
-                            defaultChecked={true}
-                          />
-                        ) : (
-                          <input
-                            className="handler"
-                            type="text"
-                            value={v.client_address}
-                            onChange={(e) => {
-                              handleChange(
-                                (v.client_address = e.target.value),
-                                'clientAddress'
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    )}
+                  <div className="outGap">
+                    {' '}
+                    <div className="gapContain my-2">
+                      {v.client_name === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">請託人</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.client_name}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              value={v.client_name}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.client_name = e.target.value),
+                                  'client'
+                                );
+                                // eslint-disable-next-line no-lone-blocks
+                                // {
+                                //   e.target.value.length > 0
+                                //     ? setClient(true)
+                                //     : setClient(false);
+                                // }
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                      {v.client_phone === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">請託人聯絡電話</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.client_phone}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              className="hide-arrows"
+                              type="text"
+                              value={v.client_phone}
+                              oninput="if(value.length>11)value=value.slice(0,11)"
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.client_phone = e.target.value),
+                                  'clientPhone'
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <div className="gapContain my-2">
+                      {v.client_address === '' && v.status_id !== 1 ? (
+                        ''
+                      ) : (
+                        <div>
+                          <div className="pb-1">請託人地址</div>
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={v.client_address}
+                              disabled
+                              defaultChecked={true}
+                            />
+                          ) : (
+                            <input
+                              className="handler"
+                              type="text"
+                              value={v.client_address}
+                              onChange={(e) => {
+                                handleChange(
+                                  (v.client_address = e.target.value),
+                                  'clientAddress'
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
@@ -1436,7 +1499,7 @@ function ApplicationForm({
                       </>
                     )}
                   </div>
-                  <div className="needInput center">
+                  {/* <div className="needInput center">
                     <input
                       type="text"
                       value={editNeed[i].requirement_name}
@@ -1446,7 +1509,7 @@ function ApplicationForm({
                         handlerUpdateNeed(e.target.value, i, 'tit');
                       }}
                     />
-                  </div>
+                  </div> */}
                   <div className="needInput">
                     <textarea
                       name="dir"
@@ -1552,14 +1615,25 @@ function ApplicationForm({
               return (
                 <div key={i} className="textareaGap">
                   <div> 備註</div>
-                  <textarea
-                    className="textarea"
-                    maxLength="300"
-                    value={v.remark}
-                    onChange={(e) => {
-                      handleChange((v.remark = e.target.value), 'remark');
-                    }}
-                  ></textarea>
+
+                  {edit ? (
+                    <textarea
+                      className="textarea"
+                      maxLength="300"
+                      value={v.remark}
+                      disabled
+                      defaultChecked={true}
+                    ></textarea>
+                  ) : (
+                    <textarea
+                      className="textarea"
+                      maxLength="300"
+                      value={v.remark}
+                      onChange={(e) => {
+                        handleChange((v.remark = e.target.value), 'remark');
+                      }}
+                    ></textarea>
+                  )}
                 </div>
               );
             })}

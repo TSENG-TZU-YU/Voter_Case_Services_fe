@@ -55,7 +55,7 @@ function EditNeedPage({
                     ''
                   )}
                 </div>
-                <div className="needInput center">
+                {/* <div className="needInput center">
                   <span className="pe-1">1.</span>
                   <input
                     type="text"
@@ -66,7 +66,7 @@ function EditNeedPage({
                       handlerUpdateNeed(e.target.value, i, 'tit');
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="needInput">
                   <span className="pe-1">2.</span>
                   <textarea
