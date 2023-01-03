@@ -299,7 +299,7 @@ function ApplicationForm({
   function submitCheck(tit, e) {
     for (let i = 0; i < editNeed.length; i++) {
       if (
-        editNeed[i].requirement_name === '' ||
+        // editNeed[i].requirement_name === '' ||
         editNeed[i].directions === ''
       ) {
         setEditVerifyPage(true);
@@ -480,8 +480,9 @@ function ApplicationForm({
       if (member.manage === 1 && member.name !== handlerNull) {
         setSelectData(response.data.selectResult.splice(2, 3));
       }
-      if (member.permissions_id !== 2 && member.manage !== 1) {
-        setSelectData(response.data.selectResult.splice(1));
+   
+      if (member.permissions_id === 3) {
+        setSelectData(response.data.selectResult);
       }
 
       // setSelectData(response.data.selectResult);
