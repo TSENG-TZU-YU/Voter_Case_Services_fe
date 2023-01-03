@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
-import axios from 'axios';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -16,11 +15,24 @@ function CaseDetail({ caseNum, setCaseNum }) {
   // 從網址上抓到關鍵字
   let params = new URLSearchParams(location.search);
   let ID = params.get('id');
+  let HId = params.get('HId');
+  let User = params.get('user');
+
   //使用者資料
   const navBtn = [
-    { title: '申請表', url: `application/${num}?id=${ID}` },
-    { title: '討論區', url: `chatPage/${num}?id=${ID}` },
-    { title: '上傳文件', url: `uploadPage/${num}?id=${ID}` },
+    {
+      title: '申請表',
+      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}`,
+    },
+    // { title: '討論區', url: `chatPage/${num}?id=${ID}` },
+    {
+      title: '案件處理情形',
+      url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}`,
+    },
+    {
+      title: '上傳文件',
+      url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}`,
+    },
   ];
 
   // console.log('num', num);

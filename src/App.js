@@ -25,6 +25,7 @@ import StatusPage from './CountALL/StatusPage';
 import UnitPage from './CountALL/UnitPage';
 import UserPage from './CountALL/UserPage';
 import Permissions from './Permissions';
+import ProcessingStatus from './CaseDetail/Component/ProcessingStatus';
 
 function App() {
   // const { member, setMember } = useAuth();
@@ -182,7 +183,12 @@ function App() {
                 }
               />
 
-              <Route path="chatPage/:num" element={<ChatPage />} />
+              {/* <Route path="chatPage/:num" element={<ChatPage />} /> */}
+              <Route
+                path="ProcessingStatus/:num"
+                element={<ProcessingStatus />}
+              />
+
               <Route
                 path="uploadPage/:num"
                 element={

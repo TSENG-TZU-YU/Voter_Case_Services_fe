@@ -892,45 +892,48 @@ function ApplicationForm({
 
           {/* 處理狀態 */}
           {handleData.length !== 0 ? (
-            <div className="statusFormContainer">
-              {handleData.map((v) => {
-                return (
-                  <div className="statusFormContain" key={uuidv4()}>
-                    <div className="mb-2">
-                      <span> &emsp;&emsp;處理人員：</span>
-                      <span>{v.handler}</span>
-                    </div>
-                    <div className="mb-2">
-                      <span>&emsp;&emsp;處理狀態：</span>
-                      <span>{v.status}</span>
-                    </div>
-                    <div className="statusTime mb-2">
-                      <span>&emsp;&emsp;處理時間：</span>
-                      <span>{v.create_time}</span>
-                    </div>
-                    <div className="d-flex mb-2">
-                      <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
-                      <textarea
-                        name=""
-                        cols="40"
-                        rows="3"
-                        placeholder={v.remark}
-                        disabled
-                      ></textarea>
-                    </div>
-                    {v.select_state === '案件進行中' &&
-                    v.estimated_time !== undefined ? (
-                      <div>
-                        <span>預計完成時間：</span>
-                        <span>{v.estimated_time}</span>
+            <>
+              <div className="statusFormTit">案件處理歷程</div>
+              <div className="statusFormContainer">
+                {handleData.map((v) => {
+                  return (
+                    <div className="statusFormContain" key={uuidv4()}>
+                      <div className="mb-2">
+                        <span> &emsp;&emsp;處理人員：</span>
+                        <span>{v.handler}</span>
                       </div>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                      <div className="mb-2">
+                        <span>&emsp;&emsp;處理狀態：</span>
+                        <span>{v.status}</span>
+                      </div>
+                      <div className="statusTime mb-2">
+                        <span>&emsp;&emsp;處理時間：</span>
+                        <span>{v.create_time}</span>
+                      </div>
+                      <div className="d-flex mb-2">
+                        <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
+                        <textarea
+                          name=""
+                          cols="40"
+                          rows="3"
+                          placeholder={v.remark}
+                          disabled
+                        ></textarea>
+                      </div>
+                      {v.select_state === '案件進行中' &&
+                      v.estimated_time !== undefined ? (
+                        <div>
+                          <span>預計完成時間：</span>
+                          <span>{v.estimated_time}</span>
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           ) : (
             <div className="editBtn">尚無狀態資料</div>
           )}
@@ -1389,7 +1392,7 @@ function ApplicationForm({
               return (
                 <div className="needContain" key={i}>
                   <div className="needTit">
-                    <div className="d-flex">
+                    <div className="checkInput">
                       <input
                         type="checkbox"
                         disabled={
@@ -1411,7 +1414,9 @@ function ApplicationForm({
                           handleNeedChecked(v.id, e.target.checked);
                         }}
                       />
+                    </div>
 
+                    <div className="needCount">
                       <span className="title">需求 {i + 1}</span>
                     </div>
 
@@ -1436,7 +1441,7 @@ function ApplicationForm({
                       </>
                     )}
                   </div>
-                  <div className="needInput center">
+                  {/* <div className="needInput center">
                     <input
                       type="text"
                       value={editNeed[i].requirement_name}
@@ -1446,7 +1451,7 @@ function ApplicationForm({
                         handlerUpdateNeed(e.target.value, i, 'tit');
                       }}
                     />
-                  </div>
+                  </div> */}
                   <div className="needInput">
                     <textarea
                       name="dir"
@@ -1491,6 +1496,8 @@ function ApplicationForm({
                 </div>
               )}
 
+              {/* files */}
+              <div className="fileTit">附件上傳</div>
               {getFile.map((v, i) => {
                 return (
                   <div key={uuidv4()} className="two">
@@ -1576,7 +1583,8 @@ function ApplicationForm({
             needState !== 9 &&
             needState !== 10 &&
             needState !== 11 &&
-            needState !== 12 ? (
+            needState !== 12 &&
+            needSumLen !== needLen ? (
               <div className="selectContain">
                 {/* <StateFilter /> */}
                 <div className="selContain">
@@ -1589,7 +1597,7 @@ function ApplicationForm({
                     }}
                   >
                     <option value="" selected>
-                      ----請選擇申請狀態----
+                      ----請選擇處理狀態----
                     </option>
                     {selectData.map((v) => {
                       return (
@@ -1600,7 +1608,7 @@ function ApplicationForm({
                     })}
                   </select>
                   {selectRemind ? (
-                    <div className="selectRemind">*請選擇申請狀態</div>
+                    <div className="selectRemind">*請選擇處理狀態</div>
                   ) : (
                     ''
                   )}
@@ -1618,13 +1626,13 @@ function ApplicationForm({
                 >
                   確認
                 </button>
-                {needSumLen === needLen ? (
+                {/* {needSumLen === needLen ? (
                   <button className="finishBtn" onClick={handleFinish}>
                     完成
                   </button>
                 ) : (
                   ''
-                )}
+                )} */}
               </div>
             ) : addStatus ? (
               ''
@@ -1650,6 +1658,32 @@ function ApplicationForm({
               </>
             )}
           </div>
+          {addStatus &&
+          handlerNull !== '' &&
+          needState !== 1 &&
+          needState !== 2 &&
+          needState !== 3 &&
+          needState !== 6 &&
+          needState !== 7 &&
+          needState !== 8 &&
+          needState !== 9 &&
+          needState !== 10 &&
+          needState !== 11 &&
+          needState !== 12 ? (
+            needSumLen === needLen ? (
+              <div className="fBtn">
+                <button className="finishBtn" onClick={handleFinish}>
+                  完成
+                </button>
+              </div>
+            ) : (
+              ''
+            )
+          ) : (
+            ''
+          )}
+
+          {/* 儲存 */}
           {member.permissions_id === 1 && needState === 1 ? (
             <div className="submitBtn">
               {edit ? (

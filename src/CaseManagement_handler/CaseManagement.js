@@ -129,6 +129,7 @@ function CaseManagement({
   }, [allData]);
 
   // 案件處理情形
+
   let handleHandleStatus = async (caseNum) => {
     let response = await axios.get(
       `${API_URL}/applicationData/getHandleStatus/${caseNum}`,
@@ -305,7 +306,7 @@ function CaseManagement({
 
                         <td className="posClick">
                           <Link
-                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}`}
+                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}`}
                           >
                             <FaEye
                               className={`icons ${

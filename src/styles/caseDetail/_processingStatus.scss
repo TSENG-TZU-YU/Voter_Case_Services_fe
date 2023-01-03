@@ -1,0 +1,86 @@
+@import '../variable';
+
+.userName {
+  //   background: lightblue;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 0 10px 3px;
+  color: $subClrBrown;
+  font-weight: 600;
+  .userIcon {
+    font-size: 1.6rem;
+    padding-right: 6px;
+  }
+}
+.chatContainer {
+  // background: lightgoldenrodyellow;
+  margin: 0 auto;
+  width: 100%;
+  height: calc(100% - 160px);
+  padding: 0 5px;
+  @include scrollbar;
+  .handleStatus {
+    margin: 10px auto;
+    // background: lemonchiffon;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include scrollbarContain;
+
+    .msgContainer {
+      // background: lightcoral;
+      width: 95%;
+      margin-top: 10px;
+      .msgContain {
+        text-align: justify;
+        border: 2px solid $focusClrG;
+        background: $mainClrW;
+        border-radius: 3px;
+        padding: 5px;
+        word-break: break-all;
+      }
+      .time {
+        text-align: end;
+        padding-top: 3px;
+        color: #aaa;
+      }
+      .handler {
+        text-align: start;
+        color: #aaa;
+      }
+    }
+  }
+}
+.noneHight {
+  height: calc(100% - 100px);
+}
+.chatBarContain {
+  // background: lemonchiffon;
+  width: 95%;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: 3%;
+  // margin: 8px auto 0;
+  @include flexCenter;
+  .submitMsg {
+    resize: none;
+    border: 1.5px solid $subClrBrown;
+    border-radius: 3px;
+    width: 100%;
+    padding: 3px;
+    @include scrollbarContain;
+  }
+  .submitIcon {
+    font-size: 2rem;
+    margin: 0 5px;
+  }
+  .submitTrue {
+    color: $subClrBrown;
+    cursor: pointer;
+  }
+}

@@ -107,7 +107,7 @@ function AddStateForm({
             // setAddStateForm(true);
           }
         >
-          確認申請
+          確認
         </button>
       </div>
     </div>
