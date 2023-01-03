@@ -37,6 +37,9 @@ function ApplicationForm({
 }) {
   const { num } = useParams();
   const location = useLocation();
+  // 從網址上抓到關鍵字
+  let params = new URLSearchParams(location.search);
+  let HId = params.get('HId');
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
@@ -105,7 +108,7 @@ function ApplicationForm({
     }
   }, [detailData]);
 
-  console.log('manager', member.permissions_id);
+  console.log('manager', addStatus);
 
   // 修改申請表
   const [edit, setEdit] = useState(true);
@@ -139,7 +142,7 @@ function ApplicationForm({
     if (input === 'clientAddress') newData[0].client_address = val;
     if (input === 'remark') newData[0].remark = val;
     if (input === 'unit') newData[0].unit = val;
-    console.log('detailData', newData);
+    // console.log('detailData', newData);
     setDetailData(newData);
   };
   //申請表驗證空值
@@ -299,7 +302,7 @@ function ApplicationForm({
   function submitCheck(tit, e) {
     for (let i = 0; i < editNeed.length; i++) {
       if (
-        editNeed[i].requirement_name === '' ||
+        // editNeed[i].requirement_name === '' ||
         editNeed[i].directions === ''
       ) {
         setEditVerifyPage(true);
@@ -480,7 +483,10 @@ function ApplicationForm({
       if (member.manage === 1 && member.name !== handlerNull) {
         setSelectData(response.data.selectResult.splice(2, 3));
       }
-      if (member.permissions_id !== 2 && member.manage !== 1) {
+      if (
+        member.permissions_id === 3 ||
+        (member.manage === 1 && member.name === handlerNull)
+      ) {
         setSelectData(response.data.selectResult.splice(1));
       }
 
@@ -1648,6 +1654,7 @@ function ApplicationForm({
             {/* 選擇狀態 */}
             {addStatus &&
             handlerNull !== '' &&
+            (member.manage === 1 || member.handler === 1) &&
             needState !== 1 &&
             needState !== 2 &&
             needState !== 3 &&
@@ -1713,6 +1720,7 @@ function ApplicationForm({
             ) : (
               <>
                 {!addStatus &&
+                member.manage !== 1 &&
                 needState !== 1 &&
                 needState !== 2 &&
                 needState !== 3 &&
