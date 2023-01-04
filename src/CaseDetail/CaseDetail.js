@@ -42,9 +42,17 @@ function CaseDetail({ caseNum, setCaseNum }) {
       {/*     onClick={() => {
           navigate(-1);
         }} */}
-      <Link to="/header" className="prePage">
+      {/* <Link to="/header" className="prePage">
+        <FaArrowLeft className="preIcon" /> <span >返回列表頁</span>
+      </Link> */}
+      <div
+        className="prePage"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
         <FaArrowLeft className="preIcon" /> <span>返回列表頁</span>
-      </Link>
+      </div>
 
       <div className="caseDetailContain">
         <nav>
