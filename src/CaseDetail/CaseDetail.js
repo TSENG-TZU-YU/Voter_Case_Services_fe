@@ -40,10 +40,6 @@ function CaseDetail() {
   // console.log('num', num);
   return (
     <div className="caseDetailContainer">
-      {/* navigate(-1) */}
-      {/*     onClick={() => {
-          navigate(-1);
-        }} */}
       <Link
         to={
           page == 1

@@ -25,9 +25,6 @@ import Permissions from './Permissions';
 import ProcessingStatus from './CaseDetail/Component/ProcessingStatus';
 
 function App() {
-  const [application, setApplication] = useState(false);
-  const [caseManagement, setCaseManagement] = useState(false);
-  const [trial, setTrial] = useState(false);
   const [addStatus, setAddStatus] = useState(true);
 
   // 刪除sweet
@@ -49,25 +46,6 @@ function App() {
     });
   }
 
-  // 送出申請表sweet
-  function submitCheck(tit, submitFile, navigate) {
-    Swal.fire({
-      title: tit,
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: '確定送出',
-      denyButtonText: `取消送出`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire('送出成功', '', 'success');
-        submitFile();
-      } else if (result.isDenied) {
-        Swal.fire('已取消送出', '', 'info');
-      }
-    });
-  }
-
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -76,16 +54,7 @@ function App() {
           <Route
             // ?member=${member.permissions_id}
             path={`header`}
-            element={
-              <Header
-                setApplication={setApplication}
-                application={application}
-                setCaseManagement={setCaseManagement}
-                caseManagement={caseManagement}
-                setTrial={setTrial}
-                trial={trial}
-              />
-            }
+            element={<Header />}
           >
             <Route index path={`caseManagement`} element={<CaseManagement />} />
             <Route
@@ -96,18 +65,7 @@ function App() {
                 <CaseManagement_handler />
               }
             />
-            <Route
-              path="application"
-              element={
-                <Application
-                  setApplication={setApplication}
-                  setCaseManagement={setCaseManagement}
-                  setTrial={setTrial}
-                  delCheck={delCheck}
-                  submitCheck={submitCheck}
-                />
-              }
-            />
+            <Route path="application" element={<Application />} />
 
             <Route path="countPage" element={<CountPage />} />
             <Route path="categoryPage" element={<CategoryPage />} />

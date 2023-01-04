@@ -15,12 +15,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 //hook
 import { useAuth } from '../utils/use_auth';
 
-function Application({
-  setApplication,
-  setCaseManagement,
-  setTrial,
-  delCheck,
-}) {
+function Application({ delCheck }) {
   const navigate = useNavigate();
   const [addNeed, setAddNeed] = useState([{ text: '' }]);
   const [addFile, setAddFile] = useState([{ file: '' }]);
@@ -305,9 +300,6 @@ function Application({
           submitFile();
           submit();
           navigate('/header/caseManagement');
-          setCaseManagement(true);
-          setApplication(false);
-          setTrial(false);
         } else if (result.isDenied) {
           Swal.fire('已取消送出', '', 'info');
         }
@@ -328,9 +320,6 @@ function Application({
         Swal.fire('儲存成功', '', 'success');
         submitFile();
         navigate('/header/caseManagement');
-        setCaseManagement(true);
-        setApplication(false);
-        setTrial(false);
       } else if (result.isDenied) {
         Swal.fire('已取消儲存', '', 'info');
       }

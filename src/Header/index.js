@@ -15,14 +15,7 @@ import { MdOutlineLogout } from 'react-icons/md';
 //hook
 import { useAuth } from '../utils/use_auth';
 
-function Header({
-  setApplication,
-  application,
-  caseManagement,
-  setCaseManagement,
-  setTrial,
-  trial,
-}) {
+function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   let params = new URLSearchParams(location.search);
@@ -86,33 +79,7 @@ function Header({
     }
   };
 
-  useEffect(() => {
-    console.log('page', page);
-  }, [page]);
-
-  //顯示樣式
-  // const app = () => {
-  //   if (caseManagement || trial) {
-  //     setCaseManagement(false);
-  //     setTrial(false);
-  //   }
-
-  //   setApplication(true);
-  // };
-  // const cas = () => {
-  //   if (application || trial) {
-  //     setApplication(false);
-  //     setTrial(false);
-  //   }
-  //   setCaseManagement(true);
-  // };
-  // const tri = () => {
-  //   if (application || caseManagement) {
-  //     setApplication(false);
-  //     setCaseManagement(false);
-  //   }
-  //   setTrial(true);
-  // };
+  useEffect(() => {}, [page]);
 
   //顯示統計
   const act = () => {
@@ -121,18 +88,6 @@ function Header({
   const acf = () => {
     setActive(false);
   };
-
-  const title1 = [
-    { tit: '申請表新增' },
-    { tit: '申請紀錄查詢' },
-    { tit: '案件審理作業' },
-    { tit: '案件統計' },
-    { tit: '申請類別統計' },
-    { tit: '案件狀態統計' },
-    { tit: '申請單位統計' },
-    { tit: '處理人統計' },
-    { tit: '權限管理' },
-  ];
 
   return (
     <>
