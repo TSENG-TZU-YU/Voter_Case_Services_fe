@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import './_index.scss';
-import {  NavLink } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,9 +24,16 @@ function Header({
   trial,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  let params = new URLSearchParams(location.search);
+  let page = params.get('page');
 
   //使用者資料
   const { member, setMember } = useAuth();
+
+  //樣式
+  // const [appLink1, setAppLink1] = useState(false);
+  // const [appLink2, setAppLink2] = useState(false);
 
   //權限
   const [user, setUser] = useState(false);
@@ -79,29 +86,33 @@ function Header({
     }
   };
 
-  //顯示樣式
-  const app = () => {
-    if (caseManagement || trial) {
-      setCaseManagement(false);
-      setTrial(false);
-    }
+  useEffect(() => {
+    console.log('page', page);
+  }, [page]);
 
-    setApplication(true);
-  };
-  const cas = () => {
-    if (application || trial) {
-      setApplication(false);
-      setTrial(false);
-    }
-    setCaseManagement(true);
-  };
-  const tri = () => {
-    if (application || caseManagement) {
-      setApplication(false);
-      setCaseManagement(false);
-    }
-    setTrial(true);
-  };
+  //顯示樣式
+  // const app = () => {
+  //   if (caseManagement || trial) {
+  //     setCaseManagement(false);
+  //     setTrial(false);
+  //   }
+
+  //   setApplication(true);
+  // };
+  // const cas = () => {
+  //   if (application || trial) {
+  //     setApplication(false);
+  //     setTrial(false);
+  //   }
+  //   setCaseManagement(true);
+  // };
+  // const tri = () => {
+  //   if (application || caseManagement) {
+  //     setApplication(false);
+  //     setCaseManagement(false);
+  //   }
+  //   setTrial(true);
+  // };
 
   //顯示統計
   const act = () => {
@@ -152,7 +163,7 @@ function Header({
               <nav>
                 <NavLink
                   to="caseManagement"
-                  className={(nav) => (nav.isActive ? 'link' : '')}
+                  className={(nav) => (nav.isActive || page == 1 ? 'link' : '')}
                 >
                   <div className="" onClick={acf}>
                     <RiFileTextLine size="20" />
@@ -169,7 +180,7 @@ function Header({
               <nav>
                 <NavLink
                   to="caseManagement_handler"
-                  className={(nav) => (nav.isActive ? 'link' : '')}
+                  className={(nav) => (nav.isActive || page == 2 ? 'link' : '')}
                 >
                   {/* 處理人/協理/主管 */}
                   <div
