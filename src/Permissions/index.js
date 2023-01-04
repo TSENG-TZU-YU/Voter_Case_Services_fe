@@ -113,7 +113,7 @@ function Permissions() {
     //     })}
     //   </div>
     // </div>
-    <div className="caseContainer">
+    <div className="permissionsContainer">
       {/* 篩選 */}
       <div className="sortSelect1">
         <div className="bothFilter1">

@@ -91,6 +91,11 @@ function CaseManagement() {
   // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+
     let getCampingData = async () => {
       let response = await axios.get(
         `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}`,
@@ -107,7 +112,7 @@ function CaseManagement() {
     };
 
     getCampingData();
-  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
+  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate, order]);
 
   useEffect(() => {
     const newPageCase = _.chunk(allData, perPage);
@@ -170,7 +175,8 @@ function CaseManagement() {
 
   return (
     <>
-      {/* {checkState ? (
+      <>
+        {/* {checkState ? (
             <CheckStatePage
               setCheckState={setCheckState}
               handleStData={handleStData}
@@ -184,175 +190,188 @@ function CaseManagement() {
           ) : (
             ''
           )} */}
-      <div className="caseContainer">
-        {/* 篩選 */}
-        <div className="sortSelect">
-          <div className="bothFilter">
-            <CategoryFilter
-              allCategoryData={allCategoryData}
-              setNowCategory={setNowCategory}
-            />
-            <StatusFilter
-              allStatusData={allStatusData}
-              setNowStatus={setNowStatus}
-            />
-            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-          </div>
-          <DateFilter
-            dateRemind={dateRemind}
-            setDateRemind={setDateRemind}
-            setMaxDate={setMaxDate}
-            setMinDate={setMinDate}
-            maxDateValue={maxDateValue}
-            setMaxDateValue={setMaxDateValue}
-            minDateValue={minDateValue}
-            setMinDateValue={setMinDateValue}
-            dateAgo={dateAgo}
-            nowDate={nowDate}
-          />
-        </div>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <table className="caseContain">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th className="sortBtn">
-                    案件編號
-                    {number ? (
-                      <MdArrowDropDown
-                        className="arrow"
-                        onClick={() => {
-                          setOrder(1);
-                          setNumber(false);
-                        }}
-                      />
-                    ) : (
-                      <MdArrowDropUp
-                        className="arrow"
-                        onClick={() => {
-                          setOrder(2);
-                          setNumber(true);
-                        }}
-                      />
-                    )}
-                  </th>
-                  <th>申請單位</th>
-                  <th>申請人</th>
-                  <th>處理人</th>
-                  <th>申請類別</th>
-                  <th className="sortBtn">
-                    申請時間
-                    {time ? (
-                      <MdArrowDropDown
-                        className="arrow"
-                        onClick={() => {
-                          setTime(false);
-                        }}
-                      />
-                    ) : (
-                      <MdArrowDropUp
-                        className="arrow"
-                        onClick={() => {
-                          setTime(true);
-                        }}
-                      />
-                    )}
-                  </th>
-                  <th>申請狀態</th>
-                  <th></th>
-                  <th>需求進度</th>
-                </tr>
-              </thead>
-              {pageCase.length !== 0 ? (
-                <>
-                  {pageCase.length > 0 &&
-                    pageCase[pageNow - 1].map((v) => {
-                      return (
-                        <tbody key={uuidv4()}>
-                          <tr>
-                            <td>
-                              {member.permissions_id === 3 &&
-                              member.name === v.sender
-                                ? `轉件人 : ${v.handler}`
-                                : ''}
-                            </td>
-                            <td>{v.case_number}</td>
-                            <td>{v.applicant_unit}</td>
-                            <td>{v.user}</td>
-                            <td>{v.handler}</td>
-                            <td>{v.application_category}</td>
-                            <td>{v.create_time}</td>
-                            <td
-                              // onClick={() => {
-                              //   setCaseNum(v.case_number);
-                              //   setCheckState(true);
-                              //   handleHandleStatus(v.case_number);
-                              //   setHandlerNull(v.handler);
-                              // }}
-                              className="view"
-                            >
-                              {v.name}
-                            </td>
-
-                            <td className="posClick">
-                              <Link
-                                to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
-                              >
-                                <FaEye
-                                  className={`icons ${
-                                    v.name === '處理人評估中' &&
-                                    member.permissions_id === 3
-                                      ? 'eyeBcg'
-                                      : ''
-                                  }`}
-                                  onClick={() => {
-                                    // setCaseNum(v.case_number);
-                                    // setCaseId(v.id);
-                                    // setHandlerNull(v.handler);
-                                    // setSender(v.sender);
-                                    // if (
-                                    //   v.name === '處理人評估中' &&
-                                    //   member.permissions_id === 3
-                                    // ) {
-                                    //   handleChangeState(v.case_number, v.id);
-                                    // }
-                                  }}
-                                />
-                              </Link>
-
-                              {/* <div className="hadClick">NEW</div> */}
-                            </td>
-                            <td>
-                              進度({v.cou}/{v.sum})
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })}
-                </>
-              ) : (
-                <div className="noData">
-                  <div>目前沒有資料</div>
-                </div>
-              )}
-            </table>
-            {/* 頁碼 */}
-
-            <div className="page">
-              <PaginationBar
-                pageNow={pageNow}
-                setPageNow={setPageNow}
-                pageTotal={pageTotal}
+        <div className="caseContainer">
+          {/* 篩選 */}
+          <div className="sortSelect">
+            <div className="bothFilter">
+              <CategoryFilter
+                allCategoryData={allCategoryData}
+                setNowCategory={setNowCategory}
               />
+              <StatusFilter
+                allStatusData={allStatusData}
+                setNowStatus={setNowStatus}
+              />
+              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
             </div>
+            <DateFilter
+              dateRemind={dateRemind}
+              setDateRemind={setDateRemind}
+              setMaxDate={setMaxDate}
+              setMinDate={setMinDate}
+              maxDateValue={maxDateValue}
+              setMaxDateValue={setMaxDateValue}
+              minDateValue={minDateValue}
+              setMinDateValue={setMinDateValue}
+              dateAgo={dateAgo}
+              nowDate={nowDate}
+            />
+          </div>
 
-            {/* 頁碼 end */}
-          </>
-        )}
-      </div>
+          <table className="caseContain">
+            <thead>
+              <tr>
+                <th></th>
+                <th className="sortBtn">
+                  案件編號
+                  {number ? (
+                    <MdArrowDropDown
+                      className="arrow"
+                      onClick={() => {
+                        setOrder(1);
+                        setNumber(false);
+                      }}
+                    />
+                  ) : (
+                    <MdArrowDropUp
+                      className="arrow"
+                      onClick={() => {
+                        setOrder(2);
+                        setNumber(true);
+                      }}
+                    />
+                  )}
+                </th>
+                <th>申請單位</th>
+                <th>申請人</th>
+                <th>處理人</th>
+                <th>申請類別</th>
+                <th className="sortBtn">
+                  申請時間
+                  {time ? (
+                    <MdArrowDropDown
+                      className="arrow"
+                      onClick={() => {
+                        setOrder(3);
+                        setTime(false);
+                      }}
+                    />
+                  ) : (
+                    <MdArrowDropUp
+                      className="arrow"
+                      onClick={() => {
+                        setOrder(4);
+                        setTime(true);
+                      }}
+                    />
+                  )}
+                </th>
+                <th>申請狀態</th>
+                <th></th>
+                <th>需求進度</th>
+              </tr>
+            </thead>
+            {isLoading ? (
+              <tbody className="noData">
+                <td colSpan={10} className="noTd">
+                  <Loader />
+                </td>
+              </tbody>
+            ) : (
+              <>
+                {pageCase.length !== 0 ? (
+                  <>
+                    {pageCase.length > 0 &&
+                      pageCase[pageNow - 1].map((v) => {
+                        return (
+                          <tbody key={uuidv4()} className="body">
+                            <tr>
+                              <td>
+                                {member.permissions_id === 3 &&
+                                member.name === v.sender
+                                  ? `轉件人 : ${v.handler}`
+                                  : ''}
+                              </td>
+                              <td>{v.case_number}</td>
+                              <td>{v.applicant_unit}</td>
+                              <td>{v.user}</td>
+                              <td>{v.handler}</td>
+                              <td>{v.application_category}</td>
+                              <td>{v.create_time}</td>
+                              <td
+                                // onClick={() => {
+                                //   setCaseNum(v.case_number);
+                                //   setCheckState(true);
+                                //   handleHandleStatus(v.case_number);
+                                //   setHandlerNull(v.handler);
+                                // }}
+                                className="view"
+                              >
+                                {v.name}
+                              </td>
+
+                              <td className="posClick">
+                                <Link
+                                  to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
+                                >
+                                  <FaEye
+                                    className={`icons ${
+                                      v.name === '處理人評估中' &&
+                                      member.permissions_id === 3
+                                        ? 'eyeBcg'
+                                        : ''
+                                    }`}
+                                    onClick={() => {
+                                      // setCaseNum(v.case_number);
+                                      // setCaseId(v.id);
+                                      // setHandlerNull(v.handler);
+                                      // setSender(v.sender);
+                                      // if (
+                                      //   v.name === '處理人評估中' &&
+                                      //   member.permissions_id === 3
+                                      // ) {
+                                      //   handleChangeState(v.case_number, v.id);
+                                      // }
+                                    }}
+                                  />
+                                </Link>
+
+                                {/* <div className="hadClick">NEW</div> */}
+                              </td>
+                              <td>
+                                進度({v.cou}/{v.sum})
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      })}
+
+                    {/* 頁碼 */}
+                    <tbody className="noData">
+                      <td colSpan={10} className="noTd">
+                        <div className="page">
+                          <PaginationBar
+                            pageNow={pageNow}
+                            setPageNow={setPageNow}
+                            pageTotal={pageTotal}
+                          />
+                        </div>
+                      </td>
+                    </tbody>
+                    {/* 頁碼 end */}
+                  </>
+                ) : (
+                  <tbody className="noData">
+                    <td colSpan={10} className="noTd">
+                      目前沒有資料
+                    </td>
+                  </tbody>
+                )}
+              </>
+            )}
+          </table>
+        </div>
+      </>
     </>
   );
 }
