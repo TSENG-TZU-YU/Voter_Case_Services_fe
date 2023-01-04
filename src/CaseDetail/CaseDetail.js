@@ -18,21 +18,22 @@ function CaseDetail() {
   let HId = params.get('HId');
   let User = params.get('user');
   let Sender = params.get('sender');
+  let page = params.get('page');
 
   //使用者資料
   const navBtn = [
     {
       title: '申請表',
-      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}&sender=${Sender}`,
+      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}&sender=${Sender}&page=${page}`,
     },
     // { title: '討論區', url: `chatPage/${num}?id=${ID}` },
     {
       title: '案件處理情形',
-      url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}`,
+      url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
     },
     {
       title: '上傳文件',
-      url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}`,
+      url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
     },
   ];
 
