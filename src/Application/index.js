@@ -68,7 +68,13 @@ function Application({
   const [client, setClient] = useState(false);
 
   //友好程度
-  const relation = [{ name: 'A' }, { name: 'B' }, { name: 'C' }, { name: 'D' }];
+  const relation = [
+    { name: 'VIP' },
+    { name: 'A' },
+    { name: 'B' },
+    { name: 'C' },
+    { name: 'D' },
+  ];
 
   // 檢查會員
   useEffect(() => {
@@ -298,7 +304,7 @@ function Application({
           Swal.fire('送出成功', '', 'success');
           submitFile();
           submit();
-          navigate('/header');
+          navigate('/header/caseManagement');
           setCaseManagement(true);
           setApplication(false);
           setTrial(false);
@@ -321,7 +327,7 @@ function Application({
       if (result.isConfirmed) {
         Swal.fire('儲存成功', '', 'success');
         submitFile();
-        navigate('/header');
+        navigate('/header/caseManagement');
         setCaseManagement(true);
         setApplication(false);
         setTrial(false);
@@ -346,6 +352,9 @@ function Application({
           // TODO: 申請狀態 一般職員跟主管送出的狀態不同
           status: 4,
           create_time: endTime,
+        },
+        {
+          withCredentials: true,
         }
       );
     } catch (err) {
@@ -425,6 +434,9 @@ function Application({
             user: member.name,
             status: 1,
             create_time: endTime,
+          },
+          {
+            withCredentials: true,
           }
         );
       }
@@ -569,7 +581,7 @@ function Application({
           <div className="box">
             {/* 當事人 */}
             <div className="gap">
-              <div> 當事人</div>
+              <div> 當事人姓名</div>
               <input
                 className="handler"
                 type="text"
@@ -644,7 +656,6 @@ function Application({
                     className="handler"
                     onChange={(e) => {
                       handleChange(e.target.value, 'litigantRimin');
-                      riminPost(e.target.value);
                     }}
                   >
                     <option value=" "> -----請選擇-----</option>
@@ -675,7 +686,7 @@ function Application({
           <div className="box">
             {/* 請託人 */}
             <div className="gap">
-              <div> 請託人</div>
+              <div> 請託人姓名</div>
               <input
                 className="handler"
                 type="text"

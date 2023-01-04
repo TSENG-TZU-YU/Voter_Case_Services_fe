@@ -87,8 +87,9 @@ function App() {
               />
             }
           >
-            <Route index element={<CaseManagement />} />
+            <Route index path={`caseManagement`} element={<CaseManagement />} />
             <Route
+              index
               path="caseManagement_handler"
               element={
                 // eslint-disable-next-line react/jsx-pascal-case

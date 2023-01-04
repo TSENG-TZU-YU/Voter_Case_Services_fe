@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './_index.scss';
-import { Link } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -79,6 +79,7 @@ function Header({
     }
   };
 
+  //顯示樣式
   const app = () => {
     if (caseManagement || trial) {
       setCaseManagement(false);
@@ -102,12 +103,25 @@ function Header({
     setTrial(true);
   };
 
+  //顯示統計
   const act = () => {
     setActive(true);
   };
   const acf = () => {
     setActive(false);
   };
+
+  const title1 = [
+    { tit: '申請表新增' },
+    { tit: '申請紀錄查詢' },
+    { tit: '案件審理作業' },
+    { tit: '案件統計' },
+    { tit: '申請類別統計' },
+    { tit: '案件狀態統計' },
+    { tit: '申請單位統計' },
+    { tit: '處理人統計' },
+    { tit: '權限管理' },
+  ];
 
   return (
     <>
@@ -124,98 +138,131 @@ function Header({
           {/* 使用者/主管 */}
           {user ? (
             <>
-              <Link to="application">
-                <div
-                  className={` ${application ? 'link' : ''}`}
-                  onClick={() => {
-                    app();
-                    acf();
-                  }}
+              <nav>
+                <NavLink
+                  to="application"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <HiPencilAlt size="20" />
-                  申請表新增
-                </div>
-              </Link>
-              <Link
-                className={` ${caseManagement ? 'link' : ''}`}
-                to="/header"
-                onClick={cas}
-              >
-                <div className="" onClick={acf}>
-                  <RiFileTextLine size="20" />
-                  申請紀錄查詢
-                </div>
-              </Link>
+                  <div>
+                    <HiPencilAlt size="20" />
+                    申請表新增
+                  </div>
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  to="caseManagement"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  <div className="" onClick={acf}>
+                    <RiFileTextLine size="20" />
+                    申請紀錄查詢
+                  </div>
+                </NavLink>
+              </nav>
             </>
           ) : (
             ''
           )}
           {handler || manage ? (
             <>
-              <Link to="caseManagement_handler">
-                {/* 處理人/協理/主管 */}
-                <div
-                  className={` ${trial ? 'link' : ''}`}
-                  onClick={() => {
-                    tri();
-                    acf();
-                  }}
+              <nav>
+                <NavLink
+                  to="caseManagement_handler"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <RiPhoneFindFill size="20" />
-                  案件審理作業
-                </div>
-              </Link>
+                  {/* 處理人/協理/主管 */}
+                  <div
+                    onClick={() => {
+                      // tri();
+                      acf();
+                    }}
+                  >
+                    <RiPhoneFindFill size="20" />
+                    案件審理作業
+                  </div>
+                </NavLink>
+              </nav>
             </>
           ) : (
             ''
           )}
           {manage ? (
             <>
-              <Link to="countPage">
-                {/* 處理人/協理/主管 */}
-                <div className="" onClick={act}>
-                  <RiPhoneFindFill size="20" />
-                  案件統計
-                </div>
-              </Link>
+              <nav>
+                <NavLink
+                  to="countPage"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  {/* 處理人/協理/主管 */}
+                  <div className="" onClick={act}>
+                    <RiPhoneFindFill size="20" />
+                    案件統計
+                  </div>
+                </NavLink>
+              </nav>
               {active ? (
                 <div className="count">
-                  <Link to="categoryPage">
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      申請類別統計
-                    </div>
-                  </Link>
-                  <Link to="statusPage">
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      案件狀態統計
-                    </div>
-                  </Link>
-                  <Link to="unitPage">
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      申請單位統計
-                    </div>
-                  </Link>
-                  <Link to="UserPage">
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      處理人統計
-                    </div>
-                  </Link>
+                  <nav>
+                    <NavLink
+                      to="categoryPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        申請類別統計
+                      </div>
+                    </NavLink>
+                  </nav>
+                  <nav>
+                    <NavLink
+                      to="statusPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        案件狀態統計
+                      </div>
+                    </NavLink>
+                  </nav>
+                  <nav>
+                    <NavLink
+                      to="unitPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        申請單位統計
+                      </div>
+                    </NavLink>
+                  </nav>
+                  <nav>
+                    <NavLink
+                      to="UserPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        處理人統計
+                      </div>
+                    </NavLink>
+                  </nav>
                 </div>
               ) : (
                 ''
               )}
-
-              <Link to="permissions">
-                {/* 處理人/協理/主管 */}
-                <div className="" onClick={acf}>
-                  <RiPhoneFindFill size="20" />
-                  權限管理
-                </div>
-              </Link>
+              <nav>
+                <NavLink
+                  to="permissions"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  {/* 處理人/協理/主管 */}
+                  <div className="" onClick={acf}>
+                    <RiPhoneFindFill size="20" />
+                    權限管理
+                  </div>
+                </NavLink>
+              </nav>
             </>
           ) : (
             ''
