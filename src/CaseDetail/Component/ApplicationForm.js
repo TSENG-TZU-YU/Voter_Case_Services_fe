@@ -313,7 +313,6 @@ function ApplicationForm({
       if (result.isConfirmed) {
         Swal.fire('刪除成功', '', 'success');
         deleteForm();
-        // submitFile();
         navigate('/header/caseManagement');
       } else if (result.isDenied) {
         Swal.fire('已取消刪除', '', 'info');
