@@ -6,7 +6,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
-function CaseDetail({ caseNum, setCaseNum }) {
+function CaseDetail() {
   const navigate = useNavigate();
   // 把網址上的 :detailedID 拿出來
   const { num } = useParams();
@@ -17,12 +17,13 @@ function CaseDetail({ caseNum, setCaseNum }) {
   let ID = params.get('id');
   let HId = params.get('HId');
   let User = params.get('user');
+  let Sender = params.get('sender');
 
   //使用者資料
   const navBtn = [
     {
       title: '申請表',
-      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}`,
+      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}&sender=${Sender}`,
     },
     // { title: '討論區', url: `chatPage/${num}?id=${ID}` },
     {

@@ -34,7 +34,6 @@
     .msgContainer {
       // background: lightcoral;
       width: 95%;
-      margin-top: 10px;
       .msgContain {
         text-align: justify;
         border: 2px solid $focusClrG;
@@ -52,6 +51,9 @@
         text-align: start;
         color: #aaa;
       }
+    }
+    .mTop {
+      margin-top: 10px;
     }
   }
 }

@@ -28,11 +28,7 @@ function ApplicationForm({
   addStatus,
   handlerSelect,
   setHandlerSelect,
-  caseId,
-  caseNum,
   delCheck,
-  handlerNull,
-  sender,
   // viewCheck,
 }) {
   const { num } = useParams();
@@ -40,6 +36,11 @@ function ApplicationForm({
   // 從網址上抓到關鍵字
   let params = new URLSearchParams(location.search);
   let HId = params.get('HId');
+  let caseId = params.get('id');
+  let Sender = params.get('sender');
+
+  // console.log('first2', Sender);
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
@@ -51,6 +52,7 @@ function ApplicationForm({
   const [handleData, setHandleData] = useState([]);
   const [handlerData, setHandlerData] = useState([]);
   const [selectData, setSelectData] = useState([]);
+  const [remarkLength, setRemarkLength] = useState('');
   const [handlerVal, setHandlerVal] = useState({ val: '' });
   const [postVal, setPostVal] = useState({
     caseNumber: '',
@@ -60,9 +62,10 @@ function ApplicationForm({
     remark: '',
     finishTime: '',
   });
-  console.log('needState', needState);
+  // console.log('hid', HId);
   const [selectRemind, setSelectRemind] = useState(false);
   const [postValRemind, setPostValRemind] = useState(false);
+  const [postCaseRemind, setPostCaseRemind] = useState(false);
   const [editVerifyPage, setEditVerifyPage] = useState(false);
   // 職權
   const [director, setDirectors] = useState(true);
@@ -108,7 +111,7 @@ function ApplicationForm({
     }
   }, [detailData]);
 
-  console.log('manager', addStatus);
+  // console.log('st', member.user === 1);
 
   // 修改申請表
   const [edit, setEdit] = useState(true);
@@ -357,7 +360,7 @@ function ApplicationForm({
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
-        `http://localhost:3001/api/application_edit/submit/${caseNum}`,
+        `http://localhost:3001/api/application_edit/submit/${num}`,
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
@@ -375,7 +378,7 @@ function ApplicationForm({
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
-        `http://localhost:3001/api/application_edit/store/${caseNum}`,
+        `http://localhost:3001/api/application_edit/store/${num}`,
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
@@ -430,7 +433,7 @@ function ApplicationForm({
   async function deleteForm() {
     try {
       let response = await axios.post(
-        `http://localhost:3001/api/application_edit/deleteForm/${caseNum}`,
+        `http://localhost:3001/api/application_edit/deleteForm/${num}`,
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
@@ -445,8 +448,8 @@ function ApplicationForm({
   // 取得detail Id 的值
   useEffect(() => {
     setIsLoading(true);
-    let params = new URLSearchParams(location.search);
-    let caseId = params.get('id');
+    // let params = new URLSearchParams(location.search);
+    // let caseId = params.get('id');
     let getCampingDetailData = async () => {
       let response = await axios.post(
         `${API_URL}/applicationData/${num}`,
@@ -455,9 +458,10 @@ function ApplicationForm({
           withCredentials: true,
         }
       );
-
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
+      setRemarkLength(response.data.remarkResult.length);
+
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -480,12 +484,12 @@ function ApplicationForm({
       if (member.permissions_id === 2) {
         setSelectData(response.data.selectResult.splice(1, 1));
       }
-      if (member.manage === 1 && member.name !== handlerNull) {
+      if (member.manage === 1 && member.name !== HId) {
         setSelectData(response.data.selectResult.splice(2, 3));
       }
       if (
         member.permissions_id === 3 ||
-        (member.manage === 1 && member.name === handlerNull)
+        (member.manage === 1 && member.name === HId)
       ) {
         setSelectData(response.data.selectResult.splice(1));
       }
@@ -495,7 +499,7 @@ function ApplicationForm({
       setNeedState(response.data.result[0].status_id);
       setNeedLen(parseInt(response.data.needResult.length));
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
-      // console.log(response.data.result[0].status_id);
+      // console.log('s', response.data.result[0].status_id);
       // console.log('c', detailData[0].transfer);
     };
 
@@ -504,7 +508,7 @@ function ApplicationForm({
     setTimeout(() => {
       setIsLoading(false);
     }, 800);
-  }, [num, needLoading, needState, caseId, caseNum, edit]);
+  }, [num, needLoading, needState, caseId, edit]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
@@ -587,8 +591,12 @@ function ApplicationForm({
   // post 處理狀態
   const handlePostHandle = async (e) => {
     e.preventDefault();
-    if (postVal.transfer === '' && postVal.status === '轉件中') {
+    if (postVal.transfer === '' && postVal.status === '處理人轉件中') {
       setPostValRemind(true);
+      return;
+    }
+    if (postVal.finishTime === '' && postVal.status === '案件進行中') {
+      setPostCaseRemind(true);
       return;
     }
 
@@ -626,7 +634,7 @@ function ApplicationForm({
     if (input !== 'edit') {
       for (let i = 0; i < editNeed.length; i++) {
         if (
-          editNeed[i].requirement_name === '' ||
+          // editNeed[i].requirement_name === '' ||
           editNeed[i].directions === ''
         ) {
           setEditVerifyPage(true);
@@ -728,6 +736,14 @@ function ApplicationForm({
 
   // finish
   let handleFinish = async () => {
+    if (remarkLength === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: '請點選上方選單列的『案件處理情形』，填寫處理狀況',
+      }).then(function () {});
+      return;
+    }
+    // console.log('object', remarkLength === 0);
     let response = await axios.post(
       `${API_URL}/applicationData/applicationFinish/${num}`,
       { caseId },
@@ -735,6 +751,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
+
     // console.log(response.data);
     ViewCheck('案件已完成', setNeedLoading, needLoading);
     navigate(`/header`);
@@ -821,8 +838,6 @@ function ApplicationForm({
             <AddStateForm
               setAddStateForm={setAddStateForm}
               handlePostVal={handlePostVal}
-              handlerSelect={handlerSelect}
-              setHandlerSelect={setHandlerSelect}
               handlerData={handlerData}
               setHandlerVal={setHandlerVal}
               handlerVal={handlerVal}
@@ -830,6 +845,8 @@ function ApplicationForm({
               handlePostHandle={handlePostHandle}
               postValRemind={postValRemind}
               setPostValRemind={setPostValRemind}
+              postCaseRemind={postCaseRemind}
+              setPostCaseRemind={setPostCaseRemind}
             />
           ) : (
             ''
@@ -856,15 +873,20 @@ function ApplicationForm({
           )}
 
           {/* user  需求修改Btn */}
-          {needState === 7 && addStatus === false ? (
-            <div
-              className="editBtn"
-              onClick={() => {
-                setEditNeed([...needData]);
-                setEditPage(true);
-              }}
-            >
-              請點選按鈕進行需求修改
+          {needState === 7 && member.user === 1 ? (
+            <div className="checkBtn">
+              <div>請點選按鈕進行需求修改</div>
+              <div className="check">
+                <div
+                  className="editBtn"
+                  onClick={() => {
+                    setEditNeed([...needData]);
+                    setEditPage(true);
+                  }}
+                >
+                  修改需求
+                </div>
+              </div>
             </div>
           ) : (
             ''
@@ -878,12 +900,7 @@ function ApplicationForm({
     ) : (
       ''
     )} */}
-
-          {/* handler轉件  是否接件 */}
-          {member.permissions_id === 3 &&
-          needState === 8 &&
-          member.name === sender ? (
-            <>
+          {/* <>
               <div className="editBtn" onClick={handleAcceptCase}>
                 是，確認接收此案件
               </div>
@@ -891,31 +908,55 @@ function ApplicationForm({
                 否，無法接收此案件
               </div>
             </>
+          {/* handler轉件  是否接件 */}
+          {member.handler === 1 && needState === 8 && member.name === Sender ? (
+            <div className="checkBtn">
+              <div>請確認是否接收此案件?</div>
+              <div className="check">
+                <div className="editBtn" onClick={handleAcceptCase}>
+                  是，確認接收此案件
+                </div>
+                <div className="editBtn" onClick={handleRejectCase}>
+                  否，無法接收此案件
+                </div>
+              </div>
+            </div>
           ) : (
             ''
           )}
-
-          {/* handler === '' 確認接收此案件 */}
-          {(member.permissions_id === 3 || member.manage === 1) &&
-          handlerNull === '' &&
-          needState === 4 ? (
+          {/* 
             <div className="editBtn" onClick={handleReceiveCase}>
               此案件目前沒有處理人，請點選確認接收此案
+            </div> */}
+          {/* handler === '' 確認接收此案件 */}
+          {(member.handler === 1 || member.manage === 1) &&
+          HId === '' &&
+          needState === 4 ? (
+            <div className="checkBtn">
+              <div>此案件目前沒有處理人，請點選確認接收此案</div>
+              <div className="check justify-content-center">
+                <div className="editBtn" onClick={handleReceiveCase}>
+                  確認接收
+                </div>
+              </div>
             </div>
           ) : (
             ''
           )}
 
           {/* handler完成  待user確認 */}
-          {member.permissions_id === 1 && needState === 11 ? (
-            <>
-              <div className="editBtn" onClick={handleAcceptFinish}>
-                是，處理人已完成所有需求項目
+          {member.user === 1 && needState === 11 ? (
+            <div className="checkBtn">
+              <div>處理人已完成需求項目，請申請人點選按鈕確認是否完成?</div>
+              <div className="check">
+                <div className="editBtn" onClick={handleAcceptFinish}>
+                  是，處理人已完成所有需求項目
+                </div>
+                <div className="editBtn" onClick={handleRejectFinish}>
+                  否，處理人尚有需求未完成
+                </div>
               </div>
-              <div className="editBtn" onClick={handleRejectFinish}>
-                否，處理人尚有需求未完成
-              </div>
-            </>
+            </div>
           ) : (
             ''
           )}
@@ -965,7 +1006,7 @@ function ApplicationForm({
               </div>
             </>
           ) : (
-            <div className="editBtn">尚無狀態資料</div>
+            <div className="nullData">尚無處理歷程</div>
           )}
 
           {/* 申請表單 */}
@@ -1653,7 +1694,7 @@ function ApplicationForm({
 
             {/* 選擇狀態 */}
             {addStatus &&
-            handlerNull !== '' &&
+            HId !== '' &&
             (member.manage === 1 || member.handler === 1) &&
             needState !== 1 &&
             needState !== 2 &&
@@ -1741,7 +1782,7 @@ function ApplicationForm({
             )}
           </div>
           {addStatus &&
-          handlerNull !== '' &&
+          HId !== '' &&
           needState !== 1 &&
           needState !== 2 &&
           needState !== 3 &&

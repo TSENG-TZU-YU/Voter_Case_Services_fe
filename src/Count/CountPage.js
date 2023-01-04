@@ -11,15 +11,11 @@ import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
-import FinishFilter from './Component/FinishFilter.js';
 import HandlerFilter from './Component/HandlerFilter.js';
 import UserFilter from './Component/UserFilter.js';
 import UserUnitFilter from './Component/UserUnitFilter.js';
 
 import Loader from '../Loader';
-
-import { FaEye, FaFireExtinguisher } from 'react-icons/fa';
-import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
 // function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 function CountPage() {
@@ -37,8 +33,6 @@ function CountPage() {
   let dateAgo = newDateString.replace(/\//g, '-');
 
   const { member, setMember } = useAuth();
-  const [number, setNumber] = useState(true);
-  const [time, setTime] = useState(true);
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
@@ -58,8 +52,6 @@ function CountPage() {
   const [nowUserUnit, setNowUserUnit] = useState('');
 
   // get data
-  const [allData, setAllData] = useState([]);
-  const [caseHistory, setCaseHistory] = useState([]);
   const [allUnit, setAllUnitData] = useState([]);
   const [allStatusData, setAllStatusData] = useState([]);
   const [countStatusData, setCountStatusData] = useState([]);
@@ -104,7 +96,6 @@ function CountPage() {
           withCredentials: true,
         }
       );
-      setAllData(response.data.result);
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
@@ -121,7 +112,7 @@ function CountPage() {
       setUnitTtl(response.data.pagination.unitCounts);
       setHandlerTtl(response.data.pagination.handlerCounts);
       setUserTtl(response.data.pagination.userCounts);
-      // console.log('object',response.data.userResult);
+      // console.log('object',allStatusData);
     };
     getAllData();
     setTimeout(() => {
@@ -138,16 +129,6 @@ function CountPage() {
     nowUser,
     nowUserUnit,
   ]);
-  // 審查 history
-  let handleCaseHistory = async (caseNum) => {
-    let response = await axios.get(
-      `${API_URL}/applicationData/getCaseHistory/${caseNum}`,
-      {
-        withCredentials: true,
-      }
-    );
-    setCaseHistory(response.data.result);
-  };
 
   // %
   const percent = (ttl, num) => {
@@ -163,6 +144,7 @@ function CountPage() {
     }
   }
   // console.log('v', handleNull);
+
   // const sortOption = [
   //   { id: '12', name: '案件已完成' },
   //   { id: '2', name: '案件未完成' },
@@ -181,62 +163,65 @@ function CountPage() {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="caseContainer">
-          {/* 篩選 */}
-          <div className="sortSelect">
-            <div className="bothFilter">
-              <CategoryFilter
-                allCategoryData={allCategoryData}
-                setNowCategory={setNowCategory}
-              />
-              <StatusFilter
-                allStatusData={allStatusData}
-                setNowStatus={setNowStatus}
-              />
-              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-              <HandlerFilter
-                setHandler={setHandler}
-                allHandlerData={allHandlerData}
-              />
-            </div>
+      <div className="caseContainer">
+        {/* 篩選 */}
+        <div className="sortSelect">
+          <div className="bothFilter">
+            <CategoryFilter
+              allCategoryData={allCategoryData}
+              setNowCategory={setNowCategory}
+            />
+            <StatusFilter
+              allStatusData={allStatusData}
+              setNowStatus={setNowStatus}
+              countStatusData={countStatusData}
+            />
+            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+            <HandlerFilter
+              setHandler={setHandler}
+              allHandlerData={allHandlerData}
+            />
           </div>
-          <div className="userFlex">
-            <div className="userSort">
-              <div>申請人：</div>
-              <UserUnitFilter
-                allUnit={allUnit}
-                setNowUnit={setNowUnit}
-                setNowUserUnit={setNowUserUnit}
-                setNowUser={setNowUser}
-                setUnitChange={setUnitChange}
-              />
-              {unitChange ? (
-                <UserFilter setNowUser={setNowUser} allUserData={allUserData} />
-              ) : (
-                ''
-              )}
-            </div>
-            <div className="userSort">
-              <div>申請日期：</div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
-              />
-            </div>
+        </div>
+        <div className="userFlex">
+          <div className="userSort">
+            <div>申請人：</div>
+            <UserUnitFilter
+              allUnit={allUnit}
+              setNowUnit={setNowUnit}
+              setNowUserUnit={setNowUserUnit}
+              setNowUser={setNowUser}
+              setUnitChange={setUnitChange}
+            />
+            {unitChange ? (
+              <UserFilter setNowUser={setNowUser} allUserData={allUserData} />
+            ) : (
+              ''
+            )}
           </div>
+          <div className="userSort">
+            <div>申請日期：</div>
+            <DateFilter
+              dateRemind={dateRemind}
+              setDateRemind={setDateRemind}
+              setMaxDate={setMaxDate}
+              setMinDate={setMinDate}
+              maxDateValue={maxDateValue}
+              setMaxDateValue={setMaxDateValue}
+              minDateValue={minDateValue}
+              setMinDateValue={setMinDateValue}
+              dateAgo={dateAgo}
+              nowDate={nowDate}
+            />
+          </div>
+        </div>
 
-          <hr />
+        <hr />
+
+        {/* 統計 */}
+        {isLoading ? (
+          <Loader />
+        ) : (
           <div className="allConutContainer">
             <div className="d-flex">
               <div className="allTit">總申請案件 ： {allTotal} 件</div>
@@ -562,8 +547,8 @@ function CountPage() {
               ''
             )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 }

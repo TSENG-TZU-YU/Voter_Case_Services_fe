@@ -1,7 +1,7 @@
 @import '../variable';
 
 .caseContainer {
-  max-width: 95%;
+  width: 90%;
   height: calc(100vh - 70px);
   //   background: rgb(231, 190, 151);
   margin: 0 auto;
@@ -25,7 +25,7 @@
       display: flex;
       align-items: center;
       justify-content: start;
-    //   margin-bottom: 10px;
+      //   margin-bottom: 10px;
     }
   }
   .allConutContainer {
@@ -33,7 +33,6 @@
     @include scrollbar;
     height: 72%;
     padding: 0 10px;
-
     .countContainer {
       margin-bottom: 30px;
       tr,

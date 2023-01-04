@@ -5,14 +5,14 @@ import '../../styles/caseDetail/_addStatePage.scss';
 
 function AddStateForm({
   setAddStateForm,
-  handlerSelect,
-  setHandlerSelect,
   handlerData,
   handlePostVal,
   postVal,
   handlePostHandle,
   postValRemind,
   setPostValRemind,
+  setPostCaseRemind,
+  postCaseRemind,
 }) {
   return (
     <div className="addStatePageContain">
@@ -36,7 +36,7 @@ function AddStateForm({
             <span>{postVal.status}</span>
           </div>
           {/* 轉件 */}
-          {postVal.status === '轉件中' ? (
+          {postVal.status === '處理人轉件中' ? (
             <div className="mb-2">
               <span>&emsp;&emsp;轉件人員：</span>
               <select
@@ -93,9 +93,15 @@ function AddStateForm({
                 type="datetime-local"
                 value={postVal.finishTime}
                 onChange={(e) => {
+                  setPostCaseRemind(false);
                   handlePostVal(e);
                 }}
               />
+              {postCaseRemind ? (
+                <span className="selectRemind">*請選擇預計完成時間</span>
+              ) : (
+                ''
+              )}
             </div>
           ) : (
             ''

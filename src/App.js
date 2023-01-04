@@ -1,12 +1,9 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LogIn from './LogIn/LogIn.js';
-import { useAuth } from './utils/use_auth';
-import axios from 'axios';
 
 // 登入元件
 import { AuthProvider } from './utils/use_auth';
@@ -18,7 +15,7 @@ import CaseManagement_handler from './CaseManagement_handler/CaseManagement';
 import CaseDetail from './CaseDetail/CaseDetail';
 import ApplicationForm from './CaseDetail/Component/ApplicationForm';
 import UploadPage from './CaseDetail/Component/UploadPage';
-import ChatPage from './CaseDetail/Component/ChatPage';
+// import ChatPage from './CaseDetail/Component/ChatPage';
 import CountPage from './Count/CountPage';
 import CategoryPage from './CountALL/CategoryPage';
 import StatusPage from './CountALL/StatusPage';
@@ -28,35 +25,10 @@ import Permissions from './Permissions';
 import ProcessingStatus from './CaseDetail/Component/ProcessingStatus';
 
 function App() {
-  // const { member, setMember } = useAuth();
-  const [member, setMember] = useState('');
-
   const [application, setApplication] = useState(false);
   const [caseManagement, setCaseManagement] = useState(false);
   const [trial, setTrial] = useState(false);
   const [addStatus, setAddStatus] = useState(true);
-  const [handlerSelect, setHandlerSelect] = useState(true);
-  const [caseNum, setCaseNum] = useState('');
-  const [caseId, setCaseId] = useState('');
-  const [handlerNull, setHandlerNull] = useState('');
-  const [sender, setSender] = useState('');
-
-  // 檢查會員
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
-          withCredentials: true,
-        });
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -115,31 +87,12 @@ function App() {
               />
             }
           >
-            <Route
-              index
-              element={
-                <CaseManagement
-                  setCaseNum={setCaseNum}
-                  setCaseId={setCaseId}
-                  setHandlerNull={setHandlerNull}
-                  setSender={setSender}
-                  caseNum={caseNum}
-                  handlerNull={handlerNull}
-                />
-              }
-            />
+            <Route index element={<CaseManagement />} />
             <Route
               path="caseManagement_handler"
               element={
                 // eslint-disable-next-line react/jsx-pascal-case
-                <CaseManagement_handler
-                  setCaseNum={setCaseNum}
-                  setCaseId={setCaseId}
-                  setHandlerNull={setHandlerNull}
-                  setSender={setSender}
-                  caseNum={caseNum}
-                  handlerNull={handlerNull}
-                />
+                <CaseManagement_handler />
               }
             />
             <Route
@@ -164,25 +117,17 @@ function App() {
             <Route path="permissions" element={<Permissions />} />
 
             {/* detail */}
-            <Route path="caseDetail" element={<CaseDetail caseNum={caseNum} />}>
+            <Route path="caseDetail" element={<CaseDetail />}>
               <Route
                 path="application/:num"
                 element={
                   <ApplicationForm
                     setAddStatus={setAddStatus}
                     addStatus={addStatus}
-                    caseNum={caseNum}
-                    handlerSelect={handlerSelect}
-                    setHandlerSelect={setHandlerSelect}
-                    caseId={caseId}
                     delCheck={delCheck}
-                    handlerNull={handlerNull}
-                    sender={sender}
-                    // viewCheck={viewCheck}
                   />
                 }
               />
-
               {/* <Route path="chatPage/:num" element={<ChatPage />} /> */}
               <Route
                 path="ProcessingStatus/:num"
@@ -195,8 +140,6 @@ function App() {
                   <UploadPage
                     setAddStatus={setAddStatus}
                     addStatus={addStatus}
-                    caseNum={caseNum}
-                    caseId={caseId}
                     delCheck={delCheck}
                   />
                 }

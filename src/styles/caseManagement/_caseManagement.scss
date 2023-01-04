@@ -45,18 +45,21 @@
           color: pink;
         }
       }
-      .viewList {
-        cursor: pointer;
-        background: $mainClrW;
+      .view {
         color: $focusClrG;
-        border: 1px solid $focusClrG;
-        padding: 5px 6px;
-        border-radius: 3px;
-        transition: 0.3s;
-        &:hover {
-          background: $focusClrG;
-          color: #fff;
-        }
+      }
+      .viewList {
+        // cursor: pointer;
+        // background: $mainClrW;
+        // color: $focusClrG;
+        // border: 1px solid $focusClrG;
+        // padding: 5px 6px;
+        // border-radius: 3px;
+        // transition: 0.3s;
+        // &:hover {
+        //   background: $focusClrG;
+        //   color: #fff;
+        // }
       }
       // .posClick {
       //   position: relative;

@@ -2,12 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ allStatusData, setNowStatus }) {
+function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
   let newData = [];
-  for (let i = 0; i < allStatusData.length; i++) {
+  for (let i = 0; i < countStatusData.length; i++) {
     newData.push({
-      value: allStatusData[i].id,
-      label: allStatusData[i].name,
+      value: countStatusData[i].id,
+      label: countStatusData[i].name,
     });
   }
   // console.log('n', newData);

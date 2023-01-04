@@ -22,14 +22,7 @@ import Loader from '../Loader';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
-function CaseManagement({
-  caseNum,
-  setCaseNum,
-  setCaseId,
-  setHandlerNull,
-  setSender,
-  handlerNull,
-}) {
+function CaseManagement() {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月
   let dateObj = new Date(nowDate);
@@ -129,41 +122,40 @@ function CaseManagement({
   }, [allData]);
 
   // 案件處理情形
-
-  let handleHandleStatus = async (caseNum) => {
-    let response = await axios.get(
-      `${API_URL}/applicationData/getHandleStatus/${caseNum}`,
-      {
-        withCredentials: true,
-      }
-    );
-    setHandleStData(response.data.result);
-    // console.log('r',response.data.result)
-  };
+  // let handleHandleStatus = async (caseNum) => {
+  //   let response = await axios.get(
+  //     `${API_URL}/applicationData/getHandleStatus/${caseNum}`,
+  //     {
+  //       withCredentials: true,
+  //     }
+  //   );
+  //   setHandleStData(response.data.result);
+  //   // console.log('r',response.data.result)
+  // };
 
   // post 案件處理情形
-  let handlePostStatus = async (e) => {
-    e.preventDefault();
-    if (submitMessage === '') return;
+  // let handlePostStatus = async (e) => {
+  //   e.preventDefault();
+  //   if (submitMessage === '') return;
 
-    let response = await axios.post(
-      `${API_URL}/applicationData/postHandleStatus`,
-      { caseNum, submitMessage },
-      {
-        withCredentials: true,
-      }
-    );
+  //   let response = await axios.post(
+  //     `${API_URL}/applicationData/postHandleStatus`,
+  //     { caseNum, submitMessage },
+  //     {
+  //       withCredentials: true,
+  //     }
+  //   );
 
-    // console.log('add', response.data);
-    Swal.fire({
-      icon: 'success',
-      title: '訊息新增成功',
-    }).then(function () {
-      // navigate('/header/caseManagement_handler');
-      setSubmitMessage('');
-      setCheckState(false);
-    });
-  };
+  //   // console.log('add', response.data);
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: '訊息新增成功',
+  //   }).then(function () {
+  //     // navigate('/header/caseManagement_handler');
+  //     setSubmitMessage('');
+  //     setCheckState(false);
+  //   });
+  // };
   // console.log('allData', member);
 
   // put 狀態 4 -> 5
@@ -184,7 +176,7 @@ function CaseManagement({
         <Loader />
       ) : (
         <>
-          {checkState ? (
+          {/* {checkState ? (
             <CheckStatePage
               setCheckState={setCheckState}
               handleStData={handleStData}
@@ -197,7 +189,7 @@ function CaseManagement({
             />
           ) : (
             ''
-          )}
+          )} */}
           <div className="caseContainer">
             {/* 篩選 */}
             <div className="sortSelect">
@@ -294,19 +286,20 @@ function CaseManagement({
                         <td>{v.application_category}</td>
                         <td>{v.create_time}</td>
                         <td
-                          onClick={() => {
-                            setCaseNum(v.case_number);
-                            setCheckState(true);
-                            handleHandleStatus(v.case_number);
-                            setHandlerNull(v.handler);
-                          }}
+                          // onClick={() => {
+                          //   setCaseNum(v.case_number);
+                          //   setCheckState(true);
+                          //   handleHandleStatus(v.case_number);
+                          //   setHandlerNull(v.handler);
+                          // }}
+                          className="view"
                         >
-                          <span className="viewList">{v.name}</span>
+                          {v.name}
                         </td>
 
                         <td className="posClick">
                           <Link
-                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}`}
+                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}`}
                           >
                             <FaEye
                               className={`icons ${
@@ -316,11 +309,10 @@ function CaseManagement({
                                   : ''
                               }`}
                               onClick={() => {
-                                setCaseNum(v.case_number);
-                                setCaseId(v.id);
-                                setHandlerNull(v.handler);
-                                setSender(v.sender);
-
+                                // setCaseNum(v.case_number);
+                                // setCaseId(v.id);
+                                // setHandlerNull(v.handler);
+                                // setSender(v.sender);
                                 // if (
                                 //   v.name === '處理人評估中' &&
                                 //   member.permissions_id === 3

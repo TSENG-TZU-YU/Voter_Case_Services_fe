@@ -12,6 +12,7 @@ import '../../styles/caseDetail/_processingStatus.scss';
 function ProcessingStatus() {
   const { member, setMember } = useAuth();
   const [submitMessage, setSubmitMessage] = useState('');
+  const [nowState, setNowState] = useState('');
   const [submitMsgTrue, setSubmitMsgTrue] = useState(false);
   const [handleStData, setHandleStData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,9 @@ function ProcessingStatus() {
         }
       );
       setHandleStData(response.data.result);
-      // console.log('r', response.data.result);
+      setNowState(response.data.stResult[0].status_id);
+
+      // console.log('r', response.data.stResult[0].status_id);
     };
 
     handleHandleStatus();
@@ -87,9 +90,12 @@ function ProcessingStatus() {
       >
         <div className={`handleStatus`}>
           {handleStData.length !== 0
-            ? handleStData.map((v) => {
+            ? handleStData.map((v, i) => {
                 return (
-                  <div className="msgContainer" key={uuidv4()}>
+                  <div
+                    className={`msgContainer ${i !== 0 ? 'mTop' : ''} `}
+                    key={uuidv4()}
+                  >
                     <div className="handler">處理人：{v.name}</div>
                     <div className="msgContain">{v.content}</div>
                     <div className="time">{v.create_time}</div>
@@ -101,8 +107,15 @@ function ProcessingStatus() {
       </div>
       {/* chatBar */}
       {/* bar */}
-      {member.permissions_id === 3 ||
-      (HId === member.name && member.manage === 1) ? (
+      {nowState !== 1 &&
+      nowState !== 2 &&
+      nowState !== 3 &&
+      nowState !== 4 &&
+      nowState !== 8 &&
+      nowState !== 9 &&
+      nowState !== 10 &&
+      nowState !== 12 &&
+      (member.handler === 1 || (HId === member.name && member.manage === 1)) ? (
         <div className="chatBarContain">
           <textarea
             className="submitMsg"

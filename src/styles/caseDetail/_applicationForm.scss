@@ -19,18 +19,34 @@
   height: 85%;
   margin: 0 auto;
   @include scrollbar;
-  .editBtn {
+  .checkBtn {
+    // background: lemonchiffon;
+    width: fit-content;
+    margin: 0 auto 20px;
     font-size: 16px;
     font-weight: 600;
-    max-width: 375px;
-    margin: 0 auto;
-    background: $focusClrY;
-    text-align: center;
-    padding: 5px 0;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    cursor: pointer;
+    border: 1px solid $subClrBrown;
+    border-radius: 3px;
+    padding: 5px;
+    width: 70%;
+text-align: center;
+    .check {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .editBtn {
+        font-size: 14px;
+        font-weight: 500;
+        background: $focusClrY;
+        text-align: center;
+        padding: 5px;
+        margin-top: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
   }
+
   .statusFormTit {
     max-width: 70%;
     margin: 0 auto;
@@ -323,4 +339,14 @@
     color: $mainClrW;
     @include submitBtn($focusClrG);
   }
+}
+.nullData {
+  width: 70%;
+  font-size: 14px;
+  margin: 0 auto;
+  background: $focusClrY;
+  text-align: center;
+  padding: 5px;
+  margin-top: 10px;
+  border-radius: 4px;
 }
