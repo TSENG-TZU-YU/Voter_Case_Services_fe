@@ -12,14 +12,17 @@ import { useAuth } from '../utils/use_auth';
 
 function LogIn() {
   const navigate = useNavigate();
-  const [login, setIogin] = useState([]);
+  const [login, setIogin] = useState([{ company: '', no: '', password: '' }]);
   const { member, setMember, isLogin, setIsLogin } = useAuth();
   const [unit, setUnit] = useState([]);
 
   // const [check, setCheck] = useState([]);
 
-  const doLogin = (e) => {
-    setIogin({ ...login, [e.target.name]: e.target.value });
+  const doLogin = (val, input) => {
+    let newData = [...login];
+    if (input === 'company') newData[0].company = val;
+    if (input === 'no') newData[0].no = val;
+    if (input === 'password') newData[0].password = val;
   };
 
   useEffect(() => {
@@ -35,14 +38,40 @@ function LogIn() {
     unit();
   }, []);
 
+  console.log('login', login);
+
+  // 登入sweet
+  function submitCheck() {
+    if (
+      login[0].company === '' ||
+      login[0].no === '' ||
+      login[0].password === ''
+    ) {
+      Swal.fire({
+        icon: 'error',
+        title: '請填寫完整資訊',
+      });
+    }
+    if (
+      login[0].company !== '' &&
+      login[0].no !== '' &&
+      login[0].password !== ''
+    ) {
+      submit();
+    }
+  }
+
   const submit = async () => {
     try {
-      let res = await axios.post('http://localhost:3001/api/login', login, {
-        withCredentials: true,
-      });
+      let res = await axios.post(
+        'http://localhost:3001/api/login',
+        { ...login[0] },
+        {
+          withCredentials: true,
+        }
+      );
       navigate('/header');
       setMember(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
       Swal.fire({
@@ -59,8 +88,13 @@ function LogIn() {
           <div className="inputContainer">
             <div className="inputContain">
               <AiFillHome className="icons" />
-              <select name="company" onChange={doLogin}>
-                <option value="0" selected >
+              <select
+                name="company"
+                onChange={(e) => {
+                  doLogin(e.target.value, 'company');
+                }}
+              >
+                <option value="0" selected>
                   --所屬單位--
                 </option>
                 {unit.map((v) => {
@@ -74,7 +108,9 @@ function LogIn() {
                 name="no"
                 type="text"
                 placeholder="員工編號"
-                onChange={doLogin}
+                onChange={(e) => {
+                  doLogin(e.target.value, 'no');
+                }}
               />
             </div>
             <div className="inputContain">
@@ -83,10 +119,12 @@ function LogIn() {
                 name="password"
                 type="text"
                 placeholder="輸入密碼"
-                onChange={doLogin}
+                onChange={(e) => {
+                  doLogin(e.target.value, 'password');
+                }}
               />
             </div>
-            <button onClick={submit}>登入</button>
+            <button onClick={submitCheck}>登入</button>
           </div>
         </div>
       </div>

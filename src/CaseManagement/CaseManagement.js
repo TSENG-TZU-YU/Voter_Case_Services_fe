@@ -311,7 +311,7 @@ function CaseManagement() {
                         </td>
                         <td className="posClick">
                           <Link
-                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}`}
+                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&page=1`}
                           >
                             <FaEye
                               className={`icons ${
