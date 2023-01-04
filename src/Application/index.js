@@ -304,7 +304,7 @@ function Application({
           Swal.fire('送出成功', '', 'success');
           submitFile();
           submit();
-          navigate('/header');
+          navigate('/header/caseManagement');
           setCaseManagement(true);
           setApplication(false);
           setTrial(false);
@@ -327,7 +327,7 @@ function Application({
       if (result.isConfirmed) {
         Swal.fire('儲存成功', '', 'success');
         submitFile();
-        navigate('/header');
+        navigate('/header/caseManagement');
         setCaseManagement(true);
         setApplication(false);
         setTrial(false);

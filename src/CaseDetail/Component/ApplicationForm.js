@@ -311,7 +311,7 @@ function ApplicationForm({
         Swal.fire('刪除成功', '', 'success');
         deleteForm();
         // submitFile();
-        navigate('/header');
+        navigate('/header/caseManagement');
       } else if (result.isDenied) {
         Swal.fire('已取消刪除', '', 'info');
       }
@@ -364,7 +364,7 @@ function ApplicationForm({
           submitFile();
           hanleAddNeed(e, 'submit');
           submit();
-          navigate('/header');
+          navigate('/header/caseManagement');
         } else if (result.isDenied) {
           Swal.fire('已取消送出', '', 'info');
         }
@@ -636,7 +636,7 @@ function ApplicationForm({
         finishTime: '',
       });
 
-      navigate(`/header`);
+      navigate(`/header/caseManagement`);
     });
   };
 
@@ -666,7 +666,7 @@ function ApplicationForm({
     // console.log('add', response.data);
     if (input === 'finish') {
       ViewCheck('修改成功', setNeedLoading, needLoading, setEditPage, false);
-      navigate(`/header`);
+      navigate(`/header/caseManagement`);
     }
 
     // if (input === 'finish') {
@@ -693,7 +693,7 @@ function ApplicationForm({
     );
     // console(response.data);
     ViewCheck('申請案件已取消', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
 
     // Swal.fire({
     //   icon: 'success',
@@ -715,7 +715,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已接收此案件', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已接收此案件',
@@ -736,7 +736,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已拒絕接收此案件', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已拒絕接收此案件',
@@ -757,7 +757,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('案件已完成', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '案件已完成',
@@ -778,7 +778,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已確定接收此案件', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已確定接收此案件',
@@ -799,7 +799,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('該案件已完成', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件已完成',
@@ -820,7 +820,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('該案件未完成，案件進行中', setNeedLoading, needLoading);
-    navigate(`/header`);
+    navigate(`/header/caseManagement`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件未完成，案件進行中',
