@@ -115,12 +115,12 @@ function Permissions() {
     // </div>
     <div className="caseContainer">
       {/* 篩選 */}
-      <div className="sortSelect">
-        <div className="bothFilter">
+      <div className="sortSelect1">
+        <div className="bothFilter1">
           <CategoryFilter category={category} setNowCategory={setNowCategory} />
           <UserFilter user={user} setNowUser={setNowUser} />
+          <PermissionFilter setNowPermission={setNowPermission} />
         </div>
-        <PermissionFilter setNowPermission={setNowPermission} />
       </div>
 
       <table className="caseContain">

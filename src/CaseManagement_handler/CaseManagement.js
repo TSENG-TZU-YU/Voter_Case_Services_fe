@@ -93,7 +93,7 @@ function CaseManagement() {
   useEffect(() => {
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}`,
+        `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}`,
         {
           withCredentials: true,
         }
@@ -110,14 +110,10 @@ function CaseManagement() {
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
 
   useEffect(() => {
-    setIsLoading(true);
     const newPageCase = _.chunk(allData, perPage);
     setPageNow(1);
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
   }, [allData]);
 
   // useEffect(() => {
@@ -229,6 +225,7 @@ function CaseManagement() {
                       <MdArrowDropDown
                         className="arrow"
                         onClick={() => {
+                          setOrder(1);
                           setNumber(false);
                         }}
                       />
@@ -236,6 +233,7 @@ function CaseManagement() {
                       <MdArrowDropUp
                         className="arrow"
                         onClick={() => {
+                          setOrder(2);
                           setNumber(true);
                         }}
                       />
@@ -342,17 +340,14 @@ function CaseManagement() {
               )}
             </table>
             {/* 頁碼 */}
-            {pageCase.length > 0 ? (
-              <div className="page">
-                <PaginationBar
-                  pageNow={pageNow}
-                  setPageNow={setPageNow}
-                  pageTotal={pageTotal}
-                />
-              </div>
-            ) : (
-              ''
-            )}
+
+            <div className="page">
+              <PaginationBar
+                pageNow={pageNow}
+                setPageNow={setPageNow}
+                pageTotal={pageTotal}
+              />
+            </div>
 
             {/* 頁碼 end */}
           </>

@@ -356,17 +356,17 @@ function CaseManagement() {
           </table>
 
           {/* 頁碼 */}
-          {pageCase.length > 0 ? (
-            <div className="page">
-              <PaginationBar
-                pageNow={pageNow}
-                setPageNow={setPageNow}
-                pageTotal={pageTotal}
-              />
-            </div>
-          ) : (
+          {/* {pageCase.length > perPage ? ( */}
+          <div className="page">
+            <PaginationBar
+              pageNow={pageNow}
+              setPageNow={setPageNow}
+              pageTotal={pageTotal}
+            />
+          </div>
+          {/* ) : (
             ''
-          )}
+          )} */}
           {/* 頁碼 end */}
         </div>
       </>
