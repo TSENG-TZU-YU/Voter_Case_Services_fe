@@ -86,4 +86,13 @@
     align-items: end;
     margin-top: 20px;
   }
+  .noData{
+    // background: lavenderblush;
+    // width: 300px;
+    // margin: 0 auto;
+    font-size: 14px;
+    color: $focusClrG;
+    display: flex;
+    justify-content: center;
+  }
 }
