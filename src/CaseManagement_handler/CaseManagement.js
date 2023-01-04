@@ -110,17 +110,19 @@ function CaseManagement() {
   }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate]);
 
   useEffect(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     const newPageCase = _.chunk(allData, perPage);
     setPageNow(1);
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
-
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 800);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
   }, [allData]);
 
+  // useEffect(() => {
+
+  // }, [allData]);
   // 案件處理情形
   // let handleHandleStatus = async (caseNum) => {
   //   let response = await axios.get(
@@ -172,11 +174,7 @@ function CaseManagement() {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          {/* {checkState ? (
+      {/* {checkState ? (
             <CheckStatePage
               setCheckState={setCheckState}
               handleStData={handleStData}
@@ -190,34 +188,37 @@ function CaseManagement() {
           ) : (
             ''
           )} */}
-          <div className="caseContainer">
-            {/* 篩選 */}
-            <div className="sortSelect">
-              <div className="bothFilter">
-                <CategoryFilter
-                  allCategoryData={allCategoryData}
-                  setNowCategory={setNowCategory}
-                />
-                <StatusFilter
-                  allStatusData={allStatusData}
-                  setNowStatus={setNowStatus}
-                />
-                <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-              </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
-              />
-            </div>
-
+      <div className="caseContainer">
+        {/* 篩選 */}
+        <div className="sortSelect">
+          <div className="bothFilter">
+            <CategoryFilter
+              allCategoryData={allCategoryData}
+              setNowCategory={setNowCategory}
+            />
+            <StatusFilter
+              allStatusData={allStatusData}
+              setNowStatus={setNowStatus}
+            />
+            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+          </div>
+          <DateFilter
+            dateRemind={dateRemind}
+            setDateRemind={setDateRemind}
+            setMaxDate={setMaxDate}
+            setMinDate={setMinDate}
+            maxDateValue={maxDateValue}
+            setMaxDateValue={setMaxDateValue}
+            minDateValue={minDateValue}
+            setMinDateValue={setMinDateValue}
+            dateAgo={dateAgo}
+            nowDate={nowDate}
+          />
+        </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
             <table className="caseContain">
               <thead>
                 <tr>
@@ -267,84 +268,96 @@ function CaseManagement() {
                   <th>需求進度</th>
                 </tr>
               </thead>
+              {pageCase.length !== 0 ? (
+                <>
+                  {pageCase.length > 0 &&
+                    pageCase[pageNow - 1].map((v) => {
+                      return (
+                        <tbody key={uuidv4()}>
+                          <tr>
+                            <td>
+                              {member.permissions_id === 3 &&
+                              member.name === v.sender
+                                ? `轉件人 : ${v.handler}`
+                                : ''}
+                            </td>
+                            <td>{v.case_number}</td>
+                            <td>{v.applicant_unit}</td>
+                            <td>{v.user}</td>
+                            <td>{v.handler}</td>
+                            <td>{v.application_category}</td>
+                            <td>{v.create_time}</td>
+                            <td
+                              // onClick={() => {
+                              //   setCaseNum(v.case_number);
+                              //   setCheckState(true);
+                              //   handleHandleStatus(v.case_number);
+                              //   setHandlerNull(v.handler);
+                              // }}
+                              className="view"
+                            >
+                              {v.name}
+                            </td>
 
-              {pageCase.length > 0 &&
-                pageCase[pageNow - 1].map((v) => {
-                  return (
-                    <tbody key={uuidv4()}>
-                      <tr>
-                        <td>
-                          {member.permissions_id === 3 &&
-                          member.name === v.sender
-                            ? `轉件人 : ${v.handler}`
-                            : ''}
-                        </td>
-                        <td>{v.case_number}</td>
-                        <td>{v.applicant_unit}</td>
-                        <td>{v.user}</td>
-                        <td>{v.handler}</td>
-                        <td>{v.application_category}</td>
-                        <td>{v.create_time}</td>
-                        <td
-                          // onClick={() => {
-                          //   setCaseNum(v.case_number);
-                          //   setCheckState(true);
-                          //   handleHandleStatus(v.case_number);
-                          //   setHandlerNull(v.handler);
-                          // }}
-                          className="view"
-                        >
-                          {v.name}
-                        </td>
+                            <td className="posClick">
+                              <Link
+                                to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
+                              >
+                                <FaEye
+                                  className={`icons ${
+                                    v.name === '處理人評估中' &&
+                                    member.permissions_id === 3
+                                      ? 'eyeBcg'
+                                      : ''
+                                  }`}
+                                  onClick={() => {
+                                    // setCaseNum(v.case_number);
+                                    // setCaseId(v.id);
+                                    // setHandlerNull(v.handler);
+                                    // setSender(v.sender);
+                                    // if (
+                                    //   v.name === '處理人評估中' &&
+                                    //   member.permissions_id === 3
+                                    // ) {
+                                    //   handleChangeState(v.case_number, v.id);
+                                    // }
+                                  }}
+                                />
+                              </Link>
 
-                        <td className="posClick">
-                          <Link
-                            to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
-                          >
-                            <FaEye
-                              className={`icons ${
-                                v.name === '處理人評估中' &&
-                                member.permissions_id === 3
-                                  ? 'eyeBcg'
-                                  : ''
-                              }`}
-                              onClick={() => {
-                                // setCaseNum(v.case_number);
-                                // setCaseId(v.id);
-                                // setHandlerNull(v.handler);
-                                // setSender(v.sender);
-                                // if (
-                                //   v.name === '處理人評估中' &&
-                                //   member.permissions_id === 3
-                                // ) {
-                                //   handleChangeState(v.case_number, v.id);
-                                // }
-                              }}
-                            />
-                          </Link>
-
-                          {/* <div className="hadClick">NEW</div> */}
-                        </td>
-                        <td>
-                          進度({v.cou}/{v.sum})
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
+                              {/* <div className="hadClick">NEW</div> */}
+                            </td>
+                            <td>
+                              進度({v.cou}/{v.sum})
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })}
+                </>
+              ) : (
+                <div className="noData">
+                  <div>目前沒有資料</div>
+                </div>
+              )}
             </table>
             {/* 頁碼 */}
-            <div className="page">
-              <PaginationBar
-                pageNow={pageNow}
-                setPageNow={setPageNow}
-                pageTotal={pageTotal}
-              />
-            </div>
+            {pageCase.length > 0 ? (
+              <div className="page">
+                <PaginationBar
+                  pageNow={pageNow}
+                  setPageNow={setPageNow}
+                  pageTotal={pageTotal}
+                />
+              </div>
+            ) : (
+              ''
+            )}
+
             {/* 頁碼 end */}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 }
