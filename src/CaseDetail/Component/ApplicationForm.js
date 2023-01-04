@@ -26,8 +26,6 @@ import Loader from '../../Loader';
 function ApplicationForm({
   setAddStatus,
   addStatus,
-  handlerSelect,
-  setHandlerSelect,
   delCheck,
   // viewCheck,
 }) {
@@ -38,8 +36,9 @@ function ApplicationForm({
   let HId = params.get('HId');
   let caseId = params.get('id');
   let Sender = params.get('sender');
+  let WebPage = parseInt(params.get('page'));
 
-  // console.log('first2', Sender);
+  // console.log('first2', WebPage === 1);
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -892,7 +891,7 @@ function ApplicationForm({
           )}
 
           {/* user  需求修改Btn */}
-          {needState === 7 && member.user === 1 ? (
+          {needState === 7 && member.user === 1 && WebPage === 1 ? (
             <div className="checkBtn">
               <div>請點選按鈕進行需求修改</div>
               <div className="check">
@@ -927,8 +926,12 @@ function ApplicationForm({
                 否，無法接收此案件
               </div>
             </>
+
           {/* handler轉件  是否接件 */}
-          {member.handler === 1 && needState === 8 && member.name === Sender ? (
+          {member.handler === 1 &&
+          needState === 8 &&
+          member.name === Sender &&
+          WebPage === 2 ? (
             <div className="checkBtn">
               <div>請確認是否接收此案件?</div>
               <div className="check">
@@ -947,10 +950,12 @@ function ApplicationForm({
             <div className="editBtn" onClick={handleReceiveCase}>
               此案件目前沒有處理人，請點選確認接收此案
             </div> */}
+
           {/* handler === '' 確認接收此案件 */}
           {(member.handler === 1 || member.manage === 1) &&
           HId === '' &&
-          needState === 4 ? (
+          needState === 4 &&
+          WebPage === 2 ? (
             <div className="checkBtn">
               <div>此案件目前沒有處理人，請點選確認接收此案</div>
               <div className="check justify-content-center">
@@ -964,7 +969,7 @@ function ApplicationForm({
           )}
 
           {/* handler完成  待user確認 */}
-          {member.user === 1 && needState === 11 ? (
+          {member.user === 1 && needState === 11 && WebPage === 1 ? (
             <div className="checkBtn">
               <div>處理人已完成需求項目，請申請人點選按鈕確認是否完成?</div>
               <div className="check">
