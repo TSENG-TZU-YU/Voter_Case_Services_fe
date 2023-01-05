@@ -2,20 +2,21 @@ import React from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ setHandler, handlerData }) {
+function ActivitySelect({
+  allUnit,
+  setNowHandlerUnit,
+  setHandler,
+  setHandleChange,
+}) {
   let newData = [];
-  for (let i = 0; i < handlerData.length; i++) {
+  for (let i = 0; i < allUnit.length; i++) {
     newData.push({
-      value: handlerData[i].name,
-      label: handlerData[i].name,
+      value: allUnit[i].name,
+      label: allUnit[i].name,
     });
   }
   // console.log('n', newData);
-  const sortOption = [
-    { value: '', label: '--請選擇處理人--' },
-    { value: '尚無處理人', label: '尚無處理人' },
-    ...newData,
-  ];
+  const sortOption = [{ value: '', label: '--請先選擇處理單位--' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -70,14 +71,20 @@ function ActivitySelect({ setHandler, handlerData }) {
   return (
     <>
       <Select
+        className="me-2"
         defaultValue={sortOption[0]}
+        onFocus={() => {
+          setHandleChange(false);
+        }}
         onChange={(e) => {
           // console.log(e.value);
-          setHandler(e.value);
+          setHandler('');
+          setNowHandlerUnit(e.value);
+          setHandleChange(true);
         }}
         options={sortOption}
         styles={customStyles}
-        isSearchable={false}
+        setHandleChange={false}
       />
     </>
   );

@@ -11,7 +11,7 @@ function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '----請選擇狀態----' }, ...newData];
+  const sortOption = [{ value: '', label: '--請選擇狀態--' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -46,7 +46,7 @@ function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
       ...base,
       border: '1px solid #817161',
       minHeight: '32px',
-      width: '150px',
+      width: '170px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {
@@ -64,7 +64,7 @@ function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
   return (
     <>
       <Select
-        className="me-2"
+        className="me-3"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

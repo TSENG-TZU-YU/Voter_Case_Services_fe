@@ -6,6 +6,7 @@
   //   background: rgb(231, 190, 151);
   margin: 0 auto;
   font-size: 12px;
+
   .sortSelect {
     // background: lemonchiffon;
     padding: 30px 0px 20px 0px;
@@ -15,17 +16,21 @@
       display: flex;
       justify-content: flex-start;
     }
+    .userSort {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+    }
   }
   // sort
   .userFlex {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     .userSort {
       display: flex;
       align-items: center;
       justify-content: start;
-      //   margin-bottom: 10px;
     }
   }
   .allConutContainer {
