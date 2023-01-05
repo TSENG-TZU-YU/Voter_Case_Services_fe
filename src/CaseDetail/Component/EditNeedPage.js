@@ -42,7 +42,7 @@ function EditNeedPage({
             return (
               <div className="addNeedTable" key={i}>
                 <div>
-                  <span className="needTit">需求 {1 + i}</span>
+                  <span className="needTit">需求 {1 + i} (字數限制500字)</span>
                   {i !== 0 ? (
                     <AiFillCloseCircle
                       className="delNeedIcon"
