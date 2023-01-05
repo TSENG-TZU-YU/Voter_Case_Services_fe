@@ -376,6 +376,7 @@ function CaseManagement() {
                         </div>
                       </td>
                     </tbody>
+                    {/* 頁碼 end */}
                   </>
                 ) : (
                   <tbody className="noData">
@@ -387,16 +388,6 @@ function CaseManagement() {
               </>
             )}
           </table>
-
-          {/* 頁碼 */}
-          {/* <div className="page">
-            <PaginationBar
-              pageNow={pageNow}
-              setPageNow={setPageNow}
-              pageTotal={pageTotal}
-            />
-          </div> */}
-          {/* 頁碼 end */}
         </div>
       </>
     </>

@@ -126,17 +126,15 @@ function CaseManagement() {
   ]);
 
   useEffect(() => {
-    // setIsLoading(true);
     const newPageCase = _.chunk(allData, perPage);
     setPageNow(1);
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
-
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 800);
   }, [allData]);
 
+  // useEffect(() => {
+
+  // }, [allData]);
   // 案件處理情形
   // let handleHandleStatus = async (caseNum) => {
   //   let response = await axios.get(
@@ -371,6 +369,7 @@ function CaseManagement() {
                         </div>
                       </td>
                     </tbody>
+                    {/* 頁碼 end */}
                   </>
                 ) : (
                   <tbody className="noData">
@@ -382,16 +381,6 @@ function CaseManagement() {
               </>
             )}
           </table>
-
-          {/* 頁碼 */}
-          {/* <div className="page">
-              <PaginationBar
-                pageNow={pageNow}
-                setPageNow={setPageNow}
-                pageTotal={pageTotal}
-              />
-            </div> */}
-          {/* 頁碼 end */}
         </div>
       </>
     </>
