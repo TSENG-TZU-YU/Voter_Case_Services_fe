@@ -17,7 +17,7 @@ import AddStateForm from './AddStateForm';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { HiOutlineDocumentPlus } from 'react-icons/hi2';
-import { FaTrashAlt } from 'react-icons/fa';
+// import { FaTrashAlt } from 'react-icons/fa';
 import { AiFillCloseCircle, AiFillCloseSquare } from 'react-icons/ai';
 
 // 元件
@@ -1552,13 +1552,13 @@ function ApplicationForm({
                   *欄位不得為空
                 </span>
                 <div>
-                  <FaTrashAlt
+                  {/* <FaTrashAlt
                     size="17"
                     onClick={() => {
                       delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
                     }}
                     className="clearIcon"
-                  />
+                  /> */}
                   <MdOutlineAddBox
                     size="20"
                     onClick={handleAddNeed}
@@ -1685,13 +1685,13 @@ function ApplicationForm({
                     {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
                   </div>
                   <div className="fileIcon">
-                    <FaTrashAlt
+                    {/* <FaTrashAlt
                       size="17"
                       onClick={() => {
                         delCheck('確定要刪除所有上傳檔案?', handleClearFile);
                       }}
                       className="clearIcon"
-                    />
+                    /> */}
                     <MdOutlineAddBox
                       size="20"
                       onClick={addF}
@@ -1762,7 +1762,7 @@ function ApplicationForm({
             {detailData.map((v, i) => {
               return (
                 <div key={i} className="textareaGap">
-                  <div>備註(限制100字數)</div>
+                  <div>備註(字數限制100)</div>
 
                   {edit ? (
                     <textarea

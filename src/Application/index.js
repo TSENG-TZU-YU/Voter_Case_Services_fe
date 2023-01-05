@@ -906,7 +906,7 @@ function Application({ delCheck }) {
 
         {/* 備註 */}
         <div className="textareaGap">
-          <div> 備註 (限制100字數)</div>
+          <div> 備註 (字數限制100)</div>
           <textarea
             className="textarea"
             maxLength="100"
