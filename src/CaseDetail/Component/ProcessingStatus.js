@@ -22,6 +22,7 @@ function ProcessingStatus() {
   let params = new URLSearchParams(location.search);
   let HId = params.get('HId');
   let User = params.get('user');
+  let WebPage = parseInt(params.get('page'));
 
   // console.log('object', User);
   // 檢查會員
@@ -114,7 +115,10 @@ function ProcessingStatus() {
       nowState !== 9 &&
       nowState !== 10 &&
       nowState !== 12 &&
-      (member.handler === 1 || (HId === member.name && member.manage === 1)) ? (
+      member.handler === 1 &&
+      HId === member.name &&
+      member.manage === 1 &&
+      WebPage === 2 ? (
         <div className="chatBarContain">
           <textarea
             className="submitMsg"

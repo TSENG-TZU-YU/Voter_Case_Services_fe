@@ -503,7 +503,7 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'handler');
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=""> -----請選擇-----</option>
               {getHandler.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}

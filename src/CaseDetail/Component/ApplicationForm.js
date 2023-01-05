@@ -636,7 +636,7 @@ function ApplicationForm({
         finishTime: '',
       });
 
-      navigate(`/header/caseManagement`);
+      navigate(`/header/caseManagement_handler`);
     });
   };
 
@@ -715,7 +715,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已接收此案件',
@@ -736,7 +736,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已拒絕接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已拒絕接收此案件',
@@ -746,7 +746,7 @@ function ApplicationForm({
     // });
   };
 
-  // finish
+  // finish --> 11
   let handleFinish = async () => {
     if (remarkLength === 0) {
       Swal.fire({
@@ -766,7 +766,7 @@ function ApplicationForm({
 
     // console.log(response.data);
     ViewCheck('案件已完成', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '案件已完成',
@@ -787,7 +787,7 @@ function ApplicationForm({
     );
     // console.log(response.data);
     ViewCheck('已確定接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已確定接收此案件',
@@ -999,16 +999,21 @@ function ApplicationForm({
                         <span>&emsp;&emsp;操作時間：</span>
                         <span>{v.create_time}</span>
                       </div>
-                      <div className="d-flex mb-2">
-                        <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
-                        <textarea
-                          name=""
-                          cols="40"
-                          rows="3"
-                          placeholder={v.remark}
-                          disabled
-                        ></textarea>
-                      </div>
+                      {v.remark !== '' ? (
+                        <div className="d-flex mb-2">
+                          <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
+                          <textarea
+                            name=""
+                            cols="40"
+                            rows="3"
+                            placeholder={v.remark}
+                            disabled
+                          ></textarea>
+                        </div>
+                      ) : (
+                        ''
+                      )}
+
                       {v.select_state === '案件進行中' &&
                       v.estimated_time !== undefined ? (
                         <div>
@@ -1126,7 +1131,7 @@ function ApplicationForm({
                             </option>
                           )}
 
-                          <option value=" ">-----請選擇-----</option>
+                          <option value="">-----請選擇-----</option>
                           {getHandler.map((v, i) => {
                             return <option key={i}>{v.name}</option>;
                           })}
@@ -1538,7 +1543,9 @@ function ApplicationForm({
                       <input
                         type="checkbox"
                         disabled={
-                          addStatus &&
+                          member.handler === 1 &&
+                          HId === member.name &&
+                          member.manage === 1 &&
                           needState !== 1 &&
                           needState !== 2 &&
                           needState !== 3 &&
@@ -1547,7 +1554,8 @@ function ApplicationForm({
                           needState !== 9 &&
                           needState !== 10 &&
                           needState !== 11 &&
-                          needState !== 12
+                          needState !== 12 &&
+                          WebPage === 2
                             ? false
                             : true
                         }
@@ -1792,8 +1800,7 @@ function ApplicationForm({
               ''
             ) : (
               <>
-                {!addStatus &&
-                member.manage !== 1 &&
+                {member.user === 1 &&
                 needState !== 1 &&
                 needState !== 2 &&
                 needState !== 3 &&
@@ -1801,7 +1808,8 @@ function ApplicationForm({
                 needState !== 9 &&
                 needState !== 10 &&
                 needState !== 11 &&
-                needState !== 12 ? (
+                needState !== 12 &&
+                WebPage === 1 ? (
                   <div className="cancle">
                     <button className="cancleBtn" onClick={handleUserCancle}>
                       取消申請
@@ -1813,8 +1821,11 @@ function ApplicationForm({
               </>
             )}
           </div>
-          {addStatus &&
+          {WebPage === 2 &&
           HId !== '' &&
+          member.handler === 1 &&
+          HId === member.name &&
+          member.manage === 1 &&
           needState !== 1 &&
           needState !== 2 &&
           needState !== 3 &&
