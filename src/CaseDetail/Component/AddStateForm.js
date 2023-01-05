@@ -28,11 +28,11 @@ function AddStateForm({
         {/* 表單內容 */}
         <div className="addStateFormContain">
           <div className="mb-2">
-            <span> &emsp;&emsp;處理人員：</span>
+            <span> &emsp;&emsp;操作人員：</span>
             <span>{postVal.handler}</span>
           </div>
           <div className="mb-2">
-            <span>&emsp;&emsp;處理狀態：</span>
+            <span>&emsp;&emsp;操作狀態：</span>
             <span>{postVal.status}</span>
           </div>
           {/* 轉件 */}

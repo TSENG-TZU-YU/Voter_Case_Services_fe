@@ -1014,7 +1014,7 @@ function ApplicationForm({
                         ''
                       )}
 
-                      {v.select_state === '案件進行中' &&
+                      {v.select_state === 5 &&
                       v.estimated_time !== undefined ? (
                         <div>
                           <span>預計完成時間：</span>
