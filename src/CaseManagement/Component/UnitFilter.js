@@ -12,7 +12,7 @@ function ActivitySelect({ allUnit, setNowUnit }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '----請選擇單位----' }, ...newData];
+  const sortOption = [{ value: '', label: '--請選擇申請單位--' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -48,7 +48,7 @@ function ActivitySelect({ allUnit, setNowUnit }) {
       border: '1px solid #817161',
       // borderRadius: '0px',
       minHeight: '32px',
-      width: '150px',
+      width: '170px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {
@@ -67,6 +67,7 @@ function ActivitySelect({ allUnit, setNowUnit }) {
   return (
     <>
       <Select
+        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

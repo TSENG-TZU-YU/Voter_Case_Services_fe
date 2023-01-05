@@ -7,6 +7,7 @@ function ActivitySelect({
   setNowUserUnit,
   setNowUser,
   setUnitChange,
+  setNowAppUnit,
 }) {
   let newData = [];
   for (let i = 0; i < allUnit.length; i++) {
@@ -79,6 +80,7 @@ function ActivitySelect({
           // console.log(e.value);
           setNowUser('');
           setNowUserUnit(e.value);
+          setNowAppUnit(e.value);
           setUnitChange(true);
         }}
         options={sortOption}

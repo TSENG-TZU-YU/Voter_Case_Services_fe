@@ -13,7 +13,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
   //   });
   // }
   const sortOption = [
-    { value: '', label: '----請選擇狀態----' },
+    { value: '', label: '--請選擇狀態--' },
     { value: '1', label: '未送審' },
     { value: '2', label: '主管審核中' },
     { value: '4', label: '處理人評估中' },
@@ -59,7 +59,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
       ...base,
       border: '1px solid #817161',
       minHeight: '32px',
-      width: '150px',
+      width: '170px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {

@@ -18,6 +18,7 @@
   max-width: 100%;
   height: 85%;
   margin: 0 auto;
+  font-size: 16px;
   @include scrollbar;
   .checkBtn {
     // background: lemonchiffon;
@@ -28,8 +29,10 @@
     border: 1px solid $subClrBrown;
     border-radius: 3px;
     padding: 5px;
-    width: 70%;
-text-align: center;
+    // width: 70%;
+    //   width: 100%;
+    // min-width: 560px;
+    text-align: center;
     .check {
       display: flex;
       align-items: center;
@@ -48,7 +51,7 @@ text-align: center;
   }
 
   .statusFormTit {
-    max-width: 70%;
+    max-width: 85%;
     margin: 0 auto;
     text-align: center;
     font-size: 16px;
@@ -57,7 +60,7 @@ text-align: center;
   }
   .statusFormContainer {
     background: $subClrBrown;
-    max-width: 70%;
+    max-width: 85%;
     margin: 0 auto;
     padding: 8px 8px 0;
     height: 250px;
@@ -76,14 +79,18 @@ text-align: center;
   }
   .tableContainer {
     // background: lightblue;
-    max-width: 70%;
+    max-width: 85%;
     margin: 20px auto 10px;
+
     .gapContain {
       display: flex;
-      gap: 120px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+      // gap: 120px;
       select {
-        width: 157.6px;
-        height: 22px;
+        width: 200px;
+        height: 30px;
       }
       .hide-arrows::-webkit-outer-spin-button,
       .hide-arrows::-webkit-inner-spin-button {
@@ -91,17 +98,20 @@ text-align: center;
         margin: 0;
       }
     }
-   
+
     .outGap {
       border: 2px solid $subClrBrown;
-      width: 84%;
+      // width: 84%;
       margin-top: 10px;
       .gapContain {
         display: flex;
-        gap: 120px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5px;
+        // gap: 120px;
         select {
-          width: 157.6px;
-          height: 22px;
+          width: 200px;
+          height: 30px;
         }
         .hide-arrows::-webkit-outer-spin-button,
         .hide-arrows::-webkit-inner-spin-button {
@@ -135,9 +145,9 @@ text-align: center;
     }
     .needContain {
       margin: 12px auto;
-      padding: 5px;
+      padding: 8px 0;
       // background: #fffacdb6;
-
+      width: 100%;
       .needTit {
         display: flex;
         align-items: center;
@@ -152,7 +162,7 @@ text-align: center;
           align-items: center;
           background: $subClrBrown;
           width: 100%;
-          font-size: 14px;
+          // font-size: 14px;
 
           .title {
             color: $mainClrW;
@@ -224,7 +234,7 @@ text-align: center;
       }
       .fileTit {
         background: $subClrBrown;
-        font-size: 14px;
+        // font-size: 14px;
         color: $mainClrW;
         padding: 0.5px 6px;
       }
@@ -237,7 +247,7 @@ text-align: center;
           display: flex;
           align-items: center;
           padding: 5px 0;
-          width: 80%;
+          width: 85%;
           .addUploadContain {
             @include flexBetween;
             width: 100%;
@@ -281,7 +291,6 @@ text-align: center;
         width: 100%;
         height: 80px;
         resize: none;
-        
       }
     }
     .selectContain {
@@ -343,7 +352,7 @@ text-align: center;
   }
 }
 .nullData {
-  width: 70%;
+  width: 85%;
   font-size: 14px;
   margin: 0 auto;
   background: $focusClrY;

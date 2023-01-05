@@ -2,23 +2,23 @@ import React from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ allStatusData, setNowStatus }) {
+function ActivitySelect({ allUnit, setNowHUnit }) {
   // const [selectSortOption, setSelectSortOption] = useState(null);
   let newData = [];
-  for (let i = 0; i < allStatusData.length; i++) {
+  for (let i = 0; i < allUnit.length; i++) {
     newData.push({
-      value: allStatusData[i].id,
-      label: allStatusData[i].name,
+      value: allUnit[i].name,
+      label: allUnit[i].name,
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請選擇狀態--' }, ...newData];
+  const sortOption = [{ value: '', label: '--請選擇處理單位--' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
       height: '32px',
-      // width: '15%',
+      // width: '170px',
       color: state.isSelected ? '#fff' : '#444',
       background: state.isSelected ? '#817161' : '#fff',
       ':active': {
@@ -46,6 +46,7 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
     control: (base, state) => ({
       ...base,
       border: '1px solid #817161',
+      // borderRadius: '0px',
       minHeight: '32px',
       width: '170px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
@@ -62,14 +63,14 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
       return { ...provided, opacity, transition };
     },
   };
+
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);
-          setNowStatus(e.value);
+          setNowHUnit(e.value);
         }}
         options={sortOption}
         styles={customStyles}

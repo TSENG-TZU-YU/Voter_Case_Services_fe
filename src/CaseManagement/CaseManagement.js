@@ -13,6 +13,7 @@ import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
+import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
@@ -50,6 +51,7 @@ function CaseManagement() {
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
+  const [nowHUnit, setNowHUnit] = useState('');
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
   const [order, setOrder] = useState('');
@@ -134,7 +136,7 @@ function CaseManagement() {
 
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}`,
+        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}`,
         {
           withCredentials: true,
         }
@@ -157,6 +159,7 @@ function CaseManagement() {
     minDate,
     maxDate,
     order,
+    nowHUnit,
   ]);
 
   useEffect(() => {
@@ -220,6 +223,7 @@ function CaseManagement() {
                 member={member}
               />
               <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+              {/* <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} /> */}
             </div>
             <DateFilter
               dateRemind={dateRemind}
@@ -261,6 +265,7 @@ function CaseManagement() {
                 </th>
                 <th>申請單位</th>
                 <th>申請人</th>
+                {/* <th>處理單位</th> */}
                 <th>處理人</th>
                 <th>申請類別</th>
                 <th className="sortBtn">
@@ -313,6 +318,7 @@ function CaseManagement() {
                                 <td>{v.case_number}</td>
                                 <td>{v.applicant_unit}</td>
                                 <td>{v.user}</td>
+                                {/* <td>{v.unit}</td> */}
                                 <td>{v.handler}</td>
                                 <td>{v.application_category}</td>
                                 <td>{v.create_time}</td>

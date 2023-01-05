@@ -46,6 +46,7 @@ function CountPage() {
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
+  const [nowAppUnit, setNowAppUnit] = useState('');
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
   // const [finish, setFinish] = useState('');
@@ -70,6 +71,7 @@ function CountPage() {
   const [stateTtl, setStateTtl] = useState([]);
   const [categoryTtl, setCategoryTtl] = useState([]);
   const [unitTtl, setUnitTtl] = useState([]);
+  const [unitAppTtl, setUnitAppTtl] = useState([]);
   const [handlerTtl, setHandlerTtl] = useState([]);
   const [userTtl, setUserTtl] = useState([]);
 
@@ -95,7 +97,7 @@ function CountPage() {
     setIsLoading(true);
     let getAllData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}&handlerUnit=${nowHandlerUnit}`,
+        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}&handlerUnit=${nowHandlerUnit}&appUnit=${nowAppUnit}`,
         {
           withCredentials: true,
         }
@@ -115,6 +117,7 @@ function CountPage() {
       setStateTtl(response.data.pagination.counts);
       setCategoryTtl(response.data.pagination.categoryCounts);
       setUnitTtl(response.data.pagination.unitCounts);
+      setUnitAppTtl(response.data.pagination.unitAppCounts);
       setHandlerTtl(response.data.pagination.handlerCounts);
       setUserTtl(response.data.pagination.userCounts);
       // console.log('object',allStatusData);
@@ -137,6 +140,7 @@ function CountPage() {
     nowUser,
     nowUserUnit,
     nowHandlerUnit,
+    nowAppUnit,
   ]);
 
   // %
@@ -194,10 +198,10 @@ function CountPage() {
               />
             </div>
             {/* 處理單位 */}
-            <div className="userSort">
+            {/* <div className="userSort">
               <div>處理單位：</div>
               <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-            </div>
+            </div> */}
           </div>
           {/* 日期 */}
           <div className="userSort">
@@ -217,12 +221,13 @@ function CountPage() {
           </div>
         </div>
         <div className="userFlex">
-          {/* 申請人 */}
+          {/* 申請單位/申請人 */}
           <div className="userSort">
-            <div>申請人：</div>
+            <div>申請單位/申請人：</div>
             <UserUnitFilter
               allUnit={allUnit}
               setNowUnit={setNowUnit}
+              setNowAppUnit={setNowAppUnit}
               setNowUserUnit={setNowUserUnit}
               setNowUser={setNowUser}
               setUnitChange={setUnitChange}
@@ -233,14 +238,15 @@ function CountPage() {
               ''
             )}
           </div>
-          {/* 處理人 */}
+          {/* 申請單位/處理人 */}
           <div className="userSort">
-            <div className="ms-3">處理人：</div>
+            <div className="ms-3">處理單位/處理人：</div>
             <UserHandlerFilter
               allUnit={allUnit}
               setHandler={setHandler}
               setNowHandlerUnit={setNowHandlerUnit}
               setHandleChange={setHandleChange}
+              setNowUnit={setNowUnit}
             />
             {handleChange ? (
               <HandlerFilter
@@ -456,6 +462,59 @@ function CountPage() {
                         </td>
                         {allHandlerData.map((v, i) => {
                           let arr = handlerTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={i}>
+                              {arr[0] !== undefined
+                                ? `${percent(
+                                    total,
+                                    arr[0][Object.keys(arr[0])]
+                                  )} %`
+                                : '0 %'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                </>
+
+                {/* 申請單位% */}
+                <>
+                  <div className="stateTit">申請單位</div>
+                  <table className="countContainer">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        {allUnit.map((v, i) => {
+                          return <th key={uuidv4()}>{v.name}</th>;
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* 件數 */}
+                      <tr>
+                        <th>案件量</th>
+                        {allUnit.map((v, i) => {
+                          let arr = unitAppTtl.filter(
+                            (val) => Object.keys(val)[0] === v.name
+                          );
+                          return (
+                            <td key={uuidv4()}>
+                              {arr[0] !== undefined
+                                ? `${arr[0][Object.keys(arr[0])]} 件`
+                                : '0 件'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+
+                      {/* %% */}
+                      <tr>
+                        <th>案件%</th>
+                        {allUnit.map((v, i) => {
+                          let arr = unitTtl.filter(
                             (val) => Object.keys(val)[0] === v.name
                           );
                           return (

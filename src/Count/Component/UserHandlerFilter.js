@@ -7,6 +7,7 @@ function ActivitySelect({
   setNowHandlerUnit,
   setHandler,
   setHandleChange,
+  setNowUnit,
 }) {
   let newData = [];
   for (let i = 0; i < allUnit.length; i++) {
@@ -79,6 +80,7 @@ function ActivitySelect({
         onChange={(e) => {
           // console.log(e.value);
           setHandler('');
+          setNowUnit(e.value);
           setNowHandlerUnit(e.value);
           setHandleChange(true);
         }}

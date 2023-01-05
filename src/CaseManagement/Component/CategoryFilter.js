@@ -12,10 +12,7 @@ function ActivitySelect({ allCategoryData, setNowCategory }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [
-    { value: '', label: '----請選擇申請類別----' },
-    ...newData,
-  ];
+  const sortOption = [{ value: '', label: '--請選擇申請類別--' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
