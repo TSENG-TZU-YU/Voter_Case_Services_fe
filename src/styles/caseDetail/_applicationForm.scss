@@ -95,7 +95,7 @@ text-align: center;
     .outGap {
       border: 2px solid $subClrBrown;
       width: 84%;
-      margin-bottom: 10px;
+      margin-top: 10px;
       .gapContain {
         display: flex;
         gap: 120px;
@@ -216,7 +216,7 @@ text-align: center;
           }
         }
         div {
-          display: flex;
+          // display: flex;
           div {
             margin-right: 10px;
           }

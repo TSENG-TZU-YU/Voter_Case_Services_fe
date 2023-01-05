@@ -3,7 +3,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { HiOutlineDocumentPlus } from 'react-icons/hi2';
-import { FaTrashAlt } from 'react-icons/fa';
+// import { FaTrashAlt } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -197,6 +197,13 @@ function UploadPage({ setAddStatus, delCheck }) {
   //   files upload
   //   update contain
   const handlerUpdateFile = (val, i, input) => {
+    if (val.size > 10 * 1024 * 1024) {
+      Swal.fire({
+        icon: 'error',
+        title: '檔案過大，請小於10MB',
+      });
+      return;
+    }
     let newData = [...filesData];
     if (input === 'photo1') newData[i].fileName = val;
     setFilesData(newData);
@@ -264,6 +271,28 @@ function UploadPage({ setAddStatus, delCheck }) {
     }
   }
 
+  //確認補件完成sweet
+  function uploadCheck(tit) {
+    Swal.fire({
+      title: tit,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '確定完成補件',
+      denyButtonText: `取消完成補件`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('完成補件', '', 'success').then(() => {
+          setRender(false);
+        });
+        fileSubmitStatus();
+        setRender(true);
+      } else if (result.isDenied) {
+        Swal.fire('已取消補寄件', '', 'info');
+      }
+    });
+  }
+
   const fileSubmitStatus = async () => {
     try {
       let response = await axios.patch(
@@ -294,8 +323,10 @@ function UploadPage({ setAddStatus, delCheck }) {
   return (
     <div className="overScr">
       {/* 上傳檔案 */}
-      {/* TODO: 判斷處理人+權限+狀態 用page判斷 */}
-      {(member.user === 1 && status === 6 && page === 1) ||
+      {(member.user === 1 && status === 5 && page === 1) ||
+      (member.user === 1 && status === 6 && page === 1) ||
+      (member.user === 1 && status === 7 && page === 1) ||
+      (member.user === 1 && status === 11 && page === 1) ||
       (member.handler === 1 && status === 5 && page === 2) ||
       (member.handler === 1 && status === 6 && page === 2) ||
       (member.handler === 1 && status === 7 && page === 2) ||
@@ -303,15 +334,16 @@ function UploadPage({ setAddStatus, delCheck }) {
         <>
           <div className="addUpload">
             <div className="addTitle">
-              請新增上傳附件(可上傳副檔名.pdf / img...)
+              請新增上傳附件 (檔案限制10MB) (可上傳副檔名
+              csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
             </div>
             <div>
-              <FaTrashAlt
+              {/* <FaTrashAlt
                 className="trashIcon"
                 onClick={() => {
                   delCheck('確定要刪除所有上傳文件', handleClearFile);
                 }}
-              />
+              /> */}
               <MdOutlineAddBox className="addIcon" onClick={handleAddFile} />
             </div>
           </div>
@@ -367,13 +399,24 @@ function UploadPage({ setAddStatus, delCheck }) {
               onClick={() => {
                 setRender(true);
                 fileSubmit();
-                if (member.user === 1) {
-                  fileSubmitStatus();
-                }
               }}
             >
               上傳檔案
             </button>
+            {member.user === 1 && status === 6 && page === 1 ? (
+              <button
+                className="submitBtn mx-3"
+                onClick={() => {
+                  if (member.user === 1) {
+                    uploadCheck('請確認已完成補件');
+                  }
+                }}
+              >
+                確認補件完成
+              </button>
+            ) : (
+              ''
+            )}
           </div>
         </>
       ) : (
