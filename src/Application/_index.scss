@@ -12,6 +12,7 @@
 }
 .scroll {
   width: 100%;
+  min-width: 560px;
   height: calc(100vh - 70px);
   @include scrollbar;
   .container {

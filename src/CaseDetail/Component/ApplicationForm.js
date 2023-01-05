@@ -178,9 +178,13 @@ function ApplicationForm({
   };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
-    // console.log('aaa', val);
-    // console.log('i', i);
-
+    if (val.size > 10 * 1024 * 1024) {
+      Swal.fire({
+        icon: 'error',
+        title: '檔案過大，請小於10MB',
+      });
+      return;
+    }
     let newData = [...getFile];
     if (input === 'file') newData[i].file = val;
     // console.log('n', newData[0].file.name);
@@ -304,9 +308,10 @@ function ApplicationForm({
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('刪除成功', '', 'success');
+        Swal.fire('刪除成功', '', 'success').then(() => {
+          navigate('/header/caseManagement');
+        });
         deleteForm();
-        navigate('/header/caseManagement');
       } else if (result.isDenied) {
         Swal.fire('已取消刪除', '', 'info');
       }
@@ -338,14 +343,14 @@ function ApplicationForm({
       setCategory(true);
     }
 
-    if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
-      setCycle(true);
-    }
+    // if (detailData[0].cycle === '0' || detailData[0].cycle === '') {
+    //   setCycle(true);
+    // }
 
     if (
       detailData[0].category !== '0' &&
-      detailData[0].category !== '' &&
-      detailData[0].cycle !== ''
+      detailData[0].category !== ''
+      // && detailData[0].cycle !== ''
     ) {
       Swal.fire({
         title: tit,
@@ -442,15 +447,13 @@ function ApplicationForm({
     }
   }
 
-  //刪除表單(未送審) TODO: render
+  //刪除表單(未送審)
   async function deleteForm() {
     try {
       let response = await axios.post(
         `http://localhost:3001/api/application_edit/deleteForm/${num}`,
         {
           ...detailData[0],
-          // TODO: 申請狀態 主管權限是1 || 0 判斷
-          // status_id: 1,
         }
       );
     } catch (err) {
@@ -1139,7 +1142,36 @@ function ApplicationForm({
                         </select>
                       )}
                     </div>
-                    <div>
+                    {v.relation === '' && v.status_id !== 1 ? (
+                      ''
+                    ) : (
+                      <div>
+                        <div className="pb-1">友好程度</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.relation}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            className="handler"
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'relation');
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.relation}
+                            </option>
+                            {relation.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
+                    )}
+                    {/* <div>
                       <div className="pb-1">需求次數</div>
                       <div className="d-flex align-items-center">
                         {radioInput.map((d, i) => {
@@ -1166,14 +1198,14 @@ function ApplicationForm({
                           );
                         })}
                       </div>
-                    </div>
+                    </div> */}
                   </div>
-                  <div className="gapContain my-2">
+                  {/* <div className="gapContain my-2">
                     {v.relation === '' && v.status_id !== 1 ? (
                       ''
                     ) : (
                       <div>
-                        <div className="pb-1">友好程度(A-D)</div>
+                        <div className="pb-1">友好程度</div>
                         {edit ? (
                           <input
                             type="text"
@@ -1198,7 +1230,7 @@ function ApplicationForm({
                         )}
                       </div>
                     )}
-                    {/* {v.project_name === '' && v.status_id !== 1 ? (
+                    {v.project_name === '' && v.status_id !== 1 ? (
                       ''
                     ) : (
                       <div>
@@ -1217,8 +1249,8 @@ function ApplicationForm({
                           }}
                         />
                       </div>
-                    )} */}
-                  </div>
+                    )}
+                  </div> */}
                   {/* 當事人 */}
                   {v.litigant === '' && v.status_id !== 1 ? (
                     ''
@@ -1273,8 +1305,9 @@ function ApplicationForm({
                             ) : (
                               <input
                                 className=" hide-arrows"
-                                type="text"
+                                type="tel"
                                 value={v.litigant_phone}
+                                maxLength="12"
                                 onChange={(e) => {
                                   handleChange(
                                     (v.litigant_phone = e.target.value),
@@ -1463,9 +1496,9 @@ function ApplicationForm({
                             ) : (
                               <input
                                 className="hide-arrows"
-                                type="text"
+                                type="tel"
                                 value={v.client_phone}
-                                oninput="if(value.length>11)value=value.slice(0,11)"
+                                maxLength="12"
                                 onChange={(e) => {
                                   handleChange(
                                     (v.client_phone = e.target.value),
@@ -1622,12 +1655,15 @@ function ApplicationForm({
             {/* 檔案上傳 */}
             <div className="file">
               {edit ? (
-                ''
+                <div className="fileTit">附件上傳</div>
               ) : (
                 <div className="fileName">
                   <div>
-                    <div>附件上傳</div>
-                    <div>(可上傳副檔名.pdf / img...)</div>
+                    <div className="fileTit">附件上傳</div>
+                    <div className="fileTit">
+                      (檔案限制10MB) (可上傳副檔名
+                      csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
+                    </div>
                     {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
                   </div>
                   <div className="fileIcon">
@@ -1648,7 +1684,6 @@ function ApplicationForm({
               )}
 
               {/* files */}
-              <div className="fileTit">附件上傳</div>
               {getFile.map((v, i) => {
                 return (
                   <div key={uuidv4()} className="two">
@@ -1687,7 +1722,7 @@ function ApplicationForm({
                           type="file"
                           name="file"
                           id={`file${i}`}
-                          accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx,.text/plain"
+                          accept=".csv,.txt,.png,.jpeg,.jpg,.pdf,.xlsx,.zip,.word,.ppt"
                           onChange={(e) => {
                             onFileUpload(e.target.files[0], i, 'file');
                             setFileUpdate(true);
@@ -1709,12 +1744,12 @@ function ApplicationForm({
             {detailData.map((v, i) => {
               return (
                 <div key={i} className="textareaGap">
-                  <div> 備註</div>
+                  <div>備註(限制100字數)</div>
 
                   {edit ? (
                     <textarea
                       className="textarea"
-                      maxLength="300"
+                      maxLength="100"
                       value={v.remark}
                       disabled
                       defaultChecked={true}

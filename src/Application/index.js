@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { HiOutlineDocumentPlus } from 'react-icons/hi2';
-import { FaTrashAlt } from 'react-icons/fa';
+// import { FaTrashAlt } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -18,7 +18,7 @@ import { useAuth } from '../utils/use_auth';
 function Application({ delCheck }) {
   const navigate = useNavigate();
   const [addNeed, setAddNeed] = useState([{ text: '' }]);
-  const [addFile, setAddFile] = useState([{ file: '' }]);
+  const [addFile, setAddFile] = useState([]);
   const [submitValue, setSubmitValue] = useState([
     {
       handler: '',
@@ -150,12 +150,19 @@ function Application({ delCheck }) {
     setAddFile(newData);
   };
   // 清空檔案
-  const handleClearFile = () => {
-    let newData = [{ file: '' }];
-    setAddFile(newData);
-  };
+  // const handleClearFile = () => {
+  //   let newData = [{ file: '' }];
+  //   setAddFile(newData);
+  // };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
+    if (val.size > 10 * 1024 * 1024) {
+      Swal.fire({
+        icon: 'error',
+        title: '檔案過大，請小於10MB',
+      });
+      return;
+    }
     let newData = [...addFile];
     if (input === 'file') newData[i].file = val;
 
@@ -262,6 +269,10 @@ function Application({ delCheck }) {
     for (let i = 0; i < addNeed.length; i++) {
       if (addNeed[i].text === '') {
         setNeed(true);
+        Swal.fire({
+          icon: 'error',
+          title: '請填寫需求',
+        });
         return;
       }
     }
@@ -277,16 +288,21 @@ function Application({ delCheck }) {
 
     if (submitValue[0].category === '0' || submitValue[0].category === '') {
       setCategory(true);
+      Swal.fire({
+        icon: 'error',
+        title: '請填寫單位',
+      });
     }
 
-    if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
-      setCycle(true);
-    }
+    // if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
+    //   setCycle(true);
+
+    // }
 
     if (
       submitValue[0].category !== '0' &&
-      submitValue[0].category !== '' &&
-      submitValue[0].cycle !== ''
+      submitValue[0].category !== ''
+      // && submitValue[0].cycle !== ''
     ) {
       Swal.fire({
         title: tit,
@@ -309,21 +325,60 @@ function Application({ delCheck }) {
 
   // 儲存申請表sweet
   function storeCheck(tit) {
-    Swal.fire({
-      title: tit,
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: '確定儲存',
-      denyButtonText: `取消儲存`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire('儲存成功', '', 'success');
-        submitFile();
-        navigate('/header/caseManagement');
-      } else if (result.isDenied) {
-        Swal.fire('已取消儲存', '', 'info');
+    for (let i = 0; i < addNeed.length; i++) {
+      if (addNeed[i].title === '' || addNeed[i].text === '') {
+        setNeed(true);
+        Swal.fire({
+          icon: 'error',
+          title: '請填寫需求',
+        });
+        return;
       }
-    });
+    }
+    for (let i = 0; i < addFile.length; i++) {
+      if (addFile[i].file === '') {
+        Swal.fire({
+          icon: 'error',
+          title: '無檔案',
+        });
+        return;
+      }
+    }
+
+    if (submitValue[0].category === '0' || submitValue[0].category === '') {
+      setCategory(true);
+      Swal.fire({
+        icon: 'error',
+        title: '請填寫單位',
+      });
+    }
+
+    // if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
+    //   setCycle(true);
+    // }
+
+    if (
+      submitValue[0].category !== '0' &&
+      submitValue[0].category !== ''
+      // &&  submitValue[0].cycle !== ''
+    ) {
+      Swal.fire({
+        title: tit,
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: '確定儲存',
+        denyButtonText: `取消儲存`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('儲存成功', '', 'success');
+          submitFile();
+          store();
+          navigate('/header/caseManagement');
+        } else if (result.isDenied) {
+          Swal.fire('已取消儲存', '', 'info');
+        }
+      });
+    }
   }
 
   //送出表單內容
@@ -380,55 +435,23 @@ function Application({ delCheck }) {
 
   //儲存表單內容
   async function store() {
-    for (let i = 0; i < addNeed.length; i++) {
-      if (addNeed[i].title === '' || addNeed[i].text === '') {
-        setNeed(true);
-        return;
-      }
-    }
     try {
-      if (submitValue[0].category === '0' || submitValue[0].category === '') {
-        setCategory(true);
-      }
-
-      if (submitValue[0].cycle === '0' || submitValue[0].cycle === '') {
-        setCycle(true);
-      }
-
-      if (
-        submitValue[0].category !== '0' &&
-        submitValue[0].category !== '' &&
-        submitValue[0].cycle !== ''
-      ) {
-        for (let i = 0; i < addFile.length; i++) {
-          if (addFile[i].file === '') {
-            Swal.fire({
-              icon: 'error',
-              title: '無檔案',
-            });
-            return;
-          }
+      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let response = await axios.post(
+        'http://localhost:3001/api/application_post',
+        {
+          ...submitValue[0],
+          need: addNeed,
+          number: parseInt(Date.now() / 10000),
+          id: member.id,
+          user: member.name,
+          status: 1,
+          create_time: endTime,
+        },
+        {
+          withCredentials: true,
         }
-
-        storeCheck('確認儲存申請表?');
-
-        let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let response = await axios.post(
-          'http://localhost:3001/api/application_post',
-          {
-            ...submitValue[0],
-            need: addNeed,
-            number: parseInt(Date.now() / 10000),
-            id: member.id,
-            user: member.name,
-            status: 1,
-            create_time: endTime,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-      }
+      );
     } catch (err) {
       console.log('sub', err);
     }
@@ -474,8 +497,8 @@ function Application({ delCheck }) {
           {/* 單位 */}
           <div className="gap">
             <div>
-              申請單位 <span>*</span>
-              {category ? <span>欄位不得為空</span> : <span>必填</span>}
+              申請單位 <span>*必填</span>
+              {/* {category ? <span>欄位不得為空</span> : <span>必填</span>} */}
             </div>
             <select
               className="handler"
@@ -509,8 +532,23 @@ function Application({ delCheck }) {
               })}
             </select>
           </div>
-          {/* 週期 */}
+          {/* 友好程度 */}
           <div className="gap">
+            <div> 友好程度</div>
+            <select
+              className="handler"
+              onChange={(e) => {
+                handleChange(e.target.value, 'relation');
+              }}
+            >
+              <option value=" "> -----請選擇-----</option>
+              {relation.map((v, i) => {
+                return <option key={i}>{v.name}</option>;
+              })}
+            </select>
+          </div>
+          {/* 週期 */}
+          {/* <div className="gap">
             <div className="cycle">
               需求次數 <span>*</span>
               {cycle ? <span>欄位不得為空</span> : <span>必填</span>}
@@ -536,10 +574,10 @@ function Application({ delCheck }) {
                 );
               })}
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="box">
-          {/* 友好程度 */}
+        {/* <div className="box">
+          友好程度
           <div className="gap">
             <div> 友好程度(A-D)</div>
             <select
@@ -554,8 +592,8 @@ function Application({ delCheck }) {
               })}
             </select>
           </div>
-          {/* 專案名稱 */}
-          {/* <div className="gap">
+          專案名稱
+          <div className="gap">
             <div> 案件名稱</div>
             <input
               className="handler"
@@ -564,8 +602,8 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'name');
               }}
             />
-          </div> */}
-        </div>
+          </div>
+        </div> */}
         <div className="outBox">
           <div className="box">
             {/* 當事人 */}
@@ -590,7 +628,8 @@ function Application({ delCheck }) {
                 <div> 當事人聯絡電話</div>
                 <input
                   className="handler hide-arrows"
-                  type="number"
+                  type="tel"
+                  maxLength="12"
                   onChange={(e) => {
                     handleChange(e.target.value, 'litigantPhone');
                   }}
@@ -695,8 +734,8 @@ function Application({ delCheck }) {
                 <div> 請託人聯絡電話</div>
                 <input
                   className="handler hide-arrows"
-                  type="number"
-                  oninput="if(value.length>11)value=value.slice(0,11)"
+                  type="tel"
+                  maxLength="12"
                   onChange={(e) => {
                     handleChange(e.target.value, 'clientPhone');
                   }}
@@ -734,13 +773,13 @@ function Application({ delCheck }) {
         <div className="add">
           <span className={`${need ? 'view' : ''}`}>*欄位不得為空</span>
           <div>
-            <FaTrashAlt
+            {/* <FaTrashAlt
               size="17"
               onClick={() => {
                 delCheck('確定要刪除所有需求內容?', handleClearNeed);
               }}
               className="clearIcon"
-            />
+            /> */}
             <MdOutlineAddBox size="20" onClick={addN} className="addIcon" />
           </div>
         </div>
@@ -751,7 +790,7 @@ function Application({ delCheck }) {
               <div key={i} className="need">
                 <div className="one">
                   <div>
-                    需求{i + 1} <span>*必填</span>
+                    需求{i + 1} (字數限制500)<span>*必填</span>
                   </div>
                   {i !== 0 ? (
                     <IoMdCloseCircle
@@ -807,17 +846,20 @@ function Application({ delCheck }) {
           <div className="fileName">
             <div>
               <div>附件上傳</div>
-              <div>(可上傳副檔名.pdf / img...)</div>
+              <div>
+                (檔案限制10MB) (可上傳副檔名
+                csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
+              </div>
               {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
             </div>
             <div className="fileIcon">
-              <FaTrashAlt
+              {/* <FaTrashAlt
                 size="17"
                 onClick={() => {
                   delCheck('確定要刪除所有上傳檔案?', handleClearFile);
                 }}
                 className="clearIcon"
-              />
+              /> */}
               <MdOutlineAddBox size="20" onClick={addF} className="addIcon" />
             </div>
           </div>
@@ -846,7 +888,7 @@ function Application({ delCheck }) {
                   type="file"
                   name="file"
                   id={`file${i}`}
-                  accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
+                  accept=".csv,.txt,.png,.jpeg,.jpg,.pdf,.xlsx,.zip,.word,.ppt"
                   onChange={(e) => {
                     onFileUpload(e.target.files[0], i, 'file');
                   }}
@@ -855,7 +897,6 @@ function Application({ delCheck }) {
                   size="20"
                   onClick={() => {
                     delCheck('確定要刪除此上傳檔案?', deleteFile, i);
-             
                   }}
                 />
               </div>
@@ -865,11 +906,10 @@ function Application({ delCheck }) {
 
         {/* 備註 */}
         <div className="textareaGap">
-          <div> 備註</div>
-
+          <div> 備註 (限制100字數)</div>
           <textarea
             className="textarea"
-            maxLength="300"
+            maxLength="100"
             onChange={(e) => {
               handleChange(e.target.value, 'remark');
             }}
@@ -884,7 +924,7 @@ function Application({ delCheck }) {
           <div
             className="submit"
             onClick={() => {
-              store();
+              storeCheck('確認儲存申請表?');
             }}
           >
             儲存
