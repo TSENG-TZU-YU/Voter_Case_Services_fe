@@ -855,6 +855,7 @@ function Application({ delCheck }) {
                   size="20"
                   onClick={() => {
                     delCheck('確定要刪除此上傳檔案?', deleteFile, i);
+             
                   }}
                 />
               </div>

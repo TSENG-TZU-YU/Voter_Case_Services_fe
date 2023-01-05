@@ -46,10 +46,10 @@ function Header() {
           withCredentials: true,
         });
 
-        setMember(response.data);
-        if (member === '') {
-          navigate('/');
-        }
+        // setMember(response.data);
+        // if (member === '') {
+        //   navigate('/');
+        // }
       } catch (err) {
         console.log(err.response.data.message);
       }
