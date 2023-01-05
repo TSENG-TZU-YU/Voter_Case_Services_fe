@@ -3,7 +3,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { HiOutlineDocumentPlus } from 'react-icons/hi2';
-import { FaTrashAlt } from 'react-icons/fa';
+// import { FaTrashAlt } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -338,12 +338,12 @@ function UploadPage({ setAddStatus, delCheck }) {
               csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
             </div>
             <div>
-              <FaTrashAlt
+              {/* <FaTrashAlt
                 className="trashIcon"
                 onClick={() => {
                   delCheck('確定要刪除所有上傳文件', handleClearFile);
                 }}
-              />
+              /> */}
               <MdOutlineAddBox className="addIcon" onClick={handleAddFile} />
             </div>
           </div>
