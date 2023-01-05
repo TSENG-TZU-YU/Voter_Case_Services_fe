@@ -79,7 +79,7 @@ function ApplicationForm({
     { title: '短期', value: '2' },
     { title: '長期', value: '3' },
   ];
-
+  console.log('getFile', getFile);
   //友好程度
   const relation = [
     { name: 'VIP' },
@@ -442,6 +442,7 @@ function ApplicationForm({
     }
   }
 
+  //刪除表單(未送審) TODO: render
   async function deleteForm() {
     try {
       let response = await axios.post(

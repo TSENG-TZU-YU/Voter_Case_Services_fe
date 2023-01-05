@@ -31,7 +31,7 @@ function UploadPage({ setAddStatus, delCheck }) {
 
   const location = useLocation();
   let params = new URLSearchParams(location.search);
-  let page = params.get('page');
+  let page = parseInt(params.get('page'));
 
   useEffect(() => {
     async function getMember() {
@@ -52,7 +52,10 @@ function UploadPage({ setAddStatus, delCheck }) {
       setAddStatus(false);
       setValid(1);
     }
-    if (member.handler === 1 || member.manage === 1) {
+    if (
+      (member.handler === 1 && page === 2) ||
+      (member.manage === 1 && page === 2)
+    ) {
       setValid(2);
     }
   }, []);
@@ -292,11 +295,11 @@ function UploadPage({ setAddStatus, delCheck }) {
     <div className="overScr">
       {/* 上傳檔案 */}
       {/* TODO: 判斷處理人+權限+狀態 用page判斷 */}
-      {(member.user === 1 && status === 6 && page == 1) ||
-      (member.handler === 1 && status === 5 && page == 2) ||
-      (member.handler === 1 && status === 6 && page == 2) ||
-      (member.handler === 1 && status === 7 && page == 2) ||
-      (member.handler === 1 && status === 11 && page == 2) ? (
+      {(member.user === 1 && status === 6 && page === 1) ||
+      (member.handler === 1 && status === 5 && page === 2) ||
+      (member.handler === 1 && status === 6 && page === 2) ||
+      (member.handler === 1 && status === 7 && page === 2) ||
+      (member.handler === 1 && status === 11 && page === 2) ? (
         <>
           <div className="addUpload">
             <div className="addTitle">
