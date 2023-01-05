@@ -12,7 +12,6 @@ function EditNeedPage({
   handlerUpdateNeed,
   hanleAddNeed,
   editVerifyPage,
-  caseId,
   delCheck,
 }) {
   console.log(editNeed);
@@ -72,6 +71,7 @@ function EditNeedPage({
                   <textarea
                     name="dir"
                     rows="3"
+                    maxLength="500"
                     placeholder="請依據標題詳細說明"
                     value={editNeed[i].directions}
                     onChange={(e) => {

@@ -14,6 +14,7 @@ import UnitFilter from './Component/UnitFilter.js';
 import HandlerFilter from './Component/HandlerFilter.js';
 import UserFilter from './Component/UserFilter.js';
 import UserUnitFilter from './Component/UserUnitFilter.js';
+import UserHandlerFilter from './Component/UserHandlerFilter.js';
 
 import Loader from '../Loader';
 
@@ -37,6 +38,7 @@ function CountPage() {
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [unitChange, setUnitChange] = useState(false);
+  const [handleChange, setHandleChange] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +52,7 @@ function CountPage() {
   const [handler, setHandler] = useState('');
   const [nowUser, setNowUser] = useState('');
   const [nowUserUnit, setNowUserUnit] = useState('');
+  const [nowHandlerUnit, setNowHandlerUnit] = useState('');
 
   // get data
   const [allUnit, setAllUnitData] = useState([]);
@@ -57,6 +60,7 @@ function CountPage() {
   const [countStatusData, setCountStatusData] = useState([]);
   const [allCategoryData, setAllCategoryData] = useState([]);
   const [allHandlerData, setAllHandlerData] = useState([]);
+  const [handlerData, setHandlerData] = useState([]);
   const [allUserData, setAllUserData] = useState([]);
   const [userData, setuserData] = useState([]);
 
@@ -91,7 +95,7 @@ function CountPage() {
     setIsLoading(true);
     let getAllData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}`,
+        `${API_URL}/applicationData/getAssistantAllApp?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&handler=${handler}&user=${nowUser}&userUnit=${nowUserUnit}&handlerUnit=${nowHandlerUnit}`,
         {
           withCredentials: true,
         }
@@ -103,6 +107,7 @@ function CountPage() {
       setAllHandlerData(response.data.handlerResult);
       setAllUserData(response.data.userResult);
       setuserData(response.data.AllUserResult);
+      setHandlerData(response.data.selHandlerResult);
 
       // total
       setAllTotal(response.data.pagination.allTotal);
@@ -131,6 +136,7 @@ function CountPage() {
     handler,
     nowUser,
     nowUserUnit,
+    nowHandlerUnit,
   ]);
 
   // %
@@ -170,23 +176,48 @@ function CountPage() {
         {/* 篩選 */}
         <div className="sortSelect">
           <div className="bothFilter">
-            <CategoryFilter
-              allCategoryData={allCategoryData}
-              setNowCategory={setNowCategory}
-            />
-            <StatusFilter
-              allStatusData={allStatusData}
-              setNowStatus={setNowStatus}
-              countStatusData={countStatusData}
-            />
-            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-            <HandlerFilter
-              setHandler={setHandler}
-              allHandlerData={allHandlerData}
+            {/* 類別 */}
+            <div className="userSort">
+              <div>申請類別：</div>
+              <CategoryFilter
+                allCategoryData={allCategoryData}
+                setNowCategory={setNowCategory}
+              />
+            </div>
+            {/* 狀態 */}
+            <div className="userSort">
+              <div>狀態：</div>
+              <StatusFilter
+                allStatusData={allStatusData}
+                setNowStatus={setNowStatus}
+                countStatusData={countStatusData}
+              />
+            </div>
+            {/* 處理單位 */}
+            <div className="userSort">
+              <div>處理單位：</div>
+              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+            </div>
+          </div>
+          {/* 日期 */}
+          <div className="userSort">
+            <div>申請日期：</div>
+            <DateFilter
+              dateRemind={dateRemind}
+              setDateRemind={setDateRemind}
+              setMaxDate={setMaxDate}
+              setMinDate={setMinDate}
+              maxDateValue={maxDateValue}
+              setMaxDateValue={setMaxDateValue}
+              minDateValue={minDateValue}
+              setMinDateValue={setMinDateValue}
+              dateAgo={dateAgo}
+              nowDate={nowDate}
             />
           </div>
         </div>
         <div className="userFlex">
+          {/* 申請人 */}
           <div className="userSort">
             <div>申請人：</div>
             <UserUnitFilter
@@ -202,20 +233,23 @@ function CountPage() {
               ''
             )}
           </div>
+          {/* 處理人 */}
           <div className="userSort">
-            <div>申請日期：</div>
-            <DateFilter
-              dateRemind={dateRemind}
-              setDateRemind={setDateRemind}
-              setMaxDate={setMaxDate}
-              setMinDate={setMinDate}
-              maxDateValue={maxDateValue}
-              setMaxDateValue={setMaxDateValue}
-              minDateValue={minDateValue}
-              setMinDateValue={setMinDateValue}
-              dateAgo={dateAgo}
-              nowDate={nowDate}
+            <div className="ms-3">處理人：</div>
+            <UserHandlerFilter
+              allUnit={allUnit}
+              setHandler={setHandler}
+              setNowHandlerUnit={setNowHandlerUnit}
+              setHandleChange={setHandleChange}
             />
+            {handleChange ? (
+              <HandlerFilter
+                setHandler={setHandler}
+                handlerData={handlerData}
+              />
+            ) : (
+              ''
+            )}
           </div>
         </div>
 
@@ -323,9 +357,9 @@ function CountPage() {
                   </table>
                 </>
 
-                {/* 申請單位% */}
+                {/* 處理單位% */}
                 <>
-                  <div className="stateTit">申請單位</div>
+                  <div className="stateTit">處理單位</div>
                   <table className="countContainer">
                     <thead>
                       <tr>

@@ -627,7 +627,7 @@ function ApplicationForm({
     // console.log('add', response.data);
     Swal.fire({
       icon: 'success',
-      title: '申請成功',
+      title: '完成',
     }).then(function () {
       setNeedLoading(!needLoading);
       setAddStateForm(false);
@@ -1567,7 +1567,11 @@ function ApplicationForm({
                 </div>
               </div>
             )}
-
+            {console.log(
+              'm',
+              (member.handler === 1 && HId === member.name) ||
+                member.manage === 1
+            )}
             {/* 需求 */}
             {editNeed.map((v, i) => {
               return (
@@ -1577,19 +1581,33 @@ function ApplicationForm({
                       <input
                         type="checkbox"
                         disabled={
-                          member.handler === 1 &&
-                          HId === member.name &&
-                          member.manage === 1 &&
-                          needState !== 1 &&
-                          needState !== 2 &&
-                          needState !== 3 &&
-                          needState !== 4 &&
-                          needState !== 8 &&
-                          needState !== 9 &&
-                          needState !== 10 &&
-                          needState !== 11 &&
-                          needState !== 12 &&
-                          WebPage === 2
+                          member.manage === 1
+                            ? member.handler === 1 &&
+                              HId === member.name &&
+                              member.manage === 1 &&
+                              needState !== 1 &&
+                              needState !== 2 &&
+                              needState !== 3 &&
+                              needState !== 4 &&
+                              needState !== 8 &&
+                              needState !== 9 &&
+                              needState !== 10 &&
+                              needState !== 11 &&
+                              needState !== 12 &&
+                              WebPage === 2
+                              ? false
+                              : true
+                            : member.handler === 1 &&
+                              needState !== 1 &&
+                              needState !== 2 &&
+                              needState !== 3 &&
+                              needState !== 4 &&
+                              needState !== 8 &&
+                              needState !== 9 &&
+                              needState !== 10 &&
+                              needState !== 11 &&
+                              needState !== 12 &&
+                              WebPage === 2
                             ? false
                             : true
                         }
@@ -1835,43 +1853,59 @@ function ApplicationForm({
             ) : addStatus ? (
               ''
             ) : (
-              <>
-                {member.user === 1 &&
-                needState !== 1 &&
-                needState !== 2 &&
-                needState !== 3 &&
-                needState !== 8 &&
-                needState !== 9 &&
-                needState !== 10 &&
-                needState !== 11 &&
-                needState !== 12 &&
-                WebPage === 1 ? (
-                  <div className="cancle">
-                    <button className="cancleBtn" onClick={handleUserCancle}>
-                      取消申請
-                    </button>
-                  </div>
-                ) : (
-                  ''
-                )}
-              </>
+              ''
             )}
           </div>
-          {WebPage === 2 &&
-          HId !== '' &&
-          member.handler === 1 &&
-          HId === member.name &&
-          member.manage === 1 &&
-          needState !== 1 &&
-          needState !== 2 &&
-          needState !== 3 &&
-          needState !== 6 &&
-          needState !== 7 &&
-          needState !== 8 &&
-          needState !== 9 &&
-          needState !== 10 &&
-          needState !== 11 &&
-          needState !== 12 ? (
+
+          {/* 取消申請 */}
+          {/* <>
+            {member.user === 1 &&
+            needState !== 1 &&
+            needState !== 2 &&
+            needState !== 3 &&
+            needState !== 8 &&
+            needState !== 9 &&
+            needState !== 10 &&
+            needState !== 11 &&
+            needState !== 12 &&
+            WebPage === 1 ? (
+              <div className="cancle">
+                <button className="cancleBtn" onClick={handleUserCancle}>
+                  取消申請
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+          </> */}
+
+          {member.manage === 1 ? (
+            member.handler === 1 &&
+            HId === member.name &&
+            member.manage === 1 &&
+            needState !== 1 &&
+            needState !== 2 &&
+            needState !== 3 &&
+            needState !== 4 &&
+            needState !== 8 &&
+            needState !== 9 &&
+            needState !== 10 &&
+            needState !== 11 &&
+            needState !== 12 &&
+            HId !== '' &&
+            WebPage === 2
+          ) : member.handler === 1 &&
+            needState !== 1 &&
+            needState !== 2 &&
+            needState !== 3 &&
+            needState !== 4 &&
+            needState !== 8 &&
+            needState !== 9 &&
+            needState !== 10 &&
+            needState !== 11 &&
+            needState !== 12 &&
+            HId !== '' &&
+            WebPage === 2 ? (
             needSumLen === needLen ? (
               <div className="fBtn">
                 <button className="finishBtn" onClick={handleFinish}>
