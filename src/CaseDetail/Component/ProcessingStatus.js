@@ -82,8 +82,7 @@ function ProcessingStatus() {
       </div>
       <div
         className={`chatContainer ${
-          member.permissions_id === 3 ||
-          (HId === member.name && member.manage === 1)
+          member.handler === 1 || (HId === member.name && member.manage === 1)
             ? ''
             : 'noneHight'
         }`}

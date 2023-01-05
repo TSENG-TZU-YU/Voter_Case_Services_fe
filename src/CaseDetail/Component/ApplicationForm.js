@@ -66,9 +66,6 @@ function ApplicationForm({
   const [postValRemind, setPostValRemind] = useState(false);
   const [postCaseRemind, setPostCaseRemind] = useState(false);
   const [editVerifyPage, setEditVerifyPage] = useState(false);
-  // 職權
-  const [director, setDirectors] = useState(true);
-  const [handler, setHandler] = useState(true);
 
   const [needLoading, setNeedLoading] = useState(false);
   const [needLen, setNeedLen] = useState('');
@@ -108,11 +105,8 @@ function ApplicationForm({
     }
     getMember();
 
-    if (member.permissions_id === 1) {
+    if (member.user === 1) {
       setAddStatus(false);
-    }
-    if (member.permissions_id === 3) {
-      setHandler(false);
     }
   }, [detailData]);
 
@@ -499,14 +493,14 @@ function ApplicationForm({
       }
 
       // selectStatus filter
-      if (member.permissions_id === 2) {
+      if (member.director === 1) {
         setSelectData(response.data.selectResult.splice(1, 1));
       }
       if (member.manage === 1 && member.name !== HId) {
         setSelectData(response.data.selectResult.splice(2, 3));
       }
       if (
-        member.permissions_id === 3 ||
+        member.handler === 1 ||
         (member.manage === 1 && member.name === HId)
       ) {
         setSelectData(response.data.selectResult.splice(1));
@@ -1731,7 +1725,7 @@ function ApplicationForm({
             })}
 
             {/* 選擇狀態 */}
-            {addStatus &&
+            {WebPage === 2 &&
             HId !== '' &&
             (member.manage === 1 || member.handler === 1) &&
             needState !== 1 &&
@@ -1845,7 +1839,7 @@ function ApplicationForm({
           )}
 
           {/* 儲存 */}
-          {member.permissions_id === 1 && needState === 1 ? (
+          {member.user === 1 && needState === 1 ? (
             <div className="submitBtn">
               {edit ? (
                 <div

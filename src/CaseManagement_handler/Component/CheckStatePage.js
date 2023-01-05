@@ -31,7 +31,7 @@ export default function CheckStatePage({
         {/* msg */}
         <div
           className={`handleStatus ${
-            member.permissions_id === 3 ||
+            member.handler === 3 ||
             (handlerNull === member.name && member.manage === 1)
               ? ''
               : 'noneHight'
@@ -51,7 +51,7 @@ export default function CheckStatePage({
         </div>
 
         {/* bar */}
-        {member.permissions_id === 3 ||
+        {member.handler === 3 ||
         (handlerNull === member.name && member.manage === 1) ? (
           <div className="chatBarContain">
             <textarea

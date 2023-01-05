@@ -43,11 +43,11 @@ function UploadPage({ setAddStatus, delCheck }) {
     }
     getMember();
 
-    if (member.permissions_id === 1) {
+    if (member.user === 1) {
       setAddStatus(false);
       setValid(1);
     }
-    if (member.permissions_id === 3 || member.permissions_id === 4) {
+    if (member.handler === 1 || member.manage === 1) {
       setValid(2);
     }
   }, []);
@@ -287,11 +287,11 @@ function UploadPage({ setAddStatus, delCheck }) {
     <div className="overScr">
       {/* 上傳檔案 */}
       {/* TODO: 判斷處理人+權限+狀態 */}
-      {(member.permissions_id === 1 && status === 6) ||
-      (member.permissions_id === 3 && status === 5) ||
-      (member.permissions_id === 3 && status === 6) ||
-      (member.permissions_id === 3 && status === 7) ||
-      (member.permissions_id === 3 && status === 11) ? (
+      {(member.user === 1 && status === 6) ||
+      (member.handler === 1 && status === 5) ||
+      (member.handler === 1 && status === 6) ||
+      (member.handler === 1 && status === 7) ||
+      (member.handler === 1 && status === 11) ? (
         <>
           <div className="addUpload">
             <div className="addTitle">
@@ -359,7 +359,7 @@ function UploadPage({ setAddStatus, delCheck }) {
               onClick={() => {
                 setRender(true);
                 fileSubmit();
-                if (member.permissions_id === 1) {
+                if (member.user === 1) {
                   fileSubmitStatus();
                 }
               }}

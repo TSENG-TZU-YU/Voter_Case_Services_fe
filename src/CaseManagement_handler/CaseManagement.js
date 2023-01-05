@@ -112,7 +112,18 @@ function CaseManagement() {
     };
 
     getCampingData();
-  }, [member, nowCategory, nowStatus, nowUnit, minDate, maxDate, order]);
+  }, [
+    member.user,
+    member.handler,
+    member.manage,
+    member.director,
+    nowCategory,
+    nowStatus,
+    nowUnit,
+    minDate,
+    maxDate,
+    order,
+  ]);
 
   useEffect(() => {
     // setIsLoading(true);
@@ -289,7 +300,7 @@ function CaseManagement() {
                           <tbody key={uuidv4()} className="body">
                             <tr>
                               <td>
-                                {member.permissions_id === 3 &&
+                                {member.handler === 1 &&
                                 member.name === v.sender
                                   ? `轉件人 : ${v.handler}`
                                   : ''}
@@ -319,7 +330,7 @@ function CaseManagement() {
                                   <FaEye
                                     className={`icons ${
                                       v.name === '處理人評估中' &&
-                                      member.permissions_id === 3
+                                      member.handler === 1
                                         ? 'eyeBcg'
                                         : ''
                                     }`}

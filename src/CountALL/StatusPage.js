@@ -111,7 +111,10 @@ function StatusPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
       setIsLoading(false);
     }, 800);
   }, [
-    member,
+    member.user,
+    member.handler,
+    member.manage,
+    member.director,
     nowCategory,
     nowStatus,
     nowUnit,
