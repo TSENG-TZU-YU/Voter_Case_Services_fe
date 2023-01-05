@@ -1,7 +1,9 @@
 @import '../variable';
 
 .logInContainer {
-  background: #c09e82;
+  // background: #c09e82;
+  background-image: url('../../assets/q-and-a-2453376_1920.jpg');
+  background-position: center;
   width: 100vw;
   height: 100vh;
   @include flexCenter;

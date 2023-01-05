@@ -23,6 +23,7 @@ import UnitPage from './CountALL/UnitPage';
 import UserPage from './CountALL/UserPage';
 import Permissions from './Permissions';
 import ProcessingStatus from './CaseDetail/Component/ProcessingStatus';
+import HeaderLeft from './HeaderLeft';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
@@ -56,9 +57,9 @@ function App() {
             path={`header`}
             element={<Header />}
           >
-            <Route index path={`caseManagement`} element={<CaseManagement />} />
+            <Route index element={<HeaderLeft />} />
+            <Route path={`caseManagement`} element={<CaseManagement />} />
             <Route
-              index
               path="caseManagement_handler"
               element={
                 // eslint-disable-next-line react/jsx-pascal-case
