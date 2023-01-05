@@ -15,6 +15,9 @@ import { MdOutlineLogout } from 'react-icons/md';
 //hook
 import { useAuth } from '../utils/use_auth';
 
+// 圖檔
+import navTop from '../assets/call-center-2537390_1920.jpg';
+
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,7 +49,7 @@ function Header() {
           withCredentials: true,
         });
 
-        // setMember(response.data);
+        setMember(response.data);
         // if (member === '') {
         //   navigate('/');
         // }
@@ -94,6 +97,7 @@ function Header() {
 
   return (
     <>
+  
       <div className="navTop">
         <h3>選民案件服務系統</h3>
         <MdOutlineLogout size="30" onClick={logOut} />
@@ -102,7 +106,7 @@ function Header() {
         <div className="navRight">
           <div>單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
-          <div>職別:{member.job}</div>
+          {/* <div>職別:{member.job}</div> */}
 
           {/* 使用者/主管 */}
           {user ? (
