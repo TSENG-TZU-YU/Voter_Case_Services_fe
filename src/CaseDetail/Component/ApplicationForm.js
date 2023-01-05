@@ -988,15 +988,15 @@ function ApplicationForm({
                   return (
                     <div className="statusFormContain" key={uuidv4()}>
                       <div className="mb-2">
-                        <span> &emsp;&emsp;處理人員：</span>
+                        <span> &emsp;&emsp;操作人員：</span>
                         <span>{v.handler}</span>
                       </div>
                       <div className="mb-2">
-                        <span>&emsp;&emsp;處理狀態：</span>
+                        <span>&emsp;&emsp;操作狀態：</span>
                         <span>{v.status}</span>
                       </div>
                       <div className="statusTime mb-2">
-                        <span>&emsp;&emsp;處理時間：</span>
+                        <span>&emsp;&emsp;操作時間：</span>
                         <span>{v.create_time}</span>
                       </div>
                       <div className="d-flex mb-2">

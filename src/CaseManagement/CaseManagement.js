@@ -13,7 +13,7 @@ import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
-import CheckStatePage from './Component/CheckStatePage.js';
+// import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
 

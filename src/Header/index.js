@@ -66,10 +66,9 @@ function Header() {
     if (member.manage === 1) {
       setManage(true);
     }
-  
 
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
-  }, [member]);
+  }, [member.user, member.handler, member.manage, member.director]);
 
   const logOut = async () => {
     try {
