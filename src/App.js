@@ -65,7 +65,10 @@ function App() {
                 <CaseManagement_handler />
               }
             />
-            <Route path="application" element={<Application />} />
+            <Route
+              path="application"
+              element={<Application delCheck={delCheck} />}
+            />
 
             <Route path="countPage" element={<CountPage />} />
             <Route path="categoryPage" element={<CategoryPage />} />

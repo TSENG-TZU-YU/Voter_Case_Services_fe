@@ -46,7 +46,10 @@ function Header() {
           withCredentials: true,
         });
 
-        setMember(response.data);
+        // setMember(response.data);
+        // if (member === '') {
+        //   navigate('/');
+        // }
       } catch (err) {
         console.log(err.response.data.message);
       }
@@ -56,10 +59,10 @@ function Header() {
     if (member.user === 1) {
       setUser(true);
     }
-    if (member.director === 1) {
-      setUser(true);
-      setHandler(true);
-    }
+    // if (member.director === 1) {
+    //   setUser(true);
+    //   setHandler(true);
+    // }
     if (member.handler === 1) {
       setHandler(true);
     }

@@ -8,6 +8,7 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import '../../styles/caseDetail/_uploadPage.scss';
 import { useAuth } from '../../utils/use_auth';
@@ -27,6 +28,10 @@ function UploadPage({ setAddStatus, delCheck }) {
   const [valid, setValid] = useState('');
   const [getUpdateFile, setGetUpdateFile] = useState([]);
   const [acceptRender, setAcceptRender] = useState(false);
+
+  const location = useLocation();
+  let params = new URLSearchParams(location.search);
+  let page = params.get('page');
 
   useEffect(() => {
     async function getMember() {
@@ -286,12 +291,12 @@ function UploadPage({ setAddStatus, delCheck }) {
   return (
     <div className="overScr">
       {/* 上傳檔案 */}
-      {/* TODO: 判斷處理人+權限+狀態 */}
-      {(member.user === 1 && status === 6) ||
-      (member.handler === 1 && status === 5) ||
-      (member.handler === 1 && status === 6) ||
-      (member.handler === 1 && status === 7) ||
-      (member.handler === 1 && status === 11) ? (
+      {/* TODO: 判斷處理人+權限+狀態 用page判斷 */}
+      {(member.user === 1 && status === 6 && page == 1) ||
+      (member.handler === 1 && status === 5 && page == 2) ||
+      (member.handler === 1 && status === 6 && page == 2) ||
+      (member.handler === 1 && status === 7 && page == 2) ||
+      (member.handler === 1 && status === 11 && page == 2) ? (
         <>
           <div className="addUpload">
             <div className="addTitle">
