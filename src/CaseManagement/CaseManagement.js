@@ -21,7 +21,7 @@ import Loader from '../Loader';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
-function CaseManagement({ setAppLoading }) {
+function CaseManagement() {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月
   let dateObj = new Date(nowDate);
