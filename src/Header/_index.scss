@@ -5,14 +5,19 @@
   width: 100%;
   height: 70px;
   // background-color: $header;
-  background-image: url('../assets/q-and-a-2453376_1920.jpg');
-  background-position: center;
+  background-image: url('../assets/call-center-2275745_1920.jpg');
+  background-position: 50% 45%;
+  background-size: 80% auto;
+  // filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
   h3 {
-    color: white;
+    color: rgb(255, 255, 255);
+  }
+  .logOut {
+    color: rgb(255, 255, 255);
   }
 }
 .between {

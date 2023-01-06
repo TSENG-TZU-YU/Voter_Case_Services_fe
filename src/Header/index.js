@@ -50,9 +50,10 @@ function Header() {
         });
 
         setMember(response.data);
-        // if (member === '') {
-        //   navigate('/');
-        // }
+        if (localStorage.getItem('memberID') === '') {
+          navigate('/');
+        }
+      
       } catch (err) {
         console.log(err.response.data.message);
       }
@@ -80,6 +81,7 @@ function Header() {
     try {
       let res = await axios.get('http://localhost:3001/api/logout');
       navigate('/');
+      localStorage.setItem('memberID', '');
     } catch (err) {
       console.log(err);
     }
@@ -97,10 +99,9 @@ function Header() {
 
   return (
     <>
-  
       <div className="navTop">
         <h3>選民案件服務系統</h3>
-        <MdOutlineLogout size="30" onClick={logOut} />
+        <MdOutlineLogout className='logOut' size="30" onClick={logOut} />
       </div>
       <div className="between">
         <div className="navRight">

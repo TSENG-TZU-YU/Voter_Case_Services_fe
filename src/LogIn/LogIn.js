@@ -70,6 +70,7 @@ function LogIn() {
           withCredentials: true,
         }
       );
+      localStorage.setItem('memberID', member.id);
       navigate('/header');
       setMember(res.data);
     } catch (err) {
