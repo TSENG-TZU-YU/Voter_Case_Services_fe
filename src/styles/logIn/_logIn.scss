@@ -63,6 +63,11 @@
           height: 25px;
           width: 25px;
         }
+        .eye {
+          font-size: 1.3rem;
+          color: $mainClrW;
+          cursor: pointer;
+        }
       }
       button {
         position: relative;

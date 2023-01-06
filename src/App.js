@@ -29,7 +29,6 @@ import HandlerUnitPage from './CountALL/HandlerUnitPage';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
-  const [appLoading, setAppLoading] = useState(false);
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -61,10 +60,7 @@ function App() {
             element={<Header />}
           >
             <Route index element={<HeaderLeft />} />
-            <Route
-              path={`caseManagement`}
-              element={<CaseManagement setAppLoading={setAppLoading} />}
-            />
+            <Route path={`caseManagement`} element={<CaseManagement />} />
             <Route
               path="caseManagement_handler"
               element={

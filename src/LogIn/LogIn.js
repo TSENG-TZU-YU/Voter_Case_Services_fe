@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/logIn/_logIn.scss';
-import { AiFillHome } from 'react-icons/ai';
+import { AiFillHome, AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BsPersonCircle } from 'react-icons/bs';
 import { FaLock } from 'react-icons/fa';
 import axios from 'axios';
@@ -15,6 +15,7 @@ function LogIn() {
   const [login, setIogin] = useState([{ company: '', no: '', password: '' }]);
   const { member, setMember, isLogin, setIsLogin } = useAuth();
   const [unit, setUnit] = useState([]);
+  const [eye, setEye] = useState(false);
 
   // const [check, setCheck] = useState([]);
 
@@ -118,12 +119,27 @@ function LogIn() {
               <FaLock className="icons" />
               <input
                 name="password"
-                type="text"
+                type={eye ? 'text' : 'password'}
                 placeholder="輸入密碼"
                 onChange={(e) => {
                   doLogin(e.target.value, 'password');
                 }}
               />
+              {eye ? (
+                <AiFillEye
+                  className="eye"
+                  onClick={() => {
+                    setEye(false);
+                  }}
+                />
+              ) : (
+                <AiFillEyeInvisible
+                  className="eye"
+                  onClick={() => {
+                    setEye(true);
+                  }}
+                />
+              )}
             </div>
             <button onClick={submitCheck}>登入</button>
           </div>
