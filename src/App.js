@@ -24,9 +24,12 @@ import UserPage from './CountALL/UserPage';
 import Permissions from './Permissions';
 import ProcessingStatus from './CaseDetail/Component/ProcessingStatus';
 import HeaderLeft from './HeaderLeft';
+import AppUserPage from './CountALL/AppUserPage';
+import HandlerUnitPage from './CountALL/HandlerUnitPage';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
+  const [appLoading, setAppLoading] = useState(false);
 
   // 刪除sweet
   function delCheck(tit, fun, i) {
@@ -58,7 +61,10 @@ function App() {
             element={<Header />}
           >
             <Route index element={<HeaderLeft />} />
-            <Route path={`caseManagement`} element={<CaseManagement />} />
+            <Route
+              path={`caseManagement`}
+              element={<CaseManagement setAppLoading={setAppLoading} />}
+            />
             <Route
               path="caseManagement_handler"
               element={
@@ -76,6 +82,8 @@ function App() {
             <Route path="statusPage" element={<StatusPage />} />
             <Route path="unitPage" element={<UnitPage />} />
             <Route path="UserPage" element={<UserPage />} />
+            <Route path="AppUserPage" element={<AppUserPage />} />
+            <Route path="HandlerUnitPage" element={<HandlerUnitPage />} />
 
             <Route path="permissions" element={<Permissions />} />
 

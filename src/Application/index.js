@@ -497,7 +497,7 @@ function Application({ delCheck }) {
           {/* 單位 */}
           <div className="gap">
             <div>
-              申請單位 <span>*必填</span>
+              處理單位 <span>*必填</span>
               {/* {category ? <span>欄位不得為空</span> : <span>必填</span>} */}
             </div>
             <select

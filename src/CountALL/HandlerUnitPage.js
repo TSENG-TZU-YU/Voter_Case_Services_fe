@@ -8,10 +8,11 @@ import moment from 'moment';
 // import '../styles/caseManagement/_caseManagement.scss';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
+
 import Loader from '../Loader';
 
 // function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
-function CategoryPage() {
+function HandlerUnitPage() {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月 ISO
   let dateObj = new Date(nowDate);
@@ -176,59 +177,54 @@ function CategoryPage() {
               <div className="allTit">搜尋件數 ： {total} 件</div>
             </div>
 
+            {/* 處理單位% */}
             <>
-              {/* 申請類別% (搜尋件數的%)*/}
-              <>
-                <div className="stateTit">申請類別</div>
-                <table className="countContainer">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      {allCategoryData.map((v) => {
-                        return <th key={uuidv4()}>{v.name}</th>;
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* 件數 */}
-                    <tr>
-                      <th>案件量</th>
-                      {allCategoryData.map((v, i) => {
-                        let arr = categoryTtl.filter(
-                          (val) => Object.keys(val)[0] === v.name
-                        );
-                        return (
-                          <td key={i}>
-                            {arr[0] !== undefined
-                              ? `${arr[0][Object.keys(arr[0])]} 件`
-                              : '0 件'}
-                          </td>
-                        );
-                      })}
-                    </tr>
+              <div className="stateTit">處理單位</div>
+              <table className="countContainer">
+                <thead>
+                  <tr>
+                    <th></th>
+                    {allUnit.map((v, i) => {
+                      return <th key={uuidv4()}>{v.name}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* 件數 */}
+                  <tr>
+                    <th>案件量</th>
+                    {allUnit.map((v, i) => {
+                      let arr = unitTtl.filter(
+                        (val) => Object.keys(val)[0] === v.name
+                      );
+                      return (
+                        <td key={uuidv4()}>
+                          {arr[0] !== undefined
+                            ? `${arr[0][Object.keys(arr[0])]} 件`
+                            : '0 件'}
+                        </td>
+                      );
+                    })}
+                  </tr>
 
-                    {/* %% */}
-                    <tr>
-                      <th>案件%</th>
-                      {allCategoryData.map((v, i) => {
-                        let arr = categoryTtl.filter(
-                          (val) => Object.keys(val)[0] === v.name
-                        );
-                        return (
-                          <td key={i}>
-                            {arr[0] !== undefined
-                              ? `${percent(
-                                  total,
-                                  arr[0][Object.keys(arr[0])]
-                                )} %`
-                              : '0 %'}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </tbody>
-                </table>
-              </>
+                  {/* %% */}
+                  <tr>
+                    <th>案件%</th>
+                    {allUnit.map((v, i) => {
+                      let arr = unitTtl.filter(
+                        (val) => Object.keys(val)[0] === v.name
+                      );
+                      return (
+                        <td key={i}>
+                          {arr[0] !== undefined
+                            ? `${percent(total, arr[0][Object.keys(arr[0])])} %`
+                            : '0 %'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
             </>
           </div>
         )}
@@ -237,4 +233,4 @@ function CategoryPage() {
   );
 }
 
-export default CategoryPage;
+export default HandlerUnitPage;

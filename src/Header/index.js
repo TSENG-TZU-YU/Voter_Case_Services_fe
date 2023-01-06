@@ -97,7 +97,6 @@ function Header() {
 
   return (
     <>
-  
       <div className="navTop">
         <h3>選民案件服務系統</h3>
         <MdOutlineLogout size="30" onClick={logOut} />
@@ -207,6 +206,29 @@ function Header() {
                       <div className="">
                         <RiPhoneFindFill size="20" />
                         申請單位統計
+                      </div>
+                    </NavLink>
+                  </nav>
+                  <nav>
+                    <NavLink
+                      to="AppUserPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        申請人統計
+                      </div>
+                    </NavLink>
+                  </nav>
+
+                  <nav>
+                    <NavLink
+                      to="HandlerUnitPage"
+                      className={(nav) => (nav.isActive ? 'link' : '')}
+                    >
+                      <div className="">
+                        <RiPhoneFindFill size="20" />
+                        處理單位統計
                       </div>
                     </NavLink>
                   </nav>
