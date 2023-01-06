@@ -251,6 +251,10 @@ function UploadPage({ setAddStatus, delCheck }) {
       formData.append('valid', valid);
       formData.append('number', parseInt(Date.now() / 10000));
       formData.append('create_time', endTime);
+      Swal.fire({
+        icon: 'success',
+        title: '已上傳檔案',
+      });
       let response = await axios.post(
         `http://localhost:3001/api/1.0/applicationData/postHandleFile/${num}`,
         formData,
@@ -260,10 +264,6 @@ function UploadPage({ setAddStatus, delCheck }) {
           },
         }
       );
-      Swal.fire({
-        icon: 'success',
-        title: '已上傳檔案',
-      });
       setFilesData([{ fileName: '' }]);
       setRender(false);
     } catch (err) {
