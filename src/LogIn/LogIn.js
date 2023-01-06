@@ -70,9 +70,9 @@ function LogIn() {
           withCredentials: true,
         }
       );
-      localStorage.setItem('memberID', member.id);
-      navigate('/header');
       setMember(res.data);
+      localStorage.setItem('memberID', login[0].no);
+      navigate('/header');
     } catch (err) {
       console.log(err);
       Swal.fire({
@@ -118,7 +118,7 @@ function LogIn() {
               <FaLock className="icons" />
               <input
                 name="password"
-                type="text"
+                type="password"
                 placeholder="輸入密碼"
                 onChange={(e) => {
                   doLogin(e.target.value, 'password');

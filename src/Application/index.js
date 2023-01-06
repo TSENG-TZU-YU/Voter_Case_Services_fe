@@ -312,10 +312,11 @@ function Application({ delCheck }) {
         denyButtonText: `取消送出`,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('送出成功', '', 'success');
+          Swal.fire('送出成功', '', 'success').then(() => {
+            navigate('/header/caseManagement');
+          });
           submitFile();
           submit();
-          navigate('/header/caseManagement');
         } else if (result.isDenied) {
           Swal.fire('已取消送出', '', 'info');
         }
@@ -370,10 +371,11 @@ function Application({ delCheck }) {
         denyButtonText: `取消儲存`,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('儲存成功', '', 'success');
+          Swal.fire('儲存成功', '', 'success').then(() => {
+            navigate('/header/caseManagement');
+          });
           submitFile();
           store();
-          navigate('/header/caseManagement');
         } else if (result.isDenied) {
           Swal.fire('已取消儲存', '', 'info');
         }
