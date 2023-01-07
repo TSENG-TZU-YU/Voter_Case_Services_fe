@@ -9,6 +9,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { API_URL } from '../../utils/config';
 
 import '../../styles/caseDetail/_uploadPage.scss';
 import { useAuth } from '../../utils/use_auth';
@@ -37,7 +38,7 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
           withCredentials: true,
         });
 
@@ -64,7 +65,7 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetUserFile() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getUserFile/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getUserFile/${num}`
         );
         setGetUserTotalFile(response.data);
       } catch (err) {
@@ -74,7 +75,7 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetHandlerFile() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getHandlerFile/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFile/${num}`
         );
         setGetHandlerTotalFile(response.data);
       } catch (err) {
@@ -84,7 +85,7 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetHandlerFileNo() {
       try {
         let response = await axios.get(
-          `http://localhost:3001/api/files/getHandlerFileNo/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFileNo/${num}`
         );
 
         setNo(response.data[0].application_category);
@@ -128,7 +129,7 @@ function UploadPage({ setAddStatus, delCheck }) {
     let dbTime = fileNo.substr(str + 1, 6);
 
     await axios({
-      url: `http://localhost:3001/api/files/${num}`,
+      url: `${process.env.REACT_APP_BASE_URL}/api/files/${num}`,
       data: {
         name: fileName,
         dbTime: dbTime,
@@ -256,7 +257,7 @@ function UploadPage({ setAddStatus, delCheck }) {
         title: '已上傳檔案',
       });
       let response = await axios.post(
-        `http://localhost:3001/api/1.0/applicationData/postHandleFile/${num}`,
+        `${process.env.REACT_APP_BASE_URL}/api/1.0/applicationData/postHandleFile/${num}`,
         formData,
         {
           headers: {
@@ -296,7 +297,7 @@ function UploadPage({ setAddStatus, delCheck }) {
   const fileSubmitStatus = async () => {
     try {
       let response = await axios.patch(
-        `http://localhost:3001/api/files/patchStatus/${num}`
+        `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`
       );
     } catch (err) {
       console.log(err);

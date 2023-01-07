@@ -6,6 +6,7 @@ import { FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { API_URL } from '../utils/config';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -29,7 +30,7 @@ function LogIn() {
   useEffect(() => {
     async function unit() {
       try {
-        let res = await axios.get('http://localhost:3001/api/login/unit');
+        let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/unit`);
         setUnit(res.data);
       } catch (err) {
         console.log(err);
@@ -65,7 +66,7 @@ function LogIn() {
   const submit = async () => {
     try {
       let res = await axios.post(
-        'http://localhost:3001/api/login',
+        `${process.env.REACT_APP_BASE_URL}/api/login`,
         { ...login[0] },
         {
           withCredentials: true,

@@ -5,6 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../utils/config';
 
 //react-icons
 import { HiPencilAlt } from 'react-icons/hi';
@@ -45,7 +46,7 @@ function Header() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
           withCredentials: true,
         });
 
@@ -79,7 +80,7 @@ function Header() {
 
   const logOut = async () => {
     try {
-      let res = await axios.get('http://localhost:3001/api/logout');
+      let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
       navigate('/');
       localStorage.setItem('memberID', '');
     } catch (err) {

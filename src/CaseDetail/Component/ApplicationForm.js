@@ -94,7 +94,7 @@ function ApplicationForm({
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
           withCredentials: true,
         });
         // console.log(response.data);
@@ -195,7 +195,7 @@ function ApplicationForm({
     let handler = async () => {
       try {
         let res = await axios.post(
-          'http://localhost:3001/api/application_get/handler',
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/handler`,
           {
             unit: addUnit,
           },
@@ -210,7 +210,7 @@ function ApplicationForm({
     let category = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/category'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/category`
         );
         setGetCategory(res.data);
       } catch (err) {
@@ -221,7 +221,7 @@ function ApplicationForm({
     let unit = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/unit'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
         );
         setGetUnit(res.data);
       } catch (err) {
@@ -232,7 +232,7 @@ function ApplicationForm({
     let county = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/county'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/county`
         );
         setGetCounty(res.data);
       } catch (err) {
@@ -250,7 +250,7 @@ function ApplicationForm({
   async function areaPost(county) {
     try {
       let res = await axios.post(
-        'http://localhost:3001/api/application_get/area',
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
         { area: county }
       );
 
@@ -263,7 +263,7 @@ function ApplicationForm({
   async function riminPost(area) {
     try {
       let res = await axios.post(
-        'http://localhost:3001/api/application_get/rimin',
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
         { rimin: area }
       );
 
@@ -377,7 +377,7 @@ function ApplicationForm({
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
-        `http://localhost:3001/api/application_edit/submit/${num}`,
+        `${process.env.REACT_APP_BASE_URL}/api/application_edit/submit/${num}`,
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
@@ -395,7 +395,7 @@ function ApplicationForm({
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
-        `http://localhost:3001/api/application_edit/store/${num}`,
+        `${process.env.REACT_APP_BASE_URL}/api/application_edit/store/${num}`,
         {
           ...detailData[0],
           // TODO: 申請狀態 主管權限是1 || 0 判斷
@@ -434,7 +434,7 @@ function ApplicationForm({
       formData.append('number', num);
       formData.append('create_time', endTime);
       let response = await axios.post(
-        `http://localhost:3001/api/application_edit/file/${num}`,
+        `${process.env.REACT_APP_BASE_URL}/api/application_edit/file/${num}`,
         formData,
         {
           headers: {
@@ -451,7 +451,7 @@ function ApplicationForm({
   async function deleteForm() {
     try {
       let response = await axios.post(
-        `http://localhost:3001/api/application_edit/deleteForm/${num}`,
+        `${process.env.REACT_APP_BASE_URL}/api/application_edit/deleteForm/${num}`,
         {
           ...detailData[0],
         }

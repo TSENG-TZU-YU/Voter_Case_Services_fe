@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { API_URL } from '../utils/config';
 
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -76,7 +77,7 @@ function Application({ delCheck }) {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
           withCredentials: true,
         });
         // console.log(response.data);
@@ -174,7 +175,7 @@ function Application({ delCheck }) {
     let handler = async () => {
       try {
         let res = await axios.post(
-          'http://localhost:3001/api/application_get/handler',
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/handler`,
           {
             unit: addUnit,
           },
@@ -189,7 +190,7 @@ function Application({ delCheck }) {
     let category = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/category'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/category`
         );
         setGetCategory(res.data);
       } catch (err) {
@@ -200,7 +201,7 @@ function Application({ delCheck }) {
     let unit = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/unit'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
         );
         setGetUnit(res.data);
       } catch (err) {
@@ -211,7 +212,7 @@ function Application({ delCheck }) {
     let cycle = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/cycle'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/cycle`
         );
         setGetCycle(res.data);
       } catch (err) {
@@ -222,7 +223,7 @@ function Application({ delCheck }) {
     let county = async () => {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/application_get/county'
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/county`
         );
         setGetCounty(res.data);
       } catch (err) {
@@ -241,7 +242,7 @@ function Application({ delCheck }) {
   async function areaPost(county) {
     try {
       let res = await axios.post(
-        'http://localhost:3001/api/application_get/area',
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
         { area: county }
       );
 
@@ -254,7 +255,7 @@ function Application({ delCheck }) {
   async function riminPost(area) {
     try {
       let res = await axios.post(
-        'http://localhost:3001/api/application_get/rimin',
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
         { rimin: area }
       );
 
@@ -388,7 +389,7 @@ function Application({ delCheck }) {
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.post(
-        'http://localhost:3001/api/application_post',
+        `${process.env.REACT_APP_BASE_URL}/api/application_post`,
         {
           ...submitValue[0],
           need: addNeed,
@@ -422,7 +423,7 @@ function Application({ delCheck }) {
       formData.append('number', parseInt(Date.now() / 10000));
       formData.append('create_time', endTime);
       let response = await axios.post(
-        'http://localhost:3001/api/application_post/file',
+        `${process.env.REACT_APP_BASE_URL}/api/application_post/file`,
         formData,
         {
           headers: {
@@ -440,7 +441,7 @@ function Application({ delCheck }) {
     try {
       let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.post(
-        'http://localhost:3001/api/application_post',
+        `${process.env.REACT_APP_BASE_URL}/api/application_post`,
         {
           ...submitValue[0],
           need: addNeed,

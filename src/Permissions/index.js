@@ -5,6 +5,7 @@ import CategoryFilter from './Component/CategoryFilter.js';
 import PermissionFilter from './Component/PermissionFilter.js';
 import UserFilter from './Component/UserFilter.js';
 import axios from 'axios';
+import { API_URL } from '../utils/config';
 
 function Permissions() {
   const [user, setUser] = useState([]);
@@ -23,7 +24,7 @@ function Permissions() {
     async function getCategory() {
       try {
         let res = await axios.get(
-          ' http://localhost:3001/api/permissions/category'
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/category`
         );
 
         setCategory(res.data);
@@ -33,7 +34,7 @@ function Permissions() {
     }
     async function getUsers() {
       try {
-        let res = await axios.get('http://localhost:3001/api/permissions/user');
+        let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/permissions/user`);
 
         setUser(res.data);
       } catch (err) {
@@ -43,7 +44,7 @@ function Permissions() {
     async function getPermissions() {
       try {
         let res = await axios.get(
-          'http://localhost:3001/api/permissions/allPermissionsData'
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/allPermissionsData`
         );
 
         setPermission(res.data);
@@ -59,7 +60,7 @@ function Permissions() {
 
   const submit = async () => {
     try {
-      let res = await axios.patch('http://localhost:3001/api/permissions', {
+      let res = await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/permissions`, {
         category: nowCategory,
         user: nowUser,
         permission: nowPermission,

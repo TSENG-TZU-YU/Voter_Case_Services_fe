@@ -73,7 +73,7 @@ function StatusPage() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`http://localhost:3001/api/login/auth`, {
+        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
           withCredentials: true,
         });
         // console.log(response.data);
