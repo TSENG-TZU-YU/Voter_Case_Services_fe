@@ -94,9 +94,12 @@ function ApplicationForm({
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -515,15 +518,14 @@ function ApplicationForm({
       setNeedState(response.data.result[0].status_id);
       setNeedLen(parseInt(response.data.needResult.length));
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
       // console.log('s', response.data.result[0].status_id);
       // console.log('c', detailData[0].transfer);
     };
 
     getCampingDetailData();
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
   }, [num, needLoading, needState, caseId, edit]);
 
   // 需求 checked
@@ -1073,7 +1075,7 @@ function ApplicationForm({
                       )}
                     </div>
                     <div>
-                      <div className="pb-1">申請單位</div>
+                      <div className="pb-1">處理人單位單位</div>
                       {edit ? (
                         <input
                           type="text"

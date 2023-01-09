@@ -73,9 +73,12 @@ function AppUserPage() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -114,16 +117,16 @@ function AppUserPage() {
       setHandlerTtl(response.data.pagination.handlerCounts);
       setUserTtl(response.data.pagination.userCounts);
       // console.log('object',allStatusData);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
     };
     getAllData();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
   }, [
-    member.user,
-    member.handler,
-    member.manage,
-    member.director,
+    // member.user,
+    // member.handler,
+    // member.manage,
+    // member.director,
     nowCategory,
     nowStatus,
     nowUnit,
