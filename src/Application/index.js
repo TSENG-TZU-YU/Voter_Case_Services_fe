@@ -71,24 +71,24 @@ function Application({ delCheck }) {
   ];
 
   // 檢查會員
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-          {
-            withCredentials: true,
-          }
-        );
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
+  // useEffect(() => {
+  //   async function getMember() {
+  //     try {
+  //       // console.log('檢查是否登入');
+  //       let response = await axios.get(
+  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       // console.log(response.data);
+  //       setMember(response.data);
+  //     } catch (err) {
+  //       console.log(err.response.data.message);
+  //     }
+  //   }
+  //   getMember();
+  // }, []);
 
   //表格資料填入
   const handleChange = (val, input) => {
@@ -183,6 +183,7 @@ function Application({ delCheck }) {
           { withCredentials: true }
         );
         setGetHandler(res.data);
+        console.log('handler2222');
       } catch (err) {
         console.log(err);
       }
@@ -227,6 +228,7 @@ function Application({ delCheck }) {
     unit();
     county();
   }, [addUnit]);
+  // addUnit
 
   //抓取區
   async function areaPost(county) {

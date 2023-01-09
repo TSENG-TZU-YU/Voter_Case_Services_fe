@@ -78,7 +78,7 @@ function Header() {
     }
 
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
-  }, [member.manage]);
+  }, [member.user, member.handler, member.manage, member.director]);
   // member.user, member.handler, member.manage, member.director
   const logOut = async () => {
     try {

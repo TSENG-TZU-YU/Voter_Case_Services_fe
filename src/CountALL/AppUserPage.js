@@ -69,24 +69,24 @@ function AppUserPage() {
   const [userTtl, setUserTtl] = useState([]);
 
   // 檢查會員
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-          {
-            withCredentials: true,
-          }
-        );
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
+  // useEffect(() => {
+  //   async function getMember() {
+  //     try {
+  //       // console.log('檢查是否登入');
+  //       let response = await axios.get(
+  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       // console.log(response.data);
+  //       setMember(response.data);
+  //     } catch (err) {
+  //       console.log(err.response.data.message);
+  //     }
+  //   }
+  //   getMember();
+  // }, []);
 
   // 取得所有資料
   useEffect(() => {
@@ -123,10 +123,10 @@ function AppUserPage() {
     };
     getAllData();
   }, [
-    // member.user,
-    // member.handler,
-    // member.manage,
-    // member.director,
+    member.user,
+    member.handler,
+    member.manage,
+    member.director,
     nowCategory,
     nowStatus,
     nowUnit,
