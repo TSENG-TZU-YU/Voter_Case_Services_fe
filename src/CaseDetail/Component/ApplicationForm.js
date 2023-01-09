@@ -70,6 +70,7 @@ function ApplicationForm({
   const [needLoading, setNeedLoading] = useState(false);
   const [needLen, setNeedLen] = useState('');
   const [needSumLen, setNeedSumLen] = useState('');
+  const [handlerUnit, setHandlerUnit] = useState('');
 
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
@@ -94,9 +95,12 @@ function ApplicationForm({
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -110,7 +114,7 @@ function ApplicationForm({
     }
   }, [detailData]);
 
-  // console.log('st', member.user === 1);
+  console.log('st', member.applicant_unit);
 
   // 修改申請表
   const [edit, setEdit] = useState(true);
@@ -477,7 +481,9 @@ function ApplicationForm({
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
       setRemarkLength(response.data.remarkResult.length);
-
+      setHandlerUnit(response.data.result[0].unit);
+      console.log('u', response.data.result[0].unit);
+      console.log('m', member.applicant_unit);
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -953,7 +959,8 @@ function ApplicationForm({
           {(member.handler === 1 || member.manage === 1) &&
           HId === '' &&
           needState === 4 &&
-          WebPage === 2 ? (
+          WebPage === 2 &&
+          member.applicant_unit === handlerUnit ? (
             <div className="checkBtn">
               <div>此案件目前沒有處理人，請點選確認接收此案</div>
               <div className="check justify-content-center">

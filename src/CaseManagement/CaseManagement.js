@@ -77,9 +77,12 @@ function CaseManagement() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -223,7 +226,7 @@ function CaseManagement() {
                 member={member}
               />
               <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-              {/* <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} /> */}
+              <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} />
             </div>
             <DateFilter
               dateRemind={dateRemind}
@@ -265,7 +268,7 @@ function CaseManagement() {
                 </th>
                 <th>申請單位</th>
                 <th>申請人</th>
-                {/* <th>處理單位</th> */}
+                <th>處理單位</th>
                 <th>處理人</th>
                 <th>申請類別</th>
                 <th className="sortBtn">
@@ -306,67 +309,65 @@ function CaseManagement() {
                     {pageCase.length > 0 &&
                       pageCase[pageNow - 1].map((v) => {
                         return (
-                          <>
-                            <tbody key={uuidv4()} className="body">
-                              <tr>
-                                <td>
-                                  {member.handler === 1 &&
-                                  member.name === v.sender
-                                    ? `轉件人 : ${v.handler}`
-                                    : ''}
-                                </td>
-                                <td>{v.case_number}</td>
-                                <td>{v.applicant_unit}</td>
-                                <td>{v.user}</td>
-                                {/* <td>{v.unit}</td> */}
-                                <td>{v.handler}</td>
-                                <td>{v.application_category}</td>
-                                <td>{v.create_time}</td>
-                                <td
-                                  // onClick={() => {
-                                  //   setCaseNum(v.case_number);
-                                  //   setCheckState(true);
-                                  //   handleHandleStatus(v.case_number);
-                                  //   setHandlerNull(v.handler);
-                                  // }}
-                                  className="view"
+                          <tbody key={uuidv4()} className="body">
+                            <tr>
+                              <td>
+                                {member.handler === 1 &&
+                                member.name === v.sender
+                                  ? `轉件人 : ${v.handler}`
+                                  : ''}
+                              </td>
+                              <td>{v.case_number}</td>
+                              <td>{v.applicant_unit}</td>
+                              <td>{v.user}</td>
+                              <td>{v.unit}</td>
+                              <td>{v.handler}</td>
+                              <td>{v.application_category}</td>
+                              <td>{v.create_time}</td>
+                              <td
+                                // onClick={() => {
+                                //   setCaseNum(v.case_number);
+                                //   setCheckState(true);
+                                //   handleHandleStatus(v.case_number);
+                                //   setHandlerNull(v.handler);
+                                // }}
+                                className="view"
+                              >
+                                {v.name}
+                              </td>
+                              <td className="posClick">
+                                <Link
+                                  to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1`}
                                 >
-                                  {v.name}
-                                </td>
-                                <td className="posClick">
-                                  <Link
-                                    to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1`}
-                                  >
-                                    <FaEye
-                                      className={`icons ${
-                                        v.name === '處理人評估中' &&
-                                        member.handler === 3
-                                          ? 'eyeBcg'
-                                          : ''
-                                      }`}
-                                      onClick={() => {
-                                        // setCaseNum(v.case_number);
-                                        // setCaseId(v.id);
-                                        // setHandlerNull(v.handler);
-                                        // setSender(v.sender);
-                                        // if (
-                                        //   v.name === '處理人評估中' &&
-                                        //   member.permissions_id === 3
-                                        // ) {
-                                        //   handleChangeState(v.case_number, v.id);
-                                        // }
-                                      }}
-                                    />
-                                  </Link>
+                                  <FaEye
+                                    className={`icons ${
+                                      v.name === '處理人評估中' &&
+                                      member.handler === 3
+                                        ? 'eyeBcg'
+                                        : ''
+                                    }`}
+                                    onClick={() => {
+                                      // setCaseNum(v.case_number);
+                                      // setCaseId(v.id);
+                                      // setHandlerNull(v.handler);
+                                      // setSender(v.sender);
+                                      // if (
+                                      //   v.name === '處理人評估中' &&
+                                      //   member.permissions_id === 3
+                                      // ) {
+                                      //   handleChangeState(v.case_number, v.id);
+                                      // }
+                                    }}
+                                  />
+                                </Link>
 
-                                  {/* <div className="hadClick">NEW</div> */}
-                                </td>
-                                <td>
-                                  進度({v.cou}/{v.sum})
-                                </td>
-                              </tr>
-                            </tbody>
-                          </>
+                                {/* <div className="hadClick">NEW</div> */}
+                              </td>
+                              <td>
+                                進度({v.cou}/{v.sum})
+                              </td>
+                            </tr>
+                          </tbody>
                         );
                       })}
 

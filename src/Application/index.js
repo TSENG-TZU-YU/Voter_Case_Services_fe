@@ -77,9 +77,12 @@ function Application({ delCheck }) {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -204,6 +207,7 @@ function Application({ delCheck }) {
           `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
         );
         setGetUnit(res.data);
+        console.log('object', 222);
       } catch (err) {
         console.log(err);
       }
