@@ -8,6 +8,11 @@ $bcgBlock: #00000080;
 $header: #817161;
 $navBar: #c09e8280;
 
+
+// btn color
+$saveClr:#221e73;
+// $delClr:;
+
 @mixin flexCenter {
   display: flex;
   align-items: center;

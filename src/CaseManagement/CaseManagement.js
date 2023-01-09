@@ -226,7 +226,7 @@ function CaseManagement() {
                 member={member}
               />
               <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-              {/* <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} /> */}
+              <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} />
             </div>
             <DateFilter
               dateRemind={dateRemind}
@@ -268,7 +268,7 @@ function CaseManagement() {
                 </th>
                 <th>申請單位</th>
                 <th>申請人</th>
-                {/* <th>處理單位</th> */}
+                <th>處理單位</th>
                 <th>處理人</th>
                 <th>申請類別</th>
                 <th className="sortBtn">
@@ -320,7 +320,7 @@ function CaseManagement() {
                               <td>{v.case_number}</td>
                               <td>{v.applicant_unit}</td>
                               <td>{v.user}</td>
-                              {/* <td>{v.unit}</td> */}
+                              <td>{v.unit}</td>
                               <td>{v.handler}</td>
                               <td>{v.application_category}</td>
                               <td>{v.create_time}</td>

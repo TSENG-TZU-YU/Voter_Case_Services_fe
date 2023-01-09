@@ -206,6 +206,7 @@ function Application({ delCheck }) {
           `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
         );
         setGetUnit(res.data);
+        console.log('object', 222);
       } catch (err) {
         console.log(err);
       }
