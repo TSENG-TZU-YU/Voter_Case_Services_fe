@@ -483,7 +483,7 @@ function ApplicationForm({
       setRemarkLength(response.data.remarkResult.length);
       setHandlerUnit(response.data.result[0].unit);
       console.log('u', response.data.result[0].unit);
-      console.log('m', member.applicant_unit);
+      // console.log('m', member.applicant_unit);
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -522,7 +522,7 @@ function ApplicationForm({
       setNeedLen(parseInt(response.data.needResult.length));
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
       // console.log('s', response.data.result[0].status_id);
-      // console.log('c', detailData[0].transfer);
+      console.log('c', parseInt(response.data.needSum[0].checked));
     };
 
     getCampingDetailData();
@@ -1885,6 +1885,8 @@ function ApplicationForm({
               ''
             )}
           </> */}
+          {console.log('aa', needSumLen, needLen)}
+          {console.log('bb', needSumLen === needLen)}
 
           {member.manage === 1 ? (
             member.handler === 1 &&
@@ -1900,7 +1902,19 @@ function ApplicationForm({
             needState !== 11 &&
             needState !== 12 &&
             HId !== '' &&
-            WebPage === 2
+            WebPage === 2 ? (
+              needSumLen === needLen ? (
+                <div className="fBtn">
+                  <button className="finishBtn" onClick={handleFinish}>
+                    完成
+                  </button>
+                </div>
+              ) : (
+                ''
+              )
+            ) : (
+              ''
+            )
           ) : member.handler === 1 &&
             needState !== 1 &&
             needState !== 2 &&
