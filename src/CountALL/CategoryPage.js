@@ -180,7 +180,7 @@ function CategoryPage() {
             <>
               {/* 申請類別% (搜尋件數的%)*/}
               <>
-                <div className="stateTit">申請類別</div>
+                <div className="stateTit">案件類別</div>
                 <table className="countContainer">
                   <thead>
                     <tr>

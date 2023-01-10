@@ -38,9 +38,12 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
 
         setMember(response.data);
       } catch (err) {
@@ -299,6 +302,7 @@ function UploadPage({ setAddStatus, delCheck }) {
       let response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`
       );
+      console.log('fileSubmitStatus');
     } catch (err) {
       console.log(err);
     }

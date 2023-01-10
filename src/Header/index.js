@@ -79,7 +79,7 @@ function Header() {
 
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
   }, [
-    localStorage.getItem('memberID'),
+   
     member.user,
     member.handler,
     member.manage,
@@ -194,7 +194,7 @@ function Header() {
                     >
                       <div className="">
                         <RiPhoneFindFill size="20" />
-                        申請類別統計
+                        案件類別統計
                       </div>
                     </NavLink>
                   </nav>
