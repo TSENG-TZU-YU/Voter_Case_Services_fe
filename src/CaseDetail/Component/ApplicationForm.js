@@ -521,15 +521,14 @@ function ApplicationForm({
       setNeedState(response.data.result[0].status_id);
       setNeedLen(parseInt(response.data.needResult.length));
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
       // console.log('s', response.data.result[0].status_id);
       console.log('c', parseInt(response.data.needSum[0].checked));
     };
 
     getCampingDetailData();
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
   }, [num, needLoading, needState, caseId, edit]);
 
   // 需求 checked
@@ -1080,7 +1079,7 @@ function ApplicationForm({
                       )}
                     </div>
                     <div>
-                      <div className="pb-1">申請單位</div>
+                      <div className="pb-1">處理人單位單位</div>
                       {edit ? (
                         <input
                           type="text"

@@ -46,15 +46,17 @@ function Header() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
 
         setMember(response.data);
         if (localStorage.getItem('memberID') === '') {
           navigate('/');
         }
-      
       } catch (err) {
         console.log(err.response.data.message);
       }
@@ -77,7 +79,7 @@ function Header() {
 
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
   }, [member.user, member.handler, member.manage, member.director]);
-
+  // member.user, member.handler, member.manage, member.director
   const logOut = async () => {
     try {
       let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
@@ -102,7 +104,7 @@ function Header() {
     <>
       <div className="navTop">
         <h3>選民案件服務系統</h3>
-        <MdOutlineLogout className='logOut' size="30" onClick={logOut} />
+        <MdOutlineLogout className="logOut" size="30" onClick={logOut} />
       </div>
       <div className="between">
         <div className="navRight">

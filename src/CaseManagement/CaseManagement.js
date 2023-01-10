@@ -133,9 +133,6 @@ function CaseManagement() {
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 600);
 
     let getCampingData = async () => {
       let response = await axios.get(
@@ -149,6 +146,9 @@ function CaseManagement() {
       setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
     };
     getCampingData();
   }, [

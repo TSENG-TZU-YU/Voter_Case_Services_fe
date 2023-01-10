@@ -14,7 +14,7 @@ import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
 import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
-import CheckStatePage from './Component/CheckStatePage.js';
+// import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import moment from 'moment';
 
@@ -41,7 +41,7 @@ function CaseManagement() {
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
   const [time, setTime] = useState(true);
-  const [checkState, setCheckState] = useState(false);
+  // const [checkState, setCheckState] = useState(false);
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
@@ -63,8 +63,8 @@ function CaseManagement() {
   const [allCategoryData, setAllCategoryData] = useState([]);
 
   // 案件處理情形
-  const [submitMessage, setSubmitMessage] = useState('');
-  const [submitMsgTrue, setSubmitMsgTrue] = useState(false);
+  // const [submitMessage, setSubmitMessage] = useState('');
+  // const [submitMsgTrue, setSubmitMsgTrue] = useState(false);
 
   // 分頁
   const [pageCase, setPageCase] = useState([]);
@@ -73,53 +73,57 @@ function CaseManagement() {
   const [pageTotal, setPageTotal] = useState(5);
 
   // 檢查會員
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-          {
-            withCredentials: true,
-          }
-        );
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
+  // useEffect(() => {
+  //   async function getMember() {
+  //     try {
+  //       // console.log('檢查是否登入');
+  //       let response = await axios.get(
+  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       // console.log(response.data);
+  //       setMember(response.data);
+  //     } catch (err) {
+  //       // console.log(err.response.data.message);
+  //     }
+  //   }
+  //   getMember();
+  // }, []);
+
   // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 600);
-
+    // category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}
     let getCampingData = async () => {
-      let response = await axios.get(
-        `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}`,
-        {
-          withCredentials: true,
-        }
-      );
-
-      // console.log(response.data.result);
-      setAllData(response.data.result);
-      setAllCategoryData(response.data.categoryResult);
-      setAllUnitData(response.data.unitResult);
-      setAllStatusData(response.data.statusResult);
+      try {
+        let response = await axios.get(
+          `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}`,
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log('1111');
+        setAllData(response.data.result);
+        setAllCategoryData(response.data.categoryResult);
+        setAllUnitData(response.data.unitResult);
+        setAllStatusData(response.data.statusResult);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 100);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     getCampingData();
   }, [
-    member.user,
-    member.handler,
-    member.manage,
-    member.director,
+    // member.user,
+    // member.handler,
+    // member.manage,
+    // member.director,
     nowCategory,
     nowStatus,
     nowUnit,
@@ -135,6 +139,8 @@ function CaseManagement() {
     setPageTotal(newPageCase.length);
     setPageCase(newPageCase);
   }, [allData]);
+
+  // console.log('allData', allData);
 
   // useEffect(() => {
 

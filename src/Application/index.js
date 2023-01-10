@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { API_URL } from '../utils/config';
+// import { API_URL } from '../utils/config';
 
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -24,8 +24,6 @@ function Application({ delCheck }) {
     {
       handler: '',
       category: '',
-      name: '',
-      cycle: '',
       relation: '',
       litigant: '',
       litigantPhone: '',
@@ -49,19 +47,19 @@ function Application({ delCheck }) {
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
-  const [getCycle, setGetCycle] = useState([]);
+  // const [getCycle, setGetCycle] = useState([]);
   const [getCounty, setGetCounty] = useState([]);
   const [getArea, setGetArea] = useState([]);
   const [getUnit, setGetUnit] = useState([]);
   const [getRimin, setGetRimin] = useState([]);
   //申請表驗證空值
   const [category, setCategory] = useState(false);
-  const [cycle, setCycle] = useState(false);
+  // const [cycle, setCycle] = useState(false);
   const [need, setNeed] = useState(false);
 
   //是否填寫
-  const [litigant, setLitigant] = useState(false);
-  const [client, setClient] = useState(false);
+  // const [litigant, setLitigant] = useState(false);
+  // const [client, setClient] = useState(false);
 
   //友好程度
   const relation = [
@@ -73,24 +71,24 @@ function Application({ delCheck }) {
   ];
 
   // 檢查會員
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-          {
-            withCredentials: true,
-          }
-        );
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
+  // useEffect(() => {
+  //   async function getMember() {
+  //     try {
+  //       // console.log('檢查是否登入');
+  //       let response = await axios.get(
+  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       // console.log(response.data);
+  //       setMember(response.data);
+  //     } catch (err) {
+  //       console.log(err.response.data.message);
+  //     }
+  //   }
+  //   getMember();
+  // }, []);
 
   //表格資料填入
   const handleChange = (val, input) => {
@@ -172,7 +170,7 @@ function Application({ delCheck }) {
 
     setAddFile(newData);
   };
-
+  // console.log('getHandler', getHandler);
   useEffect(() => {
     //抓取處理人
     let handler = async () => {
@@ -185,6 +183,7 @@ function Application({ delCheck }) {
           { withCredentials: true }
         );
         setGetHandler(res.data);
+        console.log('handler2222');
       } catch (err) {
         console.log(err);
       }
@@ -212,17 +211,7 @@ function Application({ delCheck }) {
         console.log(err);
       }
     };
-    //抓取週期
-    let cycle = async () => {
-      try {
-        let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/application_get/cycle`
-        );
-        setGetCycle(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+
     //抓取縣市
     let county = async () => {
       try {
@@ -238,9 +227,9 @@ function Application({ delCheck }) {
     handler();
     category();
     unit();
-    cycle();
     county();
   }, [addUnit]);
+  // addUnit
 
   //抓取區
   async function areaPost(county) {
@@ -622,99 +611,89 @@ function Application({ delCheck }) {
                 onChange={(e) => {
                   handleChange(e.target.value, 'litigant');
                   // eslint-disable-next-line no-lone-blocks
-                  {
-                    e.target.value.length > 0
-                      ? setLitigant(true)
-                      : setLitigant(false);
-                  }
+                  // {
+                  //   e.target.value.length > 0
+                  //     ? setLitigant(true)
+                  //     : setLitigant(false);
+                  // }
                 }}
               />
             </div>
-            {litigant ? (
-              <div className="gap">
-                <div> 當事人聯絡電話</div>
-                <input
-                  className="handler hide-arrows"
-                  type="tel"
-                  maxLength="12"
-                  onChange={(e) => {
-                    handleChange(e.target.value, 'litigantPhone');
-                  }}
-                />
-              </div>
-            ) : (
-              ''
-            )}
+            <div className="gap">
+              <div> 當事人聯絡電話</div>
+              <input
+                className="handler hide-arrows"
+                type="tel"
+                maxLength="12"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'litigantPhone');
+                }}
+              />
+            </div>
             {/* 電話 */}
           </div>
-          {litigant ? (
-            <>
-              <div className="box">
-                {/* 縣市*/}
-                <div className="gap">
-                  <div>當事人縣市</div>
-                  <select
-                    className="handler"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'litigantCounty');
-                      areaPost(e.target.value);
-                    }}
-                  >
-                    <option value=" "> -----請選擇-----</option>
-                    {getCounty.map((v, i) => {
-                      return <option key={i}>{v.name}</option>;
-                    })}
-                  </select>
-                </div>
-                {/* 區*/}
-                <div className="gap">
-                  <div>當事人區</div>
-                  <select
-                    className="handler"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'litigantArea');
-                      riminPost(e.target.value);
-                    }}
-                  >
-                    <option value=" "> -----請選擇-----</option>
-                    {getArea.map((v, i) => {
-                      return <option key={i}>{v.name}</option>;
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="box">
-                {/* 里 */}
-                <div className="gap">
-                  <div>當事人里</div>
-                  <select
-                    className="handler"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'litigantRimin');
-                    }}
-                  >
-                    <option value=" "> -----請選擇-----</option>
-                    {getRimin.map((v, i) => {
-                      return <option key={i}>{v.name}</option>;
-                    })}
-                  </select>
-                </div>
-                {/* 地址 */}
-                <div className="gap">
-                  <div> 當事人地址</div>
-                  <input
-                    className="handler"
-                    type="text"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'litigantAddress');
-                    }}
-                  />
-                </div>
-              </div>
-            </>
-          ) : (
-            ''
-          )}
+          <div className="box">
+            {/* 縣市*/}
+            <div className="gap">
+              <div>當事人縣市</div>
+              <select
+                className="handler"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'litigantCounty');
+                  areaPost(e.target.value);
+                }}
+              >
+                <option value=" "> -----請選擇-----</option>
+                {getCounty.map((v, i) => {
+                  return <option key={i}>{v.name}</option>;
+                })}
+              </select>
+            </div>
+            {/* 區*/}
+            <div className="gap">
+              <div>當事人區</div>
+              <select
+                className="handler"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'litigantArea');
+                  riminPost(e.target.value);
+                }}
+              >
+                <option value=" "> -----請選擇-----</option>
+                {getArea.map((v, i) => {
+                  return <option key={i}>{v.name}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="box">
+            {/* 里 */}
+            <div className="gap">
+              <div>當事人里</div>
+              <select
+                className="handler"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'litigantRimin');
+                }}
+              >
+                <option value=" "> -----請選擇-----</option>
+                {getRimin.map((v, i) => {
+                  return <option key={i}>{v.name}</option>;
+                })}
+              </select>
+            </div>
+            {/* 地址 */}
+            <div className="gap">
+              <div> 當事人地址</div>
+              <input
+                className="handler"
+                type="text"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'litigantAddress');
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="outBox">
@@ -728,50 +707,40 @@ function Application({ delCheck }) {
                 onChange={(e) => {
                   handleChange(e.target.value, 'client');
                   // eslint-disable-next-line no-lone-blocks
-                  {
-                    e.target.value.length > 0
-                      ? setClient(true)
-                      : setClient(false);
-                  }
+                  // {
+                  //   e.target.value.length > 0
+                  //     ? setClient(true)
+                  //     : setClient(false);
+                  // }
                 }}
               />
             </div>
-            {client ? (
-              <div className="gap">
-                <div> 請託人聯絡電話</div>
-                <input
-                  className="handler hide-arrows"
-                  type="tel"
-                  maxLength="12"
-                  onChange={(e) => {
-                    handleChange(e.target.value, 'clientPhone');
-                  }}
-                />
-              </div>
-            ) : (
-              ''
-            )}
+            <div className="gap">
+              <div> 請託人聯絡電話</div>
+              <input
+                className="handler hide-arrows"
+                type="tel"
+                maxLength="12"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'clientPhone');
+                }}
+              />
+            </div>
             {/* 電話 */}
           </div>
-          {client ? (
-            <>
-              <div className="box">
-                {/* 地址 */}
-                <div className="gap">
-                  <div> 請託人地址</div>
-                  <input
-                    className="handler"
-                    type="text"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'clientAddress');
-                    }}
-                  />
-                </div>
-              </div>
-            </>
-          ) : (
-            ''
-          )}
+          <div className="box">
+            {/* 地址 */}
+            <div className="gap">
+              <div> 請託人地址</div>
+              <input
+                className="handler"
+                type="text"
+                onChange={(e) => {
+                  handleChange(e.target.value, 'clientAddress');
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* 欄位 end */}
