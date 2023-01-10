@@ -463,7 +463,7 @@ function Application({ delCheck }) {
           {/* 申請類別 */}
           <div className="gap">
             <div>
-              申請類別 <span>*</span>
+              案件類別 <span>*</span>
               {category ? <span>欄位不得為空</span> : <span>必填</span>}
             </div>
             <select

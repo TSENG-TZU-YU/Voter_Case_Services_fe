@@ -30,7 +30,9 @@ function LogIn() {
   useEffect(() => {
     async function unit() {
       try {
-        let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/unit`);
+        let res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/unit`
+        );
         setUnit(res.data);
       } catch (err) {
         console.log(err);
@@ -42,7 +44,7 @@ function LogIn() {
 
   console.log('login', login);
 
-  // 登入sweet
+  // 檢查登入sweet
   function submitCheck() {
     if (
       login[0].company === '' ||
@@ -74,6 +76,17 @@ function LogIn() {
       );
       setMember(res.data);
       localStorage.setItem('memberID', login[0].no);
+      // Swal.mixin({
+      //   toast: true,
+      //   position: 'top',
+      //   showConfirmButton: false,
+      //   background: '#f2f2f2',
+      //   timer: 2000,
+      //   onOpen: (toast) => {
+      //     toast.addEventListener('mouseenter', Swal.stopTimer);
+      //     toast.addEventListener('mouseleave', Swal.resumeTimer);
+      //   },
+      // });
       navigate('/header');
     } catch (err) {
       console.log(err);

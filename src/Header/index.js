@@ -54,15 +54,15 @@ function Header() {
         );
 
         setMember(response.data);
-        if (localStorage.getItem('memberID') === '') {
-          navigate('/');
-        }
       } catch (err) {
         console.log(err.response.data.message);
       }
     }
     getMember();
-
+    if (localStorage.getItem('memberID') === null) {
+      navigate('/');
+    }
+    console.log('localStorage.getItem', localStorage.getItem('memberID'));
     if (member.user === 1) {
       setUser(true);
     }
@@ -78,7 +78,13 @@ function Header() {
     }
 
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
-  }, [member.user, member.handler, member.manage, member.director]);
+  }, [
+    localStorage.getItem('memberID'),
+    member.user,
+    member.handler,
+    member.manage,
+    member.director,
+  ]);
   // member.user, member.handler, member.manage, member.director
   const logOut = async () => {
     try {
@@ -134,7 +140,7 @@ function Header() {
                 >
                   <div className="" onClick={acf}>
                     <RiFileTextLine size="20" />
-                    申請紀錄查詢
+                    案件紀錄查詢
                   </div>
                 </NavLink>
               </nav>
