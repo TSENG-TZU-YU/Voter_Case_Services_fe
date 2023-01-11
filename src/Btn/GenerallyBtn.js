@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/btn/_generallyBtn.scss';
 
-function GenerallyBtn({ handleFn1, fn1, fn2, style }) {
+function GenerallyBtn({ handleFn1, fn1, fn2, style, tit }) {
   return (
     <button
       className="generallyBtn"
@@ -10,7 +10,7 @@ function GenerallyBtn({ handleFn1, fn1, fn2, style }) {
         handleFn1(e, fn1, fn2);
       }}
     >
-      修改
+      {tit}
     </button>
   );
 }
