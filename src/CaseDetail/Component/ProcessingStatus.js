@@ -30,9 +30,12 @@ function ProcessingStatus() {
     async function getMember() {
       try {
         // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setMember(response.data);
       } catch (err) {
@@ -103,6 +106,15 @@ function ProcessingStatus() {
                 );
               })
             : '目前沒有訊息'}
+        </div>
+      </div>
+      <div className="dealWithContainer">
+        <div className="dealWith">
+          <input type="checkBox" /> 已回復當事人情況
+        </div>
+        <div className="dealWith">
+          <input type="checkBox" />
+          請委員議員致電呈請人
         </div>
       </div>
       {/* chatBar */}

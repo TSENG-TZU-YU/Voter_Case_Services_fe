@@ -107,7 +107,7 @@ function Header() {
         <MdOutlineLogout className="logOut" size="30" onClick={logOut} />
       </div>
       <div className="between">
-        <div className="navRight">
+        <div className="navLeft">
           <div>接案單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
@@ -270,7 +270,7 @@ function Header() {
           )}
         </div>
 
-        <div className="left">
+        <div className="navRight">
           <Outlet />
         </div>
       </div>
