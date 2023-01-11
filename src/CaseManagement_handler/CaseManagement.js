@@ -265,13 +265,13 @@ function CaseManagement() {
                   )}
                 </th>
                 <th>詳細資訊</th>
-                <th>申請單位</th>
-                <th>申請人</th>
+                <th>接案單位</th>
+                <th>接案人</th>
                 <th>處理單位</th>
                 <th>處理人</th>
-                <th>申請類別</th>
+                <th>請託來源</th>
                 <th className="sortBtn">
-                  申請時間
+                  接案時間
                   {time ? (
                     <MdArrowDropDown
                       className="arrow"
@@ -290,7 +290,7 @@ function CaseManagement() {
                     />
                   )}
                 </th>
-                <th>申請狀態</th>
+                <th>接案狀態</th>
                 <th>需求進度</th>
               </tr>
             </thead>

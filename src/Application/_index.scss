@@ -75,56 +75,56 @@
       }
     }
 
-    .outBox{
-      width: 70%;
-      border: 2px solid $subClrBrown;
-      margin-top: 15px;
-      .box {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        div {
-          margin-bottom: 10px;
-        }
-        .gap {
-          margin-left: 5px;
-          margin-right: 5px;
-          margin-top: 0;
-          span {
-            color: $focusClrY;
-          }
-        }
-        .contain {
-          height: 100px;
-        }
-        .handler {
-          width: 250px;
-          text-align: center;
-          height: 28px;
-          .form-check {
-            margin-right: 8px;
-            margin-top: 4px;
-          }
-        }
-        .hide-arrows::-webkit-outer-spin-button,
-        .hide-arrows::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        .otherText {
-          margin-top: 10px;
-          display: block;
-        }
-        .disNone {
-          display: none;
-        }
+    // .outBox{
+    //   width: 70%;
+    //   border: 2px solid $subClrBrown;
+    //   margin-top: 15px;
+    //   .box {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     width: 100%;
+    //     div {
+    //       margin-bottom: 10px;
+    //     }
+    //     .gap {
+    //       margin-left: 5px;
+    //       margin-right: 5px;
+    //       margin-top: 0;
+    //       span {
+    //         color: $focusClrY;
+    //       }
+    //     }
+    //     .contain {
+    //       height: 100px;
+    //     }
+    //     .handler {
+    //       width: 250px;
+    //       text-align: center;
+    //       height: 28px;
+    //       .form-check {
+    //         margin-right: 8px;
+    //         margin-top: 4px;
+    //       }
+    //     }
+    //     .hide-arrows::-webkit-outer-spin-button,
+    //     .hide-arrows::-webkit-inner-spin-button {
+    //       -webkit-appearance: none;
+    //       margin: 0;
+    //     }
+    //     .otherText {
+    //       margin-top: 10px;
+    //       display: block;
+    //     }
+    //     .disNone {
+    //       display: none;
+    //     }
   
-        .check {
-          display: flex;
-          margin-top: 0;
-        }
-      }
-    }
+    //     .check {
+    //       display: flex;
+    //       margin-top: 0;
+    //     }
+    //   }
+    // }
 
     .add {
       width: 70%;
