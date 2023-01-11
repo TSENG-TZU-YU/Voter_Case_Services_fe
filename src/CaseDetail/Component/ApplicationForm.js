@@ -1662,10 +1662,9 @@ function ApplicationForm({
               ) : (
                 <div className="fileName">
                   <div>
-                    <div className="fileTit">附件上傳</div>
+                    <div className="fileTit">附件上傳 (檔案限制10MB)</div>
                     <div className="fileTit">
-                      (檔案限制10MB) (可上傳副檔名
-                      csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
+                      (可上傳副檔名 csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
                     </div>
                     {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
                   </div>

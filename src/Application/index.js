@@ -869,10 +869,10 @@ function Application({ delCheck }) {
         {/* 附件上傳 */}
         <div className="file">
           <div className="fileName">
-            <div>
-              <div>附件上傳</div>
+            <div className='fileColumn'>
+              <div>附件上傳 (檔案限制10MB)</div>
               <div>
-                (檔案限制10MB) (可上傳副檔名
+                (可上傳副檔名
                 csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
               </div>
               {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
