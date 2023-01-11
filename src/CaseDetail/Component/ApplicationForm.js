@@ -84,10 +84,9 @@ function ApplicationForm({
   //友好程度
   const relation = [
     { name: 'VIP' },
-    { name: 'A' },
-    { name: 'B' },
-    { name: 'C' },
-    { name: 'D' },
+    { name: '友善' },
+    { name: '沒特別喜好' },
+    { name: '抱怨謾罵' },
   ];
 
   // 檢查會員
@@ -1049,7 +1048,7 @@ function ApplicationForm({
                 <div key={v.id}>
                   <div className="gapContain my-2">
                     <div>
-                      <div className="pb-1">申請類別</div>
+                      <div className="pb-1">請託來源</div>
                       {edit ? (
                         <input
                           type="text"
@@ -1622,7 +1621,7 @@ function ApplicationForm({
                     </div>
 
                     <div className="needCount">
-                      <span className="title">需求 {i + 1}</span>
+                      <span className="title">呈請內容 {i + 1}</span>
                     </div>
 
                     {edit ? (

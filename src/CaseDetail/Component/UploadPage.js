@@ -112,6 +112,15 @@ function UploadPage({ setAddStatus, delCheck }) {
     toGetUserFile();
     toGetHandlerFile();
     toGetHandlerFileNo();
+    if (page === 1) {
+      setUserFilesPage(true);
+      setMgtUserFilesPage(false);
+    }
+    if (page === 2) {
+      setMgtUserFilesPage(true);
+      setUserFilesPage(false);
+    }
+
     // toGetUpdateFile();
   }, [render, acceptRender]);
 
