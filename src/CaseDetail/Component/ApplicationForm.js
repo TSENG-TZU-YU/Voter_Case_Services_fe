@@ -12,6 +12,7 @@ import moment from 'moment';
 import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
+import GenerallyBtn from '../../Btn/GenerallyBtn';
 
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
