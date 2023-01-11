@@ -22,6 +22,7 @@ import { AiFillCloseCircle, AiFillCloseSquare } from 'react-icons/ai';
 
 // 元件
 import Loader from '../../Loader';
+import ApplicationBtn from '../../Btn/ApplicationBtn';
 
 function ApplicationForm({
   setAddStatus,
@@ -848,6 +849,11 @@ function ApplicationForm({
     // });
   };
 
+  let needEdit = () => {
+    setEditNeed([...needData]);
+    setEditPage(true);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -895,64 +901,30 @@ function ApplicationForm({
 
           {/* user  需求修改Btn */}
           {needState === 7 && member.user === 1 && WebPage === 1 ? (
-            <div className="checkBtn">
-              <div>請點選按鈕進行需求修改</div>
-              <div className="check">
-                <div
-                  className="editBtn"
-                  onClick={() => {
-                    setEditNeed([...needData]);
-                    setEditPage(true);
-                  }}
-                >
-                  修改需求
-                </div>
-              </div>
-            </div>
+            <ApplicationBtn
+              handleFn1={needEdit}
+              tit="請點選按鈕進行需求修改"
+              accTit="修改需求"
+            />
           ) : (
             ''
           )}
-
-          {/* handler  接收需求Btn */}
-          {/* {needState === 13 && handler === false ? (
-      <div className="editBtn" onClick={handleCheckAccept}>
-        需求已修改完成，請點選確認接收
-      </div>
-    ) : (
-      ''
-    )} */}
-          {/* <>
-              <div className="editBtn" onClick={handleAcceptCase}>
-                是，確認接收此案件
-              </div>
-              <div className="editBtn" onClick={handleRejectCase}>
-                否，無法接收此案件
-              </div>
-            </>
 
           {/* handler轉件  是否接件 */}
           {member.handler === 1 &&
           needState === 8 &&
           member.name === Sender &&
           WebPage === 2 ? (
-            <div className="checkBtn">
-              <div>請確認是否接收此案件?</div>
-              <div className="check">
-                <div className="editBtn" onClick={handleAcceptCase}>
-                  是，確認接收此案件
-                </div>
-                <div className="editBtn" onClick={handleRejectCase}>
-                  否，無法接收此案件
-                </div>
-              </div>
-            </div>
+            <ApplicationBtn
+              handleFn1={handleAcceptCase}
+              handleFn2={handleRejectCase}
+              tit="請確認是否接收此案件?"
+              accTit="是，確認接收此案件"
+              rejTit="否，無法接收此案件"
+            />
           ) : (
             ''
           )}
-          {/* 
-            <div className="editBtn" onClick={handleReceiveCase}>
-              此案件目前沒有處理人，請點選確認接收此案
-            </div> */}
 
           {/* handler === '' 確認接收此案件 */}
           {(member.handler === 1 || member.manage === 1) &&
@@ -960,34 +932,44 @@ function ApplicationForm({
           needState === 4 &&
           WebPage === 2 &&
           member.applicant_unit === handlerUnit ? (
-            <div className="checkBtn">
-              <div>此案件目前沒有處理人，請點選確認接收此案</div>
-              <div className="check justify-content-center">
-                <div className="editBtn" onClick={handleReceiveCase}>
-                  確認接收
-                </div>
-              </div>
-            </div>
+            <ApplicationBtn
+              handleFn1={handleReceiveCase}
+              tit="此案件目前沒有處理人，請點選確認接收此案"
+              accTit="確認接收"
+            />
           ) : (
             ''
           )}
 
           {/* handler完成  待user確認 */}
           {member.user === 1 && needState === 11 && WebPage === 1 ? (
-            <div className="checkBtn">
-              <div>處理人已完成需求項目，請申請人點選按鈕確認是否完成?</div>
-              <div className="check">
-                <div className="editBtn" onClick={handleAcceptFinish}>
-                  是，處理人已完成所有需求項目
-                </div>
-                <div className="editBtn" onClick={handleRejectFinish}>
-                  否，處理人尚有需求未完成
-                </div>
-              </div>
+            <ApplicationBtn
+              handleFn1={handleAcceptFinish}
+              handleFn2={handleRejectFinish}
+              tit="處理人已完成需求項目，請申請人點選按鈕確認是否完成?"
+              accTit="是，處理人已完成所有需求項目"
+              rejTit="否，處理人尚有需求未完成"
+            />
+          ) : (
+            ''
+          )}
+
+          {/* handler  接收需求Btn */}
+          {/* {needState === 13 && handler === false ? (
+            <div className="editBtn" onClick={handleCheckAccept}>
+              需求已修改完成，請點選確認接收
             </div>
           ) : (
             ''
           )}
+          <>
+            <div className="editBtn" onClick={handleAcceptCase}>
+              是，確認接收此案件
+            </div>
+            <div className="editBtn" onClick={handleRejectCase}>
+              否，無法接收此案件
+            </div>
+          </> */}
 
           {/* 處理狀態 */}
           {handleData.length !== 0 ? (
@@ -1049,7 +1031,7 @@ function ApplicationForm({
                 <div key={v.id}>
                   <div className="gapContain my-2">
                     <div>
-                      <div className="pb-1">申請類別</div>
+                      <div className="pb-1">案件類別</div>
                       {edit ? (
                         <input
                           type="text"

@@ -1,0 +1,17 @@
+import React from 'react';
+import '../styles/btn/_generallyBtn.scss';
+
+function GenerallyBtn({ handleFn1, fn1, fn2 }) {
+  return (
+    <div
+      className="generallyBtn"
+      onClick={(e) => {
+        handleFn1(e, fn1, fn2);
+      }}
+    >
+      修改
+    </div>
+  );
+}
+
+export default GenerallyBtn;

@@ -1,9 +1,5 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { useAuth } from '../../utils/use_auth';
-
+import React from 'react';
 import '../../styles/caseManagement/_dateFilter.scss';
-import { API_URL } from '../../utils/config';
 
 function DateFilter({
   dateRemind,
@@ -17,23 +13,6 @@ function DateFilter({
   dateAgo,
   nowDate,
 }) {
-  const { member, setMember } = useAuth();
-
-  useEffect(() => {
-    async function getMember() {
-      try {
-        // console.log('檢查是否登入');
-        let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-          withCredentials: true,
-        });
-        // console.log(response.data);
-        setMember(response.data);
-      } catch (err) {
-        console.log(err.response.data.message);
-      }
-    }
-    getMember();
-  }, []);
   return (
     <>
       <div className="dateFilterContainer">
