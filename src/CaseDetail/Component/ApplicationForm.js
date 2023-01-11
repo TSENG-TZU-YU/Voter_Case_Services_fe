@@ -856,7 +856,8 @@ function ApplicationForm({
 
   return (
     <>
-      <GenerallyBtn
+      {/* test BTN */}
+      {/* <GenerallyBtn
         style={{ background: '#221e73', color: 'white' }}
         tit="修改"
       />
@@ -868,7 +869,7 @@ function ApplicationForm({
       <GenerallyBtn
         style={{ background: '#F26457', color: 'white' }}
         tit="上傳"
-      />
+      /> */}
 
       {isLoading ? (
         <Loader />

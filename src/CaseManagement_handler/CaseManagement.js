@@ -5,7 +5,6 @@ import { API_URL } from '../utils/config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useAuth } from '../utils/use_auth';
-import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
 import '../styles/caseManagement/_caseManagement.scss';
@@ -72,31 +71,10 @@ function CaseManagement() {
   const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
 
-  // 檢查會員
-  // useEffect(() => {
-  //   async function getMember() {
-  //     try {
-  //       // console.log('檢查是否登入');
-  //       let response = await axios.get(
-  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       // console.log(response.data);
-  //       setMember(response.data);
-  //     } catch (err) {
-  //       // console.log(err.response.data.message);
-  //     }
-  //   }
-  //   getMember();
-  // }, []);
-
   // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
-    // category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}
     let getCampingData = async () => {
       try {
         let response = await axios.get(
@@ -105,7 +83,6 @@ function CaseManagement() {
             withCredentials: true,
           }
         );
-        // console.log('1111');
         setAllData(response.data.result);
         setAllCategoryData(response.data.categoryResult);
         setAllUnitData(response.data.unitResult);
@@ -328,18 +305,6 @@ function CaseManagement() {
                                         ? 'eyeBcg'
                                         : ''
                                     }`}
-                                    onClick={() => {
-                                      // setCaseNum(v.case_number);
-                                      // setCaseId(v.id);
-                                      // setHandlerNull(v.handler);
-                                      // setSender(v.sender);
-                                      // if (
-                                      //   v.name === '處理人評估中' &&
-                                      //   member.permissions_id === 3
-                                      // ) {
-                                      //   handleChangeState(v.case_number, v.id);
-                                      // }
-                                    }}
                                   />
                                 </Link>
 
@@ -351,17 +316,7 @@ function CaseManagement() {
                               <td>{v.handler}</td>
                               <td>{v.application_category}</td>
                               <td>{v.create_time}</td>
-                              <td
-                                // onClick={() => {
-                                //   setCaseNum(v.case_number);
-                                //   setCheckState(true);
-                                //   handleHandleStatus(v.case_number);
-                                //   setHandlerNull(v.handler);
-                                // }}
-                                className="view"
-                              >
-                                {v.name}
-                              </td>
+                              <td className="view">{v.name}</td>
 
                               <td>
                                 進度({v.cou}/{v.sum})

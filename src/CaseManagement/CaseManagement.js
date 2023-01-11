@@ -329,18 +329,6 @@ function CaseManagement() {
                                         ? 'eyeBcg'
                                         : ''
                                     }`}
-                                    onClick={() => {
-                                      // setCaseNum(v.case_number);
-                                      // setCaseId(v.id);
-                                      // setHandlerNull(v.handler);
-                                      // setSender(v.sender);
-                                      // if (
-                                      //   v.name === '處理人評估中' &&
-                                      //   member.permissions_id === 3
-                                      // ) {
-                                      //   handleChangeState(v.case_number, v.id);
-                                      // }
-                                    }}
                                   />
                                 </Link>
 
@@ -352,17 +340,7 @@ function CaseManagement() {
                               <td>{v.handler}</td>
                               <td>{v.application_category}</td>
                               <td>{v.create_time}</td>
-                              <td
-                                // onClick={() => {
-                                //   setCaseNum(v.case_number);
-                                //   setCheckState(true);
-                                //   handleHandleStatus(v.case_number);
-                                //   setHandlerNull(v.handler);
-                                // }}
-                                className="view"
-                              >
-                                {v.name}
-                              </td>
+                              <td className="view">{v.name}</td>
                               <td>
                                 進度({v.cou}/{v.sum})
                               </td>
