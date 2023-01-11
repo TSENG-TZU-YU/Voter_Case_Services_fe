@@ -8,10 +8,28 @@ $bcgBlock: #00000080;
 $header: #817161;
 $navBar: #c09e8280;
 
+// textStyles
+$navbarLeft18: 18px;
+$navbarTop40: 40px;
+$containerTit28: 28px;
+$contentText: 18px;
 
-// btn color
-$saveClr:#221e73;
-// $delClr:;
+// 欄位寬度
+$columWidth: 250px;
+$columWidthRWD: 150px;
+
+// 間距
+$marage10: 10px;
+
+// container padding
+$padding5: 5px;
+
+// 最外框寬度
+$maxWidth: 1440px;
+$maxWidthRWD: 375px;
+
+// 圓角
+$borderRadius: 5px;
 
 @mixin flexCenter {
   display: flex;
@@ -26,16 +44,11 @@ $saveClr:#221e73;
 
 @mixin scrollbar {
   overflow: auto;
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
   &::-webkit-scrollbar {
     width: 7px;
-    //   height: 3px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #807060c0;
-    // background-clip: padding-box;
     border-radius: 3px;
   }
 }
@@ -44,12 +57,9 @@ $saveClr:#221e73;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 7px;
-    // cursor: pointer;
-    //   height: 3px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #ddd;
-    // background-clip: padding-box;
     border-radius: 3px;
   }
 }

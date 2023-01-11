@@ -264,6 +264,7 @@ function CaseManagement() {
                     />
                   )}
                 </th>
+                <th>詳細資訊</th>
                 <th>接案單位</th>
                 <th>接案人</th>
                 <th>處理單位</th>
@@ -290,7 +291,6 @@ function CaseManagement() {
                   )}
                 </th>
                 <th>接案狀態</th>
-                <th></th>
                 <th>需求進度</th>
               </tr>
             </thead>
@@ -315,25 +315,8 @@ function CaseManagement() {
                                   ? `轉件人 : ${v.handler}`
                                   : ''}
                               </td>
-                              <td>{v.case_number}</td>
-                              <td>{v.applicant_unit}</td>
-                              <td>{v.user}</td>
-                              <td>{v.unit}</td>
-                              <td>{v.handler}</td>
-                              <td>{v.application_category}</td>
-                              <td>{v.create_time}</td>
-                              <td
-                                // onClick={() => {
-                                //   setCaseNum(v.case_number);
-                                //   setCheckState(true);
-                                //   handleHandleStatus(v.case_number);
-                                //   setHandlerNull(v.handler);
-                                // }}
-                                className="view"
-                              >
-                                {v.name}
-                              </td>
 
+                              <td>{v.case_number}</td>
                               <td className="posClick">
                                 <Link
                                   to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
@@ -362,6 +345,24 @@ function CaseManagement() {
 
                                 {/* <div className="hadClick">NEW</div> */}
                               </td>
+                              <td>{v.applicant_unit}</td>
+                              <td>{v.user}</td>
+                              <td>{v.unit}</td>
+                              <td>{v.handler}</td>
+                              <td>{v.application_category}</td>
+                              <td>{v.create_time}</td>
+                              <td
+                                // onClick={() => {
+                                //   setCaseNum(v.case_number);
+                                //   setCheckState(true);
+                                //   handleHandleStatus(v.case_number);
+                                //   setHandlerNull(v.handler);
+                                // }}
+                                className="view"
+                              >
+                                {v.name}
+                              </td>
+
                               <td>
                                 進度({v.cou}/{v.sum})
                               </td>
