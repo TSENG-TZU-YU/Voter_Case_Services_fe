@@ -148,7 +148,7 @@ function CaseManagement() {
       setAllStatusData(response.data.statusResult);
       setTimeout(() => {
         setIsLoading(false);
-      }, 100);
+      });
     };
     getCampingData();
   }, [

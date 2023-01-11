@@ -112,7 +112,7 @@ function CaseManagement() {
         setAllStatusData(response.data.statusResult);
         setTimeout(() => {
           setIsLoading(false);
-        }, 100);
+        });
       } catch (err) {
         console.log(err);
       }
