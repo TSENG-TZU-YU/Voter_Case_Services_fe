@@ -856,6 +856,20 @@ function ApplicationForm({
 
   return (
     <>
+      <GenerallyBtn
+        style={{ background: '#221e73', color: 'white' }}
+        tit="修改"
+      />
+      <GenerallyBtn
+        style={{ background: '#f2ac33', color: 'white' }}
+        tit="送出"
+      />
+      <GenerallyBtn style={{ background: '#ccc', color: '#444' }} tit="刪除" />
+      <GenerallyBtn
+        style={{ background: '#F26457', color: 'white' }}
+        tit="上傳"
+      />
+
       {isLoading ? (
         <Loader />
       ) : (
