@@ -189,167 +189,172 @@ function CaseManagement() {
             ''
           )} */}
         <div className="caseContainer">
-          {/* 篩選 */}
-          <div className="sortSelect">
-            <div className="bothFilter">
-              <CategoryFilter
-                allCategoryData={allCategoryData}
-                setNowCategory={setNowCategory}
+         
+            {/* 篩選 */}
+            <div className="sortSelect">
+              <div className="bothFilter">
+                <CategoryFilter
+                  allCategoryData={allCategoryData}
+                  setNowCategory={setNowCategory}
+                />
+                <StatusFilter
+                  allStatusData={allStatusData}
+                  setNowStatus={setNowStatus}
+                />
+                <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                <UnitHandlerFilter
+                  allUnit={allUnit}
+                  setNowHUnit={setNowHUnit}
+                />
+              </div>
+              <DateFilter
+                dateRemind={dateRemind}
+                setDateRemind={setDateRemind}
+                setMaxDate={setMaxDate}
+                setMinDate={setMinDate}
+                maxDateValue={maxDateValue}
+                setMaxDateValue={setMaxDateValue}
+                minDateValue={minDateValue}
+                setMinDateValue={setMinDateValue}
+                dateAgo={dateAgo}
+                nowDate={nowDate}
               />
-              <StatusFilter
-                allStatusData={allStatusData}
-                setNowStatus={setNowStatus}
-              />
-              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-              <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} />
             </div>
-            <DateFilter
-              dateRemind={dateRemind}
-              setDateRemind={setDateRemind}
-              setMaxDate={setMaxDate}
-              setMinDate={setMinDate}
-              maxDateValue={maxDateValue}
-              setMaxDateValue={setMaxDateValue}
-              minDateValue={minDateValue}
-              setMinDateValue={setMinDateValue}
-              dateAgo={dateAgo}
-              nowDate={nowDate}
-            />
-          </div>
+ <div className="case">
+            <table className="caseContain">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th className="sortBtn">
+                    案件編號
+                    {number ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(1);
+                          setNumber(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(2);
+                          setNumber(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>詳細資訊</th>
+                  <th>接案單位</th>
+                  <th>接案人</th>
+                  <th>處理單位</th>
+                  <th>處理人</th>
+                  <th>請託來源</th>
+                  <th className="sortBtn">
+                    接案時間
+                    {time ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(3);
+                          setTime(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(4);
+                          setTime(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>接案狀態</th>
+                  <th>需求進度</th>
+                </tr>
+              </thead>
+              {isLoading ? (
+                <tbody className="noData">
+                  <td colSpan={10} className="noTd">
+                    <Loader />
+                  </td>
+                </tbody>
+              ) : (
+                <>
+                  {pageCase.length !== 0 ? (
+                    <>
+                      {pageCase.length > 0 &&
+                        pageCase[pageNow - 1].map((v) => {
+                          return (
+                            <tbody key={uuidv4()} className="body">
+                              <tr>
+                                <td>
+                                  {member.handler === 1 &&
+                                  member.name === v.sender
+                                    ? `轉件人 : ${v.handler}`
+                                    : ''}
+                                </td>
 
-          <table className="caseContain">
-            <thead>
-              <tr>
-                <th></th>
-                <th className="sortBtn">
-                  案件編號
-                  {number ? (
-                    <MdArrowDropDown
-                      className="arrow"
-                      onClick={() => {
-                        setOrder(1);
-                        setNumber(false);
-                      }}
-                    />
+                                <td>{v.case_number}</td>
+                                <td className="posClick">
+                                  <Link
+                                    to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
+                                  >
+                                    <FaEye
+                                      className={`icons ${
+                                        v.name === '處理人評估中' &&
+                                        member.handler === 1
+                                          ? 'eyeBcg'
+                                          : ''
+                                      }`}
+                                    />
+                                  </Link>
+
+                                  {/* <div className="hadClick">NEW</div> */}
+                                </td>
+                                <td>{v.applicant_unit}</td>
+                                <td>{v.user}</td>
+                                <td>{v.unit}</td>
+                                <td>{v.handler}</td>
+                                <td>{v.application_category}</td>
+                                <td>{v.create_time}</td>
+                                <td className="view">{v.name}</td>
+
+                                <td>
+                                  進度({v.cou}/{v.sum})
+                                </td>
+                              </tr>
+                            </tbody>
+                          );
+                        })}
+
+                      {/* 頁碼 */}
+                      <tbody className="noData">
+                        <td colSpan={10} className="noTd">
+                          <div className="page">
+                            <PaginationBar
+                              pageNow={pageNow}
+                              setPageNow={setPageNow}
+                              pageTotal={pageTotal}
+                            />
+                          </div>
+                        </td>
+                      </tbody>
+                      {/* 頁碼 end */}
+                    </>
                   ) : (
-                    <MdArrowDropUp
-                      className="arrow"
-                      onClick={() => {
-                        setOrder(2);
-                        setNumber(true);
-                      }}
-                    />
-                  )}
-                </th>
-                <th>詳細資訊</th>
-                <th>接案單位</th>
-                <th>接案人</th>
-                <th>處理單位</th>
-                <th>處理人</th>
-                <th>請託來源</th>
-                <th className="sortBtn">
-                  接案時間
-                  {time ? (
-                    <MdArrowDropDown
-                      className="arrow"
-                      onClick={() => {
-                        setOrder(3);
-                        setTime(false);
-                      }}
-                    />
-                  ) : (
-                    <MdArrowDropUp
-                      className="arrow"
-                      onClick={() => {
-                        setOrder(4);
-                        setTime(true);
-                      }}
-                    />
-                  )}
-                </th>
-                <th>接案狀態</th>
-                <th>需求進度</th>
-              </tr>
-            </thead>
-            {isLoading ? (
-              <tbody className="noData">
-                <td colSpan={10} className="noTd">
-                  <Loader />
-                </td>
-              </tbody>
-            ) : (
-              <>
-                {pageCase.length !== 0 ? (
-                  <>
-                    {pageCase.length > 0 &&
-                      pageCase[pageNow - 1].map((v) => {
-                        return (
-                          <tbody key={uuidv4()} className="body">
-                            <tr>
-                              <td>
-                                {member.handler === 1 &&
-                                member.name === v.sender
-                                  ? `轉件人 : ${v.handler}`
-                                  : ''}
-                              </td>
-
-                              <td>{v.case_number}</td>
-                              <td className="posClick">
-                                <Link
-                                  to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
-                                >
-                                  <FaEye
-                                    className={`icons ${
-                                      v.name === '處理人評估中' &&
-                                      member.handler === 1
-                                        ? 'eyeBcg'
-                                        : ''
-                                    }`}
-                                  />
-                                </Link>
-
-                                {/* <div className="hadClick">NEW</div> */}
-                              </td>
-                              <td>{v.applicant_unit}</td>
-                              <td>{v.user}</td>
-                              <td>{v.unit}</td>
-                              <td>{v.handler}</td>
-                              <td>{v.application_category}</td>
-                              <td>{v.create_time}</td>
-                              <td className="view">{v.name}</td>
-
-                              <td>
-                                進度({v.cou}/{v.sum})
-                              </td>
-                            </tr>
-                          </tbody>
-                        );
-                      })}
-
-                    {/* 頁碼 */}
                     <tbody className="noData">
                       <td colSpan={10} className="noTd">
-                        <div className="page">
-                          <PaginationBar
-                            pageNow={pageNow}
-                            setPageNow={setPageNow}
-                            pageTotal={pageTotal}
-                          />
-                        </div>
+                        目前沒有資料
                       </td>
                     </tbody>
-                    {/* 頁碼 end */}
-                  </>
-                ) : (
-                  <tbody className="noData">
-                    <td colSpan={10} className="noTd">
-                      目前沒有資料
-                    </td>
-                  </tbody>
-                )}
-              </>
-            )}
-          </table>
+                  )}
+                </>
+              )}
+            </table>
+          </div>
         </div>
       </>
     </>

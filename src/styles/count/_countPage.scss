@@ -5,7 +5,7 @@
   height: calc(100vh - 70px);
   //   background: rgb(231, 190, 151);
   margin: 0 auto;
-  font-size: 12px;
+  font-size: clamp(12px,1vw,18px);
   // padding-bottom: 30px;
 
   .sortSelect {
