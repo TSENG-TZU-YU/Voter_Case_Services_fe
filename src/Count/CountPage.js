@@ -178,7 +178,7 @@ function CountPage() {
     <>
       <div className="caseContainer">
         {/* 篩選 */}
-        <div className="sortSelect">
+        <div className="sort">
           <div className="bothFilter">
             {/* 類別 */}
             <div className="userSort">

@@ -8,7 +8,7 @@
   font-size: clamp(12px,1vw,18px);
   // padding-bottom: 30px;
 
-  .sortSelect {
+  .sort {
     // background: lemonchiffon;
     padding: 30px 0px 20px 0px;
     display: flex;
@@ -67,5 +67,14 @@
       border-radius: 3px;
       margin-right: 20px;
     }
+  }
+}
+
+@media screen and (max-width:375px) {
+  .m-view{
+      display: flex;
+  }
+  .p-view{
+      display: none;
   }
 }

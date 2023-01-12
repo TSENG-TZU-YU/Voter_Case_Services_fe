@@ -214,38 +214,35 @@ function CaseManagement() {
           )} */}
         <div className="caseContainer">
           {/* 篩選 */}
-          
-            <div className="sortSelect">
-              <div className="bothFilter">
-                <CategoryFilter
-                  allCategoryData={allCategoryData}
-                  setNowCategory={setNowCategory}
-                />
-                <StatusFilter
-                  allStatusData={allStatusData}
-                  setNowStatus={setNowStatus}
-                  member={member}
-                />
-                <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                <UnitHandlerFilter
-                  allUnit={allUnit}
-                  setNowHUnit={setNowHUnit}
-                />
-              </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
+
+          <div className="sortSelect">
+            <div className="bothFilter">
+              <CategoryFilter
+                allCategoryData={allCategoryData}
+                setNowCategory={setNowCategory}
               />
+              <StatusFilter
+                allStatusData={allStatusData}
+                setNowStatus={setNowStatus}
+                member={member}
+              />
+              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+              <UnitHandlerFilter allUnit={allUnit} setNowHUnit={setNowHUnit} />
             </div>
-<div className="case">
+            <DateFilter
+              dateRemind={dateRemind}
+              setDateRemind={setDateRemind}
+              setMaxDate={setMaxDate}
+              setMinDate={setMinDate}
+              maxDateValue={maxDateValue}
+              setMaxDateValue={setMaxDateValue}
+              minDateValue={minDateValue}
+              setMinDateValue={setMinDateValue}
+              dateAgo={dateAgo}
+              nowDate={nowDate}
+            />
+          </div>
+          <div className="case">
             <table className="caseContain">
               <thead>
                 <tr>
