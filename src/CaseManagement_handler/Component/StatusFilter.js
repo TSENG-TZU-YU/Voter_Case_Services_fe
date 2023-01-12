@@ -5,7 +5,7 @@ import Select from 'react-select';
 function ActivitySelect({ allStatusData, setNowStatus }) {
   // const [selectSortOption, setSelectSortOption] = useState(null);
   let newData = [];
-  for (let i = 0; i < allStatusData.length; i++) {
+  for (let i = 3; i < allStatusData.length; i++) {
     newData.push({
       value: allStatusData[i].id,
       label: allStatusData[i].name,

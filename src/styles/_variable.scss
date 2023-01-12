@@ -35,10 +35,10 @@ $maxWidthRWD: 375px;
 $borderRadius: 5px;
 
 // BTN顏色
-// 1. $focusClrB -> 上傳檔案
-// 2. 儲存、修改
-// 3. 送出、確認、完成、是
-// 4. 刪除、取消、否
+// 1. #F26457 -> 上傳檔案
+// 2. $focusClrB -> 儲存、修改
+// 3. $focusClrY -> 送出、確認、完成、是
+// 4. #ccc -> 刪除、取消、否
 
 // flex
 @mixin flexCenter {
@@ -57,6 +57,7 @@ $borderRadius: 5px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 7px;
+    height: 7px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #807060c0;
@@ -68,6 +69,7 @@ $borderRadius: 5px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 7px;
+    height: 7px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #ddd;

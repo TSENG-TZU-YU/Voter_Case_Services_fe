@@ -15,7 +15,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
   const sortOption = [
     { value: '', label: '--請選擇狀態--' },
     { value: '1', label: '未送審' },
-    { value: '2', label: '主管審核中' },
+    // { value: '2', label: '主管審核中' },
     { value: '4', label: '處理人評估中' },
     { value: '5', label: '案件進行中' },
     { value: '6', label: '需補上傳文件' },
@@ -31,6 +31,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
       ...provided,
       height: '32px',
       // width: '15%',
+      // fontSize: '18px',
       color: state.isSelected ? '#fff' : '#444',
       background: state.isSelected ? '#817161' : '#fff',
       ':active': {
@@ -60,6 +61,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
       border: '1px solid #817161',
       minHeight: '32px',
       width: '170px',
+      // fontSize: '18px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {

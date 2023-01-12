@@ -6,6 +6,7 @@
   //   background: rgb(231, 190, 151);
   margin: 0 auto;
   font-size: 12px;
+  // padding-bottom: 30px;
 
   .sortSelect {
     // background: lemonchiffon;
@@ -45,6 +46,7 @@
       td {
         border: 1px solid #ccc;
         text-align: center;
+        white-space: nowrap;
       }
       th,
       td {
