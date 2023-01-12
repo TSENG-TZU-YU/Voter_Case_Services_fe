@@ -183,7 +183,7 @@ function Application({ delCheck }) {
           { withCredentials: true }
         );
         setGetHandler(res.data);
-        console.log('handler2222');
+        // console.log('handler2222');
       } catch (err) {
         console.log(err);
       }
@@ -206,7 +206,7 @@ function Application({ delCheck }) {
           `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
         );
         setGetUnit(res.data);
-        console.log('object', 222);
+        // console.log('object', 222);
       } catch (err) {
         console.log(err);
       }

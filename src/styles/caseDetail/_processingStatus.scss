@@ -21,7 +21,7 @@
   width: 100%;
   height: calc(100% - 200px);
   padding: 0 5px;
-  @include scrollbar;
+  // @include scrollbar;
   .handleStatus {
     margin: 10px auto;
     // background: lemonchiffon;
@@ -68,11 +68,12 @@
 .chatBarContain {
   // background: lemonchiffon;
   width: 95%;
-  position: absolute;
+  position: relative;
   transform: translateX(-50%);
   left: 50%;
-  bottom: 3%;
-  // margin: 8px auto 0;
+  // bottom: 3%;
+  top: 0;
+  bottom: 0;
   @include flexCenter;
   .submitMsg {
     resize: none;

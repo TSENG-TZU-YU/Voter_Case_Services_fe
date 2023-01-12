@@ -67,7 +67,7 @@ function EditNeedPage({
                   />
                 </div> */}
                 <div className="needInput">
-                  <span className="pe-1">2.</span>
+                  {/* <span className="pe-1">2.</span> */}
                   <textarea
                     name="dir"
                     rows="3"

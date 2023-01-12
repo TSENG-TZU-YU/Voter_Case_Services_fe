@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,8 +18,7 @@ function CaseDetail() {
   let HId = params.get('HId');
   let User = params.get('user');
   let Sender = params.get('sender');
-  let page = params.get('page');
-
+  let page = parseInt(params.get('page'));
   //使用者資料
   const navBtn = [
     {
@@ -29,7 +28,8 @@ function CaseDetail() {
     // { title: '討論區', url: `chatPage/${num}?id=${ID}` },
     {
       title: '案件處理情形',
-      url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
+      // url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
+      url: `application/${num}?id=${ID}&HId=${HId}&user=${User}&sender=${Sender}&page=${page}`,
     },
     {
       title: '上傳文件',
@@ -37,12 +37,12 @@ function CaseDetail() {
     },
   ];
 
-  // console.log('num', num);
+  // console.log('num', page === 1);
   return (
     <div className="caseDetailContainer">
       <Link
         to={
-          page == 1
+          page === 1
             ? '/header/caseManagement'
             : '/header/caseManagement_handler'
         }
@@ -77,6 +77,7 @@ function CaseDetail() {
             })}
           </ul>
         </nav>
+
         <Outlet />
       </div>
     </div>
