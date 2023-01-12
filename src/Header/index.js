@@ -17,6 +17,8 @@ import { AiOutlineMenu } from 'react-icons/ai';
 //hook
 import { useAuth } from '../utils/use_auth';
 
+import HeaderMobile from '../HeaderMobile';
+
 // 圖檔
 import navTop from '../assets/call-center-2537390_1920.jpg';
 
@@ -66,7 +68,6 @@ function Header() {
     if (localStorage.getItem('memberID') === null) {
       navigate('/');
     }
-    console.log('localStorage.getItem', localStorage.getItem('memberID'));
     if (member.user === 1) {
       setUser(true);
     }
@@ -101,6 +102,8 @@ function Header() {
     setMobileToggle(!mobileToggle);
     e.stopPropagation();
   };
+
+
   //顯示統計
   const act = () => {
     setActive(true);
@@ -114,7 +117,7 @@ function Header() {
       <div className="navTop">
         <div className="mobile">
           <AiOutlineMenu
-            className="d-block d-md-none"
+            className="d-block d-md-none menu"
             size="35"
             onClick={mobile}
           />
@@ -123,18 +126,11 @@ function Header() {
         <MdOutlineLogout className="logOut" size="30" onClick={logOut} />
       </div>
       <div className="between ">
-        {/* TODO:另作手機板元件 */}
-        <div
-          className={`navLeft  d-md-block  ${
-            mobileToggle
-              ? 'd-block position-absolute'
-              : 'd-none position-relative'
-          }`}
-        >
+        {/* 桌機版 */}
+        <div className="navLeft d-none  d-md-block  ">
           <div>接案單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
-
           {/* 使用者/主管 */}
           {user ? (
             <>
@@ -142,7 +138,7 @@ function Header() {
                 <NavLink
                   to="application"
                   className={(nav) => (nav.isActive ? 'link' : '')}
-                  // onClick={()=>{}}
+                
                 >
                   <div>
                     <HiPencilAlt size="20" />
@@ -275,24 +271,30 @@ function Header() {
               ) : (
                 ''
               )}
-              <nav>
+              {/* <nav>
                 <NavLink
                   to="permissions"
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  {/* 處理人/協理/主管 */}
+                  處理人/協理/主管
                   <div className="" onClick={acf}>
                     <RiPhoneFindFill size="20" />
                     權限管理
                   </div>
                 </NavLink>
-              </nav>
+              </nav> */}
             </>
           ) : (
             ''
           )}
         </div>
-
+        {/* 桌機版 end*/}
+        {/* 手機版 */}
+        <HeaderMobile
+          mobileToggle={mobileToggle}
+          setMobileToggle={setMobileToggle}
+        />
+        {/* 手機版 end*/}
         <div className="navRight">
           <Outlet />
         </div>

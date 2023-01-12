@@ -2,18 +2,23 @@
 
 .scroll {
   width: 100%;
-  min-width: 560px;
   height: calc(100vh - 70px);
   @include scrollbar;
   .container {
-    width: 70%;
     display: flex;
     align-items: center;
     flex-direction: column;
 
+    @media only screen and (min-width: 576px) {
+      width: 100%;
+    }
+    @media only screen and (min-width: 576px) {
+      width: 70%;
+    }
+
     h3 {
       font-weight: bold;
-      margin-top:$marage10;
+      margin-top: $marage10;
     }
     .vector {
       width: 80%;
@@ -21,7 +26,7 @@
     }
 
     .box {
-      display: flex;
+      // display: flex;
       justify-content: space-between;
       width: 70%;
       div {
@@ -52,7 +57,7 @@
         margin: 0;
       }
       .otherText {
-        margin-top:$marage10;
+        margin-top: $marage10;
         display: block;
       }
       .disNone {
@@ -108,7 +113,7 @@
     //     .disNone {
     //       display: none;
     //     }
-  
+
     //     .check {
     //       display: flex;
     //       margin-top: 0;
@@ -127,7 +132,7 @@
       }
       span {
         opacity: 0;
-        color:$focusClrY;
+        color: $focusClrY;
       }
       .view {
         opacity: 1;
@@ -166,7 +171,7 @@
 
         & div {
           display: flex;
-          margin-top:$marage10;
+          margin-top: $marage10;
           .input {
             width: 100%;
           }

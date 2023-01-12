@@ -20,7 +20,6 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
-
   //使用者資料
   const navBtn = [
     {

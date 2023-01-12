@@ -459,7 +459,7 @@ function Application({ delCheck }) {
         <h3>接案資訊</h3>
         <div className="vector"></div>
         {/* 欄位 */}
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 申請類別 */}
           <div className="gap">
             <div>
@@ -512,7 +512,7 @@ function Application({ delCheck }) {
             </select>
           </div>
         </div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 處理人 */}
           <div className="gap">
             <div>處理人</div>
@@ -603,7 +603,7 @@ function Application({ delCheck }) {
         <h3>當事人資訊</h3>
         <div className="vector"></div>
 
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 當事人 */}
           <div className="gap">
             <div> 當事人姓名</div>
@@ -634,7 +634,7 @@ function Application({ delCheck }) {
           </div>
           {/* 電話 */}
         </div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 縣市*/}
           <div className="gap">
             <div>當事人縣市</div>
@@ -668,7 +668,7 @@ function Application({ delCheck }) {
             </select>
           </div>
         </div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 里 */}
           <div className="gap">
             <div>當事人里</div>
@@ -698,7 +698,7 @@ function Application({ delCheck }) {
         </div>
         <h3>請託人資訊</h3>
         <div className="vector"></div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 請託人 */}
           <div className="gap">
             <div> 請託人姓名</div>
@@ -729,7 +729,7 @@ function Application({ delCheck }) {
           </div>
           {/* 電話 */}
         </div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 縣市*/}
           <div className="gap">
             <div>請託縣市</div>
@@ -763,7 +763,7 @@ function Application({ delCheck }) {
             </select>
           </div>
         </div>
-        <div className="box">
+        <div className="box d-md-flex">
           {/* 里 */}
           <div className="gap">
             <div>請託人里</div>
