@@ -29,7 +29,7 @@ import HandlerUnitPage from './CountALL/HandlerUnitPage';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
-
+  const [scrollPage, setScrollPage] = useState(false);
   // 刪除sweet
   function delCheck(tit, fun, i) {
     Swal.fire({
@@ -84,7 +84,15 @@ function App() {
             <Route path="permissions" element={<Permissions />} />
 
             {/* detail */}
-            <Route path="caseDetail" element={<CaseDetail />}>
+            <Route
+              path="caseDetail"
+              element={
+                <CaseDetail
+                  setScrollPage={setScrollPage}
+                  scrollPage={scrollPage}
+                />
+              }
+            >
               <Route
                 path="application/:num"
                 element={
@@ -92,6 +100,7 @@ function App() {
                     setAddStatus={setAddStatus}
                     addStatus={addStatus}
                     delCheck={delCheck}
+                    scrollPage={scrollPage}
                   />
                 }
               />

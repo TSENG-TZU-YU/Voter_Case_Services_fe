@@ -67,7 +67,6 @@ function Application({ delCheck }) {
     { name: '友善' },
     { name: '沒特別喜好' },
     { name: '抱怨謾罵' },
-
   ];
 
   // 檢查會員
@@ -363,6 +362,7 @@ function Application({ delCheck }) {
         showCancelButton: false,
         confirmButtonText: '確定儲存',
         denyButtonText: `取消儲存`,
+        confirmButtonColor: '#1f9998',
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('儲存成功', '', 'success').then(() => {
@@ -869,11 +869,10 @@ function Application({ delCheck }) {
         {/* 附件上傳 */}
         <div className="file">
           <div className="fileName">
-            <div className='fileColumn'>
+            <div className="fileColumn">
               <div>附件上傳 (檔案限制10MB)</div>
               <div>
-                (可上傳副檔名
-                csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
+                (可上傳副檔名 csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
               </div>
               {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
             </div>

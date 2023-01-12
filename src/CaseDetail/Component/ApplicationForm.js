@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
 import { useLocation, useParams } from 'react-router-dom';
@@ -14,6 +14,8 @@ import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
 import GenerallyBtn from '../../Btn/GenerallyBtn';
 import ProcessingStatus from './ProcessingStatus';
+
+// import ProcessingStatus from './ProcessingStatus';
 
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -30,6 +32,7 @@ function ApplicationForm({
   setAddStatus,
   addStatus,
   delCheck,
+  scrollPage,
   // viewCheck,
 }) {
   const { num } = useParams();
@@ -40,6 +43,7 @@ function ApplicationForm({
   let caseId = params.get('id');
   let Sender = params.get('sender');
   let WebPage = parseInt(params.get('page'));
+  let scroll = parseInt(params.get('scroll'));
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +66,7 @@ function ApplicationForm({
     remark: '',
     finishTime: '',
   });
-  // console.log('hid', HId);
+
   const [selectRemind, setSelectRemind] = useState(false);
   const [postValRemind, setPostValRemind] = useState(false);
   const [postCaseRemind, setPostCaseRemind] = useState(false);
@@ -81,7 +85,6 @@ function ApplicationForm({
     { title: '短期', value: '2' },
     { title: '長期', value: '3' },
   ];
-  // console.log('getFile', getFile);
   //友好程度
   const relation = [
     { name: 'VIP' },
@@ -101,7 +104,7 @@ function ApplicationForm({
             withCredentials: true,
           }
         );
-        // console.log(response.data);
+
         setMember(response.data);
       } catch (err) {
         console.log(err.response.data.message);
@@ -113,8 +116,6 @@ function ApplicationForm({
       setAddStatus(false);
     }
   }, [detailData]);
-
-  // console.log('st', member.applicant_unit);
 
   // 修改申請表
   const [edit, setEdit] = useState(true);
@@ -149,7 +150,6 @@ function ApplicationForm({
     if (input === 'clientAddress') newData[0].client_address = val;
     if (input === 'remark') newData[0].remark = val;
     if (input === 'unit') newData[0].unit = val;
-    // console.log('detailData', newData);
     setDetailData(newData);
   };
   //申請表驗證空值
@@ -163,9 +163,6 @@ function ApplicationForm({
   //增加上傳檔案
   const addF = () => {
     const newAdds = [...getFile, { file: '' }];
-    // const newAdds = [...getFile, {}];
-
-    console.log('newAdds', newAdds);
     setGetFile(newAdds);
   };
   //刪除檔案
@@ -191,7 +188,7 @@ function ApplicationForm({
     }
     let newData = [...getFile];
     if (input === 'file') newData[i].file = val;
-    // console.log('n', newData[0].file.name);
+
     setGetFile(newData);
   };
   useEffect(() => {
@@ -465,6 +462,25 @@ function ApplicationForm({
     }
   }
 
+  //scroll
+  const scrollRef1 = useRef();
+  const scrollRef2 = useRef();
+  useEffect(() => {
+    if (scrollRef1.current && scroll === 1) {
+      scrollRef1.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+    if (scrollRef2.current && scroll === 2) {
+      scrollRef2.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+  }, [scrollPage, isLoading]);
   // 取得detail Id 的值
   useEffect(() => {
     setIsLoading(true);
@@ -482,8 +498,6 @@ function ApplicationForm({
       setNeedData(response.data.needResult);
       setRemarkLength(response.data.remarkResult.length);
       setHandlerUnit(response.data.result[0].unit);
-      // console.log('u', response.data.result[0].unit);
-      // console.log('m', member.applicant_unit);
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -494,12 +508,11 @@ function ApplicationForm({
         let data = { file: a[i] };
         newFiles.push(data);
       }
-      // console.log('n',newFiles)
+
       setGetFile(newFiles);
-      // console.log('getFile111', getFile);
+
       if (getFile.length > 0) {
         setGetDbFileTime(response.data.getFile[0].file_no);
-        // console.log('getDbFileTime', response.data.getFile[0].file_no);
       }
 
       // selectStatus filter
@@ -524,8 +537,6 @@ function ApplicationForm({
       setTimeout(() => {
         setIsLoading(false);
       }, 800);
-      // console.log('s', response.data.result[0].status_id);
-      // console.log('c', parseInt(response.data.needSum[0].checked));
     };
 
     getCampingDetailData();
@@ -541,7 +552,6 @@ function ApplicationForm({
         }
       );
       setNeedLoading(!needLoading);
-      // console.log('checked', response.data);
     } else {
       let response = await axios.put(
         `${API_URL}/applicationData/unChecked/${needId}`,
@@ -550,7 +560,6 @@ function ApplicationForm({
         }
       );
       setNeedLoading(!needLoading);
-      // console.log('checked', response.data);
     }
   };
 
@@ -577,16 +586,16 @@ function ApplicationForm({
   };
 
   // del all need
-  const handleDelAllNeed = () => {
-    let newData = [
-      {
-        requirement_name: '',
-        directions: '',
-        case_number_id: detailData[0].case_number,
-      },
-    ];
-    setEditNeed(newData);
-  };
+  // const handleDelAllNeed = () => {
+  //   let newData = [
+  //     {
+  //       requirement_name: '',
+  //       directions: '',
+  //       case_number_id: detailData[0].case_number,
+  //     },
+  //   ];
+  //   setEditNeed(newData);
+  // };
 
   //   update contain
   const handlerUpdateNeed = (val, i, input) => {
@@ -605,7 +614,7 @@ function ApplicationForm({
       handler: detailData[0].handler,
       caseNumber: detailData[0].case_number,
     };
-    // console.log(val);
+
     setPostVal(val);
   };
 
@@ -629,7 +638,6 @@ function ApplicationForm({
       }
     );
 
-    // console.log('add', response.data);
     Swal.fire({
       icon: 'success',
       title: '完成',
@@ -672,7 +680,6 @@ function ApplicationForm({
       }
     );
 
-    // console.log('add', response.data);
     if (input === 'finish') {
       ViewCheck('修改成功', setNeedLoading, needLoading, setEditPage, false);
       navigate(`/header/caseManagement`);
@@ -700,7 +707,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console(response.data);
+
     ViewCheck('申請案件已取消', setNeedLoading, needLoading);
     navigate(`/header/caseManagement`);
 
@@ -722,7 +729,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console.log(response.data);
+
     ViewCheck('已接收此案件', setNeedLoading, needLoading);
     navigate(`/header/caseManagement_handler`);
     // Swal.fire({
@@ -743,7 +750,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console.log(response.data);
+
     ViewCheck('已拒絕接收此案件', setNeedLoading, needLoading);
     navigate(`/header/caseManagement_handler`);
     // Swal.fire({
@@ -764,7 +771,7 @@ function ApplicationForm({
       }).then(function () {});
       return;
     }
-    // console.log('object', remarkLength === 0);
+
     let response = await axios.post(
       `${API_URL}/applicationData/applicationFinish/${num}`,
       { caseId },
@@ -773,7 +780,6 @@ function ApplicationForm({
       }
     );
 
-    // console.log(response.data);
     ViewCheck('案件已完成', setNeedLoading, needLoading);
     navigate(`/header/caseManagement_handler`);
     // Swal.fire({
@@ -794,7 +800,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console.log(response.data);
+
     ViewCheck('已確定接收此案件', setNeedLoading, needLoading);
     navigate(`/header/caseManagement_handler`);
     // Swal.fire({
@@ -815,7 +821,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console.log(response.data);
+
     ViewCheck('該案件已完成', setNeedLoading, needLoading);
     navigate(`/header/caseManagement`);
     // Swal.fire({
@@ -836,7 +842,7 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    // console.log(response.data);
+
     ViewCheck('該案件未完成，案件進行中', setNeedLoading, needLoading);
     navigate(`/header/caseManagement`);
     // Swal.fire({
@@ -985,7 +991,7 @@ function ApplicationForm({
               否，無法接收此案件
             </div>
           </> */}
-
+            <div ref={scrollRef1}></div>
             {/* 處理狀態 */}
             {handleData.length !== 0 ? (
               <>
@@ -1972,7 +1978,9 @@ function ApplicationForm({
             ) : (
               ''
             )}
-
+            <div id="dealWith" ref={scrollRef2}>
+              處理情況
+            </div>
             <ProcessingStatus />
           </div>
         </>

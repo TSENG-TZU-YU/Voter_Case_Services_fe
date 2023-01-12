@@ -12,6 +12,7 @@ import { HiPencilAlt } from 'react-icons/hi';
 import { RiFileTextLine } from 'react-icons/ri';
 import { RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
+import { AiOutlineMenu } from 'react-icons/ai';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -24,6 +25,8 @@ function Header() {
   const location = useLocation();
   let params = new URLSearchParams(location.search);
   let page = params.get('page');
+
+  const [mobileToggle, setMobileToggle] = useState(false);
 
   //使用者資料
   const { member, setMember } = useAuth();
@@ -55,6 +58,7 @@ function Header() {
 
         setMember(response.data);
       } catch (err) {
+        navigate('/');
         console.log(err.response.data.message);
       }
     }
@@ -92,6 +96,11 @@ function Header() {
 
   useEffect(() => {}, [page]);
 
+  const mobile = (e) => {
+    //toggle
+    setMobileToggle(!mobileToggle);
+    e.stopPropagation();
+  };
   //顯示統計
   const act = () => {
     setActive(true);
@@ -103,11 +112,25 @@ function Header() {
   return (
     <>
       <div className="navTop">
-        <h3>選民案件服務系統</h3>
+        <div className="mobile">
+          <AiOutlineMenu
+            className="d-block d-md-none"
+            size="35"
+            onClick={mobile}
+          />
+          <div className="titleH3 ">選民案件服務系統</div>
+        </div>
         <MdOutlineLogout className="logOut" size="30" onClick={logOut} />
       </div>
-      <div className="between">
-        <div className="navLeft">
+      <div className="between ">
+        {/* TODO:另作手機板元件 */}
+        <div
+          className={`navLeft  d-md-block  ${
+            mobileToggle
+              ? 'd-block position-absolute'
+              : 'd-none position-relative'
+          }`}
+        >
           <div>接案單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
