@@ -1,6 +1,6 @@
 {
   "name": "application_form",
-  "home":"./",
+  "home": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,6 +15,7 @@
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
+    "react-scroll": "^1.8.9",
     "react-select": "^5.7.0",
     "sass": "^1.56.1",
     "sweetalert2": "^11.6.15",

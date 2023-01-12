@@ -19,7 +19,7 @@
   // background: lightgoldenrodyellow;
   margin: 0 auto;
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 350px);
   padding: 0 5px;
   @include scrollbar;
   .handleStatus {
@@ -58,9 +58,11 @@
   }
 }
 .dealWithContainer{
-  display: grid;
-  grid-template-columns:100px 4fr;
-  // font-size:$navbarLeft18;
+  // display: grid;
+  // grid-template-columns:140px 4fr;
+  font-size:$subText;
+  white-space: nowrap;
+
 }
 .noneHight {
   height: calc(100% - 100px);
