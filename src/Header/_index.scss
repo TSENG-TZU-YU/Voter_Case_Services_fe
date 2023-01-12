@@ -19,6 +19,9 @@
       color: $mainClrW;
       font-size: clamp(12px, 4vw, $containerTit28);
     }
+    .menu {
+      color: $mainClrW;
+    }
   }
 
   .logOut {
@@ -32,7 +35,7 @@
     width: 200px;
     min-width: 200px;
     height: calc(100vh - 70px);
-    background-color: $navBar;
+    background-color: $navBarPc;
     display: flex;
     align-items: flex-start;
     justify-content: start;
@@ -61,11 +64,22 @@
       }
     }
   }
-  .navRight {
-    width: calc(100vw - 200px);
-    min-width: 560px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+
+  @media only screen and (min-width: 576px) {
+    .navRight {
+      width: calc(100vw - 120px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
+
+  @media only screen and (max-width: 576px) {
+    .navRight {
+      width: calc(100vw);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
   }
 }

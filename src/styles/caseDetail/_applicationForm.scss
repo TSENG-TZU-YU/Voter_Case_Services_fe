@@ -79,7 +79,15 @@
     // background: lightblue;
     max-width: 85%;
     margin: 20px auto 10px;
-
+    .appTitle {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      font-size: $navbarLeft18;
+    }
+    .vector {
+      border-top: 2px solid black;
+    }
     .gapContain {
       display: flex;
       align-items: center;
@@ -97,27 +105,6 @@
       }
     }
 
-    .outGap {
-      border: 2px solid $subClrBrown;
-      // width: 84%;
-      margin-top: 10px;
-      .gapContain {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 5px;
-        // gap: 120px;
-        select {
-          width: 200px;
-          height: 30px;
-        }
-        .hide-arrows::-webkit-outer-spin-button,
-        .hide-arrows::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-      }
-    }
 
     .add {
       width: 100%;

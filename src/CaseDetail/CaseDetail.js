@@ -19,7 +19,6 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
-
   //使用者資料
   const navBtn = [
     {
@@ -60,8 +59,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
                 <li key={uuidv4()}>
                   <NavLink
                     to={v.url}
-                    className={`linkPad ${(nav) =>
-                      nav.isActive ? 'active' : ''}`}
+                    className={`linkPad ${(nav) => (nav.isActive ? '' : '')}`}
                     onClick={doScrollPage}
                   >
                     {v.title}
