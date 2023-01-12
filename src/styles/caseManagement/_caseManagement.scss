@@ -5,7 +5,11 @@
   height: calc(100vh - 70px);
   //   background: rgb(231, 190, 151);
   margin: 0 auto;
-  font-size: 12px;
+  // padding-bottom: 30px;
+  font-size: clamp(12px, 1vw, 18px);
+  .case {
+    @include scrollbar;
+  }
   .sortSelect {
     // background: lemonchiffon;
     padding: 30px 0px 10px 0px;
@@ -26,9 +30,14 @@
     .body {
       border-bottom: 1px solid #ccc;
       text-align: center;
+      tr,
+      th,
+      td {
+        white-space: nowrap;
+      }
       th {
         padding: 10px 15px;
-        font-size: 14px;
+        // font-size: 14px;
         .arrow {
           font-size: 2rem;
           cursor: pointer;

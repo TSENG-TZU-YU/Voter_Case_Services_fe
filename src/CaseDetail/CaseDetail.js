@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -16,6 +16,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   let User = params.get('user');
   let Sender = params.get('sender');
   let page = parseInt(params.get('page'));
+  let Scroll = parseInt(params.get('scroll'));
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
@@ -34,7 +35,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
     },
     {
       title: '上傳文件',
-      url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
+      url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}&scroll=3`,
     },
   ];
 
@@ -55,13 +56,14 @@ function CaseDetail({ setScrollPage, scrollPage }) {
       <div className="caseDetailContain">
         <nav>
           <ul>
-            {navBtn.map((v) => {
+            {navBtn.map((v, i) => {
               return (
                 <li key={uuidv4()}>
                   <NavLink
                     to={v.url}
-                    className={`linkPad ${(nav) =>
-                      nav.isActive ? 'active' : ''}`}
+                    // className={(nav) =>console.log(i, v.act === i && nav.isActive)
+                    //  }
+                    className={`linkPad ${Scroll === i + 1 ? 'act' : ''}`}
                     onClick={doScrollPage}
                   >
                     {v.title}

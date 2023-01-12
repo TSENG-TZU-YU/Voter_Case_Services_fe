@@ -28,7 +28,7 @@
       transition: 0.3s linear;
       opacity: 0;
     }
-    span{
+    span {
       background: $mainClrW;
       z-index: 10;
     }
@@ -52,7 +52,7 @@
           .linkPad {
             padding: 4px 15px;
           }
-          .active {
+          .act {
             color: $focusClrG;
           }
         }
