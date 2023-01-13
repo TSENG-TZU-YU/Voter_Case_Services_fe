@@ -13,6 +13,7 @@ import { RiFileTextLine } from 'react-icons/ri';
 import { RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { AiFillUnlock } from 'react-icons/ai';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -279,6 +280,18 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
         ) : (
           ''
         )}
+        <nav className="vectorBottom">
+          <NavLink
+            to="permissions"
+            className={(nav) => (nav.isActive ? 'link' : '')}
+            onClick={mobilePage}
+          >
+            <div className="" onClick={acf}>
+              <AiFillUnlock size="20" />
+              密碼更改
+            </div>
+          </NavLink>
+        </nav>
       </div>
     </>
   );
