@@ -1,19 +1,26 @@
 @import '../variable';
 
-.caseContainer {
-  width: 90%;
+.caseWrap {
+  width: 95%;
   height: calc(100vh - 70px);
-  //   background: rgb(231, 190, 151);
-  margin: 0 auto;
-  font-size: clamp(12px,1vw,18px);
+  // background: rgb(231, 190, 151);
+  // margin: 0 auto;
+  font-size: clamp(12px, 1vw, 18px);
   // padding-bottom: 30px;
-
+  // .m-view {
+  //   display: none;
+  // }
+  .direction {
+    flex-direction: column;
+  }
+  // sort
   .sort {
     // background: lemonchiffon;
-    padding: 30px 0px 20px 0px;
+    padding: 20px 0px 0px;
     display: flex;
     justify-content: space-between;
-    .bothFilter {
+    margin-bottom: $marage10;
+    .filter {
       display: flex;
       justify-content: flex-start;
     }
@@ -23,7 +30,6 @@
       justify-content: start;
     }
   }
-  // sort
   .userFlex {
     display: flex;
     align-items: center;
@@ -54,14 +60,14 @@
       }
     }
     .stateTit {
-      font-size: 14px;
+      // font-size: 14px;
       margin-top: 10px;
       color: $focusClrG;
       font-weight: 600;
     }
     .allTit {
       padding: 5px;
-      font-size: 14px;
+      // font-size: 14px;
       background: $focusClrG;
       color: #fff;
       border-radius: 3px;
@@ -70,11 +76,55 @@
   }
 }
 
-@media screen and (max-width:375px) {
-  .m-view{
-      display: flex;
+@media screen and (max-width: 1000px) {
+  .m-view {
+    display: flex;
   }
-  .p-view{
-      display: none;
+  .p-view {
+    display: none;
+  }
+  .direction {
+    flex-direction: column;
+  }
+  .marginB {
+    margin-bottom: $marage10;
+  }
+  // sort
+  .sort {
+    // background: lemonchiffon;
+    // padding: 30px 0px 20px 0px;
+    // display: flex;
+    // justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 0px !important;
+    .filter {
+      // display: flex;
+      margin-bottom: $marage10;
+    }
+    .userSort {
+      // background: lightcoral;
+      flex-direction: column;
+
+      // display: flex;
+      align-items: start !important;
+      // justify-content: start;
+    }
+  }
+  .userFlex {
+    flex-direction: column;
+
+    // display: flex;
+    align-items: start !important;
+    // justify-content: start;
+
+    .userSort {
+      // display: flex;
+      flex-direction: column;
+      align-items: start !important;
+      // justify-content: start;
+      .unitFlex {
+        display: flex;
+      }
+    }
   }
 }

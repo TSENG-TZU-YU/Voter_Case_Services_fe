@@ -11,7 +11,7 @@ function ActivitySelect({ setNowUser, allUserData }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請選擇申請人--' }, ...newData];
+  const sortOption = [{ value: '', label: '請選擇申請人' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -66,7 +66,6 @@ function ActivitySelect({ setNowUser, allUserData }) {
   return (
     <>
       <Select
-        className="ms-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

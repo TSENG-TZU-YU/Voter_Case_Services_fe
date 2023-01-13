@@ -4,7 +4,7 @@ import Select from 'react-select';
 
 function ActivitySelect({ setFinish }) {
   const sortOption = [
-    { value: '', label: '----請選擇進度----' },
+    { value: '', label: '請選擇進度' },
     { value: '12', label: '案件已完成' },
     { value: '2', label: '案件未完成' },
   ];

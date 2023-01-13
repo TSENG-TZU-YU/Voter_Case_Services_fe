@@ -1,23 +1,33 @@
 @import '../variable';
 
+.m-view {
+  display: none;
+}
 .caseContainer {
-  max-width: 95%;
+  // background: rgb(231, 190, 151);
+  width: 90%;
   height: calc(100vh - 70px);
-  //   background: rgb(231, 190, 151);
-  margin: 0 auto;
+  // margin: 0 auto;
   // padding-bottom: 30px;
   font-size: clamp(12px, 1vw, 18px);
+  // display: flex;
+  // flex-direction: column;
   .case {
     @include scrollbar;
   }
   .sortSelect {
     // background: lemonchiffon;
-    padding: 30px 0px 10px 0px;
+    width: 100%;
+    // font-size: clamp(12px, 1vw, 13.9px);
+    padding: 20px 0px 0px;
     display: flex;
     justify-content: space-between;
     .bothFilter {
       display: flex;
       justify-content: flex-start;
+      .marge5 {
+        margin-right: 10px;
+      }
     }
   }
   .caseContain {
@@ -57,33 +67,6 @@
       .view {
         color: $focusClrG;
       }
-      .viewList {
-        // cursor: pointer;
-        // background: $mainClrW;
-        // color: $focusClrG;
-        // border: 1px solid $focusClrG;
-        // padding: 5px 6px;
-        // border-radius: 3px;
-        // transition: 0.3s;
-        // &:hover {
-        //   background: $focusClrG;
-        //   color: #fff;
-        // }
-      }
-      // .posClick {
-      //   position: relative;
-      //   .hadClick {
-      //     position: absolute;
-      //     padding: 1px 3.5px;
-      //     z-index: 10;
-      //     background: #ffc0cbb1;
-      //     border-radius: 10px;
-      //     text-align: center;
-      //     font-weight: 600;
-      //     right: 0;
-      //     top: 20%;
-      //   }
-      // }
       .sortBtn {
         @include flexCenter;
       }
@@ -102,8 +85,68 @@
     text-align: center;
     .noTd {
       padding: 15px;
-      &:hover {
-        // background: $mainClrW;
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .m-view {
+    display: flex;
+  }
+  .p-view {
+    display: none;
+  }
+  .sortSelect {
+    // background: lemonchiffon;
+    // padding: 30px 0px 10px 0px;
+    // display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .both {
+      display: flex;
+      margin-bottom: $marage10;
+      .bothFilter {
+        // display: flex;
+        // justify-content: space-between;
+        .marge5 {
+          margin-right: $marage10;
+        }
+        .margeNone {
+          margin-right: $marage10;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .m-view {
+    display: flex;
+  }
+  .p-view {
+    display: none;
+  }
+  .sortSelect {
+    // background: lemonchiffon;
+    // padding: 30px 0px 0px 0px;
+    // display: flex;
+    // justify-content: space-between;
+
+    align-items: center;
+    // justify-content: start;
+
+    .both {
+      // display: flex;
+      margin-bottom: 0;
+      flex-direction: column;
+      .bothFilter {
+        // display: flex;
+        // width: 370px;
+
+        padding-bottom: 15px;
+        .margeNone {
+          margin-right: 0;
+        }
       }
     }
   }

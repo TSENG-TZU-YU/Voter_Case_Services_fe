@@ -12,7 +12,7 @@ function ActivitySelect({ setHandler, handlerData }) {
   }
   // console.log('n', newData);
   const sortOption = [
-    { value: '', label: '--請選擇處理人--' },
+    { value: '', label: '請選擇處理人' },
     { value: '尚無處理人', label: '尚無處理人' },
     ...newData,
   ];

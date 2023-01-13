@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useAuth } from '../utils/use_auth';
 import moment from 'moment';
 
-// import '../styles/caseManagement/_caseManagement.scss';
 import '../styles/count/_countPage.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
@@ -176,89 +175,193 @@ function CountPage() {
 
   return (
     <>
-      <div className="caseContainer">
+      <div className="caseWrap">
         {/* 篩選 */}
-        <div className="sort">
-          <div className="bothFilter">
-            {/* 類別 */}
-            <div className="userSort">
-              <div>申請類別：</div>
-              <CategoryFilter
-                allCategoryData={allCategoryData}
-                setNowCategory={setNowCategory}
-              />
-            </div>
-            {/* 狀態 */}
-            <div className="userSort">
-              <div>狀態：</div>
-              <StatusFilter
-                allStatusData={allStatusData}
-                setNowStatus={setNowStatus}
-                countStatusData={countStatusData}
-              />
-            </div>
-            {/* 處理單位 */}
-            {/* <div className="userSort">
+        <div className="p-view direction">
+          <div className="sort">
+            <div className="filter">
+              {/* 類別 */}
+              <div className="userSort me-3">
+                <div>申請類別：</div>
+                <CategoryFilter
+                  allCategoryData={allCategoryData}
+                  setNowCategory={setNowCategory}
+                />
+              </div>
+              {/* 狀態 */}
+              <div className="userSort">
+                <div>狀態：</div>
+                <StatusFilter
+                  allStatusData={allStatusData}
+                  setNowStatus={setNowStatus}
+                  countStatusData={countStatusData}
+                />
+              </div>
+              {/* 處理單位 */}
+              {/* <div className="userSort">
               <div>處理單位：</div>
               <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
             </div> */}
-          </div>
-          {/* 日期 */}
-          <div className="userSort">
-            <div>申請日期：</div>
-            <DateFilter
-              dateRemind={dateRemind}
-              setDateRemind={setDateRemind}
-              setMaxDate={setMaxDate}
-              setMinDate={setMinDate}
-              maxDateValue={maxDateValue}
-              setMaxDateValue={setMaxDateValue}
-              minDateValue={minDateValue}
-              setMinDateValue={setMinDateValue}
-              dateAgo={dateAgo}
-              nowDate={nowDate}
-            />
-          </div>
-        </div>
-        <div className="userFlex">
-          {/* 申請單位/申請人 */}
-          <div className="userSort">
-            <div>申請單位/申請人：</div>
-            <UserUnitFilter
-              allUnit={allUnit}
-              setNowUnit={setNowUnit}
-              setNowAppUnit={setNowAppUnit}
-              setNowUserUnit={setNowUserUnit}
-              setNowUser={setNowUser}
-              setUnitChange={setUnitChange}
-            />
-            {unitChange ? (
-              <UserFilter setNowUser={setNowUser} allUserData={allUserData} />
-            ) : (
-              ''
-            )}
-          </div>
-          {/* 申請單位/處理人 */}
-          <div className="userSort">
-            <div className="ms-3">處理單位/處理人：</div>
-            <UserHandlerFilter
-              allUnit={allUnit}
-              setHandler={setHandler}
-              setNowHandlerUnit={setNowHandlerUnit}
-              setHandleChange={setHandleChange}
-              setNowUnit={setNowUnit}
-            />
-            {handleChange ? (
-              <HandlerFilter
-                setHandler={setHandler}
-                handlerData={handlerData}
+            </div>
+            {/* 日期 */}
+            <div className="userSort">
+              <div>申請日期：</div>
+              <DateFilter
+                dateRemind={dateRemind}
+                setDateRemind={setDateRemind}
+                setMaxDate={setMaxDate}
+                setMinDate={setMinDate}
+                maxDateValue={maxDateValue}
+                setMaxDateValue={setMaxDateValue}
+                minDateValue={minDateValue}
+                setMinDateValue={setMinDateValue}
+                dateAgo={dateAgo}
+                nowDate={nowDate}
               />
-            ) : (
-              ''
-            )}
+            </div>
+          </div>
+          <div className="userFlex">
+            {/* 申請單位/申請人 */}
+            <div className="userSort">
+              <div>申請單位/申請人：</div>
+              <UserUnitFilter
+                allUnit={allUnit}
+                setNowUnit={setNowUnit}
+                setNowAppUnit={setNowAppUnit}
+                setNowUserUnit={setNowUserUnit}
+                setNowUser={setNowUser}
+                setUnitChange={setUnitChange}
+              />
+              {unitChange ? (
+                <div className="ms-2">
+                  <UserFilter
+                    setNowUser={setNowUser}
+                    allUserData={allUserData}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+            {/* 申請單位/處理人 */}
+            <div className="userSort">
+              <div className="ms-3">處理單位/處理人：</div>
+              <UserHandlerFilter
+                allUnit={allUnit}
+                setHandler={setHandler}
+                setNowHandlerUnit={setNowHandlerUnit}
+                setHandleChange={setHandleChange}
+                setNowUnit={setNowUnit}
+              />
+              {handleChange ? (
+                <div className="ms-2">
+                  <HandlerFilter
+                    setHandler={setHandler}
+                    handlerData={handlerData}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
           </div>
         </div>
 
+        {/* m */}
+        <div className="m-view direction">
+          <div className="sort">
+            <div className="filter">
+              {/* 類別 */}
+              <div className="userSort me-2">
+                <div>申請類別：</div>
+                <CategoryFilter
+                  allCategoryData={allCategoryData}
+                  setNowCategory={setNowCategory}
+                />
+              </div>
+              {/* 狀態 */}
+              <div className="userSort">
+                <div>狀態：</div>
+                <StatusFilter
+                  allStatusData={allStatusData}
+                  setNowStatus={setNowStatus}
+                  countStatusData={countStatusData}
+                />
+              </div>
+              {/* 處理單位 */}
+              {/* <div className="userSort">
+              <div>處理單位：</div>
+              <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+            </div> */}
+            </div>
+            {/* 日期 */}
+            <div className="userSort marginB">
+              <div>申請日期：</div>
+              <DateFilter
+                dateRemind={dateRemind}
+                setDateRemind={setDateRemind}
+                setMaxDate={setMaxDate}
+                setMinDate={setMinDate}
+                maxDateValue={maxDateValue}
+                setMaxDateValue={setMaxDateValue}
+                minDateValue={minDateValue}
+                setMinDateValue={setMinDateValue}
+                dateAgo={dateAgo}
+                nowDate={nowDate}
+              />
+            </div>
+          </div>
+          <div className="userFlex">
+            {/* 申請單位/申請人 */}
+            <div className="userSort marginB">
+              <div>申請單位/申請人：</div>
+              <div className="unitFlex">
+                <UserUnitFilter
+                  allUnit={allUnit}
+                  setNowUnit={setNowUnit}
+                  setNowAppUnit={setNowAppUnit}
+                  setNowUserUnit={setNowUserUnit}
+                  setNowUser={setNowUser}
+                  setUnitChange={setUnitChange}
+                />
+                {unitChange ? (
+                  <div className="ms-2">
+                    <UserFilter
+                      setNowUser={setNowUser}
+                      allUserData={allUserData}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+            {/* 申請單位/處理人 */}
+            <div className="userSort">
+              <div>處理單位/處理人：</div>
+              <div className="unitFlex">
+                <UserHandlerFilter
+                  allUnit={allUnit}
+                  setHandler={setHandler}
+                  setNowHandlerUnit={setNowHandlerUnit}
+                  setHandleChange={setHandleChange}
+                  setNowUnit={setNowUnit}
+                />
+                {handleChange ? (
+                  <div className="ms-2">
+                    <HandlerFilter
+                      setHandler={setHandler}
+                      handlerData={handlerData}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* ------ */}
         <hr />
 
         {/* 統計 */}

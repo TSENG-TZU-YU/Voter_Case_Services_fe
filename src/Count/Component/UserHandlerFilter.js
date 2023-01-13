@@ -17,7 +17,7 @@ function ActivitySelect({
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請先選擇處理單位--' }, ...newData];
+  const sortOption = [{ value: '', label: '請先選擇處理單位' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -72,7 +72,6 @@ function ActivitySelect({
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onFocus={() => {
           setHandleChange(false);

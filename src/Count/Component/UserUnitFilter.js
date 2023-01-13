@@ -17,7 +17,7 @@ function ActivitySelect({
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請先選擇申請單位--' }, ...newData];
+  const sortOption = [{ value: '', label: '請先選擇申請單位' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({

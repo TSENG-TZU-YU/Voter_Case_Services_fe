@@ -28,7 +28,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
 
   //使用者資料
   const { member, setMember } = useAuth();
-  console.log('mobileToggle', mobileToggle);
+  // console.log('mobileToggle', mobileToggle);
   //樣式
   // const [appLink1, setAppLink1] = useState(false);
   // const [appLink2, setAppLink2] = useState(false);

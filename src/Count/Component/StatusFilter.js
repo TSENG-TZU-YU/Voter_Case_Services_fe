@@ -11,7 +11,7 @@ function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請選擇狀態--' }, ...newData];
+  const sortOption = [{ value: '', label: '請選擇狀態' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -64,7 +64,6 @@ function ActivitySelect({ allStatusData, setNowStatus, countStatusData }) {
   return (
     <>
       <Select
-        className="me-3"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

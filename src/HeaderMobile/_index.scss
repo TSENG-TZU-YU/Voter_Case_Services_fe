@@ -8,6 +8,7 @@
   justify-content: end;
   flex-direction: column;
   padding:0 10px ;
+  transition: .4s;
   .vectorBottom {
     border-bottom: 2px solid black;
     padding: $padding5 0;

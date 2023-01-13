@@ -76,7 +76,6 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[2]}
         onChange={(e) => {
           // console.log(e.value);

@@ -189,23 +189,31 @@ function CaseManagement() {
             ''
           )} */}
         <div className="caseContainer">
-         
-            {/* 篩選 */}
+          {/* 篩選 */}
+          <div className="p-view">
             <div className="sortSelect">
               <div className="bothFilter">
-                <CategoryFilter
-                  allCategoryData={allCategoryData}
-                  setNowCategory={setNowCategory}
-                />
-                <StatusFilter
-                  allStatusData={allStatusData}
-                  setNowStatus={setNowStatus}
-                />
-                <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                <UnitHandlerFilter
-                  allUnit={allUnit}
-                  setNowHUnit={setNowHUnit}
-                />
+                <div className="marge5">
+                  <CategoryFilter
+                    allCategoryData={allCategoryData}
+                    setNowCategory={setNowCategory}
+                  />
+                </div>
+                <div className="marge5">
+                  <StatusFilter
+                    allStatusData={allStatusData}
+                    setNowStatus={setNowStatus}
+                  />
+                </div>
+                <div className="marge5">
+                  <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                </div>
+                <div className="marge5">
+                  <UnitHandlerFilter
+                    allUnit={allUnit}
+                    setNowHUnit={setNowHUnit}
+                  />
+                </div>
               </div>
               <DateFilter
                 dateRemind={dateRemind}
@@ -220,7 +228,53 @@ function CaseManagement() {
                 nowDate={nowDate}
               />
             </div>
- <div className="case">
+          </div>
+
+          <div className="m-view">
+            <div className="sortSelect">
+              <div className="both">
+                <div className="bothFilter">
+                  <div className="marge5">
+                    <CategoryFilter
+                      allCategoryData={allCategoryData}
+                      setNowCategory={setNowCategory}
+                    />
+                  </div>
+                  <div className="margeNone">
+                    <StatusFilter
+                      allStatusData={allStatusData}
+                      setNowStatus={setNowStatus}
+                    />
+                  </div>
+                </div>
+                <div className="bothFilter">
+                  <div className="marge5">
+                    <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                  </div>
+                  <div className="marge5None">
+                    <UnitHandlerFilter
+                      allUnit={allUnit}
+                      setNowHUnit={setNowHUnit}
+                    />
+                  </div>
+                </div>
+              </div>
+              <DateFilter
+                dateRemind={dateRemind}
+                setDateRemind={setDateRemind}
+                setMaxDate={setMaxDate}
+                setMinDate={setMinDate}
+                maxDateValue={maxDateValue}
+                setMaxDateValue={setMaxDateValue}
+                minDateValue={minDateValue}
+                setMinDateValue={setMinDateValue}
+                dateAgo={dateAgo}
+                nowDate={nowDate}
+              />
+            </div>
+          </div>
+
+          <div className="case">
             <table className="caseContain">
               <thead>
                 <tr>

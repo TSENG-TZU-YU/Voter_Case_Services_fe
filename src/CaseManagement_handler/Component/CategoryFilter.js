@@ -12,7 +12,7 @@ function ActivitySelect({ allCategoryData, setNowCategory }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請選擇申請類別--' }, ...newData];
+  const sortOption = [{ value: '', label: '請選擇申請類別' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -67,7 +67,6 @@ function ActivitySelect({ allCategoryData, setNowCategory }) {
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);

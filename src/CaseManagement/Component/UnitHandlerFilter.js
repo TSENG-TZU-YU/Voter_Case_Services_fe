@@ -12,7 +12,7 @@ function ActivitySelect({ allUnit, setNowHUnit }) {
     });
   }
   // console.log('n', newData);
-  const sortOption = [{ value: '', label: '--請選擇處理單位--' }, ...newData];
+  const sortOption = [{ value: '', label: '請選擇處理單位' }, ...newData];
 
   const customStyles = {
     option: (provided, state) => ({
