@@ -57,12 +57,12 @@
     }
   }
 }
-.dealWithContainer{
+.dealWithContainer {
   // display: grid;
   // grid-template-columns:140px 4fr;
-  font-size:$subText;
+  font-size: $subText;
   white-space: nowrap;
-
+  margin: $marage10 0;
 }
 .noneHight {
   height: calc(100% - 100px);

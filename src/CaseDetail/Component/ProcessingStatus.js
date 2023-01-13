@@ -108,45 +108,6 @@ function ProcessingStatus() {
             : '目前沒有訊息'}
         </div>
       </div>
-      <div className="dealWithContainer ">
-        <div className="row ">
-          <div className=" col-12">回復情況:</div>
-          <div className="  col-12 col-md-3">
-            <input type="checkBox" /> 已回復當事人情況
-          </div>
-          <div className=" col-12 col-lg-4">
-            <input type="checkBox" />
-            請委員議員致電呈請人
-          </div>
-          <div className="col-12">辦理進度:</div>
-          <div className=" col-12 col-lg-3">
-            <input type="checkBox" /> 會勘/公文往返
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            追中
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            已完成
-          </div>
-          <div className="col-12">辦理結果:</div>
-          {/* TODO: 不能同時有兩個狀態 */}
-          <div className=" col-12 col-lg-3">
-            <input type="checkBox" /> 成功
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            失敗
-          </div>
-        </div>
-        {/* TODO: 民眾反饋 */}
-        <div className="col-12">民眾反饋:</div>
-        <select>
-          <option>處理人</option>
-          <option>民眾</option>
-        </select>
-      </div>
 
       {/* chatBar */}
       {/* bar */}
@@ -190,6 +151,43 @@ function ProcessingStatus() {
       ) : (
         ''
       )}
+
+      <div className="dealWithContainer">
+        <div className="row">
+          <div className="col-12">回復情況:</div>
+          <div className="col-12 col-md-3">
+            <input type="checkbox" /> 已回復當事人情況
+          </div>
+          <div className="col-12 col-lg-4">
+            <input type="checkbox" />
+            請委員議員致電呈請人
+          </div>
+          <div className="col-12">辦理進度:</div>
+          <div className="col-12 col-lg-3">
+            <input type="radio" /> 會勘/公文往返
+          </div>
+          <div className="col-12 col-lg-3">
+            <input type="radio" />
+            追中
+          </div>
+          <div className="col-12 col-lg-3">
+            <input type="radio" />
+            已完成
+          </div>
+          <div className="col-12">辦理結果:</div>
+          {/* TODO: 不能同時有兩個狀態 */}
+          <div className="col-12 col-lg-3">
+            <input type="radio" name="result" /> 成功
+          </div>
+          <div className="col-12 col-lg-3">
+            <input type="radio" name="result" />
+            失敗
+          </div>
+        </div>
+        {/* TODO: 民眾反饋 */}
+        <div className="col-12">民眾反饋:</div>
+        <textarea name="" cols="30" rows="10"></textarea>
+      </div>
     </>
   );
 }
