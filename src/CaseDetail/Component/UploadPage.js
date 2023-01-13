@@ -14,7 +14,10 @@ import { API_URL } from '../../utils/config';
 import '../../styles/caseDetail/_uploadPage.scss';
 import { useAuth } from '../../utils/use_auth';
 
+import Loader from '../../Loader';
+
 function UploadPage({ setAddStatus, delCheck }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [userFilesPage, setUserFilesPage] = useState(true);
   const [mgtFilesPage, setMgtUserFilesPage] = useState(false);
   const [filesData, setFilesData] = useState([{ fileName: '' }]);
@@ -65,6 +68,7 @@ function UploadPage({ setAddStatus, delCheck }) {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     async function toGetUserFile() {
       try {
         let response = await axios.get(
@@ -94,6 +98,9 @@ function UploadPage({ setAddStatus, delCheck }) {
         setNo(response.data[0].application_category);
         setStatus(response.data[0].status_id);
         setHandler(response.data[0].handler);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 100);
       } catch (err) {
         console.log(err);
       }
@@ -335,110 +342,124 @@ function UploadPage({ setAddStatus, delCheck }) {
   // };
 
   return (
-    <div className="overScr">
-      {/* 上傳檔案 */}
-      {(member.user === 1 && status === 5 && page === 1) ||
-      (member.user === 1 && status === 6 && page === 1) ||
-      (member.user === 1 && status === 7 && page === 1) ||
-      (member.user === 1 && status === 11 && page === 1) ||
-      (member.handler === 1 && status === 5 && page === 2) ||
-      (member.handler === 1 && status === 6 && page === 2) ||
-      (member.handler === 1 && status === 7 && page === 2) ||
-      (member.handler === 1 && status === 11 && page === 2) ? (
-        <>
-          <div className="addUpload">
-            <div className="addTitle">
-              請新增上傳附件 (檔案限制10MB) (可上傳副檔名
-              csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
-            </div>
-            <div>
-              {/* <FaTrashAlt
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="overScr">
+          {/* 上傳檔案 */}
+          {(member.user === 1 && status === 5 && page === 1) ||
+          (member.user === 1 && status === 6 && page === 1) ||
+          (member.user === 1 && status === 7 && page === 1) ||
+          (member.user === 1 && status === 11 && page === 1) ||
+          (member.handler === 1 && status === 5 && page === 2) ||
+          (member.handler === 1 && status === 6 && page === 2) ||
+          (member.handler === 1 && status === 7 && page === 2) ||
+          (member.handler === 1 && status === 11 && page === 2) ? (
+            <>
+              <div className="addUpload">
+                <div className="addTitle">
+                  請新增上傳附件 (檔案限制10MB) (可上傳副檔名
+                  csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
+                </div>
+                <div>
+                  {/* <FaTrashAlt
                 className="trashIcon"
                 onClick={() => {
                   delCheck('確定要刪除所有上傳文件', handleClearFile);
                 }}
               /> */}
-              <MdOutlineAddBox className="addIcon" onClick={handleAddFile} />
-            </div>
-          </div>
-          <div className="uploadContainer">
-            {filesData.map((v, i) => {
-              return (
-                <div key={uuidv4()}>
-                  <div className="upload">
-                    <label className="addUploadContainer" htmlFor={`file${i}`}>
-                      <span className={`items ${i < 9 ? 'ps-2' : ''}`}>
-                        {i + 1}.
-                      </span>
-                      <div className="addUploadContain">
-                        {v.fileName !== '' ? (
-                          v.fileName.name
-                        ) : (
-                          <div className="addFile">
-                            <HiOutlineDocumentPlus className="addIcon" />
-                            <span>點擊新增檔案</span>
-                          </div>
-                        )}
-                      </div>
-                    </label>
-                    {i !== 0 ? (
-                      <AiFillCloseCircle
-                        className="delIcon"
-                        onClick={() => {
-                          delCheck('確定要刪除此上傳文件', handleDelFile, i);
-                        }}
-                      />
-                    ) : (
-                      ''
-                    )}
-                  </div>
-
-                  <input
-                    className="input d-none"
-                    name="photo1"
-                    type="file"
-                    id={`file${i}`}
-                    accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
-                    onChange={(e) => {
-                      handlerUpdateFile(e.target.files[0], i, 'photo1');
-                    }}
+                  <MdOutlineAddBox
+                    className="addIcon"
+                    onClick={handleAddFile}
                   />
                 </div>
-              );
-            })}
-          </div>
-          <div className="subBtn">
-            <button
-              className="submitBtn"
-              onClick={() => {
-                setRender(true);
-                fileSubmit();
-              }}
-            >
-              上傳檔案
-            </button>
-            {member.user === 1 && status === 6 && page === 1 ? (
-              <button
-                className="submitBtn mx-3"
-                onClick={() => {
-                  if (member.user === 1) {
-                    uploadCheck('請確認已完成補件');
-                  }
-                }}
-              >
-                確認補件完成
-              </button>
-            ) : (
-              ''
-            )}
-          </div>
-        </>
-      ) : (
-        ''
-      )}
+              </div>
+              <div className="uploadContainer">
+                {filesData.map((v, i) => {
+                  return (
+                    <div key={uuidv4()}>
+                      <div className="upload">
+                        <label
+                          className="addUploadContainer"
+                          htmlFor={`file${i}`}
+                        >
+                          <span className={`items ${i < 9 ? 'ps-2' : ''}`}>
+                            {i + 1}.
+                          </span>
+                          <div className="addUploadContain">
+                            {v.fileName !== '' ? (
+                              v.fileName.name
+                            ) : (
+                              <div className="addFile">
+                                <HiOutlineDocumentPlus className="addIcon" />
+                                <span>點擊新增檔案</span>
+                              </div>
+                            )}
+                          </div>
+                        </label>
+                        {i !== 0 ? (
+                          <AiFillCloseCircle
+                            className="delIcon"
+                            onClick={() => {
+                              delCheck(
+                                '確定要刪除此上傳文件',
+                                handleDelFile,
+                                i
+                              );
+                            }}
+                          />
+                        ) : (
+                          ''
+                        )}
+                      </div>
 
-      {/* 管理者接收檔案 */}
-      {/* {(member.permissions_id === 3 || member.manage === 1) &&
+                      <input
+                        className="input d-none"
+                        name="photo1"
+                        type="file"
+                        id={`file${i}`}
+                        accept=".csv,.txt,.text,.png,.jpeg,.jpg,text/csv,.pdf,.xlsx"
+                        onChange={(e) => {
+                          handlerUpdateFile(e.target.files[0], i, 'photo1');
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="subBtn">
+                <button
+                  className="submitBtn"
+                  onClick={() => {
+                    setRender(true);
+                    fileSubmit();
+                  }}
+                >
+                  上傳檔案
+                </button>
+                {member.user === 1 && status === 6 && page === 1 ? (
+                  <button
+                    className="submitBtn mx-3"
+                    onClick={() => {
+                      if (member.user === 1) {
+                        uploadCheck('請確認已完成補件');
+                      }
+                    }}
+                  >
+                    確認補件完成
+                  </button>
+                ) : (
+                  ''
+                )}
+              </div>
+            </>
+          ) : (
+            ''
+          )}
+
+          {/* 管理者接收檔案 */}
+          {/* {(member.permissions_id === 3 || member.manage === 1) &&
       status === 8 ? (
         <>
           {newGetUpdateFile.map((v, i) => {
@@ -488,90 +509,92 @@ function UploadPage({ setAddStatus, delCheck }) {
         ''
       )} */}
 
-      {/* 雙方檔案 */}
-      <div className="viewFilesContainer">
-        <div className="viewBtn">
-          <div
-            className={`btnWidth borderR ${
-              userFilesPage === true ? 'clickStyle' : ''
-            }`}
-            onClick={() => {
-              setUserFilesPage(true);
-              setMgtUserFilesPage(false);
-            }}
-          >
-            申請人上傳文件
-          </div>
-          <div
-            className={`btnWidth borderL ${
-              mgtFilesPage === true ? 'clickStyle' : ''
-            }`}
-            onClick={() => {
-              setUserFilesPage(false);
-              setMgtUserFilesPage(true);
-            }}
-          >
-            處理人上傳文件
+          {/* 雙方檔案 */}
+          <div className="viewFilesContainer">
+            <div className="viewBtn">
+              <div
+                className={`btnWidth borderR ${
+                  userFilesPage === true ? 'clickStyle' : ''
+                }`}
+                onClick={() => {
+                  setUserFilesPage(true);
+                  setMgtUserFilesPage(false);
+                }}
+              >
+                申請人上傳文件
+              </div>
+              <div
+                className={`btnWidth borderL ${
+                  mgtFilesPage === true ? 'clickStyle' : ''
+                }`}
+                onClick={() => {
+                  setUserFilesPage(false);
+                  setMgtUserFilesPage(true);
+                }}
+              >
+                處理人上傳文件
+              </div>
+            </div>
+            {/* 檔案內容 */}
+            {/* 使用者 */}
+            {/* 管理者 */}
+            {userFilesPage === true && mgtFilesPage === false ? (
+              <div className="viewFilesContain">
+                {newGetUserFile.map((v, i) => {
+                  return (
+                    <div key={uuidv4()} className="pt-2">
+                      <span className="filesTime">{v.create_time}</span>
+                      {newGetUserFile[i].item.map((v, i) => {
+                        return (
+                          <div key={uuidv4()} className="pt-2">
+                            <span>{i + 1}.</span>
+                            <span className="ms-1 me-2">{v.file_no}</span>
+                            <span
+                              className="download"
+                              onClick={() => {
+                                handleDownload(v.name, v.file_no);
+                              }}
+                            >
+                              {v.name}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="viewFilesContain">
+                {newGetHandlerFile.map((v, i) => {
+                  return (
+                    <div key={uuidv4()} className="pt-2">
+                      <span className="filesTime">{v.create_time}</span>
+                      {newGetHandlerFile[i].item.map((v, i) => {
+                        return (
+                          <div key={uuidv4()} className="pt-2">
+                            <span>{i + 1}.</span>
+                            <span className="ms-1 me-2">{v.file_no}</span>
+                            <span
+                              className="download"
+                              onClick={() => {
+                                handleDownload(v.name, v.file_no);
+                              }}
+                            >
+                              {v.name}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
-        {/* 檔案內容 */}
-        {/* 使用者 */}
-        {/* 管理者 */}
-        {userFilesPage === true && mgtFilesPage === false ? (
-          <div className="viewFilesContain">
-            {newGetUserFile.map((v, i) => {
-              return (
-                <div key={uuidv4()} className="pt-2">
-                  <span className="filesTime">{v.create_time}</span>
-                  {newGetUserFile[i].item.map((v, i) => {
-                    return (
-                      <div key={uuidv4()} className="pt-2">
-                        <span>{i + 1}.</span>
-                        <span className="ms-1 me-2">{v.file_no}</span>
-                        <span
-                          className="download"
-                          onClick={() => {
-                            handleDownload(v.name, v.file_no);
-                          }}
-                        >
-                          {v.name}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="viewFilesContain">
-            {newGetHandlerFile.map((v, i) => {
-              return (
-                <div key={uuidv4()} className="pt-2">
-                  <span className="filesTime">{v.create_time}</span>
-                  {newGetHandlerFile[i].item.map((v, i) => {
-                    return (
-                      <div key={uuidv4()} className="pt-2">
-                        <span>{i + 1}.</span>
-                        <span className="ms-1 me-2">{v.file_no}</span>
-                        <span
-                          className="download"
-                          onClick={() => {
-                            handleDownload(v.name, v.file_no);
-                          }}
-                        >
-                          {v.name}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

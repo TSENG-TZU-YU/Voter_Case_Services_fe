@@ -28,7 +28,6 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
 
   //使用者資料
   const { member, setMember } = useAuth();
-  // console.log('mobileToggle', mobileToggle);
   //樣式
   // const [appLink1, setAppLink1] = useState(false);
   // const [appLink2, setAppLink2] = useState(false);
@@ -109,11 +108,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
   return (
     <>
       {/* TODO:另作手機板元件 */}
-      <div
-        className={`navCenter  d-md-none ${
-          mobileToggle ? 'd-black ' : 'd-none '
-        }`}
-      >
+      <div className={`navCenter  d-md-none ${mobileToggle ? ' down' : 'up'}`}>
         <div>接案單位:{member.applicant_unit}</div>
         <div>姓名:{member.name}</div>
         {/* <div>職別:{member.job}</div> */}

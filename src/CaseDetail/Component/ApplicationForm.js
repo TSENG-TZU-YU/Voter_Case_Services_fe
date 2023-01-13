@@ -139,6 +139,7 @@ function ApplicationForm({
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].project_name = val;
     if (input === 'relation') newData[0].relation = val;
+    if (input === 'phoneCheck') newData[0].phoneCheck = val;
     if (input === 'litigant') newData[0].litigant = val;
     if (input === 'litigantPhone') newData[0].litigant_phone = val;
     if (input === 'litigantCounty') newData[0].litigant_county_id = val;
@@ -147,10 +148,14 @@ function ApplicationForm({
     if (input === 'litigantAddress') newData[0].litigantAddress = val;
     if (input === 'client') newData[0].client = val;
     if (input === 'clientPhone') newData[0].client_phone = val;
+    if (input === 'clientCounty') newData[0].client_county = val;
+    if (input === 'clientArea') newData[0].client_area = val;
+    if (input === 'clientRimin') newData[0].client_rimin = val;
     if (input === 'clientAddress') newData[0].client_address = val;
     if (input === 'remark') newData[0].remark = val;
     if (input === 'unit') newData[0].unit = val;
     setDetailData(newData);
+    console.log('newData[0].phoneCheck ', newData[0].phoneCheck);
   };
   //申請表驗證空值
   const [category, setCategory] = useState(false);
@@ -536,7 +541,7 @@ function ApplicationForm({
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
       setTimeout(() => {
         setIsLoading(false);
-      }, 800);
+      }, 100);
     };
 
     getCampingDetailData();
@@ -1209,6 +1214,36 @@ function ApplicationForm({
                       </div>
                     </div> */}
                     </div>
+
+                    <div className="gapContain my-2">
+                      <div>
+                        {edit ? (
+                          <input
+                            type="checkBox"
+                            disabled
+                            defaultChecked={true}
+                            className="inputCheck me-1"
+                            checked={v.phoneCheck === 1 ? true : false}
+                          />
+                        ) : (
+                          <input
+                            type="checkBox"
+                            className="inputCheck me-1"
+                            checked={v.phoneCheck === 1 ? true : false}
+                            onChange={(e) => {
+                              handleChange(
+                                e.target.checked
+                                  ? (v.phoneCheck = 1)
+                                  : (v.phoneCheck = 0),
+                                'phoneCheck'
+                              );
+                            }}
+                          />
+                        )}
+
+                        <span> 請委員議員致電呈請人</span>
+                      </div>
+                    </div>
                     {/* <div className="gapContain my-2">
                     {v.relation === '' && v.status_id !== 1 ? (
                       ''
@@ -1519,6 +1554,90 @@ function ApplicationForm({
                       {/* )} */}
                     </div>
                     <div className="gapContain my-2">
+                      {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
+                          ''
+                        ) : ( */}
+                      <div>
+                        <div className="pb-1">當事人縣市</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            placeholder={v.client_county}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'clientCounty');
+                              areaPost(e.target.value);
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.client_county}
+                            </option>
+                            <option value=" "> -----請選擇-----</option>
+                            {getCounty.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
+
+                      <div>
+                        <div className="pb-1">當事人區</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            placeholder={v.client_area}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'clientArea');
+                              riminPost(e.target.value);
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.client_area}
+                            </option>
+                            <option value=" "> -----請選擇-----</option>
+                            {getArea.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
+                    </div>
+                    <div className="gapContain my-2">
+                      <div>
+                        <div className="pb-1">當事人里</div>
+                        {edit ? (
+                          <input
+                            type="text"
+                            value={v.client_rimin}
+                            disabled
+                            defaultChecked={true}
+                          />
+                        ) : (
+                          <select
+                            className="handler"
+                            onChange={(e) => {
+                              handleChange(e.target.value, 'clientRimin');
+                            }}
+                          >
+                            <option selected disabled hidden>
+                              {v.client_rimin}
+                            </option>
+                            <option value=" "> -----請選擇-----</option>
+                            {getRimin.map((v, i) => {
+                              return <option key={i}>{v.name}</option>;
+                            })}
+                          </select>
+                        )}
+                      </div>
                       {/* {v.client_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
