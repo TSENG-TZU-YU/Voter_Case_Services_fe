@@ -541,7 +541,7 @@ function ApplicationForm({
       setNeedSumLen(parseInt(response.data.needSum[0].checked));
       setTimeout(() => {
         setIsLoading(false);
-      }, 800);
+      }, 100);
     };
 
     getCampingDetailData();
