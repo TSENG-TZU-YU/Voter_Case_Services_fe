@@ -401,9 +401,9 @@ function CaseManagement() {
                                 <td>{v.application_category}</td>
                                 <td>{v.create_time}</td>
                                 <td className="view">{v.name}</td>
-                                <td>
+                                {/* <td>
                                   進度({v.cou}/{v.sum})
-                                </td>
+                                </td> */}
                               </tr>
                             </tbody>
                           );
