@@ -12,9 +12,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
+  z-index: 5;
+
   .mobile {
     display: flex;
     align-items: center;
+    z-index: 5;
     .titleH3 {
       color: $mainClrW;
       font-size: clamp(12px, 4vw, $containerTit28);
@@ -40,6 +43,7 @@
     align-items: flex-start;
     justify-content: start;
     flex-direction: column;
+
     & div {
       margin-top: 10px;
       margin-left: 10px;

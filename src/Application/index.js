@@ -25,6 +25,7 @@ function Application({ delCheck }) {
       handler: '',
       category: '',
       relation: '',
+      phoneCheck: '',
       litigant: '',
       litigantPhone: '',
       litigantCounty: '',
@@ -33,6 +34,9 @@ function Application({ delCheck }) {
       litigantAddress: '',
       client: '',
       clientPhone: '',
+      clientCounty: '',
+      clientArea: '',
+      clientRimin: '',
       clientAddress: '',
       remark: '',
       unit: '',
@@ -97,6 +101,7 @@ function Application({ delCheck }) {
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].name = val;
     if (input === 'relation') newData[0].relation = val;
+    if (input === 'phoneCheck') newData[0].phoneCheck = val;
     if (input === 'litigant') newData[0].litigant = val;
     if (input === 'litigantPhone') newData[0].litigantPhone = val;
     if (input === 'litigantCounty') newData[0].litigantCounty = val;
@@ -105,6 +110,9 @@ function Application({ delCheck }) {
     if (input === 'litigantAddress') newData[0].litigantAddress = val;
     if (input === 'client') newData[0].client = val;
     if (input === 'clientPhone') newData[0].clientPhone = val;
+    if (input === 'clientCounty') newData[0].clientCounty = val;
+    if (input === 'clientArea') newData[0].clientArea = val;
+    if (input === 'clientRimin') newData[0].clientRimin = val;
     if (input === 'clientAddress') newData[0].clientAddress = val;
     if (input === 'remark') newData[0].remark = val;
     if (input === 'unit') newData[0].unit = val;
@@ -502,6 +510,7 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'unit');
                 setAddUnit(e.target.value);
               }}
+              defaultValue={member.applicant_unit}
             >
               <option value="0" selected disabled hidden>
                 {member.applicant_unit}
@@ -571,6 +580,23 @@ function Application({ delCheck }) {
               })}
             </div>
           </div> */}
+        </div>
+        <div className="box d-md-flex">
+          <div className="gap">
+            <input
+              type="checkBox"
+              className="inputCheck me-1"
+              onChange={(e) => {
+                handleChange(
+                  e.target.checked
+                    ? (e.target.value = '1')
+                    : (e.target.value = '0'),
+                  'phoneCheck'
+                );
+              }}
+            />
+            <span> 請委員議員致電呈請人</span>
+          </div>
         </div>
         {/* <div className="box">
           友好程度
@@ -732,11 +758,11 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 縣市*/}
           <div className="gap">
-            <div>請託縣市</div>
+            <div>請託人縣市</div>
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'litigantCounty');
+                handleChange(e.target.value, 'clientCounty');
                 areaPost(e.target.value);
               }}
             >
@@ -752,7 +778,7 @@ function Application({ delCheck }) {
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'litigantArea');
+                handleChange(e.target.value, 'clientArea');
                 riminPost(e.target.value);
               }}
             >
@@ -770,7 +796,7 @@ function Application({ delCheck }) {
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'litigantRimin');
+                handleChange(e.target.value, 'clientRimin');
               }}
             >
               <option value=" "> -----請選擇-----</option>
@@ -847,10 +873,11 @@ function Application({ delCheck }) {
                 <div>
                   <textarea
                     className="input"
-                    placeholder="請詳細說明"
+                    // placeholder="請詳細說明"
                     name="ttt"
                     cols="30"
                     rows="10"
+                    maxLength="500"
                     value={addNeed[i].text}
                     style={{ resize: 'none', height: '120px' }}
                     onChange={(e) => {

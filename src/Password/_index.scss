@@ -1,0 +1,19 @@
+@import '../../src/styles/_variable.scss';
+
+.passWordContainer {
+  margin: $marage10 0;
+  .title {
+    font-size: $navbarLeft18;
+  }
+  .btn {
+    display: flex;
+    justify-content: center;
+    border: 1px solid $subClrBrown;
+    background-color: $header;
+    border-radius: $borderRadius;
+    margin: 30px 0;
+    padding: $padding5;
+    cursor: pointer;
+    color: aliceblue;
+  }
+}

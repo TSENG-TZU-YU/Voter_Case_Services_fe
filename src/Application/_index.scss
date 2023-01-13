@@ -38,6 +38,10 @@
         span {
           color: $focusClrY;
         }
+       
+        .inputCheck {
+          margin-top: $marage10;
+        }
       }
       .contain {
         height: 100px;
@@ -197,8 +201,10 @@
           }
         }
         .fileColumn {
+          width: 70%;
           div {
             margin-right: $marage10;
+            white-space: pre-wrap;
           }
         }
       }

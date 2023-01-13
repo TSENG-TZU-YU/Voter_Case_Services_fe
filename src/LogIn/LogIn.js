@@ -110,7 +110,7 @@ function LogIn() {
                   doLogin(e.target.value, 'company');
                 }}
               >
-                <option value="0" selected>
+                <option value="0" >
                   --接案所屬單位--
                 </option>
                 {unit.map((v) => {

@@ -7,6 +7,8 @@ import UserFilter from './Component/UserFilter.js';
 import axios from 'axios';
 import { API_URL } from '../utils/config';
 
+import Password from '../Password';
+
 function Permissions() {
   const [user, setUser] = useState([]);
   const [nowUser, setNowUser] = useState([]);
@@ -34,7 +36,9 @@ function Permissions() {
     }
     async function getUsers() {
       try {
-        let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/permissions/user`);
+        let res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/user`
+        );
 
         setUser(res.data);
       } catch (err) {
@@ -60,63 +64,23 @@ function Permissions() {
 
   const submit = async () => {
     try {
-      let res = await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/permissions`, {
-        category: nowCategory,
-        user: nowUser,
-        permission: nowPermission,
-      });
+      let res = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/api/permissions`,
+        {
+          category: nowCategory,
+          user: nowUser,
+          permission: nowPermission,
+        }
+      );
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    // <div className="background ">
-    //   <div className="permissions">
-    //     <div className="container">
-    //       <div className="select"> 單位:</div>
-    //       <CategoryFilter category={category} setNowCategory={setNowCategory} />
-    //     </div>
-    //     <div className="container">
-    //       <div className="select"> 使用者:</div>
-    //       <UserFilter user={user} setNowUser={setNowUser} />
-    //     </div>
-    //     <div className="container">
-    //       <div className="select"> 權限:</div>
-    //       <PermissionFilter setNowPermission={setNowPermission} />
-    //     </div>
-
-    //     <div className="btn" onClick={submit}>
-    //       加入權限
-    //     </div>
-    //   </div>
-    //   <div className="container1">
-    //     <div className="row mt">
-    //       <div className="col-2 ">單位</div>
-    //       <div className="col-3">使用者</div>
-    //       <div className="col-5">權限</div>
-    //     </div>
-    //     <div className="vector"></div>
-    //     {permission.map((v, i) => {
-    //       const { applicant_unit, name, director, handler } = v;
-
-    //       return (
-    //         <div key={i} className="row mt">
-    //           <div className="col-2">{applicant_unit}</div>
-    //           <div className="col-3">{name}</div>
-    //           <div className="col-4 row getPermissions">
-    //             <div className="col-2">{director}</div>
-    //             <div className="col-2">{handler}</div>
-    //           </div>
-    //           <div className="col-2 btn">更改權限</div>
-    //         </div>
-    //       );
-    //     })}
-    //   </div>
-    // </div>
     <div className="permissionsContainer">
       {/* 篩選 */}
-      <div className="sortSelect1">
+      {/* <div className="sortSelect1">
         <div className="bothFilter1">
           <CategoryFilter category={category} setNowCategory={setNowCategory} />
           <UserFilter user={user} setNowUser={setNowUser} />
@@ -148,7 +112,8 @@ function Permissions() {
             </tbody>
           );
         })}
-      </table>
+      </table> */}
+      <Password />
     </div>
   );
 }

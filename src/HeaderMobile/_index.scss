@@ -3,11 +3,12 @@
 .navCenter {
   width: 100%;
   background-color: $navBarMobile;
-  z-index: 100;
+  z-index: 1;
   position: absolute;
   justify-content: end;
   flex-direction: column;
-  padding:0 10px ;
+  padding: 0 10px;
+  transition: transform 0.4s;
   .vectorBottom {
     border-bottom: 2px solid black;
     padding: $padding5 0;
@@ -36,4 +37,10 @@
       margin-left: 20px;
     }
   }
+}
+.up {
+  transform: translateY(-450px);
+}
+.down {
+  transform: translateY(0);
 }
