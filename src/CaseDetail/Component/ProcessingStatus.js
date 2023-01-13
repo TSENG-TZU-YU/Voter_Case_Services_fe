@@ -110,21 +110,22 @@ function ProcessingStatus() {
       </div>
       <div className="dealWithContainer ">
         <div className="row ">
-          <div className=" col-12">回復情況:</div>
+          <div className=" col-12">回覆情況:</div>
           <div className="  col-12 col-md-3">
-            <input type="checkBox" /> 已回復當事人情況
+            <input type="checkBox" /> 已回覆當事人情況
           </div>
           <div className=" col-12 col-lg-4">
             <input type="checkBox" />
-            請委員議員致電呈請人
+            請委員/議員致電陳情人
           </div>
           <div className="col-12">辦理進度:</div>
           <div className=" col-12 col-lg-3">
-            <input type="checkBox" /> 會勘/公文往返
+            <input type="checkBox" />
+            辦理中( 會勘/公文往返)
           </div>
           <div className="  col-12 col-lg-3">
             <input type="checkBox" />
-            追中
+            追蹤
           </div>
           <div className="  col-12 col-lg-3">
             <input type="checkBox" />

@@ -89,8 +89,8 @@ function ApplicationForm({
   const relation = [
     { name: 'VIP' },
     { name: '友善' },
-    { name: '沒特別喜好' },
-    { name: '抱怨謾罵' },
+    { name: '無特別喜好' },
+    { name: '謾罵抱怨' },
   ];
 
   // 檢查會員
@@ -315,7 +315,7 @@ function ApplicationForm({
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire('刪除成功', '', 'success').then(() => {
-          navigate('/header/caseManagement');
+          navigate('/header/caseManagement_handler');
         });
         deleteForm();
       } else if (result.isDenied) {
@@ -370,7 +370,7 @@ function ApplicationForm({
           submitFile();
           hanleAddNeed(e, 'submit');
           submit();
-          navigate('/header/caseManagement');
+          navigate('/header/caseManagement_handler');
         } else if (result.isDenied) {
           Swal.fire('已取消送出', '', 'info');
         }
@@ -687,7 +687,7 @@ function ApplicationForm({
 
     if (input === 'finish') {
       ViewCheck('修改成功', setNeedLoading, needLoading, setEditPage, false);
-      navigate(`/header/caseManagement`);
+      navigate(`/header/caseManagement_handler`);
     }
 
     // if (input === 'finish') {
@@ -714,7 +714,7 @@ function ApplicationForm({
     );
 
     ViewCheck('申請案件已取消', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
 
     // Swal.fire({
     //   icon: 'success',
@@ -828,7 +828,7 @@ function ApplicationForm({
     );
 
     ViewCheck('該案件已完成', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件已完成',
@@ -849,7 +849,7 @@ function ApplicationForm({
     );
 
     ViewCheck('該案件未完成，案件進行中', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement`);
+    navigate(`/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件未完成，案件進行中',
@@ -1057,7 +1057,7 @@ function ApplicationForm({
                   <div key={v.id}>
                     <div className="gapContain my-2">
                       <div>
-                        <div className="pb-1">請託來源</div>
+                        <div className="pb-1">案件來源</div>
                         {edit ? (
                           <input
                             type="text"
@@ -1215,7 +1215,7 @@ function ApplicationForm({
                     </div> */}
                     </div>
 
-                    <div className="gapContain my-2">
+                    {/* <div className="gapContain my-2">
                       <div>
                         {edit ? (
                           <input
@@ -1243,7 +1243,7 @@ function ApplicationForm({
 
                         <span> 請委員議員致電呈請人</span>
                       </div>
-                    </div>
+                    </div> */}
                     {/* <div className="gapContain my-2">
                     {v.relation === '' && v.status_id !== 1 ? (
                       ''
@@ -1696,6 +1696,8 @@ function ApplicationForm({
               )}
 
               {/* 需求 */}
+              <div className="appTitle">陳情內容</div>
+              <div className="vector"></div>
               {editNeed.map((v, i) => {
                 return (
                   <div className="needContain" key={i}>
@@ -1742,7 +1744,7 @@ function ApplicationForm({
                       </div> */}
                       <div className="needCount">
                         <span className="title">
-                          呈請內容 {i + 1}
+                          陳情內容 {i + 1}
                           {edit ? '' : ' (字數限制500)'}
                         </span>
                       </div>

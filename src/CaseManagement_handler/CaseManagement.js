@@ -325,7 +325,7 @@ function CaseManagement() {
                       />
                     )}
                   </th>
-                  <th>接案狀態</th>
+                  <th>案件狀態</th>
                   <th>需求進度</th>
                 </tr>
               </thead>

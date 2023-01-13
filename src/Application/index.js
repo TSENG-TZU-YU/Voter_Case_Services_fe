@@ -50,6 +50,7 @@ function Application({ delCheck }) {
 
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
+  const [getSource, setGetSource] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
   // const [getCycle, setGetCycle] = useState([]);
   const [getCounty, setGetCounty] = useState([]);
@@ -69,8 +70,8 @@ function Application({ delCheck }) {
   const relation = [
     { name: 'VIP' },
     { name: '友善' },
-    { name: '沒特別喜好' },
-    { name: '抱怨謾罵' },
+    { name: '無特別喜好' },
+    { name: '謾罵抱怨' },
   ];
 
   // 檢查會員
@@ -195,7 +196,18 @@ function Application({ delCheck }) {
         console.log(err);
       }
     };
-    //抓取申請類別
+    //抓取案件來源
+    let source = async () => {
+      try {
+        let res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/source`
+        );
+        setGetSource(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    //抓取案件類別
     let category = async () => {
       try {
         let res = await axios.get(
@@ -206,6 +218,7 @@ function Application({ delCheck }) {
         console.log(err);
       }
     };
+
     //抓取申請單位
     let unit = async () => {
       try {
@@ -232,6 +245,7 @@ function Application({ delCheck }) {
     };
 
     handler();
+    source();
     category();
     unit();
     county();
@@ -314,7 +328,7 @@ function Application({ delCheck }) {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('送出成功', '', 'success').then(() => {
-            navigate('/header/caseManagement');
+            navigate('/header/caseManagement_handler');
           });
           submitFile();
           submit();
@@ -374,7 +388,7 @@ function Application({ delCheck }) {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('儲存成功', '', 'success').then(() => {
-            navigate('/header/caseManagement');
+            navigate('/header/caseManagement_handler');
           });
           submitFile();
           store();
@@ -468,10 +482,10 @@ function Application({ delCheck }) {
         <div className="vector"></div>
         {/* 欄位 */}
         <div className="box d-md-flex">
-          {/* 申請類別 */}
+          {/*  案件來源 */}
           <div className="gap">
             <div>
-              請託來源 <span>*</span>
+              案件來源 <span>*</span>
               {category ? <span>欄位不得為空</span> : <span>必填</span>}
             </div>
             <select
@@ -489,7 +503,7 @@ function Application({ delCheck }) {
               <option value="0" selected disabled hidden>
                 -----請選擇類別-----
               </option>
-              {getCategory.map((v, i) => {
+              {getSource.map((v, i) => {
                 return (
                   <option key={i} value={v.number}>
                     {v.name}
@@ -581,7 +595,7 @@ function Application({ delCheck }) {
             </div>
           </div> */}
         </div>
-        <div className="box d-md-flex">
+        {/* <div className="box d-md-flex">
           <div className="gap">
             <input
               type="checkBox"
@@ -597,7 +611,7 @@ function Application({ delCheck }) {
             />
             <span> 請委員議員致電呈請人</span>
           </div>
-        </div>
+        </div> */}
         {/* <div className="box">
           友好程度
           <div className="gap">
@@ -819,8 +833,10 @@ function Application({ delCheck }) {
         </div>
 
         {/* 欄位 end */}
-
         {/* 需求 */}
+        <h3>陳情內容</h3>
+        <div className="vector"></div>
+     
         <div className="add">
           <span className={`${need ? 'view' : ''}`}>*欄位不得為空</span>
           <div>
@@ -841,7 +857,7 @@ function Application({ delCheck }) {
               <div key={i} className="need">
                 <div className="one">
                   <div>
-                    呈請內容{i + 1} (字數限制500)<span>*必填</span>
+                    陳情內容{i + 1} (字數限制500)<span>*必填</span>
                   </div>
                   {i !== 0 ? (
                     <IoMdCloseCircle
