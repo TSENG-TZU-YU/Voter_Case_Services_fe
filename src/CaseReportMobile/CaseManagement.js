@@ -17,7 +17,6 @@ import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
-import CaseReportMobile from '../CaseReportMobile/CaseManagement';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
@@ -214,125 +213,8 @@ function CaseReport() {
             ''
           )} */}
         <div className="caseContainer">
-          {/* 篩選 */}
-          <div className="p-view">
-            <div className="sortSelect">
-              <div className="bothFilter">
-                <div className="marge5">
-                  <CategoryFilter
-                    allCategoryData={allCategoryData}
-                    setNowCategory={setNowCategory}
-                  />
-                </div>
-                <div className="marge5">
-                  <StatusFilter
-                    allStatusData={allStatusData}
-                    setNowStatus={setNowStatus}
-                    member={member}
-                  />
-                </div>
-
-                <div className="marge5">
-                  <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                </div>
-                <div className="marge5">
-                  <UnitHandlerFilter
-                    allUnit={allUnit}
-                    setNowHUnit={setNowHUnit}
-                  />
-                </div>
-              </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
-              />
-            </div>
-          </div>
-
-          <div className="m-view">
-            <div className="sortSelect">
-              <div className="both">
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <CategoryFilter
-                      allCategoryData={allCategoryData}
-                      setNowCategory={setNowCategory}
-                    />
-                  </div>
-                  <div className="margeNone">
-                    <StatusFilter
-                      allStatusData={allStatusData}
-                      setNowStatus={setNowStatus}
-                      member={member}
-                    />
-                  </div>
-                </div>
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                  </div>
-                  <div className="margeNone">
-                    <UnitHandlerFilter
-                      allUnit={allUnit}
-                      setNowHUnit={setNowHUnit}
-                    />
-                  </div>
-                </div>
-              </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
-              />
-            </div>
-          </div>
-          <CaseReportMobile />
-          {/* <div className="case">
+          <div className="case">
             <table className="caseContain">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>詳細資訊</th>
-                  <th>請託來源</th>
-                  <th>案件類型</th>
-                  <th className="sortBtn">
-                    接案時間
-                    {time ? (
-                      <MdArrowDropDown
-                        className="arrow"
-                        onClick={() => {
-                          setOrder(3);
-                          setTime(false);
-                        }}
-                      />
-                    ) : (
-                      <MdArrowDropUp
-                        className="arrow"
-                        onClick={() => {
-                          setOrder(4);
-                          setTime(true);
-                        }}
-                      />
-                    )}
-                  </th>
-                  <th>案件狀態</th>
-                </tr>
-              </thead>
               {isLoading ? (
                 <tbody className="noData">
                   <td colSpan={10} className="noTd">
@@ -346,44 +228,36 @@ function CaseReport() {
                       {pageCase.length > 0 &&
                         pageCase[pageNow - 1].map((v) => {
                           return (
-                            <tbody key={uuidv4()} className="body">
-                              <tr>
-                                <td>
-                                  {member.handler === 1 &&
-                                  member.name === v.sender
-                                    ? `轉件人 : ${v.handler}`
-                                    : ''}
-                                </td>
+                            <>
+                              <thead>
+                                <tr></tr>
+                              </thead>{' '}
+                              <tbody key={uuidv4()} className="body">
+                                <tr>
+                                  <td>詳細資訊</td>{' '}
+                                  <td className="posClick">
+                                    <Link
+                                      to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
+                                    >
+                                      <FaEye
+                                        className={`icons ${
+                                          v.name === '處理人評估中' &&
+                                          member.handler === 3
+                                            ? 'eyeBcg'
+                                            : ''
+                                        }`}
+                                      />
+                                    </Link>
 
-                                <td className="posClick">
-                                  <Link
-                                    to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
-                                  >
-                                    <FaEye
-                                      className={`icons ${
-                                        v.name === '處理人評估中' &&
-                                        member.handler === 3
-                                          ? 'eyeBcg'
-                                          : ''
-                                      }`}
-                                    />
-                                  </Link>
-
-                                  <div className="hadClick">NEW</div>
-                                </td>
-                                <td>{v.application_source}</td>
-                                <td>{v.application_category}</td>
-                                <td>{v.create_time}</td>
-                                <td className="view">{v.name}</td>
-                                <td>
-                                  進度({v.cou}/{v.sum})
-                                </td>
-                              </tr>
-                            </tbody>
+                                    {/* <div className="hadClick">NEW</div> */}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </>
                           );
                         })}
 
-                      頁碼
+                      {/* 頁碼 */}
                       <tbody className="noData">
                         <td colSpan={10} className="noTd">
                           <div className="page">
@@ -395,7 +269,7 @@ function CaseReport() {
                           </div>
                         </td>
                       </tbody>
-                      頁碼 end
+                      {/* 頁碼 end */}
                     </>
                   ) : (
                     <tbody className="noData">
@@ -407,7 +281,7 @@ function CaseReport() {
                 </>
               )}
             </table>
-          </div> */}
+          </div>
         </div>
       </>
     </>
