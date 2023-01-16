@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
-import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../utils/use_auth';
 import { API_URL } from '../../utils/config';
@@ -14,7 +13,7 @@ import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
 // import GenerallyBtn from '../../Btn/GenerallyBtn';
 import ProcessingStatus from './ProcessingStatus';
-
+import SelectStatus from './SelectStatus';
 // import ProcessingStatus from './ProcessingStatus';
 
 //react-icons
@@ -22,15 +21,13 @@ import { MdOutlineAddBox } from 'react-icons/md';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { HiOutlineDocumentPlus } from 'react-icons/hi2';
 // import { FaTrashAlt } from 'react-icons/fa';
-import { AiFillCloseCircle, AiFillCloseSquare } from 'react-icons/ai';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 // 元件
 import Loader from '../../Loader';
 import ApplicationBtn from '../../Btn/ApplicationBtn';
 
 function ApplicationForm({
-  setAddStatus,
-  addStatus,
   delCheck,
   scrollPage,
   // viewCheck,
@@ -57,6 +54,7 @@ function ApplicationForm({
   const [handlerData, setHandlerData] = useState([]);
   const [selectData, setSelectData] = useState([]);
   const [remarkLength, setRemarkLength] = useState('');
+  const [selCheckData, setSelCheckData] = useState([]);
   const [handlerVal, setHandlerVal] = useState({ val: '' });
   const [postVal, setPostVal] = useState({
     caseNumber: '',
@@ -76,6 +74,9 @@ function ApplicationForm({
   const [needLen, setNeedLen] = useState('');
   const [needSumLen, setNeedSumLen] = useState('');
   const [handlerUnit, setHandlerUnit] = useState('');
+  const [populaceVal, setPopulaceVal] = useState({
+    content: selCheckData.populace,
+  });
 
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
@@ -112,9 +113,9 @@ function ApplicationForm({
     }
     getMember();
 
-    if (member.user === 1) {
-      setAddStatus(false);
-    }
+    // if (member.user === 1) {
+    //   setAddStatus(false);
+    // }
   }, [detailData]);
 
   // 修改申請表
@@ -523,6 +524,7 @@ function ApplicationForm({
       setNeedData(response.data.needResult);
       setRemarkLength(response.data.remarkResult.length);
       setHandlerUnit(response.data.result[0].unit);
+      setSelCheckData(response.data.selCheckResult);
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -882,6 +884,34 @@ function ApplicationForm({
   let needEdit = () => {
     setEditNeed([...needData]);
     setEditPage(true);
+  };
+
+  // 案件處理情形 checked
+  const handleStateChecked = async (needId, checked, Ind) => {
+    // console.log('a', needId, checked, Ind);
+    if (checked === false) {
+      let response = await axios.post(
+        `${API_URL}/applicationData/selChecked/${needId}`,
+        { Ind },
+        {
+          withCredentials: true,
+        }
+      );
+      setNeedLoading(!needLoading);
+    } else {
+      let response = await axios.post(
+        `${API_URL}/applicationData/selUnChecked/${needId}`,
+        { Ind },
+        {
+          withCredentials: true,
+        }
+      );
+      setNeedLoading(!needLoading);
+    }
+  };
+
+  const handlepopulaceMsg = async (needId) => {
+    console.log('a');
   };
 
   return (
@@ -1975,7 +2005,7 @@ function ApplicationForm({
               })}
 
               {/* 選擇狀態 */}
-              {WebPage === 2 &&
+              {/* {WebPage === 2 &&
               HId !== '' &&
               (member.manage === 1 || member.handler === 1) &&
               needState !== 1 &&
@@ -1990,7 +2020,6 @@ function ApplicationForm({
               needState !== 12 &&
               needSumLen !== needLen ? (
                 <div className="selectContain">
-                  {/* <StateFilter /> */}
                   <div className="selContain">
                     <select
                       name="status"
@@ -2030,19 +2059,10 @@ function ApplicationForm({
                   >
                     確認
                   </button>
-                  {/* {needSumLen === needLen ? (
-                  <button className="finishBtn" onClick={handleFinish}>
-                    完成
-                  </button>
-                ) : (
-                  ''
-                )} */}
                 </div>
-              ) : addStatus ? (
-                ''
               ) : (
                 ''
-              )}
+              )} */}
             </div>
 
             {/* 取消申請 */}
@@ -2067,6 +2087,7 @@ function ApplicationForm({
             )}
           </> */}
 
+            {/* 完成 */}
             {member.manage === 1 ? (
               member.handler === 1 &&
               HId === member.name &&
@@ -2163,10 +2184,27 @@ function ApplicationForm({
             ) : (
               ''
             )}
-            <div id="dealWith" ref={scrollRef2}>
-              處理情況
+
+            {/* 處理情況 */}
+            <div id="dealWith" ref={scrollRef2} className="nullData margin10">
+              案件處理情形
             </div>
-            <ProcessingStatus />
+            <ProcessingStatus
+              needState={needState}
+              needSumLen={needSumLen}
+              needLen={needLen}
+              selectData={selectData}
+              postVal={postVal}
+              setSelectRemind={setSelectRemind}
+              handlePostVal={handlePostVal}
+              selectRemind={selectRemind}
+              setAddStateForm={setAddStateForm}
+              handleStateChecked={handleStateChecked}
+              selCheckData={selCheckData}
+              populaceVal={populaceVal}
+              setPopulaceVal={setPopulaceVal}
+              handlepopulaceMsg={handlepopulaceMsg}
+            />
           </div>
         </>
       )}

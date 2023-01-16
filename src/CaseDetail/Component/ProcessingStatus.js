@@ -6,10 +6,24 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../../utils/use_auth';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
-
+import SelectStatus from './SelectStatus';
 import '../../styles/caseDetail/_processingStatus.scss';
 
-function ProcessingStatus() {
+function ProcessingStatus({
+  needState,
+  needSumLen,
+  needLen,
+  selectData,
+  postVal,
+  setSelectRemind,
+  handlePostVal,
+  selectRemind,
+  setAddStateForm,
+  handleStateChecked,
+  selCheckData,
+  setPopulaceVal,
+  populaceVal,
+}) {
   const { member, setMember } = useAuth();
   const [submitMessage, setSubmitMessage] = useState('');
   const [nowState, setNowState] = useState('');
@@ -81,6 +95,102 @@ function ProcessingStatus() {
 
   return (
     <>
+      <div className="dealWithContainer ">
+        {selCheckData.map((v, i) => {
+          return (
+            <div className="row" key={i}>
+              <div className="col-12">回覆情況:</div>
+              <div className="col-12 col-md-3">
+                <input
+                  type="checkbox"
+                  checked={v.responded_client === 1 ? true : false}
+                  onChange={(e) => {
+                    handleStateChecked(v.id, e.target.checked, 'rc');
+                  }}
+                />
+                已回覆當事人情況
+              </div>
+              <div className="col-12 col-lg-4">
+                <input
+                  type="checkbox"
+                  checked={v.called === 1 ? true : false}
+                  onChange={(e) => {
+                    handleStateChecked(v.id, e.target.checked, 'called');
+                  }}
+                />
+                請委員/議員致電陳情人
+              </div>
+              <div className="col-12">辦理進度:</div>
+              <SelectStatus
+                needState={needState}
+                needSumLen={needSumLen}
+                needLen={needLen}
+                selectData={selectData}
+                postVal={postVal}
+                setSelectRemind={setSelectRemind}
+                handlePostVal={handlePostVal}
+                selectRemind={selectRemind}
+                setAddStateForm={setAddStateForm}
+              />
+              {/* <div className="col-12 col-lg-3">
+            <input type="checkBox" />
+            辦理中(會勘/公文往返)
+          </div>
+          <div className="col-12 col-lg-3">
+            <input type="checkBox" />
+            追蹤
+          </div>
+          <div className="col-12 col-lg-3">
+            <input type="checkBox" />
+            已完成
+          </div> */}
+
+              <div className="col-12">辦理結果:</div>
+              {/* TODO: 不能同時有兩個狀態 */}
+              <div className="col-12 col-lg-3">
+                <input
+                  type="radio"
+                  name="result"
+                  checked={v.success === 1 ? true : false}
+                  onChange={(e) => {
+                    handleStateChecked(v.id, e.target.checked, 'succ');
+                  }}
+                />
+                成功
+              </div>
+              <div className="col-12 col-lg-3">
+                <input
+                  type="radio"
+                  name="result"
+                  checked={v.fail === 1 ? true : false}
+                  onChange={(e) => {
+                    handleStateChecked(v.id, e.target.checked, 'fail');
+                  }}
+                />
+                失敗
+              </div>
+            </div>
+          );
+        })}
+
+        {/* TODO: 民眾反饋 */}
+        <div className="col-12">民眾反饋:</div>
+        <div className="feedbackContainer">
+          <textarea
+            className="feedback"
+            placeholder="請輸入民眾反饋..."
+            rows="3"
+            name="content"
+            value={populaceVal.content}
+            onChange={(e) => {
+              
+            }}
+          ></textarea>
+          <button>送出</button>
+        </div>
+      </div>
+
+      {/* 處理訊息 */}
       <div className="userName" id="ProcessingStatus">
         <BsFillPersonFill className="userIcon" /> {User}
       </div>
@@ -108,57 +218,14 @@ function ProcessingStatus() {
             : '目前沒有訊息'}
         </div>
       </div>
-      <div className="dealWithContainer ">
-        <div className="row ">
-          <div className=" col-12">回覆情況:</div>
-          <div className="  col-12 col-md-3">
-            <input type="checkBox" /> 已回覆當事人情況
-          </div>
-          <div className=" col-12 col-lg-4">
-            <input type="checkBox" />
-            請委員/議員致電陳情人
-          </div>
-          <div className="col-12">辦理進度:</div>
-          <div className=" col-12 col-lg-3">
-            <input type="checkBox" />
-            辦理中( 會勘/公文往返)
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            追蹤
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            已完成
-          </div>
-          <div className="col-12">辦理結果:</div>
-          {/* TODO: 不能同時有兩個狀態 */}
-          <div className=" col-12 col-lg-3">
-            <input type="checkBox" /> 成功
-          </div>
-          <div className="  col-12 col-lg-3">
-            <input type="checkBox" />
-            失敗
-          </div>
-        </div>
-        {/* TODO: 民眾反饋 */}
-        <div className="col-12">民眾反饋:</div>
-        <select>
-          <option>處理人</option>
-          <option>民眾</option>
-        </select>
-      </div>
 
       {/* chatBar */}
       {/* bar */}
       {nowState !== 1 &&
-      nowState !== 2 &&
-      nowState !== 3 &&
       nowState !== 4 &&
       nowState !== 8 &&
-      nowState !== 9 &&
       nowState !== 10 &&
-      nowState !== 12 &&
+      nowState !== 11 &&
       member.handler === 1 &&
       HId === member.name &&
       member.manage === 1 &&
@@ -191,43 +258,6 @@ function ProcessingStatus() {
       ) : (
         ''
       )}
-
-      <div className="dealWithContainer">
-        <div className="row">
-          <div className="col-12">回復情況:</div>
-          <div className="col-12 col-md-3">
-            <input type="checkbox" /> 已回復當事人情況
-          </div>
-          <div className="col-12 col-lg-4">
-            <input type="checkbox" />
-            請委員議員致電呈請人
-          </div>
-          <div className="col-12">辦理進度:</div>
-          <div className="col-12 col-lg-3">
-            <input type="radio" /> 會勘/公文往返
-          </div>
-          <div className="col-12 col-lg-3">
-            <input type="radio" />
-            追中
-          </div>
-          <div className="col-12 col-lg-3">
-            <input type="radio" />
-            已完成
-          </div>
-          <div className="col-12">辦理結果:</div>
-          {/* TODO: 不能同時有兩個狀態 */}
-          <div className="col-12 col-lg-3">
-            <input type="radio" name="result" /> 成功
-          </div>
-          <div className="col-12 col-lg-3">
-            <input type="radio" name="result" />
-            失敗
-          </div>
-        </div>
-        {/* TODO: 民眾反饋 */}
-        <div className="col-12">民眾反饋:</div>
-        <textarea name="" cols="30" rows="10"></textarea>
-      </div>
     </>
   );
 }
