@@ -14,6 +14,7 @@ import { RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AiFillUnlock } from 'react-icons/ai';
+import { HiDocumentReport } from 'react-icons/hi';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -292,6 +293,17 @@ function Header() {
           ) : (
             ''
           )}
+          <nav>
+            <NavLink
+              to="caseReport"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <HiDocumentReport size="20" />
+                結案報表
+              </div>
+            </NavLink>
+          </nav>
           <nav>
             <NavLink
               to="permissions"

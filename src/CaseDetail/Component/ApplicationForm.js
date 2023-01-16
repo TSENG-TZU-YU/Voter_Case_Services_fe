@@ -1128,9 +1128,7 @@ function ApplicationForm({
                               }
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.application_source}
-                            </option>
+                            <option hidden>{v.application_source}</option>
                             {getSource.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
                             })}
@@ -1155,9 +1153,7 @@ function ApplicationForm({
                               setEditUnit(true);
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.unit}
-                            </option>
+                            <option hidden>{v.unit}</option>
                             {getUnit.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
                             })}
@@ -1195,9 +1191,7 @@ function ApplicationForm({
                             {editUnit ? (
                               ''
                             ) : (
-                              <option selected disabled hidden>
-                                {v.handler}
-                              </option>
+                              <option hidden>{v.handler}</option>
                             )}
 
                             <option value="">-----請選擇-----</option>
@@ -1226,9 +1220,7 @@ function ApplicationForm({
                               handleChange(e.target.value, 'relation');
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.relation}
-                            </option>
+                            <option hidden>{v.relation}</option>
                             {relation.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
                             })}
@@ -1435,9 +1427,7 @@ function ApplicationForm({
                               areaPost(e.target.value);
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.litigant_county_id}
-                            </option>
+                            <option hidden>{v.litigant_county_id}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getCounty.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1465,9 +1455,7 @@ function ApplicationForm({
                               riminPost(e.target.value);
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.litigant_area_id}
-                            </option>
+                            <option hidden>{v.litigant_area_id}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getArea.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1497,9 +1485,7 @@ function ApplicationForm({
                               handleChange(e.target.value, 'litigantRimin');
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.litigant_rimin}
-                            </option>
+                            <option hidden>{v.litigant_rimin}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getRimin.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1624,9 +1610,7 @@ function ApplicationForm({
                               areaPost(e.target.value);
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.client_county}
-                            </option>
+                            <option hidden>{v.client_county}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getCounty.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1651,9 +1635,7 @@ function ApplicationForm({
                               riminPost(e.target.value);
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.client_area}
-                            </option>
+                            <option hidden>{v.client_area}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getArea.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1679,9 +1661,7 @@ function ApplicationForm({
                               handleChange(e.target.value, 'clientRimin');
                             }}
                           >
-                            <option selected disabled hidden>
-                              {v.client_rimin}
-                            </option>
+                            <option hidden>{v.client_rimin}</option>
                             <option value=" "> -----請選擇-----</option>
                             {getRimin.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
@@ -1751,7 +1731,7 @@ function ApplicationForm({
               <div className="vector"></div>
               {detailData.map((v) => {
                 return (
-                  <div className="gapContain my-2">
+                  <div key={v.id} className="gapContain my-2">
                     <div>
                       <div className="pb-1">案件類別</div>
                       {edit ? (
@@ -1773,9 +1753,7 @@ function ApplicationForm({
                             }
                           }}
                         >
-                          <option selected disabled hidden>
-                            {v.application_category}
-                          </option>
+                          <option hidden>{v.application_category}</option>
                           {getCategory.map((v, i) => {
                             return <option key={i}>{v.name}</option>;
                           })}

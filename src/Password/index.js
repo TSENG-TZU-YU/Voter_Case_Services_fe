@@ -3,7 +3,7 @@ import './_index.scss';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-function Password() {
+function CaseReport() {
   const [pass, setPass] = useState('');
   function submitCheck(tit) {
     Swal.fire({
@@ -61,4 +61,4 @@ function Password() {
   );
 }
 
-export default Password;
+export default CaseReport;

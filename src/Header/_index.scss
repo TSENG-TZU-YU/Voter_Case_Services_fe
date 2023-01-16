@@ -12,12 +12,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  z-index: 5;
 
   .mobile {
     display: flex;
     align-items: center;
-
+    // z-index: -1;
     .titleH3 {
       color: $mainClrW;
       font-size: clamp(12px, 4vw, $containerTit28);
@@ -33,7 +32,7 @@
 }
 .between {
   display: flex;
-  z-index: 1;
+  z-index: 2;
   .navLeft {
     width: 200px;
     min-width: 200px;
