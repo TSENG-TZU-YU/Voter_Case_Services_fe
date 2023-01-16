@@ -3,7 +3,7 @@
 .userName {
   //   background: lightblue;
   width: 100%;
-  margin: 0 auto;
+  margin: 20px auto 0;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -63,6 +63,22 @@
   font-size: $subText;
   white-space: nowrap;
   margin: $marage10 0;
+  .row{
+    margin: $marage10 auto;
+  }
+  .feedbackContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .feedback {
+      resize: none;
+      border: 1.5px solid $subClrBrown;
+      border-radius: 3px;
+      width: 90%;
+      padding: 3px;
+      @include scrollbarContain;
+    }
+  }
 }
 .noneHight {
   height: calc(100% - 100px);

@@ -105,7 +105,6 @@
       }
     }
 
-
     .add {
       width: 100%;
       display: flex;
@@ -278,30 +277,6 @@
         resize: none;
       }
     }
-    .selectContain {
-      // background: lightcoral;
-      display: flex;
-      justify-content: center;
-      margin: 0 auto;
-      padding: 10px 0 0;
-      font-size: 14px;
-      border-top: 1px dashed $subClrBrown;
-      .selContain {
-        position: relative;
-        display: flex;
-        justify-content: center;
-      }
-      .selectRemind {
-        position: absolute;
-        bottom: -20px;
-        left: 0;
-        font-size: 12px;
-        color: $focusClrG;
-      }
-      .confirmBtn {
-        @include submitBtn(#ccc);
-      }
-    }
 
     .cancle {
       display: flex;
@@ -346,4 +321,7 @@
   padding: 5px;
   margin-top: 10px;
   border-radius: 4px;
+}
+.margin10 {
+  margin-top: 20px;
 }

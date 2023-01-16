@@ -97,7 +97,6 @@ function App() {
                 path="application/:num"
                 element={
                   <ApplicationForm
-                    setAddStatus={setAddStatus}
                     addStatus={addStatus}
                     delCheck={delCheck}
                     scrollPage={scrollPage}

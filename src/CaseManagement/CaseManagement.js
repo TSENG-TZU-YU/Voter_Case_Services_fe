@@ -353,7 +353,6 @@ function CaseManagement() {
                     )}
                   </th>
                   <th>案件狀態</th>
-                  <th>需求進度</th>
                 </tr>
               </thead>
               {isLoading ? (
