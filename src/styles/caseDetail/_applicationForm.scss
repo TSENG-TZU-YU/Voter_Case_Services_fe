@@ -311,17 +311,15 @@
     @include submitBtn($focusClrG);
   }
 }
-.nullData {
+.selData {
   width: 85%;
   font-size: 14px;
   margin: 0 auto;
-  background: $subClrBrown;
+  background: $focusClrG;
   color: $mainClrW;
   text-align: center;
   padding: 5px;
   margin-top: 10px;
   border-radius: 4px;
-}
-.margin10 {
   margin-top: 20px;
 }
