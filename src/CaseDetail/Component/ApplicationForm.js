@@ -12,7 +12,7 @@ import moment from 'moment';
 import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
-import GenerallyBtn from '../../Btn/GenerallyBtn';
+// import GenerallyBtn from '../../Btn/GenerallyBtn';
 import ProcessingStatus from './ProcessingStatus';
 
 // import ProcessingStatus from './ProcessingStatus';
@@ -80,11 +80,11 @@ function ApplicationForm({
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
   const [getDbFileTime, setGetDbFileTime] = useState([]);
-  const radioInput = [
-    { title: '一次性', value: '1' },
-    { title: '短期', value: '2' },
-    { title: '長期', value: '3' },
-  ];
+  // const radioInput = [
+  //   { title: '一次性', value: '1' },
+  //   { title: '短期', value: '2' },
+  //   { title: '長期', value: '3' },
+  // ];
   //友好程度
   const relation = [
     { name: 'VIP' },
@@ -125,6 +125,7 @@ function ApplicationForm({
 
   //抓取後端資料
   const [getHandler, setGetHandler] = useState([]);
+  const [getSource, setGetSource] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
   const [getCounty, setGetCounty] = useState([]);
   const [getArea, setGetArea] = useState([]);
@@ -135,6 +136,7 @@ function ApplicationForm({
   const handleChange = (val, input) => {
     let newData = [...detailData];
     if (input === 'handler') newData[0].handler = val;
+    if (input === 'source') newData[0].application_source = val;
     if (input === 'category') newData[0].application_category = val;
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].project_name = val;
@@ -158,12 +160,13 @@ function ApplicationForm({
     console.log('newData[0].phoneCheck ', newData[0].phoneCheck);
   };
   //申請表驗證空值
+  const [source, setSource] = useState(false);
   const [category, setCategory] = useState(false);
-  const [cycle, setCycle] = useState(false);
+  // const [cycle, setCycle] = useState(false);
 
   //是否填寫
-  const [litigant, setLitigant] = useState(true);
-  const [client, setClient] = useState(true);
+  // const [litigant, setLitigant] = useState(true);
+  // const [client, setClient] = useState(true);
 
   //增加上傳檔案
   const addF = () => {
@@ -212,6 +215,17 @@ function ApplicationForm({
         console.log(err);
       }
     };
+    //抓取案件來源
+    let source = async () => {
+      try {
+        let res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/source`
+        );
+        setGetSource(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     //抓取申請類別
     let category = async () => {
       try {
@@ -223,7 +237,8 @@ function ApplicationForm({
         console.log(err);
       }
     };
-    //抓取申請單位
+
+    //抓取案件類別
     let unit = async () => {
       try {
         let res = await axios.get(
@@ -247,6 +262,7 @@ function ApplicationForm({
     };
 
     handler();
+    source();
     category();
     county();
     unit();
@@ -344,7 +360,9 @@ function ApplicationForm({
         return;
       }
     }
-
+    if (detailData[0].source === '0' || detailData[0].source === '') {
+      setCategory(true);
+    }
     if (detailData[0].category === '0' || detailData[0].category === '') {
       setCategory(true);
     }
@@ -355,7 +373,9 @@ function ApplicationForm({
 
     if (
       detailData[0].category !== '0' &&
-      detailData[0].category !== ''
+      detailData[0].category !== '' &&
+      detailData[0].source !== '0' &&
+      detailData[0].source !== ''
       // && detailData[0].cycle !== ''
     ) {
       Swal.fire({
@@ -1062,7 +1082,7 @@ function ApplicationForm({
                         {edit ? (
                           <input
                             type="text"
-                            placeholder={v.application_category}
+                            placeholder={v.application_source}
                             disabled
                             defaultChecked={true}
                           />
@@ -1070,18 +1090,18 @@ function ApplicationForm({
                           <select
                             className="category"
                             onChange={(e) => {
-                              handleChange(e.target.value, 'category');
+                              handleChange(e.target.value, 'source');
                             }}
                             onClick={(e) => {
                               if (e.target.value !== '0') {
-                                setCategory(false);
+                                setSource(false);
                               }
                             }}
                           >
                             <option selected disabled hidden>
-                              {v.application_category}
+                              {v.application_source}
                             </option>
-                            {getCategory.map((v, i) => {
+                            {getSource.map((v, i) => {
                               return <option key={i}>{v.name}</option>;
                             })}
                           </select>
@@ -1699,6 +1719,43 @@ function ApplicationForm({
               {/* 需求 */}
               <div className="appTitle">陳情內容</div>
               <div className="vector"></div>
+              {detailData.map((v) => {
+                return (
+                  <div className="gapContain my-2">
+                    <div>
+                      <div className="pb-1">案件類別</div>
+                      {edit ? (
+                        <input
+                          type="text"
+                          placeholder={v.application_category}
+                          disabled
+                          defaultChecked={true}
+                        />
+                      ) : (
+                        <select
+                          className="category"
+                          onChange={(e) => {
+                            handleChange(e.target.value, 'category');
+                          }}
+                          onClick={(e) => {
+                            if (e.target.value !== '0') {
+                              setCategory(false);
+                            }
+                          }}
+                        >
+                          <option selected disabled hidden>
+                            {v.application_category}
+                          </option>
+                          {getCategory.map((v, i) => {
+                            return <option key={i}>{v.name}</option>;
+                          })}
+                        </select>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
               {editNeed.map((v, i) => {
                 return (
                   <div className="needContain" key={i}>
