@@ -63,8 +63,19 @@
   font-size: $subText;
   white-space: nowrap;
   margin: $marage10 0;
-  .row{
+  .row {
+    // background-color: lemonchiffon;
     margin: $marage10 auto;
+    max-width: 85%;
+  }
+  .row > * {
+    padding: 0;
+  }
+  .submitIcon {
+    font-size: 2rem;
+    margin: 0 5px;
+    cursor: pointer;
+    color: $subClrBrown;
   }
   .feedbackContainer {
     display: flex;

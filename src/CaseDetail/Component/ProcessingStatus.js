@@ -21,8 +21,10 @@ function ProcessingStatus({
   setAddStateForm,
   handleStateChecked,
   selCheckData,
-  setPopulaceVal,
-  populaceVal,
+  selVal,
+  setSelVal,
+  handlepopulaceMsg,
+  nowSelState,
 }) {
   const { member, setMember } = useAuth();
   const [submitMessage, setSubmitMessage] = useState('');
@@ -38,7 +40,6 @@ function ProcessingStatus({
   let User = params.get('user');
   let WebPage = parseInt(params.get('page'));
 
-  // console.log('object', User);
   // 檢查會員
   useEffect(() => {
     async function getMember() {
@@ -93,46 +94,54 @@ function ProcessingStatus({
     setLoading(!loading);
   };
 
+  //
+  function handleChange(e) {
+    const newpopulace = { ...selVal, [e.target.name]: e.target.value };
+
+    // console.log('campingData', newpopulace);
+    setSelVal(newpopulace);
+  }
   return (
     <>
       <div className="dealWithContainer ">
         {selCheckData.map((v, i) => {
           return (
-            <div className="row" key={i}>
-              <div className="col-12">回覆情況:</div>
-              <div className="col-12 col-md-3">
-                <input
-                  type="checkbox"
-                  checked={v.responded_client === 1 ? true : false}
-                  onChange={(e) => {
-                    handleStateChecked(v.id, e.target.checked, 'rc');
-                  }}
+            <>
+              <div className="row" key={i}>
+                <div className="col-12">回覆情況:</div>
+                <div className="col-12 col-md-3">
+                  <input
+                    type="checkbox"
+                    checked={v.responded_client === 1 ? true : false}
+                    onChange={(e) => {
+                      handleStateChecked(v.id, e.target.checked, 'rc');
+                    }}
+                  />
+                  已回覆當事人情況
+                </div>
+                <div className="col-12 col-lg-4">
+                  <input
+                    type="checkbox"
+                    checked={v.called === 1 ? true : false}
+                    onChange={(e) => {
+                      handleStateChecked(v.id, e.target.checked, 'called');
+                    }}
+                  />
+                  請委員/議員致電陳情人
+                </div>
+                <div className="col-12">辦理進度: {nowSelState}</div>
+                <SelectStatus
+                  needState={needState}
+                  needSumLen={needSumLen}
+                  needLen={needLen}
+                  selectData={selectData}
+                  postVal={postVal}
+                  setSelectRemind={setSelectRemind}
+                  handlePostVal={handlePostVal}
+                  selectRemind={selectRemind}
+                  setAddStateForm={setAddStateForm}
                 />
-                已回覆當事人情況
-              </div>
-              <div className="col-12 col-lg-4">
-                <input
-                  type="checkbox"
-                  checked={v.called === 1 ? true : false}
-                  onChange={(e) => {
-                    handleStateChecked(v.id, e.target.checked, 'called');
-                  }}
-                />
-                請委員/議員致電陳情人
-              </div>
-              <div className="col-12">辦理進度:</div>
-              <SelectStatus
-                needState={needState}
-                needSumLen={needSumLen}
-                needLen={needLen}
-                selectData={selectData}
-                postVal={postVal}
-                setSelectRemind={setSelectRemind}
-                handlePostVal={handlePostVal}
-                selectRemind={selectRemind}
-                setAddStateForm={setAddStateForm}
-              />
-              {/* <div className="col-12 col-lg-3">
+                {/* <div className="col-12 col-lg-3">
             <input type="checkBox" />
             辦理中(會勘/公文往返)
           </div>
@@ -145,49 +154,64 @@ function ProcessingStatus({
             已完成
           </div> */}
 
-              <div className="col-12">辦理結果:</div>
-              {/* TODO: 不能同時有兩個狀態 */}
-              <div className="col-12 col-lg-3">
-                <input
-                  type="radio"
-                  name="result"
-                  checked={v.success === 1 ? true : false}
-                  onChange={(e) => {
-                    handleStateChecked(v.id, e.target.checked, 'succ');
-                  }}
-                />
-                成功
+                {nowSelState !== '案件已完成' ? (
+                  ''
+                ) : (
+                  <>
+                    <div className="col-12">辦理結果:</div>
+                    <div className="col-12 col-lg-3">
+                      <input
+                        type="radio"
+                        name="result"
+                        checked={v.success === 1 ? true : false}
+                        onChange={(e) => {
+                          handleStateChecked(v.id, e.target.checked, 'succ');
+                        }}
+                      />
+                      成功
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <input
+                        type="radio"
+                        name="result"
+                        checked={v.fail === 1 ? true : false}
+                        onChange={(e) => {
+                          handleStateChecked(v.id, e.target.checked, 'fail');
+                        }}
+                      />
+                      失敗
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="col-12 col-lg-3">
-                <input
-                  type="radio"
-                  name="result"
-                  checked={v.fail === 1 ? true : false}
-                  onChange={(e) => {
-                    handleStateChecked(v.id, e.target.checked, 'fail');
-                  }}
-                />
-                失敗
-              </div>
-            </div>
+
+              {nowSelState !== '案件已完成' ? (
+                ''
+              ) : (
+                <>
+                  {/* 民眾反饋 */}
+                  <div className="col-12">民眾反饋:</div>
+                  <div className="feedbackContainer">
+                    <textarea
+                      className="feedback"
+                      placeholder="請輸入民眾反饋..."
+                      rows="3"
+                      name="populace"
+                      value={selVal.populace}
+                      onChange={handleChange}
+                    ></textarea>
+                    <FaTelegramPlane
+                      className="submitIcon"
+                      onClick={() => {
+                        handlepopulaceMsg(v.id);
+                      }}
+                    />
+                  </div>
+                </>
+              )}
+            </>
           );
         })}
-
-        {/* TODO: 民眾反饋 */}
-        <div className="col-12">民眾反饋:</div>
-        <div className="feedbackContainer">
-          <textarea
-            className="feedback"
-            placeholder="請輸入民眾反饋..."
-            rows="3"
-            name="content"
-            value={populaceVal.content}
-            onChange={(e) => {
-              
-            }}
-          ></textarea>
-          <button>送出</button>
-        </div>
       </div>
 
       {/* 處理訊息 */}

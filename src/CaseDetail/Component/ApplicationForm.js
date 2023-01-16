@@ -64,6 +64,8 @@ function ApplicationForm({
     remark: '',
     finishTime: '',
   });
+  const [selVal, setSelVal] = useState({});
+  const [nowSelState, setNowSelState] = useState('');
 
   const [selectRemind, setSelectRemind] = useState(false);
   const [postValRemind, setPostValRemind] = useState(false);
@@ -74,9 +76,6 @@ function ApplicationForm({
   const [needLen, setNeedLen] = useState('');
   const [needSumLen, setNeedSumLen] = useState('');
   const [handlerUnit, setHandlerUnit] = useState('');
-  const [populaceVal, setPopulaceVal] = useState({
-    content: selCheckData.populace,
-  });
 
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
@@ -505,6 +504,9 @@ function ApplicationForm({
       setRemarkLength(response.data.remarkResult.length);
       setHandlerUnit(response.data.result[0].unit);
       setSelCheckData(response.data.selCheckResult);
+      setSelVal(response.data.selCheckResult[0]);
+      setNowSelState(response.data.nowStateResult[0].name);
+      // console.log('first', response.data.nowStateResult[0].name);
       // 修改儲存用
       setEditNeed(response.data.needResult);
       setHandleData(response.data.handleResult);
@@ -523,9 +525,6 @@ function ApplicationForm({
       }
 
       // selectStatus filter
-      if (member.director === 1) {
-        setSelectData(response.data.selectResult.splice(1, 1));
-      }
       if (member.manage === 1 && member.name !== HId) {
         setSelectData(response.data.selectResult.splice(2, 3));
       }
@@ -533,10 +532,9 @@ function ApplicationForm({
         member.handler === 1 ||
         (member.manage === 1 && member.name === HId)
       ) {
-        setSelectData(response.data.selectResult.splice(1));
+        setSelectData(response.data.selectResult);
       }
 
-      // setSelectData(response.data.selectResult);
       // 目前狀態
       setNeedState(response.data.result[0].status_id);
       setNeedLen(parseInt(response.data.needResult.length));
@@ -891,7 +889,15 @@ function ApplicationForm({
   };
 
   const handlepopulaceMsg = async (needId) => {
-    console.log('a');
+    // console.log('rrr',needId);
+    let response = await axios.post(
+      `${API_URL}/applicationData/populaceMsg/${needId}`,
+      selVal,
+      {
+        withCredentials: true,
+      }
+    );
+    setNeedLoading(!needLoading);
   };
 
   return (
@@ -2129,7 +2135,7 @@ function ApplicationForm({
             )}
 
             {/* 處理情況 */}
-            <div id="dealWith" ref={scrollRef2} className="nullData margin10">
+            <div id="dealWith" ref={scrollRef2} className="selData">
               案件處理情形
             </div>
             <ProcessingStatus
@@ -2144,9 +2150,10 @@ function ApplicationForm({
               setAddStateForm={setAddStateForm}
               handleStateChecked={handleStateChecked}
               selCheckData={selCheckData}
-              populaceVal={populaceVal}
-              setPopulaceVal={setPopulaceVal}
               handlepopulaceMsg={handlepopulaceMsg}
+              selVal={selVal}
+              setSelVal={setSelVal}
+              nowSelState={nowSelState}
             />
           </div>
         </>
