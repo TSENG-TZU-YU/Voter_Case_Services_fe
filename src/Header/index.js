@@ -15,7 +15,6 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AiFillUnlock } from 'react-icons/ai';
 
-
 //hook
 import { useAuth } from '../utils/use_auth';
 
@@ -132,8 +131,7 @@ function Header() {
           <div>接案單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
-          {/* 使用者/主管 */}
-          {user ? (
+          {handler || manage ? (
             <>
               <nav>
                 <NavLink
@@ -146,6 +144,13 @@ function Header() {
                   </div>
                 </NavLink>
               </nav>
+            </>
+          ) : (
+            ''
+          )}
+          {/* 使用者/主管 */}
+          {user ? (
+            <>
               <nav>
                 <NavLink
                   to="caseManagement"

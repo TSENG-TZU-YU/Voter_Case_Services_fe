@@ -23,6 +23,7 @@ function Application({ delCheck }) {
   const [submitValue, setSubmitValue] = useState([
     {
       handler: '',
+      source: '',
       category: '',
       relation: '',
       phoneCheck: '',
@@ -44,7 +45,7 @@ function Application({ delCheck }) {
   ]);
   const [addNo, setAddNo] = useState('');
   const [addUnit, setAddUnit] = useState('');
-
+  
   //使用者資料
   const { member, setMember } = useAuth();
 
@@ -58,6 +59,7 @@ function Application({ delCheck }) {
   const [getUnit, setGetUnit] = useState([]);
   const [getRimin, setGetRimin] = useState([]);
   //申請表驗證空值
+  const [source, setSource] = useState(false);
   const [category, setCategory] = useState(false);
   // const [cycle, setCycle] = useState(false);
   const [need, setNeed] = useState(false);
@@ -98,6 +100,7 @@ function Application({ delCheck }) {
   const handleChange = (val, input) => {
     let newData = [...submitValue];
     if (input === 'handler') newData[0].handler = val;
+    if (input === 'source') newData[0].source = val;
     if (input === 'category') newData[0].category = val;
     if (input === 'cycle') newData[0].cycle = val;
     if (input === 'name') newData[0].name = val;
@@ -300,12 +303,18 @@ function Application({ delCheck }) {
         return;
       }
     }
-
+    if (submitValue[0].source === '0' || submitValue[0].source === '') {
+      setSource(true);
+      Swal.fire({
+        icon: 'error',
+        title: '請填寫來源',
+      });
+    }
     if (submitValue[0].category === '0' || submitValue[0].category === '') {
       setCategory(true);
       Swal.fire({
         icon: 'error',
-        title: '請填寫單位',
+        title: '請填寫類別',
       });
     }
 
@@ -316,7 +325,9 @@ function Application({ delCheck }) {
 
     if (
       submitValue[0].category !== '0' &&
-      submitValue[0].category !== ''
+      submitValue[0].category !== '' &&
+      submitValue[0].source !== '0' &&
+      submitValue[0].source !== ''
       // && submitValue[0].cycle !== ''
     ) {
       Swal.fire({
@@ -360,12 +371,19 @@ function Application({ delCheck }) {
         return;
       }
     }
+    if (submitValue[0].source === '0' || submitValue[0].source === '') {
+      setSource(true);
+      Swal.fire({
+        icon: 'error',
+        title: '請填寫來源',
+      });
+    }
 
     if (submitValue[0].category === '0' || submitValue[0].category === '') {
       setCategory(true);
       Swal.fire({
         icon: 'error',
-        title: '請填寫單位',
+        title: '請填寫類別',
       });
     }
 
@@ -375,7 +393,9 @@ function Application({ delCheck }) {
 
     if (
       submitValue[0].category !== '0' &&
-      submitValue[0].category !== ''
+      submitValue[0].category !== '' &&
+      submitValue[0].source !== '0' &&
+      submitValue[0].source !== ''
       // &&  submitValue[0].cycle !== ''
     ) {
       Swal.fire({
@@ -486,22 +506,22 @@ function Application({ delCheck }) {
           <div className="gap">
             <div>
               案件來源 <span>*</span>
-              {category ? <span>欄位不得為空</span> : <span>必填</span>}
+              {source ? <span>請選欄位</span> : <span>必填</span>}
             </div>
             <select
               className="handler"
               onChange={(e) => {
-                handleChange(e.target.value, 'category');
+                handleChange(e.target.value, 'source');
                 setAddNo(e.target.value);
               }}
               onClick={(e) => {
                 if (e.target.value !== '0') {
-                  setCategory(false);
+                  setSource(false);
                 }
               }}
             >
               <option value="0" selected disabled hidden>
-                -----請選擇類別-----
+                -----請選擇來源-----
               </option>
               {getSource.map((v, i) => {
                 return (
@@ -836,7 +856,34 @@ function Application({ delCheck }) {
         {/* 需求 */}
         <h3>陳情內容</h3>
         <div className="vector"></div>
-     
+        <div className="box d-md-flex">
+          {/*  案件類別 */}
+          <div className="gap">
+            <div>
+              案件類別 <span>*</span>
+              {category ? <span>請選欄位</span> : <span>必填</span>}
+            </div>
+            <select
+              className="handler"
+              onChange={(e) => {
+                handleChange(e.target.value, 'category');
+              }}
+              onClick={(e) => {
+                if (e.target.value !== '0') {
+                  setCategory(false);
+                }
+              }}
+            >
+              <option value="0" selected disabled hidden>
+                -----請選擇類別-----
+              </option>
+              {getCategory.map((v, i) => {
+                return <option key={i}>{v.name}</option>;
+              })}
+            </select>
+          </div>
+        </div>
+
         <div className="add">
           <span className={`${need ? 'view' : ''}`}>*欄位不得為空</span>
           <div>

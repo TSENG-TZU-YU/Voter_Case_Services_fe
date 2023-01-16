@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FaArrowLeft } from 'react-icons/fa';
+import { useAuth } from '../utils/use_auth';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
@@ -20,6 +21,9 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
+  const { member } = useAuth();
+  const [uploadPage, setUploadPage] = useState(false);
+
   //使用者資料
   const navBtn = [
     {
@@ -32,13 +36,24 @@ function CaseDetail({ setScrollPage, scrollPage }) {
       // url: `ProcessingStatus/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}`,
       url: `application/${num}?id=${ID}&HId=${HId}&user=${User}&sender=${Sender}&page=${page}&scroll=2`,
     },
+  ];
+
+  const navBtn1 = [
     {
       title: '上傳文件',
       url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}&scroll=3`,
     },
   ];
 
-  // console.log('num', page === 1);
+  useEffect(() => {
+    //接案人與處理人皆可看到文件
+    if (member.name === HId || member.name === User) {
+      setUploadPage(true);
+    } else {
+      setUploadPage(false);
+    }
+  }, []);
+
   return (
     <div className="caseDetailContainer">
       <Link
@@ -70,6 +85,28 @@ function CaseDetail({ setScrollPage, scrollPage }) {
                 </li>
               );
             })}
+            {/* 是處理人才能看到文件 */}
+            {uploadPage ? (
+              <>
+                {navBtn1.map((v, i) => {
+                  return (
+                    <li key={uuidv4()}>
+                      <NavLink
+                        to={v.url}
+                        // className={(nav) =>console.log(i, v.act === i && nav.isActive)
+                        //  }
+                        className={`linkPad ${Scroll === 3 ? 'act' : ''}`}
+                        onClick={doScrollPage}
+                      >
+                        {v.title}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </>
+            ) : (
+              ''
+            )}
           </ul>
         </nav>
         <Outlet />
