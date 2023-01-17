@@ -17,7 +17,6 @@ import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
-import CaseReportMobile from '../CaseReportMobile/CaseReportMobile';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
@@ -301,9 +300,8 @@ function CaseReport() {
               />
             </div>
           </div>
-          {/* <CaseReportMobile /> */}
           <div className="case">
-            <table className="caseContain">
+            <table className="caseReport">
               <thead>
                 <tr>
                   <th>詳細資訊</th>
@@ -330,6 +328,7 @@ function CaseReport() {
                     )}
                   </th>
                   <th>案件狀態</th>
+                  <th>請委員/議員致電陳情人</th>
                 </tr>
               </thead>
               {isLoading ? (
@@ -345,7 +344,7 @@ function CaseReport() {
                       {pageCase.length > 0 &&
                         pageCase[pageNow - 1].map((v) => {
                           return (
-                            <tbody key={uuidv4()} className="body">
+                            <tbody key={uuidv4()} className="bodyMobile">
                               <tr>
                                 <td data-title="詳細資訊" className="posClick">
                                   <Link
@@ -372,6 +371,12 @@ function CaseReport() {
                                 <td data-title="接案時間">{v.create_time}</td>
                                 <td data-title="案件狀態" className="view">
                                   {v.name}
+                                </td>
+                                <td data-title="請委員/議員致電陳情人">
+                                  <input
+                                    type="checkbox"
+                                    checked={v.called === 1 ? true : false}
+                                  />
                                 </td>
                               </tr>
                             </tbody>
