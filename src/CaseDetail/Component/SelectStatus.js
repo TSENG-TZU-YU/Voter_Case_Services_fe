@@ -67,9 +67,7 @@ function SelectStatus({
                 handlePostVal(e);
               }}
             >
-              <option value="" selected>
-                ----請選擇處理狀態----
-              </option>
+              <option value="">----請選擇處理狀態----</option>
               {selectData.map((v) => {
                 return (
                   <option value={v.name} key={uuidv4()}>

@@ -95,7 +95,7 @@ function UploadPage({ setAddStatus, delCheck }) {
           `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFileNo/${num}`
         );
 
-        setNo(response.data[0].application_category);
+        setNo(response.data[0].application_source);
         setStatus(response.data[0].status_id);
         setHandler(response.data[0].handler);
         setTimeout(() => {

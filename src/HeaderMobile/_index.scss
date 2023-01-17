@@ -3,11 +3,11 @@
 .navCenter {
   width: 100%;
   background-color: $navBarMobile;
-  z-index: 1;
   position: absolute;
   justify-content: end;
   flex-direction: column;
   padding: 0 10px;
+  z-index: 1;
   transition: transform 0.4s;
   .vectorBottom {
     border-bottom: 2px solid black;

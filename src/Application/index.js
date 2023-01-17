@@ -45,7 +45,7 @@ function Application({ delCheck }) {
   ]);
   const [addNo, setAddNo] = useState('');
   const [addUnit, setAddUnit] = useState('');
-  
+
   //使用者資料
   const { member, setMember } = useAuth();
 
@@ -520,7 +520,7 @@ function Application({ delCheck }) {
                 }
               }}
             >
-              <option value="0" selected disabled hidden>
+              <option value="0" hidden>
                 -----請選擇來源-----
               </option>
               {getSource.map((v, i) => {
@@ -544,9 +544,8 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'unit');
                 setAddUnit(e.target.value);
               }}
-              defaultValue={member.applicant_unit}
             >
-              <option value="0" selected disabled hidden>
+              <option value="0" hidden>
                 {member.applicant_unit}
               </option>
               {getUnit.map((v, i) => {
@@ -874,7 +873,7 @@ function Application({ delCheck }) {
                 }
               }}
             >
-              <option value="0" selected disabled hidden>
+              <option value="0" hidden>
                 -----請選擇類別-----
               </option>
               {getCategory.map((v, i) => {

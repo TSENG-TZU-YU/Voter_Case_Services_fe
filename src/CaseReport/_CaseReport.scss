@@ -1,0 +1,162 @@
+@import '../styles/variable';
+
+.m-view {
+  display: none;
+}
+.caseContainer {
+  // background: rgb(231, 190, 151);
+  width: 90%;
+  height: calc(100vh - 70px);
+  // margin: 0 auto;
+  // padding-bottom: 30px;
+  font-size: clamp(12px, 1vw, 18px);
+  // display: flex;
+  // flex-direction: column;
+  .case {
+    @include scrollbar;
+  }
+  .sortSelect {
+    // background: lemonchiffon;
+    width: 100%;
+    // font-size: clamp(12px, 1vw, 13.9px);
+    padding: 20px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    .bothFilter {
+      display: flex;
+      justify-content: flex-start;
+      .marge5 {
+        margin-right: 10px;
+      }
+    }
+  }
+  .caseContain {
+    margin: 20px auto 0;
+
+    .body :hover {
+      background: #eee;
+    }
+    thead,
+    .body {
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      tr,
+      th,
+      td {
+        white-space: nowrap;
+      }
+      th {
+        padding: 10px 15px;
+        // font-size: 14px;
+        .arrow {
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+      td {
+        padding: 15px;
+        .icons {
+          width: 40px;
+          height: 20px;
+          cursor: pointer;
+        }
+        .eyeBcg {
+          color: pink;
+        }
+      }
+      .view {
+        color: $focusClrG;
+      }
+      .sortBtn {
+        @include flexCenter;
+      }
+    }
+  }
+  .page {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    margin-top: 20px;
+  }
+  .noData {
+    // background: lavenderblush;
+    font-size: 14px;
+    color: $focusClrG;
+    text-align: center;
+    .noTd {
+      padding: 15px;
+    }
+  }
+}
+
+/* media queries */
+@media screen and (max-width: 600px) {
+  .case{
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  table.caseContain {
+    width: 100%;
+  }
+  table.caseContain tr.hide-mobile,
+  table.caseContain th.hide-mobile,
+  table.caseContain td.hide-mobile {
+    display: none;
+  }
+  table.caseContain thead {
+    display: none;
+  }
+  table.caseContain tbody {
+    width: 100%;
+  }
+  table.caseContain tr,
+  table.caseContain th,
+  table.caseContain td {
+    display: block;
+    padding: 0;
+  }
+  table.caseContain tr {
+    border-bottom: none;
+    margin: 0 0 1em 0;
+    padding: 0.5em;
+  }
+  table.caseContain tr.highlight {
+    background-color: inherit !important;
+  }
+  table.caseContain.zebra tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.caseContain.zebra td:nth-child(even) {
+    background-color: #f6f6f6;
+  }
+  table.caseContain tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.caseContain td {
+    padding: 0.5em 0 0.25em 0;
+    border-bottom: 1px dotted #ccc;
+    text-align: right;
+  }
+  table.caseContain td[data-title]:before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: inline-block;
+    content: attr(data-title);
+    float: left;
+    margin-right: 0.5em;
+    font-size: 0.95em;
+  }
+  table.caseContain td:last-child {
+    padding-right: 0;
+    border-bottom: 2px solid #ccc;
+  }
+  table.caseContain td:empty {
+    display: none;
+  }
+  table.caseContain .highlight td {
+    background-color: inherit;
+    font-weight: normal;
+  }
+}
+
+

@@ -14,6 +14,7 @@ import { RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AiFillUnlock } from 'react-icons/ai';
+import { HiDocumentReport } from 'react-icons/hi';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -280,6 +281,18 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
         ) : (
           ''
         )}
+        <nav className="vectorBottom">
+          <NavLink
+            to="caseReport"
+            className={(nav) => (nav.isActive ? 'link' : '')}
+             onClick={mobilePage}
+          >
+            <div className="" onClick={acf}>
+              <HiDocumentReport size="20" />
+              結案報表
+            </div>
+          </NavLink>
+        </nav>
         <nav className="vectorBottom">
           <NavLink
             to="permissions"

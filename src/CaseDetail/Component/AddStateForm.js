@@ -47,9 +47,7 @@ function AddStateForm({
                   handlePostVal(e);
                 }}
               >
-                <option value="" selected>
-                  ----請選擇轉件人員----
-                </option>
+                <option value="">----請選擇轉件人員----</option>
                 {handlerData.map((v) => {
                   return (
                     <option value={v.name} key={uuidv4()}>
