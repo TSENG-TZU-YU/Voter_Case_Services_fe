@@ -41,6 +41,7 @@ function ApplicationForm({
   let Sender = params.get('sender');
   let WebPage = parseInt(params.get('page'));
   let scroll = parseInt(params.get('scroll'));
+  let User = parseInt(params.get('user'));
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -984,9 +985,11 @@ function ApplicationForm({
             {/* 頁籤 */}
             <div ref={scrollRef1}></div>
 
-            {/* TODO:增加判斷 */}
             {/* user  需求修改Btn */}
-            {needState === 7 && member.user === 1 && WebPage === 1 ? (
+            {needState === 7 &&
+            member.user === 1 &&
+            HId === member.name &&
+            WebPage === 2 ? (
               <ApplicationBtn
                 handleFn1={needEdit}
                 tit="請點選按鈕進行需求修改"
@@ -1028,7 +1031,10 @@ function ApplicationForm({
             )}
 
             {/* handler完成  待user確認 */}
-            {member.user === 1 && needState === 11 && WebPage === 1 ? (
+            {member.user === 1 &&
+            needState === 11 &&
+            User === member.name &&
+            WebPage === 2 ? (
               <ApplicationBtn
                 handleFn1={handleAcceptFinish}
                 handleFn2={handleRejectFinish}
