@@ -981,6 +981,9 @@ function ApplicationForm({
               ''
             )}
 
+            {/* 頁籤 */}
+            <div ref={scrollRef1}></div>
+
             {/* TODO:增加判斷 */}
             {/* user  需求修改Btn */}
             {needState === 7 && member.user === 1 && WebPage === 1 ? (
@@ -1053,7 +1056,7 @@ function ApplicationForm({
               否，無法接收此案件
             </div>
           </> */}
-            <div ref={scrollRef1}></div>
+
             {/* 處理狀態 */}
             {handleData.length !== 0 ? (
               <>
