@@ -129,7 +129,7 @@ function CaseReport() {
   //   });
   // };
 
-  // TODO:預設狀態及日期
+  // TODO:預設狀態結案
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
@@ -375,6 +375,7 @@ function CaseReport() {
                                 <td data-title="請委員/議員致電陳情人">
                                   <input
                                     type="checkbox"
+                                    disabled
                                     checked={v.called === 1 ? true : false}
                                   />
                                 </td>

@@ -3,8 +3,9 @@
 .caseDetailContainer {
   // background: lightblue;
   position: relative;
-  width: calc(100vw - 200px);
+  width: 100%;
   height: calc(100vh - 70px);
+
   // background: $bcgBlock;
   z-index: 20;
   font-size: clamp(12px, 1vw, 18px);
@@ -54,6 +55,7 @@
           cursor: pointer;
           .linkPad {
             padding: 4px 15px;
+            white-space: nowrap;
           }
           .act {
             color: $focusClrG;

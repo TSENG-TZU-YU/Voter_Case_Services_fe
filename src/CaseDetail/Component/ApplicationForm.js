@@ -158,7 +158,6 @@ function ApplicationForm({
     if (input === 'remark') newData[0].remark = val;
     if (input === 'unit') newData[0].unit = val;
     setDetailData(newData);
-    console.log('newData[0].phoneCheck ', newData[0].phoneCheck);
   };
   //申請表驗證空值
   const [source, setSource] = useState(false);
@@ -182,10 +181,10 @@ function ApplicationForm({
     setGetFile(newData);
   };
   // 清空檔案
-  const handleClearFile = () => {
-    let newData = [{ file: '' }];
-    setGetFile(newData);
-  };
+  // const handleClearFile = () => {
+  //   let newData = [{ file: '' }];
+  //   setGetFile(newData);
+  // };
   //單個檔案上傳
   const onFileUpload = (val, i, input) => {
     if (val.size > 10 * 1024 * 1024) {
@@ -1121,7 +1120,7 @@ function ApplicationForm({
               {detailData.map((v, i) => {
                 return (
                   <div key={v.id}>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       <div>
                         <div className="pb-1">案件來源</div>
                         {edit ? (
@@ -1359,7 +1358,7 @@ function ApplicationForm({
                   ) : ( */}
                     <div className="appTitle">當事人資訊</div>
                     <div className="vector"></div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       {/* {v.litigant === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
@@ -1422,7 +1421,7 @@ function ApplicationForm({
                       </div>
                       {/* )} */}
                     </div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
@@ -1480,7 +1479,7 @@ function ApplicationForm({
                       </div>
                       {/* )} */}
                     </div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       {/* {v.litigant_rimin === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
@@ -1543,7 +1542,7 @@ function ApplicationForm({
                   ) : ( */}
                     <div className="appTitle">請託人資訊</div>
                     <div className="vector"></div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       {/* {v.client_name === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
@@ -1659,7 +1658,7 @@ function ApplicationForm({
                         )}
                       </div>
                     </div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-2 ">
                       <div>
                         <div className="pb-1">當事人里</div>
                         {edit ? (
@@ -1746,7 +1745,7 @@ function ApplicationForm({
               <div className="vector"></div>
               {detailData.map((v) => {
                 return (
-                  <div key={v.id} className="gapContain my-2">
+                  <div key={v.id} className="gapContain my-2 ">
                     <div>
                       <div className="pb-1">案件類別</div>
                       {edit ? (
@@ -1830,7 +1829,7 @@ function ApplicationForm({
                           {edit ? '' : ' (字數限制500)'}
                         </span>
                       </div>
-
+                      *
                       {edit ? (
                         ''
                       ) : (
