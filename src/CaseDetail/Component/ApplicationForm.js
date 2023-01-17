@@ -1821,9 +1821,7 @@ function ApplicationForm({
                           onChange={(e) => {
                             handleNeedChecked(v.id, e.target.checked);
                           }}
-                          onChange={(e) => {
-                            handleNeedChecked(v.id, e.target.checked);
-                          }} add <div className=""></div>
+                           add <div className=""></div>
                         />
                       </div> */}
                       <div className="needCount">
