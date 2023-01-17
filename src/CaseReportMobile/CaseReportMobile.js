@@ -6,9 +6,9 @@ import axios from 'axios';
 import { useAuth } from '../utils/use_auth';
 import _ from 'lodash';
 import moment from 'moment';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 
-import '../styles/caseManagement/_caseManagement.scss';
+import './_CaseReportMobile.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
@@ -21,7 +21,7 @@ import Loader from '../Loader';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 
-function CaseReport() {
+function CaseReportMobile() {
   let nowDate = moment().format(`YYYY-MM-DD`);
   // 取前六個月
   let dateObj = new Date(nowDate);
@@ -251,6 +251,7 @@ function CaseReport() {
 
                                     {/* <div className="hadClick">NEW</div> */}
                                   </td>
+                                  
                                 </tr>
                               </tbody>
                             </>
@@ -288,4 +289,4 @@ function CaseReport() {
   );
 }
 
-export default CaseReport;
+export default CaseReportMobile;

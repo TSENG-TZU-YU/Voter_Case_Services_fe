@@ -8,7 +8,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
-import '../styles/caseManagement/_caseManagement.scss';
+import './_CaseReport.scss';
 import CategoryFilter from './Component/CategoryFilter.js';
 import StatusFilter from './Component/StatusFilter.js';
 import DateFilter from './Component/DateFilter.js';
@@ -17,7 +17,7 @@ import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
 import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
-import CaseReportMobile from '../CaseReportMobile/CaseManagement';
+import CaseReportMobile from '../CaseReportMobile/CaseReportMobile';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
@@ -301,12 +301,11 @@ function CaseReport() {
               />
             </div>
           </div>
-          <CaseReportMobile />
-          {/* <div className="case">
+          {/* <CaseReportMobile /> */}
+          <div className="case">
             <table className="caseContain">
               <thead>
                 <tr>
-                  <th></th>
                   <th>詳細資訊</th>
                   <th>請託來源</th>
                   <th>案件類型</th>
@@ -348,14 +347,7 @@ function CaseReport() {
                           return (
                             <tbody key={uuidv4()} className="body">
                               <tr>
-                                <td>
-                                  {member.handler === 1 &&
-                                  member.name === v.sender
-                                    ? `轉件人 : ${v.handler}`
-                                    : ''}
-                                </td>
-
-                                <td className="posClick">
+                                <td data-title="詳細資訊" className="posClick">
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
                                   >
@@ -369,21 +361,23 @@ function CaseReport() {
                                     />
                                   </Link>
 
-                                  <div className="hadClick">NEW</div>
+                                  {/* <div className="hadClick">NEW</div> */}
                                 </td>
-                                <td>{v.application_source}</td>
-                                <td>{v.application_category}</td>
-                                <td>{v.create_time}</td>
-                                <td className="view">{v.name}</td>
-                                <td>
-                                  進度({v.cou}/{v.sum})
+                                <td data-title="請託來源">
+                                  {v.application_source}
+                                </td>
+                                <td data-title="案件類型">
+                                  {v.application_category}
+                                </td>
+                                <td data-title="接案時間">{v.create_time}</td>
+                                <td data-title="案件狀態" className="view">
+                                  {v.name}
                                 </td>
                               </tr>
                             </tbody>
                           );
                         })}
-
-                      頁碼
+                      {/* 頁碼 */}
                       <tbody className="noData">
                         <td colSpan={10} className="noTd">
                           <div className="page">
@@ -395,7 +389,7 @@ function CaseReport() {
                           </div>
                         </td>
                       </tbody>
-                      頁碼 end
+                      {/* 頁碼 end */}
                     </>
                   ) : (
                     <tbody className="noData">
@@ -407,7 +401,7 @@ function CaseReport() {
                 </>
               )}
             </table>
-          </div> */}
+          </div>
         </div>
       </>
     </>
