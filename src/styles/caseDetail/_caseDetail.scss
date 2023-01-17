@@ -45,8 +45,7 @@
     // border: 1px solid #ccc;
     nav {
       ul {
-        align-items: center;
-        justify-content: center;
+        @include flexCenter;
         border-bottom: 1px solid #ccc;
         li {
           // font-size: 16px;

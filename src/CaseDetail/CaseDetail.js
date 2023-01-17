@@ -84,13 +84,12 @@ function CaseDetail({ setScrollPage, scrollPage }) {
         }
         className="prePage"
       >
-        <FaArrowLeft className="preIcon " />{' '}
-        <span className="d-none d-md-block">返回列表頁</span>
+        <FaArrowLeft className="preIcon " /> <span>返回列表頁</span>
       </Link>
 
       <div className="caseDetailContain">
         <nav>
-          <ul className="d-md-flex">
+          <ul>
             {navBtn.map((v, i) => {
               return (
                 <li key={uuidv4()}>
