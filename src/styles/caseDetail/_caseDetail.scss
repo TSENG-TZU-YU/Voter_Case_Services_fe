@@ -1,13 +1,14 @@
 @import '../variable';
 
 .caseDetailContainer {
+  // background: lightblue;
   position: relative;
   width: 100%;
   height: calc(100vh - 70px);
 
   // background: $bcgBlock;
   z-index: 20;
-  font-size: 12px;
+  font-size: clamp(12px, 1vw, 18px);
   @include flexCenter;
   .prePage {
     position: absolute;
@@ -15,7 +16,7 @@
     left: 10px;
     display: flex;
     align-items: center;
-    font-size: 14px;
+    // font-size: 14px;
     font-weight: 600;
     color: $focusClrG;
     cursor: pointer;
@@ -35,14 +36,10 @@
     }
   }
   .caseDetailContain {
+    background: lightcoral;
     position: relative;
-    @media only screen and (max-width: 576px) {
-      width: 100%;
-    }
-    @media only screen and (min-width: 576px) {
-      width: 60%;
-    }
-    height: 95%;
+    width: 60%;
+    height: 98%;
     background: $mainClrW;
     padding: 0 20px;
     // border: 1px solid #ccc;
@@ -52,9 +49,10 @@
         justify-content: center;
         border-bottom: 1px solid #ccc;
         li {
-          font-size: 16px;
+          // font-size: 16px;
           font-weight: 600;
           margin: 5px 20px;
+          white-space: nowrap;
           cursor: pointer;
           .linkPad {
             padding: 4px 15px;
@@ -62,6 +60,27 @@
           }
           .act {
             color: $focusClrG;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .caseDetailContainer {
+    width: calc(100vw - 0px);
+    .prePage {
+      opacity: 0;
+    }
+    .caseDetailContain {
+      width: 100%;
+      padding: 0 10px;
+      nav {
+        ul {
+          padding-left: 0;
+          li {
+            margin: 5px auto;
           }
         }
       }

@@ -1,6 +1,6 @@
 @import '../variable';
 @mixin btn($bcg, $clr) {
-  font-size: 14px;
+  font-size: clamp(12px, 1vw, 18px);
   font-weight: 500;
   background: $bcg;
   color: $clr;
@@ -18,7 +18,7 @@
 .checkBtnContent {
   // background: lemonchiffon;
   margin: 0 auto 20px;
-  font-size: 16px;
+  font-size: clamp(12px, 1vw, 18px);
   font-weight: 600;
   border: 1px solid $subClrBrown;
   border-radius: 3px;
@@ -35,5 +35,11 @@
     .editBtnRej {
       @include btn(#ccc, #444);
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .checkBtnContent {
+    max-width: 95%;
   }
 }

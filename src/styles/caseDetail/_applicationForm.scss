@@ -13,18 +13,21 @@
   }
 }
 
+.m-view {
+  display: none;
+}
 .appFormContainer {
   // background: lemonchiffon;
   max-width: 100%;
-  height: 85%;
+  height: 90%;
   margin: 0 auto;
-  font-size: 16px;
+  font-size: clamp(12px, 1vw, 18px);
   @include scrollbar;
   .checkBtn {
     // background: lemonchiffon;
     // width: fit-content;
     margin: 0 auto 20px;
-    font-size: 16px;
+    // font-size: 16px;
     font-weight: 600;
     border: 1px solid $subClrBrown;
     border-radius: 3px;
@@ -36,7 +39,7 @@
       align-items: center;
       justify-content: space-around;
       .editBtn {
-        font-size: 14px;
+        // font-size: 14px;
         font-weight: 500;
         background: $focusClrY;
         text-align: center;
@@ -52,7 +55,7 @@
     max-width: 85%;
     margin: 0 auto;
     text-align: center;
-    font-size: 16px;
+    // font-size: 16px;
     color: $subClrBrown;
     font-weight: 600;
   }
@@ -84,7 +87,7 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-      font-size: $navbarLeft18;
+      font-size: clamp(12px, 1vw, 18px);
     }
     .vector {
       border-top: 2px solid black;
@@ -166,7 +169,7 @@
       .needInput {
         display: flex;
         justify-content: start;
-        padding-top: 5px;
+        padding: 5px 5px 0;
         input {
           width: 100%;
         }
@@ -269,8 +272,8 @@
     }
     .textareaGap {
       width: 100%;
-      margin-top: 15px;
-      font-size: 14px;
+      padding: 5px 5px 0;
+      font-size: clamp(12px, 1vw, 14px);
       .textarea {
         width: 100%;
         height: 80px;
@@ -311,9 +314,10 @@
     @include submitBtn($focusClrG);
   }
 }
-.selData {
+.selData,
+.nullData {
   width: 85%;
-  font-size: 14px;
+  font-size: clamp(12px, 1vw, 18px);
   margin: 0 auto;
   background: $focusClrG;
   color: $mainClrW;
@@ -322,4 +326,38 @@
   margin-top: 10px;
   border-radius: 4px;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .m-view {
+    display: flex;
+  }
+  .p-view {
+    display: none;
+  }
+
+  .appFormContainer {
+    height: 90%;
+    .checkBtn {
+      max-width: 95%;
+    }
+    .statusFormContainer {
+      max-width: 95%;
+    }
+    .tableContainer {
+      // background: lightblue;
+      max-width: 95%;
+      .gapContain {
+        select {
+          width: 158px;
+          height: 22px;
+        }
+      }
+    }
+  }
+
+  .selData,
+  .nullData {
+    width: 95%;
+  }
 }

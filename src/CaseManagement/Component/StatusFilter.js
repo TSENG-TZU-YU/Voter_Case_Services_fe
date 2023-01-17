@@ -13,7 +13,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
     });
   }
   const sortOption = [
-    { value: '', label: '--請選擇狀態--' },
+    { value: '', label: '請選擇狀態' },
     { value: '1', label: '未送審' },
     ...newData,
   ];
