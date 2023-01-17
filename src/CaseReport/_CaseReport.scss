@@ -33,11 +33,11 @@
   .caseContain {
     margin: 20px auto 0;
 
-    .body :hover {
+    .bodyMobile :hover {
       background: #eee;
     }
     thead,
-    .body {
+    .bodyMobile {
       border-bottom: 1px solid #ccc;
       text-align: center;
       tr,
@@ -91,53 +91,58 @@
 
 /* media queries */
 @media screen and (max-width: 600px) {
-  .case{
+  .case {
     max-width: 600px;
     margin: 0 auto;
   }
-  table.caseContain {
+
+  table.caseReport {
     width: 100%;
   }
-  table.caseContain tr.hide-mobile,
-  table.caseContain th.hide-mobile,
-  table.caseContain td.hide-mobile {
+  table.caseReport tr.hide-mobile,
+  table.caseReport th.hide-mobile,
+  table.caseReport td.hide-mobile {
     display: none;
   }
-  table.caseContain thead {
+  table.caseReport thead {
     display: none;
   }
-  table.caseContain tbody {
+  table.caseReport tbody {
     width: 100%;
   }
-  table.caseContain tr,
-  table.caseContain th,
-  table.caseContain td {
+  .caseContainer .caseReport .bodyMobile {
+    border-bottom: none;
+  }
+  table.caseReport tr,
+  table.caseReport th,
+  table.caseReport td {
     display: block;
     padding: 0;
   }
   table.caseContain tr {
     border-bottom: none;
+    border-top: none;
     margin: 0 0 1em 0;
     padding: 0.5em;
   }
-  table.caseContain tr.highlight {
+  table.caseReport tr.highlight {
     background-color: inherit !important;
   }
-  table.caseContain.zebra tr:nth-child(even) {
+  table.caseReport.zebra tr:nth-child(even) {
     background-color: transparent;
   }
-  table.caseContain.zebra td:nth-child(even) {
+  table.caseReport.zebra td:nth-child(even) {
     background-color: #f6f6f6;
   }
-  table.caseContain tr:nth-child(even) {
+  table.caseReport tr:nth-child(even) {
     background-color: transparent;
   }
-  table.caseContain td {
+  table.caseReport td {
     padding: 0.5em 0 0.25em 0;
     border-bottom: 1px dotted #ccc;
     text-align: right;
   }
-  table.caseContain td[data-title]:before {
+  table.caseReport td[data-title]:before {
     content: attr(data-title);
     font-weight: bold;
     display: inline-block;
@@ -146,17 +151,78 @@
     margin-right: 0.5em;
     font-size: 0.95em;
   }
-  table.caseContain td:last-child {
+  table.caseReport td:last-child {
     padding-right: 0;
     border-bottom: 2px solid #ccc;
   }
-  table.caseContain td:empty {
+  table.caseReport td:empty {
     display: none;
   }
-  table.caseContain .highlight td {
+  table.caseReport .highlight td {
     background-color: inherit;
     font-weight: normal;
   }
 }
 
+@media screen and (max-width: 1400px) {
+  .m-view {
+    display: flex;
+  }
+  .p-view {
+    display: none;
+  }
+  .sortSelect {
+    // background: lemonchiffon;
+    // padding: 30px 0px 10px 0px;
+    // display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .both {
+      display: flex;
+      margin-bottom: $marage10;
+      .bothFilter {
+        // display: flex;
+        // justify-content: space-between;
+        .marge5 {
+          margin-right: $marage10;
+        }
+        .margeNone {
+          margin-right: $marage10;
+        }
+      }
+    }
+  }
+}
 
+@media screen and (max-width: 1000px) {
+  .m-view {
+    display: flex;
+  }
+  .p-view {
+    display: none;
+  }
+  .sortSelect {
+    // background: lemonchiffon;
+    // padding: 30px 0px 0px 0px;
+    // display: flex;
+    // justify-content: space-between;
+
+    align-items: center;
+    // justify-content: start;
+
+    .both {
+      // display: flex;
+      margin-bottom: 0;
+      flex-direction: column;
+      .bothFilter {
+        // display: flex;
+        // width: 370px;
+
+        padding-bottom: 15px;
+        .margeNone {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
