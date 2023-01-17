@@ -94,7 +94,7 @@ function ProcessingStatus({
     setLoading(!loading);
   };
 
-  //
+  // 修改民眾反饋
   function handleChange(e) {
     const newpopulace = { ...selVal, [e.target.name]: e.target.value };
 
@@ -113,6 +113,22 @@ function ProcessingStatus({
                   <input
                     type="checkbox"
                     checked={v.responded_client === 1 ? true : false}
+                    disabled={
+                      WebPage === 2 &&
+                      HId !== '' &&
+                      (member.manage === 1 || member.handler === 1) &&
+                      HId === member.name &&
+                      needState !== 1 &&
+                      needState !== 6 &&
+                      needState !== 7 &&
+                      needState !== 8 &&
+                      needState !== 9 &&
+                      needState !== 10 &&
+                      needState !== 11 &&
+                      needSumLen !== needLen
+                        ? false
+                        : true
+                    }
                     onChange={(e) => {
                       handleStateChecked(v.id, e.target.checked, 'rc');
                     }}
@@ -123,6 +139,22 @@ function ProcessingStatus({
                   <input
                     type="checkbox"
                     checked={v.called === 1 ? true : false}
+                    disabled={
+                      WebPage === 2 &&
+                      HId !== '' &&
+                      (member.manage === 1 || member.handler === 1) &&
+                      HId === member.name &&
+                      needState !== 1 &&
+                      needState !== 6 &&
+                      needState !== 7 &&
+                      needState !== 8 &&
+                      needState !== 9 &&
+                      needState !== 10 &&
+                      needState !== 11 &&
+                      needSumLen !== needLen
+                        ? false
+                        : true
+                    }
                     onChange={(e) => {
                       handleStateChecked(v.id, e.target.checked, 'called');
                     }}
@@ -164,6 +196,7 @@ function ProcessingStatus({
                         type="radio"
                         name="result"
                         checked={v.success === 1 ? true : false}
+                        disabled={HId !== member.name ? true : false}
                         onChange={(e) => {
                           handleStateChecked(v.id, e.target.checked, 'succ');
                         }}
@@ -175,6 +208,7 @@ function ProcessingStatus({
                         type="radio"
                         name="result"
                         checked={v.fail === 1 ? true : false}
+                        disabled={HId !== member.name ? true : false}
                         onChange={(e) => {
                           handleStateChecked(v.id, e.target.checked, 'fail');
                         }}
@@ -197,15 +231,20 @@ function ProcessingStatus({
                       placeholder="請輸入民眾反饋..."
                       rows="3"
                       name="populace"
+                      disabled={HId !== member.name ? true : false}
                       value={selVal.populace}
                       onChange={handleChange}
                     ></textarea>
-                    <FaTelegramPlane
-                      className="submitIcon"
-                      onClick={() => {
-                        handlepopulaceMsg(v.id);
-                      }}
-                    />
+                    {HId !== member.name ? (
+                      ''
+                    ) : (
+                      <FaTelegramPlane
+                        className="submitIcon"
+                        onClick={() => {
+                          handlepopulaceMsg(v.id);
+                        }}
+                      />
+                    )}
                   </div>
                 </>
               )}
