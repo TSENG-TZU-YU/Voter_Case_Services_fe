@@ -103,76 +103,83 @@ function ProcessingStatus({
   }
   return (
     <>
-      <div className="dealWithContainer ">
+      <div className="dealWithContainer">
         {selCheckData.map((v, i) => {
           return (
             <>
-              <div className="row" key={i}>
-                <div className="col-12">回覆情況:</div>
-                <div className="col-12 col-md-3">
-                  <input
-                    type="checkbox"
-                    checked={v.responded_client === 1 ? true : false}
-                    disabled={
-                      WebPage === 2 &&
-                      HId !== '' &&
-                      (member.manage === 1 || member.handler === 1) &&
-                      HId === member.name &&
-                      needState !== 1 &&
-                      needState !== 6 &&
-                      needState !== 7 &&
-                      needState !== 8 &&
-                      needState !== 9 &&
-                      needState !== 10 &&
-                      needState !== 11 &&
-                      needSumLen !== needLen
-                        ? false
-                        : true
-                    }
-                    onChange={(e) => {
-                      handleStateChecked(v.id, e.target.checked, 'rc');
-                    }}
-                  />
-                  已回覆當事人情況
+              <div className="dealWithContain" key={i}>
+                <div className="reply">
+                  <div className="dealTit">回覆情況：</div>
+                  <div className="">
+                    <input
+                      type="checkbox"
+                      className="ms-2"
+                      checked={v.responded_client === 1 ? true : false}
+                      disabled={
+                        WebPage === 2 &&
+                        HId !== '' &&
+                        (member.manage === 1 || member.handler === 1) &&
+                        HId === member.name &&
+                        needState !== 1 &&
+                        needState !== 6 &&
+                        needState !== 7 &&
+                        needState !== 8 &&
+                        needState !== 9 &&
+                        needState !== 10 &&
+                        needState !== 11 &&
+                        needSumLen !== needLen
+                          ? false
+                          : true
+                      }
+                      onChange={(e) => {
+                        handleStateChecked(v.id, e.target.checked, 'rc');
+                      }}
+                    />
+                    已回覆當事人情況
+                  </div>
+                  <div className="">
+                    <input
+                      type="checkbox"
+                      className="ms-2"
+                      checked={v.called === 1 ? true : false}
+                      disabled={
+                        WebPage === 2 &&
+                        HId !== '' &&
+                        (member.manage === 1 || member.handler === 1) &&
+                        HId === member.name &&
+                        needState !== 1 &&
+                        needState !== 6 &&
+                        needState !== 7 &&
+                        needState !== 8 &&
+                        needState !== 9 &&
+                        needState !== 10 &&
+                        needState !== 11 &&
+                        needSumLen !== needLen
+                          ? false
+                          : true
+                      }
+                      onChange={(e) => {
+                        handleStateChecked(v.id, e.target.checked, 'called');
+                      }}
+                    />
+                    請委員/議員致電陳情人
+                  </div>
                 </div>
-                <div className="col-12 col-lg-4">
-                  <input
-                    type="checkbox"
-                    checked={v.called === 1 ? true : false}
-                    disabled={
-                      WebPage === 2 &&
-                      HId !== '' &&
-                      (member.manage === 1 || member.handler === 1) &&
-                      HId === member.name &&
-                      needState !== 1 &&
-                      needState !== 6 &&
-                      needState !== 7 &&
-                      needState !== 8 &&
-                      needState !== 9 &&
-                      needState !== 10 &&
-                      needState !== 11 &&
-                      needSumLen !== needLen
-                        ? false
-                        : true
-                    }
-                    onChange={(e) => {
-                      handleStateChecked(v.id, e.target.checked, 'called');
-                    }}
+                <div className="reply">
+                  <div className="dealTit">辦理進度： {nowSelState}</div>
+                  <SelectStatus
+                    needState={needState}
+                    needSumLen={needSumLen}
+                    needLen={needLen}
+                    selectData={selectData}
+                    postVal={postVal}
+                    setSelectRemind={setSelectRemind}
+                    handlePostVal={handlePostVal}
+                    selectRemind={selectRemind}
+                    setAddStateForm={setAddStateForm}
                   />
-                  請委員/議員致電陳情人
                 </div>
-                <div className="col-12">辦理進度: {nowSelState}</div>
-                <SelectStatus
-                  needState={needState}
-                  needSumLen={needSumLen}
-                  needLen={needLen}
-                  selectData={selectData}
-                  postVal={postVal}
-                  setSelectRemind={setSelectRemind}
-                  handlePostVal={handlePostVal}
-                  selectRemind={selectRemind}
-                  setAddStateForm={setAddStateForm}
-                />
+
                 {/* <div className="col-12 col-lg-3">
             <input type="checkBox" />
             辦理中(會勘/公文往返)
@@ -190,30 +197,34 @@ function ProcessingStatus({
                   ''
                 ) : (
                   <>
-                    <div className="col-12">辦理結果:</div>
-                    <div className="col-12 col-lg-3">
-                      <input
-                        type="radio"
-                        name="result"
-                        checked={v.success === 1 ? true : false}
-                        disabled={HId !== member.name ? true : false}
-                        onChange={(e) => {
-                          handleStateChecked(v.id, e.target.checked, 'succ');
-                        }}
-                      />
-                      成功
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <input
-                        type="radio"
-                        name="result"
-                        checked={v.fail === 1 ? true : false}
-                        disabled={HId !== member.name ? true : false}
-                        onChange={(e) => {
-                          handleStateChecked(v.id, e.target.checked, 'fail');
-                        }}
-                      />
-                      失敗
+                    <div className="reply">
+                      <div className="dealTit">辦理結果：</div>
+                      <div className="">
+                        <input
+                          type="radio"
+                          className="ms-2"
+                          name="result"
+                          checked={v.success === 1 ? true : false}
+                          disabled={HId !== member.name ? true : false}
+                          onChange={(e) => {
+                            handleStateChecked(v.id, e.target.checked, 'succ');
+                          }}
+                        />
+                        成功
+                      </div>
+                      <div className="">
+                        <input
+                          type="radio"
+                          className="ms-2"
+                          name="result"
+                          checked={v.fail === 1 ? true : false}
+                          disabled={HId !== member.name ? true : false}
+                          onChange={(e) => {
+                            handleStateChecked(v.id, e.target.checked, 'fail');
+                          }}
+                        />
+                        失敗
+                      </div>
                     </div>
                   </>
                 )}
@@ -224,27 +235,29 @@ function ProcessingStatus({
               ) : (
                 <>
                   {/* 民眾反饋 */}
-                  <div className="col-12">民眾反饋:</div>
                   <div className="feedbackContainer">
-                    <textarea
-                      className="feedback"
-                      placeholder="請輸入民眾反饋..."
-                      rows="3"
-                      name="populace"
-                      disabled={HId !== member.name ? true : false}
-                      value={selVal.populace}
-                      onChange={handleChange}
-                    ></textarea>
-                    {HId !== member.name ? (
-                      ''
-                    ) : (
-                      <FaTelegramPlane
-                        className="submitIcon"
-                        onClick={() => {
-                          handlepopulaceMsg(v.id);
-                        }}
-                      />
-                    )}
+                    <div className="dealTit">民眾反饋：</div>
+                    <div className="feedbackContain">
+                      <textarea
+                        className="feedback"
+                        placeholder="請輸入民眾反饋..."
+                        rows="3"
+                        name="populace"
+                        disabled={HId !== member.name ? true : false}
+                        value={selVal.populace}
+                        onChange={handleChange}
+                      ></textarea>
+                      {HId !== member.name ? (
+                        ''
+                      ) : (
+                        <FaTelegramPlane
+                          className="submitIcon"
+                          onClick={() => {
+                            handlepopulaceMsg(v.id);
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
                 </>
               )}
@@ -254,16 +267,11 @@ function ProcessingStatus({
       </div>
 
       {/* 處理訊息 */}
-      <div className="userName" id="ProcessingStatus">
-        <BsFillPersonFill className="userIcon" /> {User}
+      <div className="userName">
+        {/* <BsFillPersonFill className="userIcon" /> {User} */}
+        處理人處理情形
       </div>
-      <div
-        className={`chatContainer ${
-          member.handler === 1 || (HId === member.name && member.manage === 1)
-            ? ''
-            : 'noneHight'
-        }`}
-      >
+      <div className={`chatContainer `}>
         <div className={`handleStatus`}>
           {handleStData.length !== 0
             ? handleStData.map((v, i) => {
@@ -296,7 +304,7 @@ function ProcessingStatus({
         <div className="chatBarContain">
           <textarea
             className="submitMsg"
-            placeholder="請輸入訊息..."
+            placeholder="請輸入處理情形..."
             name="ttt"
             rows="2"
             value={submitMessage}

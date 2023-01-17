@@ -15,10 +15,10 @@
 .selectContain {
   // background: lightcoral;
   display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 10px 0 0;
-  font-size: 14px;
+  // justify-content: center;
+  margin-left: 10px;
+  // padding: 10px 0 0;
+  font-size: clamp(12px, 1vw, 18px);
   .selContain {
     position: relative;
     display: flex;

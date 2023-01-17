@@ -1186,7 +1186,7 @@ function ApplicationForm({
                       />
                     </div> */}
                     </div>
-                    <div className="gapContain">
+                    <div className="gapContain my-2">
                       <div>
                         <div className="pb-1">處理人</div>
                         {edit ? (
@@ -1829,7 +1829,7 @@ function ApplicationForm({
                           {edit ? '' : ' (字數限制500)'}
                         </span>
                       </div>
-                      *
+
                       {edit ? (
                         ''
                       ) : (

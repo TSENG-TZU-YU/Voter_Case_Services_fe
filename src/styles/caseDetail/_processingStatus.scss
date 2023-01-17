@@ -1,13 +1,14 @@
 @import '../variable';
 
 .userName {
-  //   background: lightblue;
-  width: 100%;
+  // background: lightblue;
+  max-width: 85%;
   margin: 20px auto 0;
   display: flex;
   align-items: center;
-  font-size: 16px;
-  padding: 0 10px 3px;
+  justify-content: center;
+  font-size: clamp(12px, 1vw, 18px);
+  padding: 0 0 3px;
   color: $subClrBrown;
   font-weight: 600;
   .userIcon {
@@ -16,11 +17,13 @@
   }
 }
 .chatContainer {
-  // background: lightgoldenrodyellow;
+  // background: lightcoral;
   margin: 0 auto;
-  width: 100%;
-  height: calc(100% - 350px);
-  padding: 0 5px;
+  width: 85%;
+  height: 40%;
+  // padding: 0 10px;
+  font-size: clamp(12px, 1vw, 18px);
+  border-top: 1px dashed #aaa;
   // @include scrollbar;
   .handleStatus {
     margin: 10px auto;
@@ -33,7 +36,7 @@
 
     .msgContainer {
       // background: lightcoral;
-      width: 95%;
+      width: 100%;
       .msgContain {
         text-align: justify;
         border: 2px solid $focusClrG;
@@ -60,16 +63,23 @@
 .dealWithContainer {
   // display: grid;
   // grid-template-columns:140px 4fr;
-  font-size: $subText;
+  // background: lightcoral;
   white-space: nowrap;
-  margin: $marage10 0;
-  .row {
+  margin: $marage10 auto;
+  font-size: clamp(12px, 1vw, 18px);
+  max-width: 85%;
+
+  .dealWithContain {
     // background-color: lemonchiffon;
-    margin: $marage10 auto;
-    max-width: 85%;
+    margin: $marage10 0;
+    .reply {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
   }
-  .row > * {
-    padding: 0;
+  .dealTit {
+    color: $focusClrG;
   }
   .submitIcon {
     font-size: 2rem;
@@ -78,16 +88,23 @@
     color: $subClrBrown;
   }
   .feedbackContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .feedback {
-      resize: none;
-      border: 1.5px solid $subClrBrown;
-      border-radius: 3px;
-      width: 90%;
-      padding: 3px;
-      @include scrollbarContain;
+    // max-width: 90%;
+    // display: flex;
+    // justify-content: center;
+    .feedbackContain {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .feedback {
+        resize: none;
+        border: 1.5px solid $subClrBrown;
+        border-radius: 3px;
+        width: 100%;
+        padding: 3px;
+        word-break: break-all;
+        text-align: justify;
+        @include scrollbarContain;
+      }
     }
   }
 }
@@ -96,11 +113,10 @@
 }
 .chatBarContain {
   // background: lemonchiffon;
-  width: 95%;
+  width: 85%;
   position: relative;
   transform: translateX(-50%);
   left: 50%;
-  // bottom: 3%;
   top: 0;
   bottom: 0;
   @include flexCenter;
@@ -119,5 +135,28 @@
   .submitTrue {
     color: $subClrBrown;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .userName {
+    // background: lightblue;
+    max-width: 95%;
+  }
+  .chatContainer {
+    width: 100%;
+    height: calc(100% - 350px);
+    // padding: 0 5px;
+    // @include scrollbar;
+    .handleStatus {
+      height: 95%;
+    }
+  }
+  .dealWithContainer {
+    max-width: 95%;
+  }
+  .chatBarContain {
+    // background: lemonchiffon;
+    width: 95%;
   }
 }
