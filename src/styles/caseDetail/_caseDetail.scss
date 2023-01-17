@@ -2,8 +2,9 @@
 
 .caseDetailContainer {
   position: relative;
-  width: calc(100vw - 200px);
+  width: 100%;
   height: calc(100vh - 70px);
+
   // background: $bcgBlock;
   z-index: 20;
   font-size: 12px;
@@ -35,14 +36,20 @@
   }
   .caseDetailContain {
     position: relative;
-    width: 60%;
+    @media only screen and (max-width: 576px) {
+      width: 100%;
+    }
+    @media only screen and (min-width: 576px) {
+      width: 60%;
+    }
     height: 95%;
     background: $mainClrW;
     padding: 0 20px;
     // border: 1px solid #ccc;
     nav {
       ul {
-        @include flexCenter;
+        align-items: center;
+        justify-content: center;
         border-bottom: 1px solid #ccc;
         li {
           font-size: 16px;
@@ -51,6 +58,7 @@
           cursor: pointer;
           .linkPad {
             padding: 4px 15px;
+            white-space: nowrap;
           }
           .act {
             color: $focusClrG;

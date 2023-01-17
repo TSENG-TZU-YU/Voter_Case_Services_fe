@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useAuth } from '../utils/use_auth';
+import axios from 'axios';
 
 import '../styles/caseDetail/_caseDetail.scss';
 
@@ -21,7 +22,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
-  const { member } = useAuth();
+  const { member, setMember } = useAuth();
   const [uploadPage, setUploadPage] = useState(false);
 
   //使用者資料
@@ -44,6 +45,25 @@ function CaseDetail({ setScrollPage, scrollPage }) {
       url: `uploadPage/${num}?id=${ID}&HId=${HId}&user=${User}&page=${page}&scroll=3`,
     },
   ];
+  // 檢查會員
+  useEffect(() => {
+    async function getMember() {
+      try {
+        // console.log('檢查是否登入');
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log(response.data);
+        setMember(response.data);
+      } catch (err) {
+        console.log(err.response.data.message);
+      }
+    }
+    getMember();
+  }, []);
 
   useEffect(() => {
     //接案人與處理人皆可看到文件
@@ -52,7 +72,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
     } else {
       setUploadPage(false);
     }
-  }, []);
+  }, [member.name]);
 
   return (
     <div className="caseDetailContainer">
@@ -64,12 +84,13 @@ function CaseDetail({ setScrollPage, scrollPage }) {
         }
         className="prePage"
       >
-        <FaArrowLeft className="preIcon" /> <span>返回列表頁</span>
+        <FaArrowLeft className="preIcon " />{' '}
+        <span className="d-none d-md-block">返回列表頁</span>
       </Link>
 
       <div className="caseDetailContain">
         <nav>
-          <ul>
+          <ul className="d-md-flex">
             {navBtn.map((v, i) => {
               return (
                 <li key={uuidv4()}>
