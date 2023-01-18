@@ -17,7 +17,7 @@
   .mobile {
     display: flex;
     align-items: center;
-   
+
     .titleH3 {
       color: $mainClrW;
       font-size: clamp(12px, 4vw, $containerTit28);
@@ -67,7 +67,10 @@
       }
     }
   }
-
+  .navFlex {
+    display: flex;
+    align-items: center;
+  }
   @media only screen and (min-width: 768px) {
     .navRight {
       width: calc(100vw - 120px);

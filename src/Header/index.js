@@ -12,6 +12,7 @@ import { HiPencilAlt, HiDocumentReport } from 'react-icons/hi';
 import { RiFileTextLine, RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
+import { IoBarChartSharp } from 'react-icons/io5';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -195,9 +196,9 @@ function Header() {
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
                   {/* 處理人/協理/主管 */}
-                  <div className="" onClick={act}>
-                    <RiPhoneFindFill size="20" />
-                    案件統計
+                  <div className="navFlex" onClick={act}>
+                    <IoBarChartSharp size="20" />
+                    <span>案件統計</span>
                   </div>
                 </NavLink>
               </nav>
@@ -209,7 +210,7 @@ function Header() {
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
-                        <RiPhoneFindFill size="20" />
+                        {/* <RiPhoneFindFill size="20" /> */}
                         案件類別統計
                       </div>
                     </NavLink>
@@ -220,7 +221,7 @@ function Header() {
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
-                        <RiPhoneFindFill size="20" />
+                        {/* <RiPhoneFindFill size="20" /> */}
                         案件狀態統計
                       </div>
                     </NavLink>
@@ -231,7 +232,7 @@ function Header() {
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
-                        <RiPhoneFindFill size="20" />
+                        {/* <RiPhoneFindFill size="20" /> */}
                         申請單位統計
                       </div>
                     </NavLink>
@@ -242,7 +243,7 @@ function Header() {
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
-                        <RiPhoneFindFill size="20" />
+                        {/* <RiPhoneFindFill size="20" /> */}
                         申請人統計
                       </div>
                     </NavLink>
@@ -253,8 +254,8 @@ function Header() {
                       to="HandlerUnitPage"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
-                      <div className="">
-                        <RiPhoneFindFill size="20" />
+                      <div className="d-flex align-items-center">
+                        {/* <RiPhoneFindFill size="20" /> */}
                         處理單位統計
                       </div>
                     </NavLink>
@@ -265,7 +266,7 @@ function Header() {
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
-                        <RiPhoneFindFill size="20" />
+                        {/* <RiPhoneFindFill size="20" /> */}
                         處理人統計
                       </div>
                     </NavLink>
