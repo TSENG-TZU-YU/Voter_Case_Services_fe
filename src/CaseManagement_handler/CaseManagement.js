@@ -329,9 +329,11 @@ function CaseManagement() {
               </thead>
               {isLoading ? (
                 <tbody className="noData">
-                  <td colSpan={10} className="noTd">
-                    <Loader />
-                  </td>
+                  <tr>
+                    <td colSpan={10} className="noTd">
+                      <Loader />
+                    </td>
+                  </tr>
                 </tbody>
               ) : (
                 <>
@@ -377,23 +379,27 @@ function CaseManagement() {
 
                       {/* 頁碼 */}
                       <tbody className="noData pbar-view">
-                        <td colSpan={10} className="noTd">
-                          <div className="page">
-                            <PaginationBar
-                              pageNow={pageNow}
-                              setPageNow={setPageNow}
-                              pageTotal={pageTotal}
-                            />
-                          </div>
-                        </td>
+                        <tr>
+                          <td colSpan={10} className="noTd">
+                            <div className="page">
+                              <PaginationBar
+                                pageNow={pageNow}
+                                setPageNow={setPageNow}
+                                pageTotal={pageTotal}
+                              />
+                            </div>
+                          </td>
+                        </tr>
                       </tbody>
                       {/* 頁碼 end */}
                     </>
                   ) : (
                     <tbody className="noData">
-                      <td colSpan={10} className="noTd">
-                        目前沒有資料
-                      </td>
+                      <tr>
+                        <td colSpan={10} className="noTd">
+                          目前沒有資料
+                        </td>
+                      </tr>
                     </tbody>
                   )}
                 </>

@@ -109,7 +109,7 @@ function LogIn() {
                   doLogin(e.target.value, 'company');
                 }}
               >
-                <option value="0">--接案單位--</option>
+                <option value="0">請選擇單位</option>
                 {unit.map((v) => {
                   return <option key={v.id}>{v.name}</option>;
                 })}
@@ -131,7 +131,8 @@ function LogIn() {
               <input
                 name="password"
                 type={eye ? 'text' : 'password'}
-                placeholder="輸入密碼"
+                placeholder="密碼至多15字"
+                maxLength={15}
                 onChange={(e) => {
                   doLogin(e.target.value, 'password');
                 }}

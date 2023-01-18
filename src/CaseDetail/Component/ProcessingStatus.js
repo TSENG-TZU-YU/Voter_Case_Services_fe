@@ -106,8 +106,8 @@ function ProcessingStatus({
       <div className="dealWithContainer">
         {selCheckData.map((v, i) => {
           return (
-            <>
-              <div className="dealWithContain" key={i}>
+            <div key={i}>
+              <div className="dealWithContain">
                 <div className="reply">
                   <div className="dealTit">回覆情況：</div>
                   <div className="">
@@ -259,7 +259,7 @@ function ProcessingStatus({
                   </div>
                 </>
               )}
-            </>
+            </div>
           );
         })}
       </div>
