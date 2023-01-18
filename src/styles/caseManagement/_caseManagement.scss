@@ -94,23 +94,21 @@
   .p-view {
     display: none;
   }
-  .sortSelect {
-    // background: lemonchiffon;
-    // padding: 30px 0px 10px 0px;
-    // display: flex;
-    justify-content: center;
-    flex-direction: column;
-    .both {
-      display: flex;
-      margin-bottom: $marage10;
-      .bothFilter {
-        // display: flex;
-        // justify-content: space-between;
-        .marge5 {
-          margin-right: $marage10;
-        }
-        .margeNone {
-          margin-right: $marage10;
+  .caseContainer {
+    .sortSelect {
+      justify-content: center;
+      flex-direction: column;
+      margin-left: -5px;
+      .both {
+        display: flex;
+        margin-bottom: $marage10;
+        .bothFilter {
+          .marge5 {
+            margin-right: $marage10;
+          }
+          .margeNone {
+            margin-right: $marage10;
+          }
         }
       }
     }
@@ -124,27 +122,19 @@
   .p-view {
     display: none;
   }
-  .sortSelect {
-    // background: lemonchiffon;
-    // padding: 30px 0px 0px 0px;
-    // display: flex;
-    // justify-content: space-between;
 
-    align-items: center;
-    // justify-content: start;
-
-    .both {
-      // display: flex;
-      margin-bottom: 0;
-      flex-direction: column;
-      .bothFilter {
-        // display: flex;
-        // width: 370px;
-
-        padding-bottom: 15px;
-        .margeNone {
-          margin-right: 0;
-        }
+  .caseContainer {
+    .sortSelect {
+      align-items: flex-start;
+      .both {
+        margin-bottom: 0;
+        flex-direction: column;
+        // .bothFilter {
+        //   padding-bottom: 15px;
+        //   .margeNone {
+        //     margin-right: 0;
+        //   }
+        // }
       }
     }
   }
