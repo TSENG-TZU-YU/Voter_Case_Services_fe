@@ -39,7 +39,6 @@
       align-items: center;
       justify-content: space-around;
       .editBtn {
-        // font-size: 14px;
         font-weight: 500;
         background: $focusClrY;
         text-align: center;
@@ -55,7 +54,6 @@
     max-width: 85%;
     margin: 0 auto;
     text-align: center;
-    // font-size: 16px;
     color: $subClrBrown;
     font-weight: 600;
   }
@@ -87,7 +85,8 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-      font-size: clamp(12px, 1vw, 18px);
+      font-size: $contentTit;
+      font-weight: 600;
     }
     .vector {
       border-top: 2px solid black;
@@ -98,9 +97,13 @@
       justify-content: space-between;
       padding: 0 5px;
       // gap: 120px;
+      input {
+        width: $columW;
+        height: $columH;
+      }
       select {
-        width: 200px;
-        height: 30px;
+        width: $columW;
+        height: $columH;
       }
       .hide-arrows::-webkit-outer-spin-button,
       .hide-arrows::-webkit-inner-spin-button {
@@ -150,7 +153,6 @@
           align-items: center;
           background: $subClrBrown;
           width: 100%;
-          // font-size: 14px;
 
           .title {
             color: $mainClrW;
@@ -274,7 +276,7 @@
     .textareaGap {
       width: 100%;
       padding: 5px 5px 0;
-      font-size: clamp(12px, 1vw, 14px);
+      font-size: $contentText18;
       .textarea {
         width: 100%;
         height: 80px;
@@ -318,7 +320,7 @@
 .selData,
 .nullData {
   width: 85%;
-  font-size: clamp(12px, 1vw, 18px);
+  font-size: $contentText18;
   margin: 0 auto;
   background: $focusClrG;
   color: $mainClrW;
@@ -348,12 +350,6 @@
     .tableContainer {
       // background: lightblue;
       max-width: 95%;
-      .gapContain {
-        select {
-          width: 158px;
-          height: 22px;
-        }
-      }
     }
   }
 

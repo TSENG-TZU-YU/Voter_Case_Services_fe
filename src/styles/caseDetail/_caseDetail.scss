@@ -38,7 +38,7 @@
   .caseDetailContain {
     background: lightcoral;
     position: relative;
-    width: 60%;
+    width: 71%;
     height: 98%;
     background: $mainClrW;
     padding: 0 20px;
@@ -48,7 +48,6 @@
         @include flexCenter;
         border-bottom: 1px solid #ccc;
         li {
-          // font-size: 16px;
           font-weight: 600;
           margin: 5px 20px;
           white-space: nowrap;
@@ -56,6 +55,7 @@
           .linkPad {
             padding: 4px 15px;
             white-space: nowrap;
+            font-size: $contentTit;
           }
           .act {
             color: $focusClrG;

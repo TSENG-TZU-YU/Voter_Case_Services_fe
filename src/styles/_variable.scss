@@ -9,21 +9,20 @@ $header: #817161;
 $navBarPc: #c09e8280;
 $navBarMobile: #c09e82;
 
-
 // textStyles
 $navbarTop40: 40px;
 $containerTit28: 28px;
 $contentText: 18px;
 $subText: 16px;
 
-
-$navbarTop:clamp(12px, 2.5vw, $navbarTop40);
+$navbarTop: clamp(12px, 2.5vw, $navbarTop40);
 $navbarLeft: clamp(12px, 2.5vw, $contentText);
 $contentText18: clamp(12px, 1vw, $contentText);
+$contentTit: clamp(18px, 1.5vw, $containerTit28);
 
 // 欄位寬度
-$columWidth: 250px;
-$columWidthRWD: 150px;
+$columW: clamp(158px, 250px, 280px);
+$columH: clamp(22px, 28px, 32px);
 
 // 間距
 $marage10: 10px;
