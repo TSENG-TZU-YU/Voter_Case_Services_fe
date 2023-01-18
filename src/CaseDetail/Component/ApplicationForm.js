@@ -1716,30 +1716,6 @@ function ApplicationForm({
                   </div>
                 );
               })}
-              {edit ? (
-                ''
-              ) : (
-                <div className="add">
-                  <span className={`${editVerifyPage ? 'view' : ''}`}>
-                    *欄位不得為空
-                  </span>
-                  <div>
-                    {/* <FaTrashAlt
-                    size="17"
-                    onClick={() => {
-                      delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
-                    }}
-                    className="clearIcon"
-                  /> */}
-                    <MdOutlineAddBox
-                      size="20"
-                      onClick={handleAddNeed}
-                      className="addIcon"
-                    />
-                  </div>
-                </div>
-              )}
-
               {/* 需求 */}
               <div className="appTitle">陳情內容</div>
               <div className="vector"></div>
@@ -1777,6 +1753,29 @@ function ApplicationForm({
                   </div>
                 );
               })}
+              {edit ? (
+                ''
+              ) : (
+                <div className="add">
+                  <span className={`${editVerifyPage ? 'view' : ''}`}>
+                    *欄位不得為空
+                  </span>
+                  <div>
+                    {/* <FaTrashAlt
+                    size="17"
+                    onClick={() => {
+                      delCheck('確定要刪除所有需求內容?', handleDelAllNeed);
+                    }}
+                    className="clearIcon"
+                  /> */}
+                    <MdOutlineAddBox
+                      size="20"
+                      onClick={handleAddNeed}
+                      className="addIcon"
+                    />
+                  </div>
+                </div>
+              )}
 
               {editNeed.map((v, i) => {
                 return (

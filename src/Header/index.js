@@ -107,9 +107,6 @@ function Header() {
   const actoggle = () => {
     setActive(!active);
   };
-  const act = () => {
-    setActive(true);
-  };
   const acf = () => {
     setActive(false);
   };
