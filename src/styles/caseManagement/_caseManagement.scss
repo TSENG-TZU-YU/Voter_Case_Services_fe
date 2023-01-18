@@ -151,9 +151,15 @@
 }
 
 /* media queries */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 576px) {
+  .caseContainer {
+    .mobileToggle {
+      display: flex;
+      justify-content: end;
+    }
+  }
   .case {
-    max-width: 600px;
+    max-width: 576px;
     margin: 0 auto;
   }
 

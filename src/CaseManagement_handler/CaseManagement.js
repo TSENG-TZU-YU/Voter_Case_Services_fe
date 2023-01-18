@@ -21,6 +21,7 @@ import Loader from '../Loader';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 function CaseManagement() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -272,6 +273,23 @@ function CaseManagement() {
                 nowDate={nowDate}
               />
             </div>
+          </div>
+          <div className="mobileToggle">
+            {mobileToggle ? (
+              <BsToggleOn
+                size="35"
+                onClick={() => {
+                  setMobileToggle(false);
+                }}
+              />
+            ) : (
+              <BsToggleOff
+                size="35"
+                onClick={() => {
+                  setMobileToggle(true);
+                }}
+              />
+            )}
           </div>
 
           <div className="case">
