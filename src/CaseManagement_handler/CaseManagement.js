@@ -45,6 +45,7 @@ function CaseManagement() {
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [isLoading, setIsLoading] = useState(false);
+  const [mobileToggle, setMobileToggle] = useState(false);
   // 篩選
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
@@ -275,7 +276,12 @@ function CaseManagement() {
           </div>
 
           <div className="case">
-            <table className="caseContain">
+            <table
+              className={`caseContain ${
+                mobileToggle ? ' mobileCaseContain' : ''
+              }
+              `}
+            >
               <thead>
                 <tr>
                   <th></th>
@@ -350,8 +356,8 @@ function CaseManagement() {
                                     : ''}
                                 </td>
 
-                                <td>{v.case_number}</td>
-                                <td className="posClick">
+                                <td data-title="案件編號">{v.case_number}</td>
+                                <td data-title="詳細資訊" className="posClick">
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
@@ -367,13 +373,19 @@ function CaseManagement() {
 
                                   {/* <div className="hadClick">NEW</div> */}
                                 </td>
-                                <td>{v.applicant_unit}</td>
-                                <td>{v.user}</td>
-                                <td>{v.unit}</td>
-                                <td>{v.handler}</td>
-                                <td>{v.application_category}</td>
-                                <td>{v.create_time}</td>
-                                <td className="view">{v.name}</td>
+                                <td data-title="接案單位">
+                                  {v.applicant_unit}
+                                </td>
+                                <td data-title="接案人">{v.user}</td>
+                                <td data-title="處理單位">{v.unit}</td>
+                                <td data-title="處理人">{v.handler}</td>
+                                <td data-title="請託來源">
+                                  {v.application_category}
+                                </td>
+                                <td data-title="接案時間">{v.create_time}</td>
+                                <td data-title="案件狀態" className="view">
+                                  {v.name}
+                                </td>
 
                                 {/* <td>
                                   進度({v.cou}/{v.sum})

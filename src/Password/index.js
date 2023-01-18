@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './_index.scss';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function CaseReport() {
   const [pass, setPass] = useState('');
+
   function submitCheck(tit) {
     Swal.fire({
       title: tit,
@@ -32,6 +33,7 @@ function CaseReport() {
           withCredentials: true,
         }
       );
+      setPass('');
       console.log('pass', pass);
     } catch (err) {
       console.log(err);
@@ -40,10 +42,12 @@ function CaseReport() {
 
   return (
     <div className="passWordContainer">
-      <div className="title">請輸入密碼:</div>
+      <div className="title">請輸入密碼(最長15):</div>
       <div>
         <input
-          type="text"
+          type="password"
+          maxLength="15"
+          value={pass}
           onChange={(e) => {
             setPass(e.target.value);
           }}

@@ -70,6 +70,9 @@
       .sortBtn {
         @include flexCenter;
       }
+      .tiTick{
+        color: red;
+      }
     }
   }
   .page {
@@ -96,53 +99,53 @@
     margin: 0 auto;
   }
 
-  table.caseReport {
+  table.mobileCaseReport {
     width: 100%;
   }
-  table.caseReport tr.hide-mobile,
-  table.caseReport th.hide-mobile,
-  table.caseReport td.hide-mobile {
+  table.mobileCaseReport tr.hide-mobile,
+  table.mobileCaseReport th.hide-mobile,
+  table.mobileCaseReport td.hide-mobile {
     display: none;
   }
-  table.caseReport thead {
+  table.mobileCaseReport thead {
     display: none;
   }
-  table.caseReport tbody {
+  table.mobileCaseReport tbody {
     width: 100%;
   }
-  .caseContainer .caseReport .bodyMobile {
+  .caseContainer .mobileCaseReport .bodyMobile {
     border-bottom: none;
   }
-  table.caseReport tr,
-  table.caseReport th,
-  table.caseReport td {
+  table.mobileCaseReport tr,
+  table.mobileCaseReport th,
+  table.mobileCaseReport td {
     display: block;
     padding: 0;
   }
-  table.caseContain tr {
+  table.mobileCaseReport tr {
     border-bottom: none;
     border-top: none;
     margin: 0 0 1em 0;
     padding: 0.5em;
   }
-  table.caseReport tr.highlight {
+  table.mobileCaseReport tr.highlight {
     background-color: inherit !important;
   }
-  table.caseReport.zebra tr:nth-child(even) {
+  table.mobileCaseReport.zebra tr:nth-child(even) {
     background-color: transparent;
   }
-  table.caseReport.zebra td:nth-child(even) {
+  table.mobileCaseReport.zebra td:nth-child(even) {
     background-color: #f6f6f6;
   }
-  table.caseReport tr:nth-child(even) {
+  table.mobileCaseReport tr:nth-child(even) {
     background-color: transparent;
   }
-  table.caseReport td {
+  table.mobileCaseReport td {
     padding: 0.5em 0 0.25em 0;
     border-bottom: 1px dotted #ccc;
     text-align: right;
   }
-  table.caseReport td[data-title]:before {
+  table.mobileCaseReport td[data-title]:before {
     content: attr(data-title);
     font-weight: bold;
     display: inline-block;
@@ -151,14 +154,14 @@
     margin-right: 0.5em;
     font-size: 0.95em;
   }
-  table.caseReport td:last-child {
+  table.mobileCaseReport td:last-child {
     padding-right: 0;
     border-bottom: 2px solid #ccc;
   }
-  table.caseReport td:empty {
+  table.mobileCaseReport td:empty {
     display: none;
   }
-  table.caseReport .highlight td {
+  table.mobileCaseReport .highlight td {
     background-color: inherit;
     font-weight: normal;
   }
