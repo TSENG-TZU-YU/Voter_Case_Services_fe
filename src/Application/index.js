@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-// import { API_URL } from '../utils/config';
+
 
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -53,11 +53,13 @@ function Application({ delCheck }) {
   const [getHandler, setGetHandler] = useState([]);
   const [getSource, setGetSource] = useState([]);
   const [getCategory, setGetCategory] = useState([]);
+  const [getUnit, setGetUnit] = useState([]);
   // const [getCycle, setGetCycle] = useState([]);
   const [getCounty, setGetCounty] = useState([]);
   const [getArea, setGetArea] = useState([]);
-  const [getUnit, setGetUnit] = useState([]);
   const [getRimin, setGetRimin] = useState([]);
+  const [getClientArea, setGetClientArea] = useState([]);
+  const [getClientRimin, setGetclientRimin] = useState([]);
   //申請表驗證空值
   const [source, setSource] = useState(false);
   const [category, setCategory] = useState(false);
@@ -255,7 +257,7 @@ function Application({ delCheck }) {
   }, [addUnit]);
   // addUnit
 
-  //抓取區
+  //抓取當事人區
   async function areaPost(county) {
     try {
       let res = await axios.post(
@@ -268,7 +270,7 @@ function Application({ delCheck }) {
       console.log(err);
     }
   }
-  //抓取里
+  //抓取當事人里
   async function riminPost(area) {
     try {
       let res = await axios.post(
@@ -277,6 +279,34 @@ function Application({ delCheck }) {
       );
 
       setGetRimin(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+   //抓取請託人區
+   async function clientAreaPost(county) {
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
+        { area: county }
+      );
+
+      setGetClientArea(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+   //抓取請託人里
+   async function  clientRiminPost(area) {
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
+        { rimin: area }
+      );
+
+      setGetclientRimin(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -521,7 +551,7 @@ function Application({ delCheck }) {
               }}
             >
               <option value="0" hidden>
-                -----請選擇來源-----
+                請選擇來源
               </option>
               {getSource.map((v, i) => {
                 return (
@@ -564,7 +594,7 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'handler');
               }}
             >
-              <option value=""> -----請選擇-----</option>
+              <option value=""> 請選擇</option>
               {getHandler.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -579,7 +609,7 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'relation');
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=" "> 請選擇</option>
               {relation.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -665,7 +695,7 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 當事人 */}
           <div className="gap">
-            <div> 當事人姓名</div>
+            <div>當事人姓名</div>
             <input
               className="handler"
               type="text"
@@ -704,7 +734,7 @@ function Application({ delCheck }) {
                 areaPost(e.target.value);
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=" "> 請選擇</option>
               {getCounty.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -720,7 +750,7 @@ function Application({ delCheck }) {
                 riminPost(e.target.value);
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=" "> 請選擇</option>
               {getArea.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -737,7 +767,7 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'litigantRimin');
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=" "> 請選擇</option>
               {getRimin.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -796,10 +826,10 @@ function Application({ delCheck }) {
               className="handler"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientCounty');
-                areaPost(e.target.value);
+                clientAreaPost(e.target.value);
               }}
             >
-              <option value=" "> -----請選擇-----</option>
+              <option value=" ">請選擇</option>
               {getCounty.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
@@ -812,11 +842,11 @@ function Application({ delCheck }) {
               className="handler"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientArea');
-                riminPost(e.target.value);
+                clientRiminPost(e.target.value);
               }}
             >
-              <option value=" "> -----請選擇-----</option>
-              {getArea.map((v, i) => {
+              <option value=" "> 請選擇</option>
+              {getClientArea.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
             </select>
@@ -832,8 +862,8 @@ function Application({ delCheck }) {
                 handleChange(e.target.value, 'clientRimin');
               }}
             >
-              <option value=" "> -----請選擇-----</option>
-              {getRimin.map((v, i) => {
+              <option value=" "> 請選擇</option>
+              {getClientRimin.map((v, i) => {
                 return <option key={i}>{v.name}</option>;
               })}
             </select>
@@ -874,7 +904,7 @@ function Application({ delCheck }) {
               }}
             >
               <option value="0" hidden>
-                -----請選擇類別-----
+                請選擇類別
               </option>
               {getCategory.map((v, i) => {
                 return <option key={i}>{v.name}</option>;

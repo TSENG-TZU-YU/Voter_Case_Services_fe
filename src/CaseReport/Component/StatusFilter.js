@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ allStatusData, setNowStatus, member }) {
+function ActivitySelect({ allStatusData, setNowStatus }) {
   // const [selectSortOption, setSelectSortOption] = useState([]);
   // console.log('m',member.manage)
+
   let newData = [];
   for (let i = 1; i < allStatusData.length; i++) {
     newData.push({
@@ -13,7 +14,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
     });
   }
   const sortOption = [{ value: '', label: '--請選擇狀態--' }, ...newData];
-
+  console.log('sortOption', sortOption);
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -66,13 +67,11 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
   };
   return (
     <>
-      {/* {console.log('selectSortOption', selectSortOption[0])} */}
       <Select
-      defaultvalue={sortOption[9]}
-        // value=
+        defaultValue={{ value: 9, label: '結案' }}
         onChange={(e) => {
-          console.log(e.value);
-          setNowStatus((e.value));
+          // console.log(e.value);
+          setNowStatus(e.value);
         }}
         options={sortOption}
         styles={customStyles}

@@ -8,13 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 
 //react-icons
-import { HiPencilAlt } from 'react-icons/hi';
-import { RiFileTextLine } from 'react-icons/ri';
-import { RiPhoneFindFill } from 'react-icons/ri';
+import { HiPencilAlt, HiDocumentReport } from 'react-icons/hi';
+import { RiFileTextLine, RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
-import { AiOutlineMenu } from 'react-icons/ai';
-import { AiFillUnlock } from 'react-icons/ai';
-import { HiDocumentReport } from 'react-icons/hi';
+import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 
 //hook
 import { useAuth } from '../utils/use_auth';

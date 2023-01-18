@@ -20,6 +20,7 @@ import Loader from '../Loader';
 
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
+import { GiCheckMark } from 'react-icons/gi';
 
 function CaseReport() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -46,9 +47,10 @@ function CaseReport() {
   const [minDateValue, setMinDateValue] = useState(dateAgo);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [mobileToggle, setMobileToggle] = useState(true);
 
   // 篩選
-  const [nowStatus, setNowStatus] = useState('');
+  const [nowStatus, setNowStatus] = useState(9);
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
   const [nowHUnit, setNowHUnit] = useState('');
@@ -270,6 +272,7 @@ function CaseReport() {
                       allStatusData={allStatusData}
                       setNowStatus={setNowStatus}
                       member={member}
+                      nowStatus={nowStatus}
                     />
                   </div>
                 </div>
@@ -300,7 +303,10 @@ function CaseReport() {
             </div>
           </div>
           <div className="case">
-            <table className="caseReport">
+            <table
+              className={`caseReport ${mobileToggle ? ' mobileCaseReport' : ''}
+              `}
+            >
               <thead>
                 <tr>
                   <th>詳細資訊</th>
@@ -374,11 +380,11 @@ function CaseReport() {
                                   {v.name}
                                 </td>
                                 <td data-title="請委員/議員致電陳情人">
-                                  <input
-                                    type="checkbox"
-                                    disabled
-                                    checked={v.called === 1 ? true : false}
-                                  />
+                                  {v.called === 1 ? (
+                                    <GiCheckMark className="tiTick" size="25" />
+                                  ) : (
+                                    ''
+                                  )}
                                 </td>
                               </tr>
                             </tbody>
