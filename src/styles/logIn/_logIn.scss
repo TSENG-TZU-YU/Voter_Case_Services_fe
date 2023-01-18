@@ -3,13 +3,13 @@
 .logInContainer {
   background: #c09e82;
   // background-image: url('../../assets/q-and-a-2453376_1920.jpg');
-  background-position: center;
+  // background-position: center;
   width: 100vw;
   height: 100vh;
   @include flexCenter;
   .container {
     position: relative;
-    width: 60%;
+    max-width: 60%;
     height: 67%;
     background: $bcgBlock;
     @include flexCenter;
@@ -19,7 +19,7 @@
       top: 2%;
       left: 4%;
       color: $mainClrW;
-      font-size: 32px;
+      font-size: clamp(24px, 2vw, 40px);
     }
     .inputContainer {
       display: flex;
@@ -85,13 +85,64 @@
         &::before {
           position: absolute;
           content: '';
-          width: 15px;
-          height: 15px;
+          width: 1.1rem;
+          height: 1.1rem;
           border-top: 3px solid $mainClrW;
           border-right: 3px solid $mainClrW;
           top: 50%;
           right: 15px;
           transform: translateY(-50%) rotate(45deg);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logInContainer {
+    .container {
+      max-width: 80%;
+      .inputContainer {
+        .inputContain {
+          input,
+          select {
+            width: 210px;
+          }
+          .icons {
+            color: $mainClrW;
+            margin: 10px 20px 10px 10px;
+            height: 25px;
+            width: 25px;
+          }
+          .eye {
+            font-size: 1.3rem;
+            color: $mainClrW;
+            cursor: pointer;
+          }
+        }
+        button {
+          position: relative;
+          margin-top: 20px;
+          padding: 10px;
+          border: 0;
+          border-radius: 8px;
+          color: $mainClrW;
+          background: $subClrBrown;
+          transition: box-shadow 0.3s;
+          &:hover {
+            box-shadow: 0.2px 0.2px 6px rgba(255, 255, 255, 0.555);
+          }
+          &::before {
+            position: absolute;
+            content: '';
+            width: 1.1rem;
+            height: 1.1rem;
+            border-top: 3px solid $mainClrW;
+            border-right: 3px solid $mainClrW;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%) rotate(45deg);
+          }
         }
       }
     }

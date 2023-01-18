@@ -6,7 +6,6 @@ import { FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { API_URL } from '../utils/config';
 
 //hook
 import { useAuth } from '../utils/use_auth';

@@ -54,7 +54,6 @@ function SelectStatus({
       needState !== 8 &&
       needState !== 9 &&
       needState !== 10 &&
-      needState !== 11 &&
       needSumLen !== needLen ? (
         <div className="selectContain">
           {/* <StateFilter /> */}

@@ -1030,7 +1030,7 @@ function ApplicationForm({
             )}
 
             {/* handler完成  待user確認 */}
-            {member.user === 1 &&
+            {/* {member.user === 1 &&
             needState === 11 &&
             User === member.name &&
             WebPage === 2 ? (
@@ -1043,7 +1043,7 @@ function ApplicationForm({
               />
             ) : (
               ''
-            )}
+            )} */}
 
             {/* handler  接收需求Btn */}
             {/* {needState === 13 && handler === false ? (
@@ -2081,7 +2081,7 @@ function ApplicationForm({
           </> */}
 
             {/* 完成 */}
-            {member.manage === 1 ? (
+            {/* {member.manage === 1 ? (
               member.handler === 1 &&
               HId === member.name &&
               member.manage === 1 &&
@@ -2131,7 +2131,7 @@ function ApplicationForm({
               )
             ) : (
               ''
-            )}
+            )} */}
 
             {/* 儲存 */}
             {member.user === 1 && needState === 1 ? (

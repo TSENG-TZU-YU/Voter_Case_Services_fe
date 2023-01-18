@@ -28,17 +28,17 @@ function AddStateForm({
         {/* 表單內容 */}
         <div className="addStateFormContain">
           <div className="mb-2">
-            <span> &emsp;&emsp;操作人員：</span>
+            <span>操作人員：</span>
             <span>{postVal.handler}</span>
           </div>
           <div className="mb-2">
-            <span>&emsp;&emsp;操作狀態：</span>
+            <span>操作狀態：</span>
             <span>{postVal.status}</span>
           </div>
           {/* 轉件 */}
           {postVal.status === '處理人轉件中' ? (
             <div className="mb-2">
-              <span>&emsp;&emsp;轉件人員：</span>
+              <span>轉件人員：</span>
               <select
                 name="transfer"
                 value={postVal.transfer}
@@ -47,7 +47,7 @@ function AddStateForm({
                   handlePostVal(e);
                 }}
               >
-                <option value="">----請選擇轉件人員----</option>
+                <option value="">請選擇轉件人員</option>
                 {handlerData.map((v) => {
                   return (
                     <option value={v.name} key={uuidv4()}>
@@ -72,9 +72,10 @@ function AddStateForm({
             <span>2022/12/12 13:14</span>
           </div> */}
           <div className="d-flex mb-2">
-            <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
+            <span>&emsp;&emsp;備註：</span>
             <textarea
               name="remark"
+              className="remark"
               rows="5"
               placeholder=""
               value={postVal.remark}
