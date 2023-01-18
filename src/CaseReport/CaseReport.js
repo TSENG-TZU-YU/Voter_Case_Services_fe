@@ -21,6 +21,7 @@ import Loader from '../Loader';
 import { FaEye } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 import { GiCheckMark } from 'react-icons/gi';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 function CaseReport() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -301,6 +302,23 @@ function CaseReport() {
                 nowDate={nowDate}
               />
             </div>
+          </div>
+          <div className="mobileToggle d-md-none ">
+            {mobileToggle ? (
+              <BsToggleOn
+                size="35"
+                onClick={() => {
+                  setMobileToggle(false);
+                }}
+              />
+            ) : (
+              <BsToggleOff
+                size="35"
+                onClick={() => {
+                  setMobileToggle(true);
+                }}
+              />
+            )}
           </div>
           <div className="case">
             <table
