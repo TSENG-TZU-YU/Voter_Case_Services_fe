@@ -257,23 +257,7 @@ function CaseReport() {
               />
             </div>
           </div>
-          <div className="mobileToggle">
-            {mobileToggle ? (
-              <BsToggleOn
-                size="35"
-                onClick={() => {
-                  setMobileToggle(false);
-                }}
-              />
-            ) : (
-              <BsToggleOff
-                size="35"
-                onClick={() => {
-                  setMobileToggle(true);
-                }}
-              />
-            )}
-          </div>
+
           <div className="m-view">
             <div className="sortSelect">
               <div className="both">
@@ -318,6 +302,23 @@ function CaseReport() {
                 nowDate={nowDate}
               />
             </div>
+          </div>
+          <div className="mobileToggle d-md-none ">
+            {mobileToggle ? (
+              <BsToggleOn
+                size="35"
+                onClick={() => {
+                  setMobileToggle(false);
+                }}
+              />
+            ) : (
+              <BsToggleOff
+                size="35"
+                onClick={() => {
+                  setMobileToggle(true);
+                }}
+              />
+            )}
           </div>
           <div className="case">
             <table
