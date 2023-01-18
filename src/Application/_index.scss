@@ -1,5 +1,8 @@
 @import '../../src/styles/_variable.scss';
 
+.contents18 {
+  font-size: $contentText18;
+}
 .scroll {
   width: 100%;
   height: calc(100vh - 70px);
@@ -16,7 +19,8 @@
       width: 70%;
     }
 
-    h3 {
+    .h3 {
+      font-size: $containerTit28;
       font-weight: bold;
       margin-top: $marage10;
     }
@@ -38,7 +42,7 @@
         span {
           color: $focusClrY;
         }
-       
+
         .inputCheck {
           margin-top: $marage10;
         }

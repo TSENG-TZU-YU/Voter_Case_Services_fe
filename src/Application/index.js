@@ -6,7 +6,6 @@ import moment from 'moment';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
 //react-icons
 import { MdOutlineAddBox } from 'react-icons/md';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -284,8 +283,8 @@ function Application({ delCheck }) {
     }
   }
 
-   //抓取請託人區
-   async function clientAreaPost(county) {
+  //抓取請託人區
+  async function clientAreaPost(county) {
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
@@ -298,8 +297,8 @@ function Application({ delCheck }) {
     }
   }
 
-   //抓取請託人里
-   async function  clientRiminPost(area) {
+  //抓取請託人里
+  async function clientRiminPost(area) {
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
@@ -528,18 +527,18 @@ function Application({ delCheck }) {
   return (
     <div className="scroll">
       <div className="container">
-        <h3>接案資訊</h3>
+        <div className="h3">接案資訊</div>
         <div className="vector"></div>
         {/* 欄位 */}
         <div className="box d-md-flex">
           {/*  案件來源 */}
           <div className="gap">
-            <div>
+            <div className="contents18">
               案件來源 <span>*</span>
               {source ? <span>請選欄位</span> : <span>必填</span>}
             </div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'source');
                 setAddNo(e.target.value);
@@ -564,12 +563,12 @@ function Application({ delCheck }) {
           </div>
           {/* 單位 */}
           <div className="gap">
-            <div>
+            <div className="contents18">
               處理單位 <span>*必填</span>
               {/* {category ? <span>欄位不得為空</span> : <span>必填</span>} */}
             </div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'unit');
                 setAddUnit(e.target.value);
@@ -587,9 +586,9 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 處理人 */}
           <div className="gap">
-            <div>處理人</div>
+            <div className="contents18">處理人</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'handler');
               }}
@@ -602,9 +601,9 @@ function Application({ delCheck }) {
           </div>
           {/* 友好程度 */}
           <div className="gap">
-            <div> 友好程度</div>
+            <div className="contents18"> 友好程度</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'relation');
               }}
@@ -689,15 +688,15 @@ function Application({ delCheck }) {
             />
           </div>
         </div> */}
-        <h3>當事人資訊</h3>
+        <div className="h3">當事人資訊</div>
         <div className="vector"></div>
 
         <div className="box d-md-flex">
           {/* 當事人 */}
           <div className="gap">
-            <div>當事人姓名</div>
+            <div className="contents18">當事人姓名</div>
             <input
-              className="handler"
+              className="handler contents18"
               type="text"
               onChange={(e) => {
                 handleChange(e.target.value, 'litigant');
@@ -711,9 +710,9 @@ function Application({ delCheck }) {
             />
           </div>
           <div className="gap">
-            <div> 當事人聯絡電話</div>
+            <div className="contents18"> 當事人聯絡電話</div>
             <input
-              className="handler hide-arrows"
+              className="handler hide-arrows contents18"
               type="tel"
               maxLength="12"
               onChange={(e) => {
@@ -726,9 +725,9 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 縣市*/}
           <div className="gap">
-            <div>當事人縣市</div>
+            <div className="contents18">當事人縣市</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'litigantCounty');
                 areaPost(e.target.value);
@@ -742,9 +741,9 @@ function Application({ delCheck }) {
           </div>
           {/* 區*/}
           <div className="gap">
-            <div>當事人區</div>
+            <div className="contents18">當事人區</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'litigantArea');
                 riminPost(e.target.value);
@@ -760,9 +759,9 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 里 */}
           <div className="gap">
-            <div>當事人里</div>
+            <div className="contents18">當事人里</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'litigantRimin');
               }}
@@ -775,9 +774,9 @@ function Application({ delCheck }) {
           </div>
           {/* 地址 */}
           <div className="gap">
-            <div> 當事人地址</div>
+            <div className="contents18"> 當事人地址</div>
             <input
-              className="handler"
+              className="handler contents18"
               type="text"
               onChange={(e) => {
                 handleChange(e.target.value, 'litigantAddress');
@@ -785,14 +784,14 @@ function Application({ delCheck }) {
             />
           </div>
         </div>
-        <h3>請託人資訊</h3>
+        <div className="h3">請託人資訊</div>
         <div className="vector"></div>
         <div className="box d-md-flex">
           {/* 請託人 */}
           <div className="gap">
-            <div> 請託人姓名</div>
+            <div className="contents18"> 請託人姓名</div>
             <input
-              className="handler"
+              className="handler contents18"
               type="text"
               onChange={(e) => {
                 handleChange(e.target.value, 'client');
@@ -806,9 +805,9 @@ function Application({ delCheck }) {
             />
           </div>
           <div className="gap">
-            <div> 請託人聯絡電話</div>
+            <div className="contents18"> 請託人聯絡電話</div>
             <input
-              className="handler hide-arrows"
+              className="handler hide-arrows contents18"
               type="tel"
               maxLength="12"
               onChange={(e) => {
@@ -821,9 +820,9 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 縣市*/}
           <div className="gap">
-            <div>請託人縣市</div>
+            <div className="contents18">請託人縣市</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientCounty');
                 clientAreaPost(e.target.value);
@@ -837,9 +836,9 @@ function Application({ delCheck }) {
           </div>
           {/* 區*/}
           <div className="gap">
-            <div>請託人區</div>
+            <div className="contents18">請託人區</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientArea');
                 clientRiminPost(e.target.value);
@@ -855,9 +854,9 @@ function Application({ delCheck }) {
         <div className="box d-md-flex">
           {/* 里 */}
           <div className="gap">
-            <div>請託人里</div>
+            <div className="contents18">請託人里</div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientRimin');
               }}
@@ -870,9 +869,9 @@ function Application({ delCheck }) {
           </div>
           {/* 地址 */}
           <div className="gap">
-            <div> 請託人地址</div>
+            <div className="contents18"> 請託人地址</div>
             <input
-              className="handler"
+              className="handler contents18"
               type="text"
               onChange={(e) => {
                 handleChange(e.target.value, 'clientAddress');
@@ -883,17 +882,17 @@ function Application({ delCheck }) {
 
         {/* 欄位 end */}
         {/* 需求 */}
-        <h3>陳情內容</h3>
+        <div className="h3">陳情內容</div>
         <div className="vector"></div>
         <div className="box d-md-flex">
           {/*  案件類別 */}
           <div className="gap">
-            <div>
+            <div className="contents18">
               案件類別 <span>*</span>
               {category ? <span>請選欄位</span> : <span>必填</span>}
             </div>
             <select
-              className="handler"
+              className="handler contents18"
               onChange={(e) => {
                 handleChange(e.target.value, 'category');
               }}
@@ -932,7 +931,7 @@ function Application({ delCheck }) {
             return (
               <div key={i} className="need">
                 <div className="one">
-                  <div>
+                  <div className="contents18">
                     陳情內容{i + 1} (字數限制500)<span>*必填</span>
                   </div>
                   {i !== 0 ? (
@@ -964,7 +963,7 @@ function Application({ delCheck }) {
                 </div> */}
                 <div>
                   <textarea
-                    className="input"
+                    className="input contents18"
                     // placeholder="請詳細說明"
                     name="ttt"
                     cols="30"
@@ -989,8 +988,8 @@ function Application({ delCheck }) {
         <div className="file">
           <div className="fileName">
             <div className="fileColumn">
-              <div>附件上傳 (檔案限制10MB)</div>
-              <div>
+              <div className="contents18">附件上傳 (檔案限制10MB)</div>
+              <div className="contents18">
                 (可上傳副檔名 csv.txt.png.jpeg.jpg.pdf.xlsx.zip.word.ppt)
               </div>
               {/* <div>(選擇新專案必須上傳RFP 文件)</div> */}
@@ -1020,7 +1019,7 @@ function Application({ delCheck }) {
                     ) : (
                       <div className="addFile">
                         <HiOutlineDocumentPlus className="addIcon" />
-                        <span>點擊新增檔案</span>
+                        <span className="contents18">點擊新增檔案</span>
                       </div>
                     )}
                   </div>
@@ -1049,9 +1048,9 @@ function Application({ delCheck }) {
 
         {/* 備註 */}
         <div className="textareaGap">
-          <div> 備註 (字數限制100)</div>
+          <div className="contents18"> 備註 (字數限制100)</div>
           <textarea
-            className="textarea"
+            className="textarea contents18"
             maxLength="100"
             onChange={(e) => {
               handleChange(e.target.value, 'remark');

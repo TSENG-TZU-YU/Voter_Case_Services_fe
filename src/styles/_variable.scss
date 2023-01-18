@@ -11,11 +11,15 @@ $navBarMobile: #c09e82;
 
 
 // textStyles
-$navbarLeft18: 18px;
 $navbarTop40: 40px;
 $containerTit28: 28px;
 $contentText: 18px;
 $subText: 16px;
+
+
+$navbarTop:clamp(12px, 2.5vw, $navbarTop40);
+$navbarLeft: clamp(12px, 2.5vw, $contentText);
+$contentText18: clamp(12px, 1vw, $contentText);
 
 // 欄位寬度
 $columWidth: 250px;

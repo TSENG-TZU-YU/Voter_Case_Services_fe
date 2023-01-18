@@ -20,7 +20,7 @@
 
     .titleH3 {
       color: $mainClrW;
-      font-size: clamp(12px, 4vw, $containerTit28);
+      font-size: $navbarTop;
     }
     .menu {
       color: $mainClrW;
@@ -46,6 +46,7 @@
     & div {
       margin-top: 10px;
       margin-left: 10px;
+      font-size: $navbarLeft;
     }
     .bold {
       font-weight: bold;

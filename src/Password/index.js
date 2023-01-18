@@ -41,8 +41,8 @@ function CaseReport() {
   };
 
   return (
-    <div className="passWordContainer">
-      <div className="title">請輸入密碼:</div>
+    <div className="passWordContainer contents18">
+      <div>請輸入密碼:</div>
       <div>
         <input
           type="password"
