@@ -129,7 +129,6 @@ function CaseReport() {
   //   });
   // };
 
-  // TODO:預設狀態結案
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);

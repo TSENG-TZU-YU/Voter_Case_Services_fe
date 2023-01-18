@@ -46,7 +46,7 @@ function CaseManagement() {
   const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [isLoading, setIsLoading] = useState(false);
   // 篩選
-  const [nowStatus, setNowStatus] = useState('');
+  const [nowStatus, setNowStatus] = useState(4);
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
   const [nowHUnit, setNowHUnit] = useState('');
@@ -71,7 +71,6 @@ function CaseManagement() {
   const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
 
-  // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
