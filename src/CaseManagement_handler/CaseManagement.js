@@ -47,7 +47,7 @@ function CaseManagement() {
   const [isLoading, setIsLoading] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   // 篩選
-  const [nowStatus, setNowStatus] = useState('');
+  const [nowStatus, setNowStatus] = useState(4);
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
   const [nowHUnit, setNowHUnit] = useState('');
@@ -72,7 +72,6 @@ function CaseManagement() {
   const [perPage] = useState(7);
   const [pageTotal, setPageTotal] = useState(5);
 
-  // TODO:預設狀態及日期
   // 取得所有資料
   useEffect(() => {
     setIsLoading(true);
@@ -336,9 +335,11 @@ function CaseManagement() {
               </thead>
               {isLoading ? (
                 <tbody className="noData">
-                  <td colSpan={10} className="noTd">
-                    <Loader />
-                  </td>
+                  <tr>
+                    <td colSpan={10} className="noTd">
+                      <Loader />
+                    </td>
+                  </tr>
                 </tbody>
               ) : (
                 <>
@@ -361,14 +362,7 @@ function CaseManagement() {
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
-                                    <FaEye
-                                      className={`icons ${
-                                        v.name === '處理人評估中' &&
-                                        member.handler === 1
-                                          ? 'eyeBcg'
-                                          : ''
-                                      }`}
-                                    />
+                                    <FaEye className="icons" />
                                   </Link>
 
                                   {/* <div className="hadClick">NEW</div> */}
@@ -397,23 +391,27 @@ function CaseManagement() {
 
                       {/* 頁碼 */}
                       <tbody className="noData pbar-view">
-                        <td colSpan={10} className="noTd">
-                          <div className="page">
-                            <PaginationBar
-                              pageNow={pageNow}
-                              setPageNow={setPageNow}
-                              pageTotal={pageTotal}
-                            />
-                          </div>
-                        </td>
+                        <tr>
+                          <td colSpan={10} className="noTd">
+                            <div className="page">
+                              <PaginationBar
+                                pageNow={pageNow}
+                                setPageNow={setPageNow}
+                                pageTotal={pageTotal}
+                              />
+                            </div>
+                          </td>
+                        </tr>
                       </tbody>
                       {/* 頁碼 end */}
                     </>
                   ) : (
                     <tbody className="noData">
-                      <td colSpan={10} className="noTd">
-                        目前沒有資料
-                      </td>
+                      <tr>
+                        <td colSpan={10} className="noTd">
+                          目前沒有資料
+                        </td>
+                      </tr>
                     </tbody>
                   )}
                 </>

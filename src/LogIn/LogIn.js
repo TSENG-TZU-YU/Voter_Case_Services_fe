@@ -6,7 +6,6 @@ import { FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { API_URL } from '../utils/config';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -110,7 +109,7 @@ function LogIn() {
                   doLogin(e.target.value, 'company');
                 }}
               >
-                <option value="0">--接案單位--</option>
+                <option value="0">請選擇單位</option>
                 {unit.map((v) => {
                   return <option key={v.id}>{v.name}</option>;
                 })}
@@ -132,7 +131,8 @@ function LogIn() {
               <input
                 name="password"
                 type={eye ? 'text' : 'password'}
-                placeholder="輸入密碼"
+                placeholder="密碼至多15字"
+                maxLength={15}
                 onChange={(e) => {
                   doLogin(e.target.value, 'password');
                 }}

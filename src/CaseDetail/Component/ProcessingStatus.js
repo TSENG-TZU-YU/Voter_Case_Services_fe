@@ -106,8 +106,8 @@ function ProcessingStatus({
       <div className="dealWithContainer">
         {selCheckData.map((v, i) => {
           return (
-            <>
-              <div className="dealWithContain" key={i}>
+            <div key={i}>
+              <div className="dealWithContain">
                 <div className="reply">
                   <div className="dealTit">回覆情況：</div>
                   <div className="">
@@ -126,7 +126,6 @@ function ProcessingStatus({
                         needState !== 8 &&
                         needState !== 9 &&
                         needState !== 10 &&
-                        needState !== 11 &&
                         needSumLen !== needLen
                           ? false
                           : true
@@ -153,7 +152,6 @@ function ProcessingStatus({
                         needState !== 8 &&
                         needState !== 9 &&
                         needState !== 10 &&
-                        needState !== 11 &&
                         needSumLen !== needLen
                           ? false
                           : true
@@ -193,7 +191,7 @@ function ProcessingStatus({
             已完成
           </div> */}
 
-                {nowSelState !== '案件已完成' ? (
+                {nowSelState !== '結案' ? (
                   ''
                 ) : (
                   <>
@@ -230,7 +228,7 @@ function ProcessingStatus({
                 )}
               </div>
 
-              {nowSelState !== '案件已完成' ? (
+              {nowSelState !== '結案' ? (
                 ''
               ) : (
                 <>
@@ -261,7 +259,7 @@ function ProcessingStatus({
                   </div>
                 </>
               )}
-            </>
+            </div>
           );
         })}
       </div>
@@ -295,8 +293,8 @@ function ProcessingStatus({
       {nowState !== 1 &&
       nowState !== 4 &&
       nowState !== 8 &&
+      nowState !== 9 &&
       nowState !== 10 &&
-      nowState !== 11 &&
       member.handler === 1 &&
       HId === member.name &&
       member.manage === 1 &&

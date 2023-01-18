@@ -1,28 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
 import Select from 'react-select';
 
 function ActivitySelect({ allStatusData, setNowStatus }) {
-  // const [selectSortOption, setSelectSortOption] = useState(null);
-  // let newData = [];
-  // for (let i = 3; i < allStatusData.length; i++) {
-  //   newData.push({
-  //     value: allStatusData[i].id,
-  //     label: allStatusData[i].name,
-  //   });
-  // }
+  let newData = [];
+  for (let i = 1; i < allStatusData.length; i++) {
+    newData.push({
+      value: allStatusData[i].id,
+      label: allStatusData[i].name,
+    });
+  }
   // console.log('n', newData);
   const sortOption = [
     // { value: '', label: '--請選擇狀態--' },
     { value: '', label: '全部狀態' },
-    { value: '1', label: '未送審' },
-    { value: '4', label: '處理人評估中' },
-    { value: '5', label: '案件進行中' },
-    { value: '6', label: '需補上傳文件' },
-    { value: '7', label: '須修改需求' },
-    { value: '8', label: '轉件中' },
-    { value: '11', label: '待申請人確認完成' },
-    { value: '12', label: '案件已完成' },
+    ...newData,
   ];
 
   const customStyles = {
@@ -76,7 +67,7 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
   return (
     <>
       <Select
-        defaultValue={sortOption[2]}
+        defaultValue={{ value: '4', label: '處理人評估中' }}
         onChange={(e) => {
           // console.log(e.value);
           setNowStatus(e.value);

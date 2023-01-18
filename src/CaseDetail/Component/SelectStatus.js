@@ -54,7 +54,6 @@ function SelectStatus({
       needState !== 8 &&
       needState !== 9 &&
       needState !== 10 &&
-      needState !== 11 &&
       needSumLen !== needLen ? (
         <div className="selectContain">
           {/* <StateFilter /> */}
@@ -67,7 +66,7 @@ function SelectStatus({
                 handlePostVal(e);
               }}
             >
-              <option value="">----請選擇處理狀態----</option>
+              <option value="">請選擇處理狀態</option>
               {selectData.map((v) => {
                 return (
                   <option value={v.name} key={uuidv4()}>
