@@ -40,7 +40,7 @@
         margin-left: 5px;
         margin-right: 5px;
         span {
-          color: $focusClrY;
+          @include focusText;
         }
 
         .inputCheck {
@@ -88,7 +88,7 @@
       }
       span {
         opacity: 0;
-        color: $focusClrY;
+        @include focusText;
       }
       .view {
         opacity: 1;
@@ -107,7 +107,7 @@
 
       .need {
         span {
-          color: $focusClrY;
+          @include focusText;
         }
         .one {
           display: flex;
@@ -121,7 +121,7 @@
             margin-bottom: 2px;
           }
           span {
-            color: $focusClrY;
+            @include focusText;
           }
         }
 

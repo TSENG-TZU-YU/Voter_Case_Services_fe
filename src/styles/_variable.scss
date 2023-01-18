@@ -8,7 +8,13 @@ $bcgBlock: #00000080;
 $header: #817161;
 $navBarPc: #c09e8280;
 $navBarMobile: #c09e82;
+$focusClrR: #ce1111;
+$focusClrP: #e77979;
 
+@mixin focusText {
+  color: $focusClrP;
+  font-weight: 600;
+}
 // textStyles
 $navbarTop40: 40px;
 $containerTit28: 28px;

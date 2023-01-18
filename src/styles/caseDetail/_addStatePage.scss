@@ -43,7 +43,7 @@
       }
       .selectRemind {
         // font-size: 12px;
-        color: $focusClrG;
+        @include focusText;
         margin-left: 5px;
       }
     }
