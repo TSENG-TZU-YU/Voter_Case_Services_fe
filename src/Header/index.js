@@ -104,6 +104,9 @@ function Header() {
   };
 
   //顯示統計
+  const actoggle = () => {
+    setActive(!active);
+  };
   const act = () => {
     setActive(true);
   };
@@ -196,7 +199,7 @@ function Header() {
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
                   {/* 處理人/協理/主管 */}
-                  <div className="navFlex" onClick={act}>
+                  <div className="navFlex" onClick={actoggle}>
                     <IoBarChartSharp size="20" />
                     <span>案件統計</span>
                   </div>
