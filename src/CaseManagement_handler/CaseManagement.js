@@ -48,7 +48,7 @@ function CaseManagement() {
   const [isLoading, setIsLoading] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   // 篩選
-  const [nowStatus, setNowStatus] = useState(4);
+  const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
   const [nowUnit, setNowUnit] = useState('');
   const [nowHUnit, setNowHUnit] = useState('');

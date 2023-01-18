@@ -20,19 +20,19 @@
     }
 
     .h3 {
-      font-size: $containerTit28;
-      font-weight: bold;
+      font-size: $contentTit;
+      font-weight: 600;
       margin-top: $marage10;
     }
     .vector {
-      width: 80%;
+      width: 85%;
       border-top: 2px solid black;
     }
 
     .box {
       // display: flex;
       justify-content: space-between;
-      width: 70%;
+      width: 85%;
       div {
         margin-top: $marage10;
       }
@@ -51,8 +51,8 @@
         height: 100px;
       }
       .handler {
-        width: $columWidth;
-        height: 28px;
+        width: $columW;
+        height: $columH;
         .form-check {
           margin-right: 8px;
           margin-top: 4px;
@@ -78,7 +78,7 @@
     }
 
     .add {
-      width: 70%;
+      width: 85%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -96,7 +96,7 @@
     }
 
     .needs {
-      width: 70%;
+      width: 85%;
       justify-content: start;
       align-items: center;
       .addIcon {
@@ -135,7 +135,7 @@
       }
     }
     .file {
-      width: 70%;
+      width: 85%;
       justify-content: start;
 
       margin-top: $marage10;
@@ -153,7 +153,7 @@
           }
         }
         .fileColumn {
-          width: 70%;
+          width: 85%;
           div {
             margin-right: $marage10;
             white-space: pre-wrap;
@@ -169,7 +169,7 @@
           display: flex;
           align-items: center;
           padding: 5px 0;
-          width: 80%;
+          width: 85%;
           .addUploadContain {
             @include flexBetween;
             width: 100%;
@@ -206,7 +206,7 @@
       }
     }
     .textareaGap {
-      width: 70%;
+      width: 85%;
       margin-top: $marage10;
       .textarea {
         width: 100%;
@@ -220,7 +220,7 @@
       justify-content: start;
       // background-color: rgb(231, 246, 22);
       margin-top: $marage10;
-      font-weight: bold;
+      font-weight: 600;
     }
     .submitBtn {
       display: flex;
