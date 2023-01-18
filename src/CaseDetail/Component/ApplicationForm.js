@@ -1829,7 +1829,7 @@ function ApplicationForm({
                           {edit ? '' : ' (字數限制500)'}
                         </span>
                       </div>
-                      *
+
                       {edit ? (
                         ''
                       ) : (

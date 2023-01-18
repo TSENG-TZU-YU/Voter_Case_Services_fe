@@ -355,14 +355,7 @@ function CaseManagement() {
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
-                                    <FaEye
-                                      className={`icons ${
-                                        v.name === '處理人評估中' &&
-                                        member.handler === 1
-                                          ? 'eyeBcg'
-                                          : ''
-                                      }`}
-                                    />
+                                    <FaEye className="icons" />
                                   </Link>
 
                                   {/* <div className="hadClick">NEW</div> */}
