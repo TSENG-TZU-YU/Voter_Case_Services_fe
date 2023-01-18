@@ -42,11 +42,12 @@ function CaseReport() {
 
   return (
     <div className="passWordContainer">
-      <div className="title">請輸入密碼(最長15):</div>
+      <div className="title">請輸入密碼:</div>
       <div>
         <input
           type="password"
           maxLength="15"
+          placeholder="密碼至多15字"
           value={pass}
           onChange={(e) => {
             setPass(e.target.value);
