@@ -191,6 +191,7 @@ function ApplicationForm({
       Swal.fire({
         icon: 'error',
         title: '檔案過大，請小於10MB',
+        confirmButtonColor: '#f2ac33',
       });
       return;
     }
@@ -303,10 +304,16 @@ function ApplicationForm({
       showCancelButton: false,
       confirmButtonText: '確定儲存',
       denyButtonText: `取消儲存`,
+      confirmButtonColor: '#f2ac33',
+      denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('儲存成功', '', 'success').then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '儲存成功',
+          confirmButtonColor: '#f2ac33',
+        }).then(() => {
           setEdit(true);
         });
         hanleAddNeed(e, 'edit');
@@ -314,7 +321,11 @@ function ApplicationForm({
         store();
         setEditUnit(false);
       } else if (result.isDenied) {
-        Swal.fire('已取消儲存', '', 'info');
+        Swal.fire({
+          icon: 'info',
+          title: '已取消儲存',
+          confirmButtonColor: '#f2ac33',
+        });
       }
     });
   }
@@ -327,15 +338,25 @@ function ApplicationForm({
       showCancelButton: false,
       confirmButtonText: '確定刪除',
       denyButtonText: `取消刪除`,
+      confirmButtonColor: '#f2ac33',
+      denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('刪除成功', '', 'success').then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '刪除成功',
+          confirmButtonColor: '#f2ac33',
+        }).then(() => {
           navigate('/header/caseManagement_handler');
         });
         deleteForm();
       } else if (result.isDenied) {
-        Swal.fire('已取消刪除', '', 'info');
+        Swal.fire({
+          icon: 'info',
+          title: '已取消刪除',
+          confirmButtonColor: '#f2ac33',
+        });
       }
     });
   }
@@ -356,6 +377,7 @@ function ApplicationForm({
         Swal.fire({
           icon: 'error',
           title: '無檔案',
+          confirmButtonColor: '#f2ac33',
         });
         return;
       }
@@ -384,15 +406,25 @@ function ApplicationForm({
         showCancelButton: false,
         confirmButtonText: '確定送出',
         denyButtonText: `取消送出`,
+        confirmButtonColor: '#f2ac33',
+        denyButtonColor: '#ccc',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('送出成功', '', 'success');
+          Swal.fire({
+            icon: 'success',
+            title: '送出成功',
+            confirmButtonColor: '#f2ac33',
+          });
           submitFile();
           hanleAddNeed(e, 'submit');
           submit();
           navigate('/header/caseManagement_handler');
         } else if (result.isDenied) {
-          Swal.fire('已取消送出', '', 'info');
+          Swal.fire({
+            icon: 'info',
+            title: '已取消送出',
+            confirmButtonColor: '#f2ac33',
+          });
         }
       });
     }
@@ -794,6 +826,7 @@ function ApplicationForm({
       Swal.fire({
         icon: 'info',
         title: '請點選上方選單列的『案件處理情形』，填寫處理狀況',
+        confirmButtonColor: '#f2ac33',
       }).then(function () {});
       return;
     }
@@ -1187,7 +1220,7 @@ function ApplicationForm({
                     </div> */}
                     </div>
                     <div className="gapContain my-md-2 d-md-flex">
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">處理人</div>
                         {edit ? (
                           <input
@@ -1219,7 +1252,7 @@ function ApplicationForm({
                       {/* {v.relation === '' && v.status_id !== 1 ? (
                       ''
                     ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">友好程度</div>
                         {edit ? (
                           <input
@@ -1363,7 +1396,7 @@ function ApplicationForm({
                       {/* {v.litigant === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人姓名</div>
                         {edit ? (
                           <input
@@ -1396,7 +1429,7 @@ function ApplicationForm({
                       {/* {v.litigant_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1426,7 +1459,7 @@ function ApplicationForm({
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1454,7 +1487,7 @@ function ApplicationForm({
                       {/* {v.litigant_area_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1484,7 +1517,7 @@ function ApplicationForm({
                       {/* {v.litigant_rimin === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1512,7 +1545,7 @@ function ApplicationForm({
                       {/* {v.litigant_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人地址</div>
                         {edit ? (
                           <input
@@ -1547,7 +1580,7 @@ function ApplicationForm({
                       {/* {v.client_name === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人姓名</div>
                         {edit ? (
                           <input
@@ -1579,7 +1612,7 @@ function ApplicationForm({
                       {/* {v.client_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1609,7 +1642,7 @@ function ApplicationForm({
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1634,7 +1667,7 @@ function ApplicationForm({
                         )}
                       </div>
 
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1660,7 +1693,7 @@ function ApplicationForm({
                       </div>
                     </div>
                     <div className="gapContain my-md-2 d-md-flex">
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1687,7 +1720,7 @@ function ApplicationForm({
                       {/* {v.client_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人地址</div>
                         {edit ? (
                           <input
