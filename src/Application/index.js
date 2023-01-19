@@ -376,13 +376,21 @@ function Application({ delCheck }) {
         denyButtonColor: '#ccc',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('送出成功', '', 'success').then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: '送出成功',
+            confirmButtonColor: '#f2ac33',
+          }).then(() => {
             navigate('/header/caseManagement_handler');
           });
           submitFile();
           submit();
         } else if (result.isDenied) {
-          Swal.fire('已取消送出', '', 'info');
+          Swal.fire({
+            icon: 'info',
+            title: '已取消成功',
+            confirmButtonColor: '#f2ac33',
+          });
         }
       });
     }

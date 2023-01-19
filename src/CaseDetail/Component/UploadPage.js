@@ -222,6 +222,7 @@ function UploadPage({ setAddStatus, delCheck }) {
       Swal.fire({
         icon: 'error',
         title: '檔案過大，請小於10MB',
+        confirmButtonColor: '#f2ac33',
       });
       return;
     }
@@ -307,13 +308,21 @@ function UploadPage({ setAddStatus, delCheck }) {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('完成補件', '', 'success').then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '完成補件',
+          confirmButtonColor: '#f2ac33',
+        }).then(() => {
           setRender(false);
         });
         fileSubmitStatus();
         setRender(true);
       } else if (result.isDenied) {
-        Swal.fire('已取消補寄件', '', 'info');
+        Swal.fire({
+          icon: 'info',
+          title: '已取消補件',
+          confirmButtonColor: '#f2ac33',
+        });
       }
     });
   }
