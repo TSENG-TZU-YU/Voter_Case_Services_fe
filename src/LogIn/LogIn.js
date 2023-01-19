@@ -75,17 +75,13 @@ function LogIn() {
       );
       setMember(res.data);
       localStorage.setItem('memberID', login[0].no);
-      // Swal.mixin({
-      //   toast: true,
-      //   position: 'top',
-      //   showConfirmButton: false,
-      //   background: '#f2f2f2',
-      //   timer: 2000,
-      //   onOpen: (toast) => {
-      //     toast.addEventListener('mouseenter', Swal.stopTimer);
-      //     toast.addEventListener('mouseleave', Swal.resumeTimer);
-      //   },
-      // });
+      Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: '登入成功',
+        showConfirmButton: false,
+        timer: 800,
+      });
       navigate('/header');
     } catch (err) {
       console.log(err);
