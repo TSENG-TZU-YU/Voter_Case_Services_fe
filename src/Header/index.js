@@ -115,14 +115,10 @@ function Header() {
     <>
       <div className="navTop">
         <div className="mobile">
-          <AiOutlineMenu
-            className="d-block d-md-none menu"
-            size="35"
-            onClick={mobile}
-          />
+          <AiOutlineMenu className="d-block d-md-none menu" onClick={mobile} />
           <div className="titleH3 ">選民案件服務系統</div>
         </div>
-        <MdOutlineLogout className="logOut" size="30" onClick={logOut} />
+        <MdOutlineLogout className="logOut" onClick={logOut} />
       </div>
       <div className="between ">
         {/* 桌機版 */}

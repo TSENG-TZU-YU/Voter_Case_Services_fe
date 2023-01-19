@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './_index.scss';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import GenerallyBtn from '../Btn/GenerallyBtn';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 function CaseReport() {
   const [pass, setPass] = useState('');
+  const [eye, setEye] = useState(false);
 
   function submitCheck(tit) {
     Swal.fire({
@@ -43,9 +46,9 @@ function CaseReport() {
   return (
     <div className="passWordContainer contents18">
       <div>請輸入密碼:</div>
-      <div>
+      <div className="">
         <input
-          type="password"
+          type={eye ? 'text' : 'password'}
           maxLength="15"
           placeholder="密碼至多15字"
           value={pass}
@@ -53,14 +56,27 @@ function CaseReport() {
             setPass(e.target.value);
           }}
         />
-      </div>
-      <div
-        className="btn"
-        onClick={() => {
-          submitCheck('確認更改密碼?');
-        }}
-      >
-        更改
+        {eye ? (
+          <AiFillEye
+            className="eye"
+            onClick={() => {
+              setEye(false);
+            }}
+          />
+        ) : (
+          <AiFillEyeInvisible
+            className="eye"
+            onClick={() => {
+              setEye(true);
+            }}
+          />
+        )}
+        <GenerallyBtn
+          style={{ background: '#2c75c8', color: 'white' }}
+          tit="更改"
+          handleFn1={submitCheck}
+          fn1="確認更改密碼?"
+        />
       </div>
     </div>
   );

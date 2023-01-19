@@ -15,6 +15,7 @@ import '../../styles/caseDetail/_uploadPage.scss';
 import { useAuth } from '../../utils/use_auth';
 
 import Loader from '../../Loader';
+import GenerallyBtn from '../../Btn/GenerallyBtn';
 
 function UploadPage({ setAddStatus, delCheck }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -429,26 +430,21 @@ function UploadPage({ setAddStatus, delCheck }) {
                 })}
               </div>
               <div className="subBtn">
-                <button
-                  className="submitBtn"
-                  onClick={() => {
-                    setRender(true);
-                    fileSubmit();
-                  }}
-                >
-                  上傳檔案
-                </button>
+                <GenerallyBtn
+                  style={{ background: '#e77979', color: 'white' }}
+                  tit="上傳檔案"
+                  handleFn1={setRender}
+                  fn1={true}
+                  handleFn2={fileSubmit}
+                />
+
                 {member.user === 1 && status === 6 && page === 1 ? (
-                  <button
-                    className="submitBtn mx-3"
-                    onClick={() => {
-                      if (member.user === 1) {
-                        uploadCheck('請確認已完成補件');
-                      }
-                    }}
-                  >
-                    確認補件完成
-                  </button>
+                  <GenerallyBtn
+                    style={{ background: '#f2ac33', color: 'white' }}
+                    tit="確認補件完成"
+                    handleFn1={uploadCheck}
+                    fn1="請確認已完成補件"
+                  />
                 ) : (
                   ''
                 )}

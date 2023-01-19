@@ -15,6 +15,8 @@ import { HiOutlineDocumentPlus } from 'react-icons/hi2';
 //hook
 import { useAuth } from '../utils/use_auth';
 
+import GenerallyBtn from '../Btn/GenerallyBtn';
+
 function Application({ delCheck }) {
   const navigate = useNavigate();
   const [addNeed, setAddNeed] = useState([{ text: '' }]);
@@ -313,6 +315,7 @@ function Application({ delCheck }) {
 
   // 送出申請表sweet
   function submitCheck(tit) {
+    console.log('object', tit);
     for (let i = 0; i < addNeed.length; i++) {
       if (addNeed[i].text === '') {
         setNeed(true);
@@ -1063,7 +1066,19 @@ function Application({ delCheck }) {
         </div> */}
 
         <div className="submitBtn">
-          <div
+          <GenerallyBtn
+            style={{ background: '#2c75c8', color: 'white' }}
+            tit="儲存"
+            handleFn1={storeCheck}
+            fn1="確認儲存申請表?"
+          />
+          <GenerallyBtn
+            style={{ background: '#f2ac33', color: 'white' }}
+            tit="送出"
+            handleFn1={submitCheck}
+            fn1="確定要送出申請表?"
+          />
+          {/* <div
             className="submit"
             onClick={() => {
               storeCheck('確認儲存申請表?');
@@ -1078,7 +1093,7 @@ function Application({ delCheck }) {
             }}
           >
             送出
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

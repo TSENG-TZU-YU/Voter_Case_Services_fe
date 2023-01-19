@@ -297,6 +297,7 @@
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin: 20px 0;
     .submit {
       display: flex;
       justify-content: center;
@@ -317,12 +318,24 @@
     @include submitBtn($focusClrG);
   }
 }
-.selData,
-.nullData {
+.selData {
   width: 85%;
   font-size: $contentText18;
   margin: 0 auto;
   background: $focusClrG;
+  color: $mainClrW;
+  text-align: center;
+  padding: 5px;
+  margin-top: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.nullData {
+  width: 85%;
+  font-size: $contentText18;
+  margin: 0 auto;
+  background: $subClrBrown;
   color: $mainClrW;
   text-align: center;
   padding: 5px;
@@ -348,8 +361,219 @@
       max-width: 95%;
     }
     .tableContainer {
-      // background: lightblue;
+      background: lightblue;
       max-width: 95%;
+
+      .appTitle {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-size: $contentTit;
+        font-weight: 600;
+      }
+      .vector {
+        border-top: 2px solid black;
+      }
+      .gapContain {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5px;
+        input {
+          width: $columW;
+          height: $columH;
+        }
+        select {
+          width: $columW;
+          height: $columH;
+        }
+        .hide-arrows::-webkit-outer-spin-button,
+        .hide-arrows::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .add {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: -10px;
+        span {
+          opacity: 0;
+          @include focusText;
+        }
+        .view {
+          opacity: 1;
+        }
+        .clearIcon {
+          margin-right: 10px;
+        }
+        .addIcon,
+        .clearIcon {
+          cursor: pointer;
+        }
+      }
+      .needContain {
+        margin: 12px auto;
+        padding: 8px 0;
+        // background: #fffacdb6;
+        width: 100%;
+        .needTit {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .checkInput {
+            display: flex;
+            align-items: center;
+            padding-right: 5px;
+          }
+          .needCount {
+            display: flex;
+            align-items: center;
+            background: $subClrBrown;
+            width: 100%;
+
+            .title {
+              color: $mainClrW;
+              // background: $focusClrG;
+              border-radius: 2px;
+              margin-left: 5px;
+              padding: 1px;
+            }
+          }
+
+          .delNeedIcon {
+            cursor: pointer;
+            font-size: 1rem;
+          }
+        }
+
+        .needInput {
+          display: flex;
+          justify-content: start;
+          padding: 5px 5px 0;
+          input {
+            width: 100%;
+          }
+          textarea {
+            resize: none;
+            width: 100%;
+            @include scrollbarContain;
+          }
+        }
+        .center {
+          align-items: center;
+        }
+      }
+      .needFile {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 10px;
+        .files {
+          margin-left: 5px;
+          width: 365px;
+          background: #ddd;
+          border: 1px solid #aaa;
+          text-align: justify;
+        }
+      }
+      .file {
+        width: 100%;
+        justify-content: start;
+
+        margin-top: 10px;
+        .fileName {
+          display: flex;
+          justify-content: space-between;
+          color: aliceblue;
+          background-color: $header;
+          padding-left: 5px;
+          .fileIcon {
+            align-items: center;
+            .clearIcon {
+              margin-right: 10px;
+            }
+          }
+          div {
+            // display: flex;
+            div {
+              margin-right: 10px;
+            }
+          }
+        }
+        .fileTit {
+          background: $subClrBrown;
+          // font-size: 14px;
+          color: $mainClrW;
+          padding: 0.5px 6px;
+        }
+        .two {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 5px;
+          .addUploadContainer {
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+            width: 85%;
+            .addUploadContain {
+              @include flexBetween;
+              width: 100%;
+              padding: 0 5px;
+              margin-top: 2px;
+              background: #eee;
+              border: 1px solid $subClrBrown;
+            }
+            .items {
+              margin: 0 5px;
+            }
+          }
+          .delIcon {
+            position: relative;
+            left: -25px;
+            top: 1px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 5px;
+          }
+          .addFile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            .addIcon {
+              font-size: 1rem;
+              color: $focusClrG;
+            }
+            span {
+              padding: 1px 0 0 5px;
+              @include focusText;
+            }
+          }
+        }
+      }
+      .textareaGap {
+        width: 100%;
+        padding: 5px 5px 0;
+        font-size: $contentText18;
+        .textarea {
+          width: 100%;
+          height: 80px;
+          resize: none;
+        }
+      }
+
+      .cancle {
+        display: flex;
+        justify-content: center;
+        .cancleBtn {
+          color: $mainClrW;
+          @include submitBtn($focusClrG);
+        }
+      }
     }
   }
 

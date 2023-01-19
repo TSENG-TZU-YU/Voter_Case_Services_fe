@@ -1,17 +1,5 @@
 @import '../variable';
 
-@mixin submitBtn($bcg) {
-  border: 0;
-  background: $bcg;
-  padding: 2px 8px;
-  margin-left: 10px;
-  border-radius: 5px;
-  transition: linear 0.3s;
-  &:hover {
-    box-shadow: 0.2px 0.2px 4px #8a8a8aa5;
-  }
-}
-
 .selectContain {
   // background: lightcoral;
   display: flex;
@@ -32,6 +20,15 @@
     @include focusText;
   }
   .confirmBtn {
-    @include submitBtn(#ccc);
+    font-size: $contentText18;
+    border: 0;
+    padding: 2px 10px;
+    margin-left: 5px;
+    border-radius: $borderRadius;
+    transition: linear 0.3s;
+    background: $focusClrY;
+    &:hover {
+      box-shadow: 0.3px 0.3px 4px #8a8a8aa5;
+    }
   }
 }

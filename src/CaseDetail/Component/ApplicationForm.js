@@ -11,7 +11,7 @@ import moment from 'moment';
 import '../../styles/caseDetail/_applicationForm.scss';
 import EditNeedPage from './EditNeedPage';
 import AddStateForm from './AddStateForm';
-// import GenerallyBtn from '../../Btn/GenerallyBtn';
+import GenerallyBtn from '../../Btn/GenerallyBtn';
 import ProcessingStatus from './ProcessingStatus';
 import SelectStatus from './SelectStatus';
 // import ProcessingStatus from './ProcessingStatus';
@@ -296,7 +296,7 @@ function ApplicationForm({
   }
 
   //確認儲存sweet
-  function storeCheck(tit, e) {
+  function storeCheck(e, tit) {
     Swal.fire({
       title: tit,
       showDenyButton: true,
@@ -341,7 +341,7 @@ function ApplicationForm({
   }
 
   // 送出申請表sweet
-  function submitCheck(tit, e) {
+  function submitCheck(e, tit) {
     for (let i = 0; i < editNeed.length; i++) {
       if (
         // editNeed[i].requirement_name === '' ||
@@ -924,7 +924,7 @@ function ApplicationForm({
     <>
       {/* test BTN */}
       {/* <GenerallyBtn
-        style={{ background: '#221e73', color: 'white' }}
+        style={{ background: '#2c75c8', color: 'white' }}
         tit="修改"
       />
       <GenerallyBtn
@@ -933,7 +933,7 @@ function ApplicationForm({
       />
       <GenerallyBtn style={{ background: '#ccc', color: '#444' }} tit="刪除" />
       <GenerallyBtn
-        style={{ background: '#F26457', color: 'white' }}
+        style={{ background: '#e77979', color: 'white' }}
         tit="上傳"
       /> */}
 
@@ -1120,7 +1120,7 @@ function ApplicationForm({
               {detailData.map((v, i) => {
                 return (
                   <div key={v.id}>
-                    <div className="gapContain my-2 ">
+                    <div className="gapContain my-2">
                       <div>
                         <div className="pb-1">案件來源</div>
                         {edit ? (
@@ -2136,42 +2136,36 @@ function ApplicationForm({
             {member.user === 1 && needState === 1 ? (
               <div className="submitBtn">
                 {edit ? (
-                  <div
-                    className="submit"
-                    onClick={() => {
-                      setEdit(false);
-                      // toEdit();
-                    }}
-                  >
-                    修改
-                  </div>
+                  <GenerallyBtn
+                    style={{ background: '#2c75c8', color: 'white' }}
+                    tit="修改"
+                    handleFn1={setEdit}
+                    fn1={false}
+                  />
                 ) : (
-                  <div
-                    className="submit"
-                    onClick={(e) => {
-                      storeCheck('確認儲存表單?', e);
-                    }}
-                  >
-                    儲存
-                  </div>
+                  <GenerallyBtn
+                    style={{ background: '#2c75c8', color: 'white' }}
+                    tit="儲存"
+                    handleFn1={storeCheck}
+                    fn1="確認儲存表單?"
+                    eNull="1"
+                  />
                 )}
 
-                <div
-                  className="submit"
-                  onClick={(e) => {
-                    submitCheck('確定要送出申請表?', e);
-                  }}
-                >
-                  送出
-                </div>
-                <div
-                  className="submit"
-                  onClick={() => {
-                    deleteCheck('確認刪除申請表?');
-                  }}
-                >
-                  刪除申請
-                </div>
+                <GenerallyBtn
+                  style={{ background: '#f2ac33', color: 'white' }}
+                  tit="送出"
+                  handleFn1={submitCheck}
+                  fn1="確定要送出申請表?"
+                  eNull="1"
+                />
+
+                <GenerallyBtn
+                  style={{ background: '#ccc', color: 'white' }}
+                  tit="刪除申請"
+                  handleFn1={deleteCheck}
+                  fn1="確認刪除申請表?"
+                />
               </div>
             ) : (
               ''

@@ -3,12 +3,11 @@ $mainClrW: #fff;
 $subClrBrown: #817161;
 $focusClrY: #f2ac33;
 $focusClrG: #1f9998;
-$focusClrB: #221e73;
+$focusClrB: #2c75c8;
 $bcgBlock: #00000080;
 $header: #817161;
 $navBarPc: #c09e8280;
 $navBarMobile: #c09e82;
-$focusClrR: #ce1111;
 $focusClrP: #e77979;
 
 @mixin focusText {
@@ -21,10 +20,12 @@ $containerTit28: 28px;
 $contentText: 18px;
 $subText: 16px;
 
-$navbarTop: clamp(12px, 2.5vw, $navbarTop40);
+$navbarTop: clamp(24px, 2.5vw, $navbarTop40);
 $navbarLeft: clamp(12px, 2.5vw, $contentText);
 $contentText18: clamp(12px, 1vw, $contentText);
 $contentTit: clamp(18px, 1.5vw, $containerTit28);
+
+$btnTit: clamp(14px, 18px, 24px);
 
 // 欄位寬度
 $columW: clamp(158px, 250px, 280px);
@@ -43,10 +44,13 @@ $maxWidthRWD: 375px;
 // 圓角
 $borderRadius: 5px;
 
+// icon
+$icon35: clamp(20px, 28px, 35px);
+
 // BTN顏色
-// 1. #F26457 -> 上傳檔案
-// 2. $focusClrB -> 儲存、修改
-// 3. $focusClrY -> 送出、確認、完成、是
+// 1. $focusClrP #e77979-> 上傳檔案
+// 2. $focusClrB #2c75c8-> 儲存、修改、更改
+// 3. $focusClrY #f2ac33-> 送出、確認、完成、是
 // 4. #ccc -> 刪除、取消、否
 
 // flex
