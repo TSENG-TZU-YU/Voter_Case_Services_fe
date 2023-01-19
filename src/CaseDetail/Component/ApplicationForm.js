@@ -1120,9 +1120,9 @@ function ApplicationForm({
               {detailData.map((v, i) => {
                 return (
                   <div key={v.id}>
-                    <div className="gapContain my-2 ">
-                      <div>
-                        <div className="pb-1">案件來源</div>
+                    <div className="gapContain my-md-2 d-md-flex">
+                      <div className="my-1">
+                        <div className="pb-1 ">案件來源</div>
                         {edit ? (
                           <input
                             type="text"
@@ -1149,8 +1149,8 @@ function ApplicationForm({
                           </select>
                         )}
                       </div>
-                      <div>
-                        <div className="pb-1">處理人單位單位</div>
+                      <div className="my-2">
+                        <div className="pb-1 ">處理人單位單位</div>
                         {edit ? (
                           <input
                             type="text"
@@ -1185,8 +1185,8 @@ function ApplicationForm({
                       />
                     </div> */}
                     </div>
-                    <div className="gapContain my-2">
-                      <div>
+                    <div className="gapContain my-md-2 d-md-flex">
+                      <div className='my-1'>
                         <div className="pb-1">處理人</div>
                         {edit ? (
                           <input
@@ -1218,7 +1218,7 @@ function ApplicationForm({
                       {/* {v.relation === '' && v.status_id !== 1 ? (
                       ''
                     ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">友好程度</div>
                         {edit ? (
                           <input
@@ -1358,11 +1358,11 @@ function ApplicationForm({
                   ) : ( */}
                     <div className="appTitle">當事人資訊</div>
                     <div className="vector"></div>
-                    <div className="gapContain my-2 ">
+                    <div className="gapContain my-md-2 d-md-flex">
                       {/* {v.litigant === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人姓名</div>
                         {edit ? (
                           <input
@@ -1395,7 +1395,7 @@ function ApplicationForm({
                       {/* {v.litigant_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1421,11 +1421,11 @@ function ApplicationForm({
                       </div>
                       {/* )} */}
                     </div>
-                    <div className="gapContain my-2 ">
+                    <div className="gapContain my-md-2 d-md-flex">
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1453,7 +1453,7 @@ function ApplicationForm({
                       {/* {v.litigant_area_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1479,11 +1479,11 @@ function ApplicationForm({
                       </div>
                       {/* )} */}
                     </div>
-                    <div className="gapContain my-2 ">
+                    <div className="gapContain my-md-2 d-md-flex ">
                       {/* {v.litigant_rimin === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1511,7 +1511,7 @@ function ApplicationForm({
                       {/* {v.litigant_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人地址</div>
                         {edit ? (
                           <input
@@ -1542,11 +1542,11 @@ function ApplicationForm({
                   ) : ( */}
                     <div className="appTitle">請託人資訊</div>
                     <div className="vector"></div>
-                    <div className="gapContain my-2 ">
+                    <div className="gapContain my-md-2 d-md-flex">
                       {/* {v.client_name === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">請託人姓名</div>
                         {edit ? (
                           <input
@@ -1578,7 +1578,7 @@ function ApplicationForm({
                       {/* {v.client_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">請託人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1604,11 +1604,11 @@ function ApplicationForm({
                       </div>
                       {/* )} */}
                     </div>
-                    <div className="gapContain my-2">
+                    <div className="gapContain my-md-2 d-md-flex">
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1633,7 +1633,7 @@ function ApplicationForm({
                         )}
                       </div>
 
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1658,8 +1658,8 @@ function ApplicationForm({
                         )}
                       </div>
                     </div>
-                    <div className="gapContain my-2 ">
-                      <div>
+                    <div className="gapContain my-md-2 d-md-flex">
+                      <div className='my-1'>
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1686,7 +1686,7 @@ function ApplicationForm({
                       {/* {v.client_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div>
+                      <div className='my-1'>
                         <div className="pb-1">請託人地址</div>
                         {edit ? (
                           <input
@@ -1721,7 +1721,7 @@ function ApplicationForm({
               <div className="vector"></div>
               {detailData.map((v) => {
                 return (
-                  <div key={v.id} className="gapContain my-2 ">
+                  <div key={v.id} className="gapContain my-md-2 d-md-flex">
                     <div>
                       <div className="pb-1">案件類別</div>
                       {edit ? (
