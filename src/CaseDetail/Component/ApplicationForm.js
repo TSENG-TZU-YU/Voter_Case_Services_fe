@@ -666,6 +666,7 @@ function ApplicationForm({
     Swal.fire({
       icon: 'success',
       title: '完成',
+      confirmButtonColor: '#f2ac33',
     }).then(function () {
       setNeedLoading(!needLoading);
       setAddStateForm(false);
