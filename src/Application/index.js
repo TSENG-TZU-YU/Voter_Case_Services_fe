@@ -322,6 +322,7 @@ function Application({ delCheck }) {
         Swal.fire({
           icon: 'error',
           title: '請填寫需求',
+          confirmButtonColor: '#f2ac33',
         });
         return;
       }
@@ -331,6 +332,7 @@ function Application({ delCheck }) {
         Swal.fire({
           icon: 'error',
           title: '無檔案',
+          confirmButtonColor: '#f2ac33',
         });
         return;
       }
@@ -340,6 +342,7 @@ function Application({ delCheck }) {
       Swal.fire({
         icon: 'error',
         title: '請填寫來源',
+        confirmButtonColor: '#f2ac33',
       });
     }
     if (submitValue[0].category === '0' || submitValue[0].category === '') {
@@ -347,6 +350,7 @@ function Application({ delCheck }) {
       Swal.fire({
         icon: 'error',
         title: '請填寫類別',
+        confirmButtonColor: '#f2ac33',
       });
     }
 
@@ -368,6 +372,8 @@ function Application({ delCheck }) {
         showCancelButton: false,
         confirmButtonText: '確定送出',
         denyButtonText: `取消送出`,
+        confirmButtonColor: '#f2ac33',
+        denyButtonColor: '#ccc',
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('送出成功', '', 'success').then(() => {
@@ -390,6 +396,7 @@ function Application({ delCheck }) {
         Swal.fire({
           icon: 'error',
           title: '請填寫需求',
+          confirmButtonColor: '#f2ac33',
         });
         return;
       }
@@ -399,6 +406,7 @@ function Application({ delCheck }) {
         Swal.fire({
           icon: 'error',
           title: '無檔案',
+          confirmButtonColor: '#f2ac33',
         });
         return;
       }
@@ -408,6 +416,7 @@ function Application({ delCheck }) {
       Swal.fire({
         icon: 'error',
         title: '請填寫來源',
+        confirmButtonColor: '#f2ac33',
       });
     }
 
@@ -416,6 +425,7 @@ function Application({ delCheck }) {
       Swal.fire({
         icon: 'error',
         title: '請填寫類別',
+        confirmButtonColor: '#f2ac33',
       });
     }
 
@@ -436,7 +446,8 @@ function Application({ delCheck }) {
         showCancelButton: false,
         confirmButtonText: '確定儲存',
         denyButtonText: `取消儲存`,
-        confirmButtonColor: '#1f9998',
+        confirmButtonColor: '#f2ac33',
+        denyButtonColor: '#ccc',
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('儲存成功', '', 'success').then(() => {
@@ -742,7 +753,7 @@ function Application({ delCheck }) {
               })}
             </select>
           </div>
-          
+
           {/* 區*/}
           <div className="gap">
             <div className="contents18">當事人區</div>

@@ -261,6 +261,7 @@ function UploadPage({ setAddStatus, delCheck }) {
           Swal.fire({
             icon: 'error',
             title: '無檔案',
+            confirmButtonColor: '#f2ac33',
           });
           return;
         }
@@ -275,6 +276,7 @@ function UploadPage({ setAddStatus, delCheck }) {
       Swal.fire({
         icon: 'success',
         title: '已上傳檔案',
+        confirmButtonColor: '#f2ac33',
       });
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/1.0/applicationData/postHandleFile/${num}`,
@@ -300,6 +302,8 @@ function UploadPage({ setAddStatus, delCheck }) {
       showCancelButton: false,
       confirmButtonText: '確定完成補件',
       denyButtonText: `取消完成補件`,
+      confirmButtonColor: '#f2ac33',
+      denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {

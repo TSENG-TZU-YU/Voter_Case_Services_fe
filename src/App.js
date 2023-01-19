@@ -39,13 +39,23 @@ function App() {
       showCancelButton: false,
       confirmButtonText: '確定刪除',
       denyButtonText: `取消刪除`,
+      confirmButtonColor: '#f2ac33',
+      denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('刪除成功', '', 'success');
+        Swal.fire({
+          icon: 'success',
+          title: '刪除成功',
+          confirmButtonColor: '#f2ac33',
+        });
         fun(i);
       } else if (result.isDenied) {
-        Swal.fire('已取消刪除', '', 'info');
+        Swal.fire({
+          icon: 'info',
+          title: '已取消刪除',
+          confirmButtonColor: '#f2ac33',
+        });
       }
     });
   }

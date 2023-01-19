@@ -16,6 +16,8 @@ function CaseReport() {
       showCancelButton: false,
       confirmButtonText: '確定更改',
       denyButtonText: `取消更改`,
+      confirmButtonColor: '#f2ac33',
+        denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
