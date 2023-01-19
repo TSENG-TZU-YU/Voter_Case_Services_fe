@@ -630,7 +630,7 @@ function ApplicationForm({
     setEditNeed(newData);
     setEditVerifyPage(false);
   };
-
+  
   // post 處理狀態
   const handlePostVal = (e) => {
     let val = {
@@ -652,6 +652,16 @@ function ApplicationForm({
     }
     if (postVal.finishTime === '' && postVal.status === '案件進行中') {
       setPostCaseRemind(true);
+      return;
+    }
+
+    if (remarkLength === 0 && postVal.status === '結案') {
+      Swal.fire({
+        icon: 'info',
+        title: '請在『案件處理情形』，填寫處理狀況',
+      }).then(function () {
+        setAddStateForm(false);
+      });
       return;
     }
 
@@ -1187,7 +1197,7 @@ function ApplicationForm({
                     </div> */}
                     </div>
                     <div className="gapContain my-md-2 d-md-flex">
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">處理人</div>
                         {edit ? (
                           <input
@@ -1219,7 +1229,7 @@ function ApplicationForm({
                       {/* {v.relation === '' && v.status_id !== 1 ? (
                       ''
                     ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">友好程度</div>
                         {edit ? (
                           <input
@@ -1363,7 +1373,7 @@ function ApplicationForm({
                       {/* {v.litigant === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人姓名</div>
                         {edit ? (
                           <input
@@ -1396,7 +1406,7 @@ function ApplicationForm({
                       {/* {v.litigant_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1426,7 +1436,7 @@ function ApplicationForm({
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1454,7 +1464,7 @@ function ApplicationForm({
                       {/* {v.litigant_area_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1484,7 +1494,7 @@ function ApplicationForm({
                       {/* {v.litigant_rimin === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1512,7 +1522,7 @@ function ApplicationForm({
                       {/* {v.litigant_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人地址</div>
                         {edit ? (
                           <input
@@ -1547,7 +1557,7 @@ function ApplicationForm({
                       {/* {v.client_name === '' && v.status_id !== 1 ? (
                         ''
                       ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人姓名</div>
                         {edit ? (
                           <input
@@ -1579,7 +1589,7 @@ function ApplicationForm({
                       {/* {v.client_phone === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人聯絡電話</div>
                         {edit ? (
                           <input
@@ -1609,7 +1619,7 @@ function ApplicationForm({
                       {/* {v.litigant_county_id === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人縣市</div>
                         {edit ? (
                           <input
@@ -1634,7 +1644,7 @@ function ApplicationForm({
                         )}
                       </div>
 
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人區</div>
                         {edit ? (
                           <input
@@ -1660,7 +1670,7 @@ function ApplicationForm({
                       </div>
                     </div>
                     <div className="gapContain my-md-2 d-md-flex">
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">當事人里</div>
                         {edit ? (
                           <input
@@ -1687,7 +1697,7 @@ function ApplicationForm({
                       {/* {v.client_address === '' && v.status_id !== 1 ? (
                           ''
                         ) : ( */}
-                      <div className='my-1'>
+                      <div className="my-1">
                         <div className="pb-1">請託人地址</div>
                         {edit ? (
                           <input
