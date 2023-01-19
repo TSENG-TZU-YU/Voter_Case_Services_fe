@@ -32,7 +32,10 @@
     .box {
       // display: flex;
       justify-content: space-between;
-      width: 85%;
+   
+      @media only screen and (min-width: 576px) {
+        width: 85%;
+      }
       div {
         margin-top: $marage10;
       }

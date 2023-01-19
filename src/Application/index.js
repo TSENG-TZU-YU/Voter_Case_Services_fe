@@ -742,6 +742,7 @@ function Application({ delCheck }) {
               })}
             </select>
           </div>
+          
           {/* 區*/}
           <div className="gap">
             <div className="contents18">當事人區</div>

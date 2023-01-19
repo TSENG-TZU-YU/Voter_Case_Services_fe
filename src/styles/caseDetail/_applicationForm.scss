@@ -18,7 +18,7 @@
 }
 .appFormContainer {
   // background: lemonchiffon;
-  max-width: 100%;
+  // max-width: 100%;
   height: 90%;
   margin: 0 auto;
   font-size: clamp(12px, 1vw, 18px);
@@ -34,6 +34,7 @@
     padding: 5px;
     text-align: center;
     max-width: 85%;
+
     .check {
       display: flex;
       align-items: center;
@@ -92,10 +93,20 @@
       border-top: 2px solid black;
     }
     .gapContain {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      // align-items: center;
+      // justify-content: space-between;
       padding: 0 5px;
+      @media only screen and (max-width: 576px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      @media only screen and (min-width: 576px) {
+        align-items: center;
+        justify-content: space-between;
+      }
+  
       // gap: 120px;
       input {
         width: $columW;

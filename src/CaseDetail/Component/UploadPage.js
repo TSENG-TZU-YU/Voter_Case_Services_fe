@@ -349,14 +349,16 @@ function UploadPage({ setAddStatus, delCheck }) {
       ) : (
         <div className="overScr">
           {/* 上傳檔案 */}
-          {(member.user === 1 && status === 5 && page === 1) ||
+          {(member.user === 1 && status === 2 && page === 1) ||
+          (member.user === 1 && status === 3 && page === 1) ||
+          (member.user === 1 && status === 5 && page === 1) ||
           (member.user === 1 && status === 6 && page === 1) ||
           (member.user === 1 && status === 7 && page === 1) ||
-          (member.user === 1 && status === 11 && page === 1) ||
+          (member.handler === 1 && status === 2 && page === 2) ||
+          (member.handler === 1 && status === 3 && page === 2) ||
           (member.handler === 1 && status === 5 && page === 2) ||
           (member.handler === 1 && status === 6 && page === 2) ||
-          (member.handler === 1 && status === 7 && page === 2) ||
-          (member.handler === 1 && status === 11 && page === 2) ? (
+          (member.handler === 1 && status === 7 && page === 2) ? (
             <>
               <div className="addUpload">
                 <div className="addTitle">
