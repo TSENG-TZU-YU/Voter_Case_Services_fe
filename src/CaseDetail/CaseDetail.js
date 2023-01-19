@@ -67,7 +67,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
 
   useEffect(() => {
     //接案人與處理人皆可看到文件
-    if (member.name === HId || member.name === User) {
+    if (member.name === HId || member.name === User || member.manage === 1) {
       setUploadPage(true);
     } else {
       setUploadPage(false);
