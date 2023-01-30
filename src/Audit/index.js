@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import './_index.scss';
+import moment from 'moment';
 
 import UserFilter from './Component/UserFilter.js';
+import DateFilter from './Component/DateFilter.js';
 import axios from 'axios';
 import { clearConfigCache } from 'prettier';
 
 function Audit() {
   const [audit, setAudit] = useState([]);
   const [nameSearch, setNameSearch] = useState('');
+  const [allData, setAllData] = useState([]);
+  const [user, setUser] = useState([]);
+  const [nowUser, setNowUser] = useState([]);
+
+  //date
+  let nowDate = moment().format(`YYYY-MM-DD`);
+  // 取前六個月
+  let dateObj = new Date(nowDate);
+  dateObj.setMonth(dateObj.getMonth() - 6);
+
+  // 將日期轉換為指定格式的字串
+  let newDateString = dateObj.toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  let dateAgo = newDateString.replace(/\//g, '-');
+  const [dateRemind, setDateRemind] = useState('');
+  const [maxDateValue, setMaxDateValue] = useState(nowDate);
+  const [minDateValue, setMinDateValue] = useState(dateAgo);
+  const [maxDate, setMaxDate] = useState(nowDate);
+  const [minDate, setMinDate] = useState(dateAgo);
+
   useEffect(() => {
     async function audit() {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/audit?search=${nameSearch}`
+          `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}`
         );
 
         setAudit(res.data);
@@ -21,14 +47,26 @@ function Audit() {
       }
     }
     audit();
-  }, []);
-  console.log('c', nameSearch);
+  }, [minDate, maxDate]);
 
   return (
     <div className="permissionsContainer">
       {/* 篩選 */}
       <div className="sortSelect1">
         <div className="bothFilter1">
+          <UserFilter user={user} setNowUser={setNowUser} />
+          <DateFilter
+            dateRemind={dateRemind}
+            setDateRemind={setDateRemind}
+            setMaxDate={setMaxDate}
+            setMinDate={setMinDate}
+            maxDateValue={maxDateValue}
+            setMaxDateValue={setMaxDateValue}
+            minDateValue={minDateValue}
+            setMinDateValue={setMinDateValue}
+            dateAgo={dateAgo}
+            nowDate={nowDate}
+          />
           <input
             type="text"
             placeholder="請輸入使用者員工編號或案件編號"
@@ -40,7 +78,6 @@ function Audit() {
               setNameSearch(textValue);
             }}
           />
-          {/* <UserFilter user={user} setNowUser={setNowUser} /> */}
         </div>
       </div>
 
