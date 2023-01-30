@@ -1,7 +1,5 @@
 @import '../styles/variable';
 
-
-
 .background {
   width: 70%;
   margin-top: 3%;
@@ -80,6 +78,17 @@
     .bothFilter1 {
       display: flex;
       justify-content: center;
+      .searchInput {
+        margin-right: $marage10;
+        width: 200px;
+        height: 26px;
+        padding: 2px;
+        border: 2px solid #444;
+        outline: none;
+        &:focus {
+          border: 2px solid $subClrBrown;
+        }
+      }
     }
   }
   .caseContain {

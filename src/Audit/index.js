@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './_index.scss';
 import moment from 'moment';
 
-import UserFilter from './Component/UserFilter.js';
 import DateFilter from './Component/DateFilter.js';
 import axios from 'axios';
 import { clearConfigCache } from 'prettier';
 
 function Audit() {
   const [audit, setAudit] = useState([]);
+  const [auditL, setAuditL] = useState('');
+
   const [nameSearch, setNameSearch] = useState('');
-  const [allData, setAllData] = useState([]);
-  const [user, setUser] = useState([]);
-  const [nowUser, setNowUser] = useState([]);
 
   //date
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -38,23 +36,35 @@ function Audit() {
     async function audit() {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}`
+          `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}&search=${nameSearch}`
         );
 
         setAudit(res.data);
+        setAuditL(res.data.length);
+        console.log('first', res.data.length);
       } catch (err) {
         console.log(err);
       }
     }
     audit();
-  }, [minDate, maxDate]);
+  }, [minDate, maxDate, nameSearch]);
 
   return (
     <div className="permissionsContainer">
       {/* 篩選 */}
       <div className="sortSelect1">
         <div className="bothFilter1">
-          <UserFilter user={user} setNowUser={setNowUser} />
+          <input
+            type="text"
+            className="searchInput"
+            placeholder="請輸入使用者員工編號或案件編號"
+            maxLength={15}
+            value={nameSearch}
+            onChange={(e) => {
+              let textValue = e.target.value;
+              setNameSearch(textValue);
+            }}
+          />
           <DateFilter
             dateRemind={dateRemind}
             setDateRemind={setDateRemind}
@@ -67,17 +77,6 @@ function Audit() {
             dateAgo={dateAgo}
             nowDate={nowDate}
           />
-          <input
-            type="text"
-            placeholder="請輸入使用者員工編號或案件編號"
-            maxLength={15}
-            value={nameSearch}
-            onChange={(e) => {
-              let textValue = e.target.value;
-              console.log('v', textValue);
-              setNameSearch(textValue);
-            }}
-          />
         </div>
       </div>
 
@@ -89,19 +88,30 @@ function Audit() {
             <th>時間</th>
           </tr>
         </thead>
-
-        {audit.map((v, i) => {
-          const { user, record, time } = v;
-          return (
-            <tbody key={i}>
-              <tr>
-                <td>{user}</td>
-                <td>{record}</td>
-                <td>{time}</td>
-              </tr>
-            </tbody>
-          );
-        })}
+        {audit.length !== 0 ? (
+          <>
+            {audit.map((v, i) => {
+              const { user, record, time } = v;
+              return (
+                <tbody key={i}>
+                  <tr>
+                    <td>{user}</td>
+                    <td>{record}</td>
+                    <td>{time}</td>
+                  </tr>
+                </tbody>
+              );
+            })}
+          </>
+        ) : (
+          <tbody className="noData">
+            <tr>
+              <td colSpan={3} className="noTd">
+                目前沒有資料
+              </td>
+            </tr>
+          </tbody>
+        )}
       </table>
     </div>
   );
