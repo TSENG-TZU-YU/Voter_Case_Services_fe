@@ -15,6 +15,7 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AiFillUnlock } from 'react-icons/ai';
 import { HiDocumentReport } from 'react-icons/hi';
+import { FaHistory } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -285,7 +286,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
           <NavLink
             to="caseReport"
             className={(nav) => (nav.isActive ? 'link' : '')}
-             onClick={mobilePage}
+            onClick={mobilePage}
           >
             <div className="" onClick={acf}>
               <HiDocumentReport size="20" />
@@ -302,6 +303,14 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             <div className="" onClick={acf}>
               <AiFillUnlock size="20" />
               密碼更改
+            </div>
+          </NavLink>
+        </nav>
+        <nav>
+          <NavLink to="audit" className={(nav) => (nav.isActive ? 'link' : '')}>
+            <div className="" onClick={acf}>
+              <FaHistory size="18" />
+              稽核紀錄
             </div>
           </NavLink>
         </nav>

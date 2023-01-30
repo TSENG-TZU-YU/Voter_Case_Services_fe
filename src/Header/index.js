@@ -13,6 +13,7 @@ import { RiFileTextLine, RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 import { IoBarChartSharp } from 'react-icons/io5';
+import { FaHistory } from 'react-icons/fa';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -306,6 +307,17 @@ function Header() {
               <div className="" onClick={acf}>
                 <AiFillUnlock size="20" />
                 密碼更改
+              </div>
+            </NavLink>
+          </nav>
+          <nav>
+            <NavLink
+              to="audit"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <FaHistory size="18" />
+                稽核紀錄
               </div>
             </NavLink>
           </nav>
