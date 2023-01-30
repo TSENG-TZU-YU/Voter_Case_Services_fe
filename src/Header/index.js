@@ -312,6 +312,17 @@ function Header() {
           </nav>
           <nav>
             <NavLink
+              to="workLog"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <FaHistory size="18" />
+                工作日誌
+              </div>
+            </NavLink>
+          </nav>
+          <nav>
+            <NavLink
               to="audit"
               className={(nav) => (nav.isActive ? 'link' : '')}
             >
