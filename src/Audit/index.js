@@ -6,18 +6,20 @@ import './_index.scss';
 // import UserFilter from './Component/UserFilter.js';
 import axios from 'axios';
 
-function Permissions() {
+function Audit() {
   const [user, setUser] = useState([]);
   const [nowUser, setNowUser] = useState([]);
   const [category, setCategory] = useState([]);
   const [nowCategory, setNowCategory] = useState([]);
   const [nowPermission, setNowPermission] = useState([]);
-  const [permission, setPermission] = useState([
-    { applicant_unit: '國會', name: '曾子瑜', permissions: '處理者' },
-    { applicant_unit: '國會', name: '曾子瑜', permissions: '主管' },
-    { applicant_unit: '服務處A', name: 'Kelly', permissions: '處理者' },
-    { applicant_unit: '服務處B', name: '林鈺珊', permissions: '主管' },
-  ]);
+  const [audit, setAudit] = useState([]);
+
+  // const [permission, setPermission] = useState([
+  //   { applicant_unit: '國會', name: '曾子瑜', permissions: '處理者' },
+  //   { applicant_unit: '國會', name: '曾子瑜', permissions: '主管' },
+  //   { applicant_unit: '服務處A', name: 'Kelly', permissions: '處理者' },
+  //   { applicant_unit: '服務處B', name: '林鈺珊', permissions: '主管' },
+  // ]);
 
   useEffect(() => {
     async function getCategory() {
@@ -48,15 +50,26 @@ function Permissions() {
           `${process.env.REACT_APP_BASE_URL}/api/permissions/allPermissionsData`
         );
 
-        setPermission(res.data);
+        // setPermission(res.data);
       } catch (err) {
         console.log(err);
       }
     }
+    async function audit() {
+      try {
+        let res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/audit`
+        );
 
+        setAudit(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     getCategory();
     getUsers();
     // getPermissions();
+    audit();
   }, []);
 
   const submit = async () => {
@@ -88,31 +101,27 @@ function Permissions() {
       <table className="caseContain">
         <thead>
           <tr>
-            <th>單位</th>
             <th>使用者</th>
-            <th>權限</th>
+            <th>紀錄</th>
+            <th>時間</th>
           </tr>
         </thead>
 
-        {permission.map((v, i) => {
-          const { applicant_unit, name, permissions, director, handler } = v;
+        {audit.map((v, i) => {
+          const { user, record, time } = v;
           return (
             <tbody key={i}>
               <tr>
-                <td>{applicant_unit}</td>
-                <td>{name}</td>
-                <td>{permissions}</td>
-                <td>
-                  <span className="viewList"> 刪除權限</span>
-                </td>
+                <td>{user}</td>
+                <td>{record}</td>
+                <td>{time}</td>
               </tr>
             </tbody>
           );
         })}
       </table>
-    
     </div>
   );
 }
 
-export default Permissions;
+export default Audit;
