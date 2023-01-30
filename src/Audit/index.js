@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './_index.scss';
 
-// import CategoryFilter from './Component/CategoryFilter.js';
-// import PermissionFilter from './Component/PermissionFilter.js';
-// import UserFilter from './Component/UserFilter.js';
+import UserFilter from './Component/UserFilter.js';
 import axios from 'axios';
 
 function Audit() {
   const [audit, setAudit] = useState([]);
+  const [user, setUser] = useState([]);
+  const [nowUser, setNowUser] = useState([]);
 
   useEffect(() => {
     async function audit() {
@@ -28,11 +28,9 @@ function Audit() {
     <div className="permissionsContainer">
       {/* 篩選 */}
       <div className="sortSelect1">
-        {/* <div className="bothFilter1">
-          <CategoryFilter category={category} setNowCategory={setNowCategory} />
+        <div className="bothFilter1">
           <UserFilter user={user} setNowUser={setNowUser} />
-          <PermissionFilter setNowPermission={setNowPermission} />
-        </div> */}
+        </div>
       </div>
 
       <table className="caseContain">
