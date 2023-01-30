@@ -184,6 +184,17 @@ function CaseManagement() {
     setHandleStData(response.data.result);
   };
 
+  // 稽核紀錄
+  let handleRecord = async (caseNum) => {
+    let response = await axios.post(
+      `${API_URL}/applicationData/postRecord`,
+      { caseNum, page: 1 },
+      {
+        withCredentials: true,
+      }
+    );
+  };
+
   // put 狀態 4 -> 5
   // let handleChangeState = async (caseNum, caseId) => {
   //   let response = await axios.post(
@@ -405,7 +416,12 @@ function CaseManagement() {
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
                                   >
-                                    <FaEye className="icons" />
+                                    <FaEye
+                                      className="icons"
+                                      onClick={() => {
+                                        handleRecord(v.case_number);
+                                      }}
+                                    />
                                   </Link>
 
                                   {/* <div className="hadClick">NEW</div> */}

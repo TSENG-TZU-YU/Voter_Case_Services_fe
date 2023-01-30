@@ -172,6 +172,15 @@ function CaseManagement() {
   //   // console(response.data.result);
   // };
 
+  let handleRecord = async (caseNum) => {
+    let response = await axios.post(
+      `${API_URL}/applicationData/postRecord`,
+      { caseNum, page: 2 },
+      {
+        withCredentials: true,
+      }
+    );
+  };
   return (
     <>
       <>
@@ -380,7 +389,12 @@ function CaseManagement() {
                                   <Link
                                     to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
-                                    <FaEye className="icons" />
+                                    <FaEye
+                                      className="icons"
+                                      onClick={() => {
+                                        handleRecord(v.case_number);
+                                      }}
+                                    />
                                   </Link>
 
                                   {/* <div className="hadClick">NEW</div> */}
