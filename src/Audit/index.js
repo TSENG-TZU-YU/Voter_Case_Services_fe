@@ -8,8 +8,6 @@ import { clearConfigCache } from 'prettier';
 
 function Audit() {
   const [audit, setAudit] = useState([]);
-  const [auditL, setAuditL] = useState('');
-
   const [nameSearch, setNameSearch] = useState('');
 
   //date
@@ -40,8 +38,6 @@ function Audit() {
         );
 
         setAudit(res.data);
-        setAuditL(res.data.length);
-        console.log('first', res.data.length);
       } catch (err) {
         console.log(err);
       }
