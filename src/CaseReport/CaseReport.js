@@ -303,7 +303,7 @@ function CaseReport() {
               />
             </div>
           </div>
-          <div className="mobileToggle d-md-none ">
+          <div className="mobileToggle ">
             {mobileToggle ? (
               <BsToggleOn
                 size="35"

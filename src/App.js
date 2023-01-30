@@ -27,6 +27,7 @@ import HeaderLeft from './HeaderLeft';
 import AppUserPage from './CountALL/AppUserPage';
 import HandlerUnitPage from './CountALL/HandlerUnitPage';
 import CaseReport from './CaseReport/CaseReport';
+import Audit from './Audit';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
@@ -93,6 +94,7 @@ function App() {
             <Route path="HandlerUnitPage" element={<HandlerUnitPage />} />
             <Route path="caseReport" element={<CaseReport />} />
             <Route path="permissions" element={<Permissions />} />
+            <Route path="audit" element={<Audit />} />
 
             {/* detail */}
             <Route

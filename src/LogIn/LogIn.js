@@ -82,6 +82,7 @@ function LogIn() {
         showConfirmButton: false,
         timer: 800,
       });
+      record();
       navigate('/header');
     } catch (err) {
       console.log(err);
@@ -89,6 +90,18 @@ function LogIn() {
         icon: 'error',
         title: '單位、員編或密碼錯誤',
       });
+    }
+  };
+
+  const record = async () => {
+    console.log('login[0].no', login[0].no);
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/login/audit`,
+        { ...login[0] }
+      );
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
