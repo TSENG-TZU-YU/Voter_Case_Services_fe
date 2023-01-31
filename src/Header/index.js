@@ -14,6 +14,7 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 import { IoBarChartSharp } from 'react-icons/io5';
 import { FaHistory } from 'react-icons/fa';
+import { BsJournalText } from 'react-icons/bs';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -316,7 +317,7 @@ function Header() {
               className={(nav) => (nav.isActive ? 'link' : '')}
             >
               <div className="" onClick={acf}>
-                <FaHistory size="18" />
+                <BsJournalText size="18" />
                 工作日誌
               </div>
             </NavLink>

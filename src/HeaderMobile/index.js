@@ -8,14 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 
 //react-icons
-import { HiPencilAlt } from 'react-icons/hi';
-import { RiFileTextLine } from 'react-icons/ri';
-import { RiPhoneFindFill } from 'react-icons/ri';
+import { HiPencilAlt, HiDocumentReport } from 'react-icons/hi';
+import { RiFileTextLine, RiPhoneFindFill } from 'react-icons/ri';
 import { MdOutlineLogout } from 'react-icons/md';
-import { AiOutlineMenu } from 'react-icons/ai';
-import { AiFillUnlock } from 'react-icons/ai';
-import { HiDocumentReport } from 'react-icons/hi';
+import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 import { FaHistory } from 'react-icons/fa';
+import { BsJournalText } from 'react-icons/bs';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -138,7 +136,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 onClick={mobilePage}
               >
                 <div className="" onClick={acf}>
-                  <RiFileTextLine size="20" />
+                  <RiPhoneFindFill size="20" />
                   案件紀錄查詢
                 </div>
               </NavLink>
@@ -162,7 +160,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     acf();
                   }}
                 >
-                  <RiPhoneFindFill size="20" />
+                  <RiFileTextLine size="20" />
                   案件處理作業
                 </div>
               </NavLink>
@@ -194,10 +192,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      案件類別統計
-                    </div>
+                    <div className="">案件類別統計</div>
                   </NavLink>
                 </nav>
                 <nav className="vectorBottom">
@@ -206,10 +201,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      案件狀態統計
-                    </div>
+                    <div className="">案件狀態統計</div>
                   </NavLink>
                 </nav>
                 <nav className="vectorBottom">
@@ -218,10 +210,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      申請單位統計
-                    </div>
+                    <div className="">申請單位統計</div>
                   </NavLink>
                 </nav>
                 <nav className="vectorBottom">
@@ -230,10 +219,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      申請人統計
-                    </div>
+                    <div className="">申請人統計</div>
                   </NavLink>
                 </nav>
 
@@ -243,10 +229,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      處理單位統計
-                    </div>
+                    <div className="">處理單位統計</div>
                   </NavLink>
                 </nav>
                 <nav className="vectorBottom">
@@ -255,10 +238,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
-                    <div className="">
-                      <RiPhoneFindFill size="20" />
-                      處理人統計
-                    </div>
+                    <div className="">處理人統計</div>
                   </NavLink>
                 </nav>
               </div>
@@ -303,6 +283,17 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             <div className="" onClick={acf}>
               <AiFillUnlock size="20" />
               密碼更改
+            </div>
+          </NavLink>
+        </nav>
+        <nav>
+          <NavLink
+            to="workLog"
+            className={(nav) => (nav.isActive ? 'link' : '')}
+          >
+            <div className="" onClick={acf}>
+              <BsJournalText size="18" />
+              工作日誌
             </div>
           </NavLink>
         </nav>

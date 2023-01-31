@@ -79,26 +79,6 @@ function Application({ delCheck }) {
     { name: '謾罵抱怨' },
   ];
 
-  // 檢查會員
-  // useEffect(() => {
-  //   async function getMember() {
-  //     try {
-  //       // console.log('檢查是否登入');
-  //       let response = await axios.get(
-  //         `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       // console.log(response.data);
-  //       setMember(response.data);
-  //     } catch (err) {
-  //       console.log(err.response.data.message);
-  //     }
-  //   }
-  //   getMember();
-  // }, []);
-
   //表格資料填入
   const handleChange = (val, input) => {
     let newData = [...submitValue];
@@ -388,7 +368,7 @@ function Application({ delCheck }) {
         } else if (result.isDenied) {
           Swal.fire({
             icon: 'info',
-            title: '已取消成功',
+            title: '已取消送出',
             confirmButtonColor: '#f2ac33',
           });
         }

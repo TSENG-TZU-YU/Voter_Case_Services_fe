@@ -46,7 +46,7 @@ function Audit() {
   }, [minDate, maxDate, nameSearch]);
 
   return (
-    <div className="permissionsContainer">
+    <div className="auditContainer">
       {/* 篩選 */}
       <div className="sortSelect1">
         <div className="bothFilter1">

@@ -1,77 +1,288 @@
 @import '../styles/variable';
 
-.background {
-  width: 70%;
-  margin-top: 3%;
-
-  .permissions {
-    // background-color: $navBar;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    // height: 30px;
-    .container {
-      display: flex;
-      align-items: center;
-
-      .select {
-        margin-right: 5px;
-        width: 46px;
-        display: flex;
-        justify-content: end;
-        white-space: nowrap;
-      }
-    }
-    .btn {
-      border: 1px solid $subClrBrown;
-      background-color: $header;
-      border-radius: 10px;
-      margin: 0 15px;
-      padding: 4px 5px;
-      white-space: nowrap;
-      cursor: pointer;
-      color: aliceblue;
-    }
-  }
-  .container1 {
-    margin: 20px 0;
-    padding-left: 0;
-    padding-right: 0;
-    .vector {
-      width: 100%;
-      border-top: 2px solid black;
-    }
-    .mt {
-      margin: 15px 0;
-    }
-    .row {
-      background-color: #29d7d7;
-      align-items: center;
-      .getPermissions {
-        white-space: nowrap;
-      }
-      .btn {
-        border: 1px solid $subClrBrown;
-        background-color: $header;
-        border-radius: 10px;
-        margin: 0 15px;
-        padding: 4px 5px;
-        white-space: nowrap;
-        cursor: pointer;
-        color: aliceblue;
-      }
-    }
-  }
+.contents18 {
+  font-size: $contentText18;
 }
-
-.permissionsContainer {
+.overText {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.workLogContainer {
   width: 100%;
   height: calc(100vh - 70px);
-  margin: 0 auto;
-  font-size: 12px;
   @include scrollbar;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  .mobileToggle {
+    display: none;
+  }
+  .logContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0px 0px 10px 0px;
+    @media only screen and (max-width: 576px) {
+      width: 100%;
+    }
+    @media only screen and (min-width: 576px) {
+      width: 70%;
+    }
+
+    .sortSelect {
+      // background: lemonchiffon;
+      padding: 30px 0px 10px 0px;
+      display: flex;
+      justify-content: center;
+      .logBetween {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .addButton {
+          display: block;
+          margin: 0 $marage10;
+          padding: 4px 8px;
+          border: 0;
+          border-radius: 5px;
+          color: $mainClrW;
+          background: $focusClrB;
+          transition: linear 0.2s;
+          &:hover {
+            box-shadow: 0.2px 0.2px 4px #777777c9;
+          }
+        }
+      }
+      button {
+        display: block;
+        margin: 0 $marage10;
+        padding: 4px 8px;
+        border: 0;
+        border-radius: 5px;
+        color: $mainClrW;
+        background: $subClrBrown;
+        transition: linear 0.2s;
+        &:hover {
+          box-shadow: 0.2px 0.2px 4px #777777c9;
+        }
+      }
+
+      .bothFilter1 {
+        display: flex;
+        justify-content: center;
+        .searchInput {
+          margin-right: $marage10;
+          width: 200px;
+          height: 26px;
+          padding: 2px;
+          border: 2px solid #444;
+          outline: none;
+          &:focus {
+            border: 2px solid $subClrBrown;
+          }
+        }
+      }
+    }
+    .logContain {
+      margin: 20px auto 0;
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      @include scrollbar;
+      tbody :hover {
+        background: #eee;
+      }
+      thead,
+      tbody {
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        th {
+          padding: 10px 15px;
+          font-size: 14px;
+          .arrow {
+            font-size: 2rem;
+            cursor: pointer;
+          }
+        }
+        td {
+          padding: 15px;
+          .icons {
+            width: 40px;
+            height: 20px;
+            cursor: pointer;
+          }
+          .eyeBcg {
+            color: pink;
+          }
+        }
+
+        .viewList {
+          cursor: pointer;
+          background: $mainClrW;
+          color: $focusClrG;
+          border: 1px solid $focusClrG;
+          padding: 5px 6px;
+          border-radius: 3px;
+          transition: 0.3s;
+          &:hover {
+            background: $focusClrG;
+            color: #fff;
+          }
+        }
+
+        .sortBtn {
+          @include flexCenter;
+        }
+      }
+    }
+  }
+  .addWorkLogContain {
+    position: absolute;
+    z-index: 100;
+    height: calc(100% - 75px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    @media only screen and (max-width: 576px) {
+      width: 100%;
+    }
+    @media only screen and (min-width: 576px) {
+      width: 70%;
+    }
+    background: rgba(0, 0, 0, 0.55);
+    font-size: clamp(12px, 1vw, 18px);
+
+    .addWorkLog {
+      position: relative;
+      width: 90%;
+      background: $mainClrW;
+      padding: 0 15px 10px;
+      margin-top: 10%;
+      .box {
+        justify-content: space-between;
+        width: 85%;
+
+        div {
+          margin-top: $marage10;
+        }
+        .gap {
+          // margin-left: 5px;
+          margin-right: 5px;
+          span {
+            @include focusText;
+          }
+
+          .inputCheck {
+            margin-top: $marage10;
+          }
+        }
+        .contain {
+          height: 100px;
+        }
+        .handler {
+          width: $columW;
+          height: $columH;
+          margin-top: $marage10;
+          .form-check {
+            margin-right: 8px;
+            margin-top: 4px;
+          }
+        }
+        .hide-arrows::-webkit-outer-spin-button,
+        .hide-arrows::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .needs {
+        width: 85%;
+        justify-content: start;
+        align-items: center;
+        .addIcon {
+          font-size: 1.3rem;
+          cursor: pointer;
+          color: $focusClrG;
+        }
+
+        .need {
+          span {
+            @include focusText;
+          }
+          .one {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // background-color: $header;
+            // color: $mainClrW;
+            padding-left: 5px;
+            div {
+              margin-top: 2px;
+              margin-bottom: 2px;
+            }
+            span {
+              @include focusText;
+            }
+          }
+
+          & div {
+            display: flex;
+            margin-top: $marage10;
+            .input {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .closeBtn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      padding: 10px 0 5px;
+      color: $subClrBrown;
+      border-bottom: 1px solid $subClrBrown;
+      margin-bottom: 8px;
+    }
+    .addWorkLogFormContain {
+      width: 90%;
+      background: #ccc;
+      margin: 15px auto;
+      padding: 10px;
+      // font-size: 14px;
+      .remark {
+        resize: none;
+        width: 75%;
+        @include scrollbarContain;
+      }
+      .selectRemind {
+        // font-size: 12px;
+        @include focusText;
+        margin-left: 5px;
+      }
+    }
+    button {
+      display: block;
+      margin: 0 auto;
+      padding: 4px 8px;
+      border: 0;
+      border-radius: 5px;
+      color: $mainClrW;
+      background: $subClrBrown;
+      transition: linear 0.2s;
+      &:hover {
+        box-shadow: 0.2px 0.2px 4px #777777c9;
+      }
+    }
+  }
   .sortSelect1 {
-    // background: lemonchiffon;
     padding: 30px 0px 10px 0px;
     display: flex;
     justify-content: center;
@@ -80,59 +291,93 @@
       justify-content: center;
     }
   }
-  .caseContain {
-    margin: 20px auto 0;
 
-    tbody :hover {
-      background: #eee;
-    }
-    thead,
-    tbody {
-      border-bottom: 1px solid #ccc;
-      text-align: center;
-      th {
-        padding: 10px 15px;
-        font-size: 14px;
-        .arrow {
-          font-size: 2rem;
-          cursor: pointer;
-        }
-      }
-      td {
-        padding: 15px;
-        .icons {
-          width: 40px;
-          height: 20px;
-          cursor: pointer;
-        }
-        .eyeBcg {
-          color: pink;
-        }
-      }
-
-      .viewList {
-        cursor: pointer;
-        background: $mainClrW;
-        color: $focusClrG;
-        border: 1px solid $focusClrG;
-        padding: 5px 6px;
-        border-radius: 3px;
-        transition: 0.3s;
-        &:hover {
-          background: $focusClrG;
-          color: #fff;
-        }
-      }
-
-      .sortBtn {
-        @include flexCenter;
-      }
-    }
-  }
   .page {
     display: flex;
     justify-content: center;
     align-items: end;
     margin-top: 20px;
+  }
+}
+
+/* media queries */
+@media screen and (max-width: 576px) {
+  .logContainer {
+    .mobileToggle {
+      display: flex;
+      justify-content: end;
+    }
+  }
+
+  .case {
+    max-width: 576px;
+    margin: 0 auto;
+  }
+
+  table.mobileCaseLog {
+    width: 100%;
+  }
+  table.mobileCaseLog tr.hide-mobile,
+  table.mobileCaseLog th.hide-mobile,
+  table.mobileCaseLog td.hide-mobile {
+    display: none;
+  }
+  table.mobileCaseLog thead {
+    display: none;
+  }
+  table.mobileCaseLog tbody {
+    width: 100%;
+  }
+  .logContainer .mobileCaseLog .bodyLog {
+    border-bottom: none;
+  }
+  table.mobileCaseLog tr,
+  table.mobileCaseLog th,
+  table.mobileCaseLog td {
+    display: block;
+    padding: 0;
+  }
+  table.mobileCaseLog tr {
+    border-bottom: none;
+    border-top: none;
+    margin: 0 0 1em 0;
+    padding: 0.5em;
+  }
+  table.mobileCaseLog tr.highlight {
+    background-color: inherit !important;
+  }
+  table.mobileCaseLog.zebra tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseLog.zebra td:nth-child(even) {
+    background-color: #f6f6f6;
+  }
+  table.mobileCaseLog tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseLog td {
+    padding: 0.5em 0 0.25em 0;
+    border-bottom: 1px dotted #ccc;
+    text-align: right;
+  }
+  table.mobileCaseLog td[data-title]:before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: inline-block;
+    content: attr(data-title);
+    float: left;
+    margin-right: 0.5em;
+    font-size: 0.95em;
+  }
+  table.mobileCaseLog td:last-child {
+    padding-right: 0;
+    border-bottom: 2px solid #ccc;
+  }
+  table.mobileCaseLog td:empty {
+    display: none;
+  }
+  table.mobileCaseLog .highlight td {
+    background-color: inherit;
+    font-weight: normal;
   }
 }
