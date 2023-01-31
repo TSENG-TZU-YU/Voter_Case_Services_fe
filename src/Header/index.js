@@ -324,7 +324,7 @@ function Header() {
           </nav>
           <nav>
             <NavLink
-              to="workLogSearch"
+              to={`workLogSearch?unit=${member.applicant_unit}`}
               className={(nav) => (nav.isActive ? 'link' : '')}
             >
               <div className="" onClick={acf}>

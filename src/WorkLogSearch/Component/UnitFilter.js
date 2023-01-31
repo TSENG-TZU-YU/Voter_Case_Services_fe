@@ -1,26 +1,16 @@
 import React from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ setMaxDate, setMinDate }) {
-  const today = new Date();
-  const months = [];
-
-  for (let i = 0; i < 6; i++) {
-    const sixMonthsAgo = new Date(today.getFullYear(), today.getMonth() - i);
-
-    const year = sixMonthsAgo.getFullYear();
-    let month = sixMonthsAgo.getMonth() + 1;
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    months.push({
-      value: `${year}${month}`,
-      label: `${year}/${month}`,
+function ActivitySelect({ allUnit, setNowUnit, Unit }) {
+  let newData = [];
+  for (let i = 0; i < allUnit.length; i++) {
+    newData.push({
+      value: allUnit[i].name,
+      label: allUnit[i].name,
     });
   }
-  // console.log(months);
-
-  const sortOption = [...months];
+  // console.log('n', newData);
+  const sortOption = [...newData, { value: '', label: '全部處理單位' }];
 
   const customStyles = {
     option: (provided, state) => ({
@@ -75,17 +65,13 @@ function ActivitySelect({ setMaxDate, setMinDate }) {
   return (
     <>
       <Select
-        defaultValue={{ value: '', label: `${months[0].label}` }}
+        defaultValue={{
+          value: `${Unit}`,
+          label: `${Unit}`,
+        }}
         onChange={(e) => {
           // console.log(e.value);
-          let year = e.value.slice(0, 4);
-          let month = e.value.slice(4, 6);
-          let max = `${year}/${month}/31`;
-          let min = `${year}/${month}/01`;
-
-          // console.log(max, min);
-          setMaxDate(max);
-          setMinDate(min);
+          setNowUnit(e.value);
         }}
         options={sortOption}
         styles={customStyles}
