@@ -14,10 +14,10 @@
       justify-content: center;
     }
   }
-  .workLogContainer {
+  .workContainer {
     @include scrollbar;
 
-    .caseContain {
+    .workContain {
       // background: lightblue;
       margin: 20px auto 0;
 

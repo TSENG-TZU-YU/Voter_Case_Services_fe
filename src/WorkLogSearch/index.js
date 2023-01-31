@@ -78,8 +78,8 @@ function WorkLogSearch() {
         <div>請選擇年月份：</div>
         <MonthFilter setMaxDate={setMaxDate} setMinDate={setMinDate} />
       </div>
-      <div className="workLogContainer">
-        <table className="caseContain">
+      <div className="workContainer">
+        <table className="workContain">
           <thead>
             <tr>
               <th></th>
