@@ -1,0 +1,51 @@
+@import '../styles/variable';
+
+.workLogSearchContainer {
+  // background: lemonchiffon;
+  max-width: 1270px;
+  height: calc(100vh - 70px);
+  font-size: $contentText18;
+  .sortSelect1 {
+    padding: 30px 0px 10px 0px;
+    display: flex;
+    justify-content: center;
+    .bothFilter1 {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .workLogContainer {
+    @include scrollbar;
+
+    .caseContain {
+      // background: lightblue;
+      margin: 20px auto 0;
+
+      tbody :hover {
+        background: #eee;
+      }
+      thead,
+      tbody {
+        text-align: center;
+        th {
+          font-size: 14px;
+        }
+        td,
+        th {
+          border: 1px solid #ccc;
+          padding: 15px;
+          .write {
+            cursor: pointer;
+          }
+          .noWrite {
+            color: $focusClrP;
+          }
+        }
+
+        .sortBtn {
+          @include flexCenter;
+        }
+      }
+    }
+  }
+}

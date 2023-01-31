@@ -153,7 +153,7 @@ function Header() {
                   className={(nav) => (nav.isActive || page == 1 ? 'link' : '')}
                 >
                   <div className="" onClick={acf}>
-                    <RiFileTextLine size="20" />
+                    <RiPhoneFindFill size="20" />
                     案件紀錄查詢
                   </div>
                 </NavLink>
@@ -176,7 +176,7 @@ function Header() {
                       acf();
                     }}
                   >
-                    <RiPhoneFindFill size="20" />
+                    <RiFileTextLine size="20" />
                     案件處理作業
                   </div>
                 </NavLink>
@@ -318,6 +318,17 @@ function Header() {
               <div className="" onClick={acf}>
                 <FaHistory size="18" />
                 工作日誌
+              </div>
+            </NavLink>
+          </nav>
+          <nav>
+            <NavLink
+              to="workLogSearch"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <FaHistory size="18" />
+                工作日誌查詢
               </div>
             </NavLink>
           </nav>

@@ -29,6 +29,7 @@ import HandlerUnitPage from './CountALL/HandlerUnitPage';
 import CaseReport from './CaseReport/CaseReport';
 import Audit from './Audit';
 import WorkLog from './WorkLog';
+import WorkLogSearch from './WorkLogSearch';
 
 function App() {
   const [addStatus, setAddStatus] = useState(true);
@@ -96,6 +97,7 @@ function App() {
             <Route path="caseReport" element={<CaseReport />} />
             <Route path="permissions" element={<Permissions />} />
             <Route path="workLog" element={<WorkLog />} />
+            <Route path="workLogSearch" element={<WorkLogSearch />} />
             <Route path="audit" element={<Audit />} />
 
             {/* detail */}

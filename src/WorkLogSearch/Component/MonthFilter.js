@@ -1,23 +1,32 @@
 import React from 'react';
-import { useState } from 'react';
 import Select from 'react-select';
 
-function ActivitySelect({ user, setNowUser }) {
-  let newData = [];
-  for (let i = 0; i < user.length; i++) {
-    newData.push({
-      value: user[i].name,
-      label: user[i].staff_code + ' ' + user[i].name,
+function ActivitySelect({ setMaxDate, setMinDate }) {
+  const today = new Date();
+  const months = [];
+
+  for (let i = 0; i < 6; i++) {
+    const sixMonthsAgo = new Date(today.getFullYear(), today.getMonth() - i);
+
+    const year = sixMonthsAgo.getFullYear();
+    let month = sixMonthsAgo.getMonth() + 1;
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    months.push({
+      value: `${year}${month}`,
+      label: `${year}-${month}`,
     });
   }
+  // console.log(months);
 
-  const sortOption = [{ value: '', label: '--請選擇使用者--' }, ...newData];
+  const sortOption = [{ value: '', label: '請選擇年月份' }, ...months];
 
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
       height: '32px',
-      // width: '180px',
+      // width: '170px',
       color: state.isSelected ? '#fff' : '#444',
       background: state.isSelected ? '#817161' : '#fff',
       ':active': {
@@ -47,7 +56,7 @@ function ActivitySelect({ user, setNowUser }) {
       border: '1px solid #817161',
       // borderRadius: '0px',
       minHeight: '32px',
-      width: '180px',
+      width: '170px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,
       '&:hover': {
@@ -66,15 +75,21 @@ function ActivitySelect({ user, setNowUser }) {
   return (
     <>
       <Select
-        className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
-          console.log(e.value);
-          setNowUser(e.value);
+          // console.log(e.value);
+          let year = e.value.slice(0, 4);
+          let month = e.value.slice(4, 6);
+          let max = `${year}/${month}/31`;
+          let min = `${year}/${month}/01`;
+
+          // console.log(max, min);
+          setMaxDate(max);
+          setMinDate(min);
         }}
         options={sortOption}
         styles={customStyles}
-        isSearchable={true}
+        isSearchable={false}
       />
     </>
   );

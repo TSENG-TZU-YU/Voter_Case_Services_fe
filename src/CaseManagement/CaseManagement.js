@@ -312,7 +312,7 @@ function CaseManagement() {
               />
             </div>
           </div>
-          <div className="mobileToggle  ">
+          <div className="mobileToggle">
             {mobileToggle ? (
               <BsToggleOn
                 size="35"
