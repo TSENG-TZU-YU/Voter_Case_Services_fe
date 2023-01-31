@@ -79,7 +79,6 @@ function Application({ delCheck }) {
     { name: '謾罵抱怨' },
   ];
 
-
   //表格資料填入
   const handleChange = (val, input) => {
     let newData = [...submitValue];

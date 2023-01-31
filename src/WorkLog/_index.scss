@@ -3,13 +3,8 @@
 .contents18 {
   font-size: $contentText18;
 }
-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse:collapse;
-}
 .overText {
-  max-width: 50%;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -19,20 +14,81 @@ table {
   @include scrollbar;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  .mobileToggle {
+    display: none;
+  }
   .logContainer {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 30px 0px 10px 0px;
+    padding: 0px 0px 10px 0px;
     @media only screen and (max-width: 576px) {
       width: 100%;
     }
     @media only screen and (min-width: 576px) {
       width: 70%;
     }
-    .caseContain {
-      margin: 20px auto 0;
 
+    .sortSelect {
+      // background: lemonchiffon;
+      padding: 30px 0px 10px 0px;
+      display: flex;
+      justify-content: center;
+      .logBetween {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .addButton {
+          display: block;
+          margin: 0 $marage10;
+          padding: 4px 8px;
+          border: 0;
+          border-radius: 5px;
+          color: $mainClrW;
+          background: $focusClrB;
+          transition: linear 0.2s;
+          &:hover {
+            box-shadow: 0.2px 0.2px 4px #777777c9;
+          }
+        }
+      }
+      button {
+        display: block;
+        margin: 0 $marage10;
+        padding: 4px 8px;
+        border: 0;
+        border-radius: 5px;
+        color: $mainClrW;
+        background: $subClrBrown;
+        transition: linear 0.2s;
+        &:hover {
+          box-shadow: 0.2px 0.2px 4px #777777c9;
+        }
+      }
+
+      .bothFilter1 {
+        display: flex;
+        justify-content: center;
+        .searchInput {
+          margin-right: $marage10;
+          width: 200px;
+          height: 26px;
+          padding: 2px;
+          border: 2px solid #444;
+          outline: none;
+          &:focus {
+            border: 2px solid $subClrBrown;
+          }
+        }
+      }
+    }
+    .logContain {
+      margin: 20px auto 0;
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      @include scrollbar;
       tbody :hover {
         background: #eee;
       }
@@ -58,7 +114,6 @@ table {
           .eyeBcg {
             color: pink;
           }
-         
         }
 
         .viewList {
@@ -78,19 +133,6 @@ table {
         .sortBtn {
           @include flexCenter;
         }
-      }
-    }
-    button {
-      display: block;
-      margin: 0 auto;
-      padding: 4px 8px;
-      border: 0;
-      border-radius: 5px;
-      color: $mainClrW;
-      background: $subClrBrown;
-      transition: linear 0.2s;
-      &:hover {
-        box-shadow: 0.2px 0.2px 4px #777777c9;
       }
     }
   }
@@ -255,5 +297,87 @@ table {
     justify-content: center;
     align-items: end;
     margin-top: 20px;
+  }
+}
+
+/* media queries */
+@media screen and (max-width: 576px) {
+  .logContainer {
+    .mobileToggle {
+      display: flex;
+      justify-content: end;
+    }
+  }
+
+  .case {
+    max-width: 576px;
+    margin: 0 auto;
+  }
+
+  table.mobileCaseLog {
+    width: 100%;
+  }
+  table.mobileCaseLog tr.hide-mobile,
+  table.mobileCaseLog th.hide-mobile,
+  table.mobileCaseLog td.hide-mobile {
+    display: none;
+  }
+  table.mobileCaseLog thead {
+    display: none;
+  }
+  table.mobileCaseLog tbody {
+    width: 100%;
+  }
+  .logContainer .mobileCaseLog .bodyLog {
+    border-bottom: none;
+  }
+  table.mobileCaseLog tr,
+  table.mobileCaseLog th,
+  table.mobileCaseLog td {
+    display: block;
+    padding: 0;
+  }
+  table.mobileCaseLog tr {
+    border-bottom: none;
+    border-top: none;
+    margin: 0 0 1em 0;
+    padding: 0.5em;
+  }
+  table.mobileCaseLog tr.highlight {
+    background-color: inherit !important;
+  }
+  table.mobileCaseLog.zebra tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseLog.zebra td:nth-child(even) {
+    background-color: #f6f6f6;
+  }
+  table.mobileCaseLog tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseLog td {
+    padding: 0.5em 0 0.25em 0;
+    border-bottom: 1px dotted #ccc;
+    text-align: right;
+  }
+  table.mobileCaseLog td[data-title]:before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: inline-block;
+    content: attr(data-title);
+    float: left;
+    margin-right: 0.5em;
+    font-size: 0.95em;
+  }
+  table.mobileCaseLog td:last-child {
+    padding-right: 0;
+    border-bottom: 2px solid #ccc;
+  }
+  table.mobileCaseLog td:empty {
+    display: none;
+  }
+  table.mobileCaseLog .highlight td {
+    background-color: inherit;
+    font-weight: normal;
   }
 }

@@ -3,23 +3,47 @@ import './_index.scss';
 import moment from 'moment';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 import { AiFillCloseSquare } from 'react-icons/ai';
+import { FaEye } from 'react-icons/fa';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import DateFilter from './Component/DateFilter.js';
+import DateFilterAll from './Component/DateFilterAll.js';
+import { useAuth } from '../utils/use_auth';
 function WorkLog() {
   const [log, setLog] = useState([]);
   const [addWorkLog, setAddWorkLog] = useState([
     { workCategory: '', workLog: '' },
   ]);
-  //日誌驗證空值
-  // const [need, setNeed] = useState(false);
-  const [category, setCategory] = useState(false);
+  const [eyeDetail, setEyeDetail] = useState([]);
+  const [mobileToggle, setMobileToggle] = useState(true);
+  //使用者資料
+  const { member } = useAuth();
 
   //date
   let nowDate = moment().format(`YYYY-MM-DD`);
   const [selectDate, setSelectDate] = useState(nowDate);
+  // 取前六個月
+  let dateObj = new Date(nowDate);
+  dateObj.setMonth(dateObj.getMonth() - 6);
+  // 將日期轉換為指定格式的字串
+  let newDateString = dateObj.toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  let dateAgo = newDateString.replace(/\//g, '-');
+  const [dateRemind, setDateRemind] = useState('');
+  const [maxDateValue, setMaxDateValue] = useState(nowDate);
+  const [minDateValue, setMinDateValue] = useState(dateAgo);
+  const [maxDate, setMaxDate] = useState(nowDate);
+  const [minDate, setMinDate] = useState(dateAgo);
+
   // 日誌
+  const [EyeWorkLogForm, setEyeWorkLogForm] = useState(false);
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
 
   const handleChange = (val, input) => {
@@ -32,22 +56,37 @@ function WorkLog() {
 
   useEffect(() => {
     async function audit() {
+      let no = localStorage.getItem('memberID');
       try {
         let res = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/workLog`,
-          { test: '' },
-          {
-            withCredentials: true,
-          }
+          `${process.env.REACT_APP_BASE_URL}/api/workLog?minDate=${minDate}&maxDate=${maxDate}`,
+          { staff_code: no }
         );
-
         setLog(res.data);
       } catch (err) {
         console.log(err);
       }
     }
     audit();
-  }, [addWorkLogForm]);
+  }, [addWorkLogForm, minDate, maxDate]);
+  //TODO: 刷新時畫面沒重新渲染
+  //查看詳細
+  async function detail(create_time) {
+    try {
+      let response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/workLog/detail`,
+        {
+          create_time: create_time,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setEyeDetail(response.data);
+    } catch (err) {
+      console.log('sub', err);
+    }
+  }
 
   // 送出申請表sweet
   function submitCheck(tit) {
@@ -92,9 +131,8 @@ function WorkLog() {
   //送出表單內容
   async function submit() {
     try {
-      console.log('123');
       let response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/workLog/post`,
+        `${process.env.REACT_APP_BASE_URL}/api/workLog/submit`,
         {
           ...addWorkLog[0],
           time: selectDate,
@@ -103,27 +141,65 @@ function WorkLog() {
           withCredentials: true,
         }
       );
-      console.log('456');
-      // setAddWorkLogForm(false);
     } catch (err) {
       console.log('sub', err);
     }
   }
-  console.log('setAddWorkLogForm', addWorkLogForm);
   return (
     <div className="workLogContainer">
       <div className="logContainer">
-        <button
-          onClick={() => {
-            setAddWorkLogForm(true);
-          }}
+        <div className="sortSelect">
+          <div className="logBetween">
+            <div>
+              <button
+                className="addButton"
+                onClick={() => {
+                  setAddWorkLogForm(true);
+                }}
+              >
+                新增工作日誌
+              </button>
+            </div>
+            <div className="mobileToggle ">
+              {mobileToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(true);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+          <DateFilterAll
+            dateRemind={dateRemind}
+            setDateRemind={setDateRemind}
+            setMaxDate={setMaxDate}
+            setMinDate={setMinDate}
+            maxDateValue={maxDateValue}
+            setMaxDateValue={setMaxDateValue}
+            minDateValue={minDateValue}
+            setMinDateValue={setMinDateValue}
+            dateAgo={dateAgo}
+            nowDate={nowDate}
+          />
+        </div>
+
+        <table
+          className={`logContain ${mobileToggle ? ' mobileCaseLog' : ''}
+              `}
         >
-          新增工作日誌
-        </button>
-        <table className="caseContain">
           <thead>
             <tr>
               <th>使用者</th>
+              <th>詳細資訊</th>
               <th>工作類型</th>
               <th>工作說明</th>
               <th>時間</th>
@@ -131,16 +207,34 @@ function WorkLog() {
           </thead>
           {log.length !== 0 ? (
             <>
-            {/* TODO: */}
               {log.map((v, i) => {
-                const { user, job_category, Job_description, time } = v;
+                const {
+                  user,
+                  job_category,
+                  Job_description,
+                  create_time,
+                  time,
+                } = v;
                 return (
-                  <tbody key={i}>
+                  <tbody key={i} className="bodyLog">
                     <tr>
-                      <td>{user}</td>
-                      <td>{job_category}</td>
-                      <td className='overText'>{Job_description}</td>
-                      <td>{time}</td>
+                      <td data-title="使用者">{user}</td>
+                      <td data-title="詳細資訊">
+                        <FaEye
+                          className="icons"
+                          onClick={() => {
+                            detail(create_time);
+                            setEyeWorkLogForm(true);
+                          }}
+                        />
+                      </td>
+                      <td data-title="工作類型" className="overText">
+                        {job_category}
+                      </td>
+                      <td data-title="工作說明" className="overText">
+                        {Job_description}
+                      </td>
+                      <td data-title="時間">{time}</td>
                     </tr>
                   </tbody>
                 );
@@ -149,7 +243,7 @@ function WorkLog() {
           ) : (
             <tbody className="noData">
               <tr>
-                <td colSpan={3} className="noTd">
+                <td colSpan={5} className="noTd">
                   目前沒有資料
                 </td>
               </tr>
@@ -183,12 +277,12 @@ function WorkLog() {
                 {/*  工作類別  */}
                 <div className="gap">
                   <div className="contents18">
-                    工作類別 <span>*</span>
-                    {category ? <span>請填欄位</span> : <span>必填</span>}
+                    工作類別(字數限制16) <span>*必填</span>
                   </div>
                   <input
                     className="handler contents18"
                     type="text"
+                    maxLength="16"
                     onChange={(e) => {
                       handleChange(e.target.value, 'workCategory');
                     }}
@@ -196,7 +290,6 @@ function WorkLog() {
                 </div>
               </div>
               <div className="add">
-                {/* <span className={`${need ? 'view' : ''}`}>*欄位不得為空</span> */}
                 <div>
                   {/* <FaTrashAlt
               size="17"
@@ -214,34 +307,17 @@ function WorkLog() {
                 <div className="need">
                   <div className="one">
                     <div className="contents18">
-                      工作說明<span>*必填</span>
+                      工作說明(字數限制500)<span>*必填</span>
                     </div>
                   </div>
-                  {/* 
-                <div>
-                  <input
-                    className="input"
-                    type="text"
-                    name="tt"
-                    value={addNeed[i].title}
-                    placeholder="標題"
-                    onChange={(e) => {
-                      needChangerHandler(e.target.value, i, 'tt');
-                      if (e.target.value !== '') {
-                        setNeed(false);
-                      }
-                    }}
-                  />
-                </div> */}
+
                   <div>
                     <textarea
                       className="input contents18 "
-                      // placeholder="請詳細說明"
                       name="ttt"
                       cols="30"
                       rows="10"
                       maxLength="500"
-                      // value={addNeed[i].text}
                       style={{ resize: 'none', height: '120px' }}
                       onChange={(e) => {
                         handleChange(e.target.value, 'workLog');
@@ -260,6 +336,64 @@ function WorkLog() {
             >
               確認
             </button>
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
+      {EyeWorkLogForm ? (
+        <div className="addWorkLogContain">
+          <div className="addWorkLog">
+            <AiFillCloseSquare
+              className="closeBtn"
+              onClick={() => {
+                setEyeWorkLogForm(false);
+              }}
+            />
+            <div className="title">工作日誌</div>
+
+            {/* 表單內容 */}
+            {eyeDetail.map((v, i) => {
+              const { job_category, Job_description, time } = v;
+              return (
+                <div className="addWorkLogFormContain">
+                  <div className="box ">
+                    <div className="gap">
+                      <DateFilter selectDate={time} />
+                    </div>
+                  </div>
+                  <div className="box ">
+                    <div className="gap">
+                      <div className="contents18">工作類別</div>
+                      <input
+                        className="handler contents18"
+                        type="text"
+                        value={job_category}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="needs">
+                    <div className="need">
+                      <div className="one">
+                        <div className="contents18">工作說明</div>
+                      </div>
+
+                      <div>
+                        <textarea
+                          className="input contents18 "
+                          cols="30"
+                          rows="10"
+                          style={{ resize: 'none', height: '120px' }}
+                          value={Job_description}
+                          disabled
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (
