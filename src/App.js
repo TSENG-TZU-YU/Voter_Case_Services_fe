@@ -68,11 +68,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LogIn />} />
-          <Route
-            // ?member=${member.permissions_id}
-            path={`header`}
-            element={<Header />}
-          >
+          <Route path={`header`} element={<Header />}>
             <Route index element={<HeaderLeft />} />
             <Route path={`caseManagement`} element={<CaseManagement />} />
             <Route
