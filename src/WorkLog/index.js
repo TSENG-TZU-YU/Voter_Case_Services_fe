@@ -19,6 +19,7 @@ function WorkLog() {
   ]);
   const [eyeDetail, setEyeDetail] = useState([]);
   const [mobileToggle, setMobileToggle] = useState(true);
+  const [disable, setDisable] = useState(false);
   //使用者資料
   const { member } = useAuth();
 
@@ -155,6 +156,7 @@ function WorkLog() {
                 className="addButton"
                 onClick={() => {
                   setAddWorkLogForm(true);
+                  setDisable(false);
                 }}
               >
                 新增工作日誌
@@ -225,6 +227,7 @@ function WorkLog() {
                           onClick={() => {
                             detail(create_time);
                             setEyeWorkLogForm(true);
+                            setDisable(true);
                           }}
                         />
                       </td>
@@ -266,9 +269,11 @@ function WorkLog() {
             <div className="addWorkLogFormContain">
               <div className="box ">
                 <div className="gap">
+                  <div className="contents18">日期</div>
                   <DateFilter
                     selectDate={selectDate}
                     setSelectDate={setSelectDate}
+                    disable={disable}
                   />
                 </div>
               </div>
@@ -359,7 +364,8 @@ function WorkLog() {
                 <div className="addWorkLogFormContain">
                   <div className="box ">
                     <div className="gap">
-                      <DateFilter selectDate={time} />
+                      <div className="contents18">日期</div>
+                      <DateFilter selectDate={time} disable={disable} />
                     </div>
                   </div>
                   <div className="box ">

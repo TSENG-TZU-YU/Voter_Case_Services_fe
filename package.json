@@ -17,6 +17,7 @@
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.0",
+    "recharts": "^2.3.2",
     "sass": "^1.56.1",
     "sweetalert2": "^11.6.15",
     "web-vitals": "^2.1.4"

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/caseManagement/_dateFilter.scss';
 
-function DateFilter({ selectDate, setSelectDate }) {
+function DateFilter({ selectDate, setSelectDate, disable }) {
   return (
     <>
       <div className="dateFilterContainer">
@@ -9,6 +9,7 @@ function DateFilter({ selectDate, setSelectDate }) {
           <input
             type="date"
             value={selectDate}
+            disabled={disable ? true : false}
             onChange={(e) => {
               setSelectDate(e.target.value);
             }}

@@ -295,7 +295,6 @@ function Application({ delCheck }) {
 
   // 送出申請表sweet
   function submitCheck(tit) {
-    console.log('object', tit);
     for (let i = 0; i < addNeed.length; i++) {
       if (addNeed[i].text === '') {
         setNeed(true);

@@ -332,7 +332,7 @@ function UploadPage({ setAddStatus, delCheck }) {
       let response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`
       );
-      console.log('fileSubmitStatus');
+      // console.log('fileSubmitStatus');
     } catch (err) {
       console.log(err);
     }

@@ -15,7 +15,7 @@ function ActivitySelect({ setMaxDate, setMinDate }) {
     }
     months.push({
       value: `${year}${month}`,
-      label: `${year}-${month}`,
+      label: `${year}/${month}`,
     });
   }
   // console.log(months);
