@@ -8,6 +8,7 @@ import moment from 'moment';
 // import '../styles/caseManagement/_caseManagement.scss';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
+import SimplePieChart from './Component/SimplePieChart';
 
 import Loader from '../Loader';
 
@@ -68,22 +69,24 @@ function StatusPage() {
   const [handlerTtl, setHandlerTtl] = useState([]);
   const [userTtl, setUserTtl] = useState([]);
 
-  // 檢查會員
-  // useEffect(() => {
-  //   async function getMember() {
-  //     try {
-  //       // console.log('檢查是否登入');
-  //       let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-  //         withCredentials: true,
-  //       });
-  //       // console.log(response.data);
-  //       setMember(response.data);
-  //     } catch (err) {
-  //       console.log(err.response.data.message);
-  //     }
-  //   }
-  //   getMember();
-  // }, []);
+  //chart
+  const [chart, setChart] = useState([]);
+
+  let newChart = [];
+  for (let i = 0; i < chart.length; i++) {
+    newChart.push({
+      name: chart[i].name,
+      value: chart[i].st,
+    });
+  }
+
+  //TODO:
+  const data = [
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+  ];
 
   // 取得所有資料
   useEffect(() => {
@@ -95,35 +98,33 @@ function StatusPage() {
           withCredentials: true,
         }
       );
-      setAllCategoryData(response.data.categoryResult);
-      setAllUnitData(response.data.unitResult);
       setAllStatusData(response.data.statusResult);
       setCountStatusData(response.data.statusResult.splice(1));
-      setAllHandlerData(response.data.handlerResult);
-      setAllUserData(response.data.userResult);
-      setuserData(response.data.AllUserResult);
-      setHandlerData(response.data.selHandlerResult);
 
       // total
       setAllTotal(response.data.pagination.allTotal);
       setTotal(response.data.pagination.total);
       setStateTtl(response.data.pagination.counts);
-      setCategoryTtl(response.data.pagination.categoryCounts);
-      setUnitTtl(response.data.pagination.unitCounts);
-      setUnitAppTtl(response.data.pagination.unitAppCounts);
-      setHandlerTtl(response.data.pagination.handlerCounts);
-      setUserTtl(response.data.pagination.userCounts);
+
       // console.log('object',allStatusData);
       setTimeout(() => {
         setIsLoading(false);
       }, 100);
     };
+
+    let getBar = async () => {
+      try {
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/chart/SimplePieChart`
+        );
+        setChart(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBar();
     getAllData();
   }, [
-    // member.user,
-    // member.handler,
-    // member.manage,
-    // member.director,
     nowCategory,
     nowStatus,
     nowUnit,
@@ -225,6 +226,7 @@ function StatusPage() {
                   </tr>
                 </tbody>
               </table>
+              <SimplePieChart chart={newChart} />
             </>
           </div>
         )}
