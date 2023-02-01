@@ -14,9 +14,7 @@ import DateFilterAll from './Component/DateFilterAll.js';
 import { useAuth } from '../utils/use_auth';
 function WorkLog() {
   const [log, setLog] = useState([]);
-  const [addWorkLog, setAddWorkLog] = useState([
-    { workCategory: '', workLog: '' },
-  ]);
+  const [addWorkLog, setAddWorkLog] = useState([{ workLog: '' }]);
   const [eyeDetail, setEyeDetail] = useState([]);
   const [mobileToggle, setMobileToggle] = useState(true);
   const [disable, setDisable] = useState(false);
@@ -26,6 +24,7 @@ function WorkLog() {
   //date
   let nowDate = moment().format(`YYYY-MM-DD`);
   const [selectDate, setSelectDate] = useState(nowDate);
+
   // 取前六個月
   let dateObj = new Date(nowDate);
   dateObj.setMonth(dateObj.getMonth() - 6);
@@ -40,8 +39,37 @@ function WorkLog() {
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
-  const [maxDate, setMaxDate] = useState(nowDate);
-  const [minDate, setMinDate] = useState(dateAgo);
+  // const [maxDate, setMaxDate] = useState(nowDate);
+  // const [minDate, setMinDate] = useState(dateAgo);
+
+  // 最大及最小日期初值
+  const today = new Date();
+  const sixMonthsAgo = new Date(today.getFullYear(), today.getMonth());
+
+  let month = sixMonthsAgo.getMonth() + 1;
+  if (month < 10) {
+    month = `0${month}`;
+  }
+
+  const maxM = `${sixMonthsAgo.getFullYear()}/${month}/31`;
+  const minM = `${sixMonthsAgo.getFullYear()}/${month}/01`;
+
+  const [maxDate, setMaxDate] = useState(maxM);
+  const [minDate, setMinDate] = useState(minM);
+
+  // 每月的1-31天
+  const start_date = new Date(minDate);
+  const end_date = new Date(maxDate >= nowDate ? nowDate : maxDate);
+  const allDate = [];
+  for (let d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) {
+    let newD = d.toLocaleDateString('zh-TW', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    if (newD.slice(5, 7) === minDate.slice(5, 7)) allDate.push(newD);
+  }
+  const sortAllDate = allDate.sort((a, b) => new Date(b) - new Date(a));
 
   // 日誌
   const [EyeWorkLogForm, setEyeWorkLogForm] = useState(false);
@@ -49,7 +77,7 @@ function WorkLog() {
 
   const handleChange = (val, input) => {
     let newData = [...addWorkLog];
-    if (input === 'workCategory') newData[0].workCategory = val;
+    // if (input === 'workCategory') newData[0].workCategory = val;
     if (input === 'workLog') newData[0].workLog = val;
 
     setAddWorkLog(newData);
@@ -61,7 +89,10 @@ function WorkLog() {
       try {
         let res = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/api/workLog?minDate=${minDate}&maxDate=${maxDate}`,
-          { staff_code: no }
+          { staff_code: no, sortAllDate: sortAllDate },
+          {
+            withCredentials: true,
+          }
         );
         setLog(res.data);
       } catch (err) {
@@ -70,7 +101,7 @@ function WorkLog() {
     }
     audit();
   }, [addWorkLogForm, minDate, maxDate]);
-  //TODO: 刷新時畫面沒重新渲染
+
   //查看詳細
   async function detail(create_time) {
     try {
@@ -91,15 +122,15 @@ function WorkLog() {
 
   // 送出申請表sweet
   function submitCheck(tit) {
-    if (addWorkLog[0].workCategory === '' || addWorkLog[0].workLog === '') {
+    if (addWorkLog[0].workLog === '') {
       Swal.fire({
         icon: 'error',
         title: '請填寫完整內容',
         confirmButtonColor: '#f2ac33',
       });
     }
-
-    if (addWorkLog[0].workCategory !== '' && addWorkLog[0].workLog !== '') {
+    // addWorkLog[0].workCategory !== '' &&
+    if (addWorkLog[0].workLog !== '') {
       Swal.fire({
         title: tit,
         showDenyButton: true,
@@ -151,8 +182,8 @@ function WorkLog() {
       <div className="logContainer">
         <div className="sortSelect">
           <div className="logBetween">
-            <div>
-              <button
+            <div className="me-2">
+              {/* <button
                 className="addButton"
                 onClick={() => {
                   setAddWorkLogForm(true);
@@ -160,7 +191,8 @@ function WorkLog() {
                 }}
               >
                 新增工作日誌
-              </button>
+              </button> */}
+              <DateFilterAll setMaxDate={setMaxDate} setMinDate={setMinDate} />
             </div>
             <div className="mobileToggle ">
               {mobileToggle ? (
@@ -180,18 +212,6 @@ function WorkLog() {
               )}
             </div>
           </div>
-          <DateFilterAll
-            dateRemind={dateRemind}
-            setDateRemind={setDateRemind}
-            setMaxDate={setMaxDate}
-            setMinDate={setMinDate}
-            maxDateValue={maxDateValue}
-            setMaxDateValue={setMaxDateValue}
-            minDateValue={minDateValue}
-            setMinDateValue={setMinDateValue}
-            dateAgo={dateAgo}
-            nowDate={nowDate}
-          />
         </div>
 
         <table
@@ -202,7 +222,7 @@ function WorkLog() {
             <tr>
               <th>使用者</th>
               <th>詳細資訊</th>
-              <th>工作類型</th>
+              {/* <th>工作類型</th> */}
               <th>工作說明</th>
               <th>時間</th>
             </tr>
@@ -210,29 +230,26 @@ function WorkLog() {
           {log.length !== 0 ? (
             <>
               {log.map((v, i) => {
-                const {
-                  user,
-                  job_category,
-                  Job_description,
-                  create_time,
-                  time,
-                } = v;
+                const { user, Job_description, time } = v;
                 return (
-                  <tbody key={i} className="bodyLog">
+                  <tbody
+                    key={i}
+                    className={`bodyLog ${
+                      Job_description === '' ? 'description' : ''
+                    }`}
+                  >
                     <tr>
                       <td data-title="使用者">{user}</td>
                       <td data-title="詳細資訊">
                         <FaEye
                           className="icons"
                           onClick={() => {
-                            detail(create_time);
-                            setEyeWorkLogForm(true);
+                            detail(time);
+                            setAddWorkLogForm(true);
                             setDisable(true);
+                            setSelectDate(time);
                           }}
                         />
-                      </td>
-                      <td data-title="工作類型" className="overText">
-                        {job_category}
                       </td>
                       <td data-title="工作說明" className="overText">
                         {Job_description}
@@ -266,74 +283,53 @@ function WorkLog() {
             <div className="title">新增工作日誌</div>
 
             {/* 表單內容 */}
-            <div className="addWorkLogFormContain">
-              <div className="box ">
-                <div className="gap">
-                  <div className="contents18">日期</div>
-                  <DateFilter
-                    selectDate={selectDate}
-                    setSelectDate={setSelectDate}
-                    disable={disable}
-                  />
-                </div>
-              </div>
-
-              <div className="box ">
-                {/*  工作類別  */}
-                <div className="gap">
-                  <div className="contents18">
-                    工作類別(字數限制16) <span>*必填</span>
-                  </div>
-                  <input
-                    className="handler contents18"
-                    type="text"
-                    maxLength="16"
-                    onChange={(e) => {
-                      handleChange(e.target.value, 'workCategory');
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="add">
-                <div>
-                  {/* <FaTrashAlt
-              size="17"
-              onClick={() => {
-                delCheck('確定要刪除所有需求內容?', handleClearNeed);
-              }}
-              className="clearIcon"
-            /> */}
-                  {/* <MdOutlineAddBox size="20" onClick={addN} className="addIcon" /> */}
-                </div>
-              </div>
-              <div className="needs">
-                {/* {addNeed.map((v, i) => {
-          return ( */}
-                <div className="need">
-                  <div className="one">
-                    <div className="contents18">
-                      工作說明(字數限制500)<span>*必填</span>
+            {eyeDetail.map((v, i) => {
+              const { Job_description, time } = v;
+              return (
+                <div key={i} className="addWorkLogFormContain">
+                  <div className="box ">
+                    <div className="gap">
+                      <div className="contents18">日期</div>
+                      <DateFilter selectDate={time} disable={disable} />
                     </div>
                   </div>
+                  {/* <div className="box ">
+                    <div className="gap">
+                      <div className="contents18">工作類別</div>
+                      <input
+                        className="handler contents18"
+                        type="text"
+                        value={job_category}
+                        disabled
+                      />
+                    </div>
+                  </div> */}
+                  <div className="needs">
+                    <div className="need">
+                      <div className="one">
+                        <div className="contents18">工作說明</div>
+                      </div>
 
-                  <div>
-                    <textarea
-                      className="input contents18 "
-                      name="ttt"
-                      cols="30"
-                      rows="10"
-                      maxLength="500"
-                      style={{ resize: 'none', height: '120px' }}
-                      onChange={(e) => {
-                        handleChange(e.target.value, 'workLog');
-                      }}
-                    ></textarea>
+                      <div>
+                        <textarea
+                          className="input contents18 "
+                          cols="30"
+                          rows="10"
+                          style={{ resize: 'none', height: '120px' }}
+                          value={Job_description}
+                          onChange={(e) => {
+                            handleChange(
+                              (v.Job_description = e.target.value),
+                              'workLog'
+                            );
+                          }}
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {/* );
-        })} */}
-              </div>
-            </div>
+              );
+            })}
             <button
               onClick={() => {
                 submitCheck('確認送出?');
@@ -368,7 +364,7 @@ function WorkLog() {
                       <DateFilter selectDate={time} disable={disable} />
                     </div>
                   </div>
-                  <div className="box ">
+                  {/* <div className="box ">
                     <div className="gap">
                       <div className="contents18">工作類別</div>
                       <input
@@ -378,7 +374,7 @@ function WorkLog() {
                         disabled
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="needs">
                     <div className="need">
                       <div className="one">

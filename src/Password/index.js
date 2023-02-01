@@ -7,6 +7,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 function CaseReport() {
   const [pass, setPass] = useState('');
+  const [passTow, setPassTow] = useState('');
   const [eye, setEye] = useState(false);
 
   function submitCheck(tit) {
@@ -17,7 +18,7 @@ function CaseReport() {
       confirmButtonText: '確定更改',
       denyButtonText: `取消更改`,
       confirmButtonColor: '#f2ac33',
-        denyButtonColor: '#ccc',
+      denyButtonColor: '#ccc',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -47,7 +48,7 @@ function CaseReport() {
 
   return (
     <div className="passWordContainer contents18">
-      <div>請輸入密碼:</div>
+      <div>請輸入新密碼:</div>
       <div className="">
         <input
           type={eye ? 'text' : 'password'}
@@ -73,10 +74,46 @@ function CaseReport() {
             }}
           />
         )}
+      </div>
+      <div>請再次輸入新密碼:</div>
+      <div className="">
+        <input
+          type={eye ? 'text' : 'password'}
+          maxLength="15"
+          placeholder="密碼至多15字"
+          value={passTow}
+          onChange={(e) => {
+            setPassTow(e.target.value);
+          }}
+        />
+        {eye ? (
+          <AiFillEye
+            className="eye"
+            onClick={() => {
+              setEye(false);
+            }}
+          />
+        ) : (
+          <AiFillEyeInvisible
+            className="eye"
+            onClick={() => {
+              setEye(true);
+            }}
+          />
+        )}
         <GenerallyBtn
           style={{ background: '#2c75c8', color: 'white' }}
           tit="更改"
-          handleFn1={submitCheck}
+          handleFn1={() => {
+            if (pass === passTow) {
+              submitCheck();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: '密碼不一致',
+              });
+            }
+          }}
           fn1="確認更改密碼?"
         />
       </div>

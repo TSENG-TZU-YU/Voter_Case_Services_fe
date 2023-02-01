@@ -96,6 +96,7 @@
       tbody {
         border-bottom: 1px solid #ccc;
         text-align: center;
+
         th {
           padding: 10px 15px;
           font-size: 14px;
@@ -133,6 +134,9 @@
         .sortBtn {
           @include flexCenter;
         }
+      }
+      .description {
+        background-color: red;
       }
     }
   }
@@ -332,7 +336,7 @@
   table.mobileCaseLog tbody {
     width: 100%;
   }
-  .logContainer .mobileCaseLog .bodyLog {
+  .logContainer .logContain .bodyLog {
     border-bottom: none;
   }
   table.mobileCaseLog tr,

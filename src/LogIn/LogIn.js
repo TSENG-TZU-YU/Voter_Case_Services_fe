@@ -41,8 +41,6 @@ function LogIn() {
     unit();
   }, []);
 
-  console.log('login', login);
-
   // 檢查登入sweet
   function submitCheck() {
     if (
@@ -86,6 +84,8 @@ function LogIn() {
       navigate('/header');
     } catch (err) {
       console.log(err);
+      localStorage.setItem('memberID', login[0].no);
+      record_err();
       Swal.fire({
         icon: 'error',
         title: '單位、員編或密碼錯誤',
@@ -94,10 +94,19 @@ function LogIn() {
   };
 
   const record = async () => {
-    console.log('login[0].no', login[0].no);
     try {
       let res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/login/audit`,
+        `${process.env.REACT_APP_BASE_URL}/api/audit/login`,
+        { ...login[0] }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const record_err = async () => {
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/audit/login/err`,
         { ...login[0] }
       );
     } catch (err) {

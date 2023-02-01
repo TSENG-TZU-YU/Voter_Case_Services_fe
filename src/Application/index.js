@@ -469,10 +469,23 @@ function Application({ delCheck }) {
           withCredentials: true,
         }
       );
+      // record_appSubmit();
     } catch (err) {
       console.log('sub', err);
     }
   }
+
+  //送出稽核
+  const record_appSubmit = async () => {
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/login/audit/appSubmit`
+        // { ...login[0] }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // 上傳檔案
   async function submitFile() {
