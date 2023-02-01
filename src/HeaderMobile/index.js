@@ -14,6 +14,8 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 import { FaHistory } from 'react-icons/fa';
 import { BsJournalText } from 'react-icons/bs';
+import { IoBarChartSharp } from 'react-icons/io5';
+import { TbReportSearch } from 'react-icons/tb';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -179,7 +181,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
               >
                 {/* 處理人/協理/主管 */}
                 <div className="" onClick={act}>
-                  <RiPhoneFindFill size="20" />
+                  <IoBarChartSharp size="20" />
                   案件統計
                 </div>
               </NavLink>
@@ -286,10 +288,12 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             </div>
           </NavLink>
         </nav>
-        <nav>
+
+        <nav className="vectorBottom">
           <NavLink
             to="workLog"
             className={(nav) => (nav.isActive ? 'link' : '')}
+            onClick={mobilePage}
           >
             <div className="" onClick={acf}>
               <BsJournalText size="18" />
@@ -297,8 +301,24 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             </div>
           </NavLink>
         </nav>
-        <nav>
-          <NavLink to="audit" className={(nav) => (nav.isActive ? 'link' : '')}>
+        <nav className="vectorBottom">
+          <NavLink
+            to={`workLogSearch?unit=${member.applicant_unit}`}
+            className={(nav) => (nav.isActive ? 'link' : '')}
+            onClick={mobilePage}
+          >
+            <div className="" onClick={acf}>
+              <TbReportSearch size="20" />
+              工作日誌查詢
+            </div>
+          </NavLink>
+        </nav>
+        <nav className="vectorBottom">
+          <NavLink
+            to="audit"
+            className={(nav) => (nav.isActive ? 'link' : '')}
+            onClick={mobilePage}
+          >
             <div className="" onClick={acf}>
               <FaHistory size="18" />
               稽核紀錄

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { API_URL } from '../utils/config';
 import axios from 'axios';
 import { useAuth } from '../utils/use_auth';

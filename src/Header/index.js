@@ -15,6 +15,7 @@ import { AiOutlineMenu, AiFillUnlock } from 'react-icons/ai';
 import { IoBarChartSharp } from 'react-icons/io5';
 import { FaHistory } from 'react-icons/fa';
 import { BsJournalText } from 'react-icons/bs';
+import { TbReportSearch } from 'react-icons/tb';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -328,7 +329,7 @@ function Header() {
               className={(nav) => (nav.isActive ? 'link' : '')}
             >
               <div className="" onClick={acf}>
-                <FaHistory size="18" />
+                <TbReportSearch size="20" />
                 工作日誌查詢
               </div>
             </NavLink>

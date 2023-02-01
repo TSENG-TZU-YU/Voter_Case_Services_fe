@@ -3,7 +3,6 @@
 .background {
   width: 70%;
   margin-top: 3%;
-
   .permissions {
     // background-color: $navBar;
     display: flex;
@@ -146,5 +145,18 @@
     justify-content: center;
     align-items: end;
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .auditContainer {
+    .sortSelect1 {
+      .bothFilter1 {
+        flex-direction: column;
+        .searchInput {
+          margin-bottom: $marage10;
+        }
+      }
+    }
   }
 }

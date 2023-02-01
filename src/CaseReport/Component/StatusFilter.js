@@ -13,8 +13,7 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
       label: allStatusData[i].name,
     });
   }
-  const sortOption = [{ value: '', label: '--請選擇狀態--' }, ...newData];
-  console.log('sortOption', sortOption);
+  const sortOption = [{ value: '', label: '請選擇狀態' }, ...newData];
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -49,7 +48,7 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
       ...base,
       border: '1px solid #817161',
       minHeight: '32px',
-      width: '180px',
+      width: '170px',
       // fontSize: '18px',
       borderColor: state.isFocused ? '#817161' : 'hsl(0, 0%, 80%)',
       boxShadow: 0,

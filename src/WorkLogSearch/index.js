@@ -125,7 +125,8 @@ function WorkLogSearch() {
         <table className="workContain">
           <thead>
             <tr>
-              <th></th>
+              {users.length !== 0 ? <th></th> : ''}
+
               {allDate.map((v, i) => {
                 return <th key={i}>{v}</th>;
               })}
@@ -133,39 +134,47 @@ function WorkLogSearch() {
           </thead>
 
           <tbody>
-            {users.map((v, i) => {
-              return (
-                <tr key={i}>
-                  <td>
-                    {v.name} {v.staff_code}
-                  </td>
+            {users.length !== 0 ? (
+              users.map((v, i) => {
+                return (
+                  <tr key={i}>
+                    <td>
+                      {v.name} {v.staff_code}
+                    </td>
 
-                  {allDate.map((d, i) => {
-                    let arr = workLog.filter(
-                      (val) =>
-                        val.time === d &&
-                        parseInt(val.staff_code) === parseInt(v.staff_code)
-                    );
-                    return (
-                      <td key={i}>
-                        {arr.length !== 0 ? (
-                          <GiCheckMark
-                            size={20}
-                            className="write"
-                            onClick={() => {
-                              handleView(v.staff_code, arr[0].time);
-                              setViewForm(true);
-                            }}
-                          />
-                        ) : (
-                          <IoCloseSharp size={30} className="noWrite" />
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+                    {allDate.map((d, i) => {
+                      let arr = workLog.filter(
+                        (val) =>
+                          val.time === d &&
+                          parseInt(val.staff_code) === parseInt(v.staff_code)
+                      );
+                      return (
+                        <td key={i}>
+                          {arr.length !== 0 ? (
+                            <GiCheckMark
+                              size={20}
+                              className="write"
+                              onClick={() => {
+                                handleView(v.staff_code, arr[0].time);
+                                setViewForm(true);
+                              }}
+                            />
+                          ) : (
+                            <IoCloseSharp size={30} className="noWrite" />
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={32} className="noData">
+                  目前沒有資料
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
