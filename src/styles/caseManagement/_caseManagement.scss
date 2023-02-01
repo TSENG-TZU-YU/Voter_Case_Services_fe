@@ -174,10 +174,17 @@
     padding: 0;
   }
   table.mobileCaseContain tr {
-    border-bottom: none;
-    border-top: none;
+    // border-bottom: none;
+    // border-top: none;
+    border: 1px solid #ccc;
     margin: 0 0 1em 0;
-    padding: 0.5em;
+    padding: 0 0.5em;
+  }
+  .caseContainer .mobileCaseContain .noData tr {
+    border: 0px;
+  }
+  .caseContainer .mobileCaseContain .noData td {
+    text-align: center;
   }
   table.mobileCaseContain tr.highlight {
     background-color: inherit !important;
@@ -196,6 +203,9 @@
     border-bottom: 1px dotted #ccc;
     text-align: right;
   }
+  table.mobileCaseContain td:last-child {
+    border-bottom: 0px;
+  }
   table.mobileCaseContain td[data-title]:before {
     content: attr(data-title);
     font-weight: bold;
@@ -207,7 +217,7 @@
   }
   table.mobileCaseContain td:last-child {
     padding-right: 0;
-    border-bottom: 2px solid #ccc;
+    // border-bottom: 2px solid #ccc;
   }
   table.mobileCaseContain td:empty {
     display: none;

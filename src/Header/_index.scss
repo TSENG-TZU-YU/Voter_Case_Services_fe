@@ -44,7 +44,7 @@
     align-items: flex-start;
     justify-content: start;
     flex-direction: column;
-
+// transition: count .6s;
     & div {
       margin-top: 10px;
       margin-left: 10px;
@@ -64,11 +64,19 @@
       color: $focusClrG;
     }
     .count {
+      // transform: translateX(-300px);
       div {
         margin-top: 0px;
         margin-left: 20px;
       }
     }
+    // .countDown {
+    //   transform: translateX(0);
+    //   div {
+    //     margin-top: 0px;
+    //     margin-left: 20px;
+    //   }
+    // }
   }
   .navFlex {
     display: flex;

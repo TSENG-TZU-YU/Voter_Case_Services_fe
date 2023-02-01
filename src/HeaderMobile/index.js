@@ -276,18 +276,6 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             </div>
           </NavLink>
         </nav>
-        <nav className="vectorBottom">
-          <NavLink
-            to="permissions"
-            className={(nav) => (nav.isActive ? 'link' : '')}
-            onClick={mobilePage}
-          >
-            <div className="" onClick={acf}>
-              <AiFillUnlock size="20" />
-              密碼更改
-            </div>
-          </NavLink>
-        </nav>
 
         <nav className="vectorBottom">
           <NavLink
@@ -322,6 +310,18 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             <div className="" onClick={acf}>
               <FaHistory size="18" />
               稽核紀錄
+            </div>
+          </NavLink>
+        </nav>
+        <nav className="vectorBottom">
+          <NavLink
+            to="permissions"
+            className={(nav) => (nav.isActive ? 'link' : '')}
+            onClick={mobilePage}
+          >
+            <div className="" onClick={acf}>
+              <AiFillUnlock size="20" />
+              密碼更改
             </div>
           </NavLink>
         </nav>

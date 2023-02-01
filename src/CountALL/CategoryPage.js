@@ -147,8 +147,10 @@ function CategoryPage() {
         ) : (
           <div className="allConutContainer">
             <div className="d-flex">
-              <div className="allTit">總申請案件 ： {allTotal} 件</div>
-              <div className="allTit">搜尋件數 ： {total} 件</div>
+              {/* <div className="allTit">總申請案件 ： {allTotal} 件</div> */}
+              <div className="allTit">
+                篩選結果件數 ： {total} 件 / {allTotal} 件
+              </div>
             </div>
 
             <>
