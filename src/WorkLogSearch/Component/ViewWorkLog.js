@@ -44,8 +44,8 @@ function ViewWorkLog({ setViewForm, viewData }) {
                     </div>
 
                     <textarea
-                      className="input contents18 "
-                      cols="100"
+                      className="directions contents18 "
+                      //   cols="100"
                       rows="10"
                       style={{ resize: 'none', height: '120px' }}
                       value={Job_description}

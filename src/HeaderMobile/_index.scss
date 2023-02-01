@@ -10,7 +10,7 @@
   z-index: 30;
   transition: transform 0.4s;
   .vectorBottom {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #aaa;
     padding: $padding5 0;
   }
   color: aliceblue;
@@ -39,7 +39,7 @@
   }
 }
 .up {
-  transform: translateY(-650px);
+  transform: translateY(-800px);
 }
 .down {
   transform: translateY(0);
