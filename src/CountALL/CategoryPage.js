@@ -88,7 +88,7 @@ function CategoryPage() {
     let getBar = async () => {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/simpleBarChart`
+          `${process.env.REACT_APP_BASE_URL}/api/chart/simpleBarChart?&minDate=${minDate}&maxDate=${maxDate}`
         );
         setChart(response.data);
       } catch (err) {
@@ -98,10 +98,6 @@ function CategoryPage() {
     getBar();
     getAllData();
   }, [
-    // member.user,
-    // member.handler,
-    // member.manage,
-    // member.director,
     nowCategory,
     nowStatus,
     nowUnit,

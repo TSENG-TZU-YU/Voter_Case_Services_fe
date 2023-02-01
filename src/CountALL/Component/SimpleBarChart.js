@@ -16,7 +16,7 @@ function SimpleBarChart({ chart }) {
   for (let i = 0; i < chart.length; i++) {
     newData.push({
       name: chart[i].name,
-      案件: chart[i].category,
+      案件量: chart[i].category,
     });
   }
 
@@ -39,7 +39,7 @@ function SimpleBarChart({ chart }) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="案件" fill="#8884d8" />
+        <Bar dataKey="案件量" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );
