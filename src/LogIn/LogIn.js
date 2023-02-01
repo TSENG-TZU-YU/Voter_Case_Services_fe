@@ -108,7 +108,7 @@ function LogIn() {
     <>
       <div className="logInContainer">
         <div className="container">
-          <div className="title">選民案件服務系統</div>
+          <div className="title">選民服務案件管理系統</div>
           <div className="inputContainer">
             <div className="inputContain">
               <AiFillHome className="icons" />

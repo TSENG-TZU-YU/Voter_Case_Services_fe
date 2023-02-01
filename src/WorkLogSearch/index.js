@@ -47,10 +47,6 @@ function WorkLogSearch() {
   const maxM = `${sixMonthsAgo.getFullYear()}/${month}/31`;
   const minM = `${sixMonthsAgo.getFullYear()}/${month}/01`;
 
-  let dateAgo = newDateString.replace(/\//g, '-');
-  const [dateRemind, setDateRemind] = useState('');
-  const [maxDateValue, setMaxDateValue] = useState(nowDate);
-  const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [maxDate, setMaxDate] = useState(maxM);
   const [minDate, setMinDate] = useState(minM);
 
@@ -112,13 +108,26 @@ function WorkLogSearch() {
       )}
       {/* 篩選 */}
       <div className="sortSelect1">
-        <div className="month">
-          <div>請選擇年月份：</div>
-          <MonthFilter setMaxDate={setMaxDate} setMinDate={setMinDate} />
+        <div className="monthSelect">
+          <div className="month">
+            <div>請選擇年月份：</div>
+            <MonthFilter setMaxDate={setMaxDate} setMinDate={setMinDate} />
+          </div>
+          <div className="month ms-2">
+            <div>請選擇單位：</div>
+            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} Unit={Unit} />
+          </div>
         </div>
-        <div className="month ms-2">
-          <div>請選擇單位：</div>
-          <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} Unit={Unit} />
+
+        <div className="squareContainer">
+          <div className="squareContain">
+            <div className="squareB"></div>
+            <div>：已填寫</div>
+          </div>
+          <div className="squareContain">
+            <div className="squareP"></div>
+            <div>：未填寫</div>
+          </div>
         </div>
       </div>
       <div className="workContainer">
@@ -148,19 +157,19 @@ function WorkLogSearch() {
                           val.time === d &&
                           parseInt(val.staff_code) === parseInt(v.staff_code)
                       );
+                      console.log('v', arr);
                       return (
                         <td key={i}>
-                          {arr.length !== 0 ? (
-                            <GiCheckMark
-                              size={20}
+                          {arr.length !== 0 && arr[0].Job_description !== '' ? (
+                            <div
                               className="write"
                               onClick={() => {
                                 handleView(v.staff_code, arr[0].time);
                                 setViewForm(true);
                               }}
-                            />
+                            ></div>
                           ) : (
-                            <IoCloseSharp size={30} className="noWrite" />
+                            <div className="noWrite"></div>
                           )}
                         </td>
                       );

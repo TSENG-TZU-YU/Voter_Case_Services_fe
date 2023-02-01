@@ -131,7 +131,12 @@ function ProcessingStatus({
                           : true
                       }
                       onChange={(e) => {
-                        handleStateChecked(v.id, e.target.checked, 'rc');
+                        handleStateChecked(
+                          v.id,
+                          e.target.checked,
+                          'rc',
+                          v.case_number
+                        );
                       }}
                     />
                     已回覆當事人情況
@@ -157,7 +162,12 @@ function ProcessingStatus({
                           : true
                       }
                       onChange={(e) => {
-                        handleStateChecked(v.id, e.target.checked, 'called');
+                        handleStateChecked(
+                          v.id,
+                          e.target.checked,
+                          'called',
+                          v.case_number
+                        );
                       }}
                     />
                     請委員/議員致電陳情人
@@ -205,7 +215,12 @@ function ProcessingStatus({
                           checked={v.success === 1 ? true : false}
                           disabled={HId !== member.name ? true : false}
                           onChange={(e) => {
-                            handleStateChecked(v.id, e.target.checked, 'succ');
+                            handleStateChecked(
+                              v.id,
+                              e.target.checked,
+                              'succ',
+                              v.case_number
+                            );
                           }}
                         />
                         成功
@@ -218,7 +233,12 @@ function ProcessingStatus({
                           checked={v.fail === 1 ? true : false}
                           disabled={HId !== member.name ? true : false}
                           onChange={(e) => {
-                            handleStateChecked(v.id, e.target.checked, 'fail');
+                            handleStateChecked(
+                              v.id,
+                              e.target.checked,
+                              'fail',
+                              v.case_number
+                            );
                           }}
                         />
                         失敗

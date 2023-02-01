@@ -164,9 +164,35 @@
     padding: 30px 0px 20px 0px;
     display: flex;
     align-items: center;
-    .month {
+    justify-content: space-between;
+    .monthSelect {
+      display: flex;
+      .month {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .squareContainer {
       display: flex;
       align-items: center;
+      margin-left: 30px;
+      .squareContain {
+        display: flex;
+        align-items: center;
+        .squareB,
+        .squareP {
+          width: 20px;
+          height: 20px;
+        }
+        .squareB {
+          background: #aaa;
+        }
+        .squareP {
+          background: $focusClrP;
+          margin-left: $marage10;
+        }
+      }
     }
   }
   .workContainer {
@@ -187,15 +213,22 @@
         td,
         th {
           border: 1px solid #ccc;
-          padding: 15px;
           .write {
+            background: #aaa;
+            width: 100%;
+            height: 80px;
             cursor: pointer;
           }
           .noWrite {
-            color: $focusClrP;
+            background: $focusClrP;
+            width: 100%;
+            height: 80px;
           }
         }
-
+        td:nth-child(1),
+        th {
+          padding: 15px;
+        }
         .sortBtn {
           @include flexCenter;
         }
@@ -221,11 +254,37 @@
   .workLogSearchContainer {
     max-width: 370px;
     .sortSelect1 {
-      justify-content: center;
-      .month {
-        align-items: flex-start;
-        flex-direction: column;
-        padding-left: 2px;
+      align-items: flex-start;
+      flex-direction: column;
+      .monthSelect {
+        display: flex;
+        justify-content: center;
+        .month {
+          align-items: flex-start;
+          flex-direction: column;
+          padding-left: 2px;
+        }
+      }
+
+      .squareContainer {
+        margin-left: 0px;
+        margin-top: $marage10;
+        .squareContain {
+          display: flex;
+          align-items: center;
+          .squareB,
+          .squareP {
+            width: 20px;
+            height: 20px;
+          }
+          .squareB {
+            background: #aaa;
+          }
+          .squareP {
+            background: $focusClrP;
+            margin-left: $marage10;
+          }
+        }
       }
     }
   }

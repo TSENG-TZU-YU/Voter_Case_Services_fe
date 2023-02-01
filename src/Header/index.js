@@ -119,7 +119,7 @@ function Header() {
       <div className="navTop">
         <div className="mobile">
           <AiOutlineMenu className="d-block d-md-none menu" onClick={mobile} />
-          <div className="titleH3 ">選民案件服務系統</div>
+          <div className="titleH3 ">選民服務案件管理系統</div>
         </div>
         <MdOutlineLogout className="logOut" onClick={logOut} />
       </div>
@@ -138,7 +138,7 @@ function Header() {
                 >
                   <div>
                     <HiPencilAlt size="20" />
-                    申請表新增
+                    選服案件新增
                   </div>
                 </NavLink>
               </nav>
@@ -156,7 +156,7 @@ function Header() {
                 >
                   <div className="" onClick={acf}>
                     <RiPhoneFindFill size="20" />
-                    案件紀錄查詢
+                    選服案件查詢
                   </div>
                 </NavLink>
               </nav>
@@ -179,7 +179,7 @@ function Header() {
                     }}
                   >
                     <RiFileTextLine size="20" />
-                    案件處理作業
+                    選服案件處理
                   </div>
                 </NavLink>
               </nav>
@@ -197,7 +197,7 @@ function Header() {
                   {/* 處理人/協理/主管 */}
                   <div className="navFlex" onClick={actoggle}>
                     <IoBarChartSharp size="20" />
-                    <span>案件統計</span>
+                    <span>選服案件統計</span>
                   </div>
                 </NavLink>
               </nav>
@@ -301,6 +301,40 @@ function Header() {
               </div>
             </NavLink>
           </nav>
+
+          <nav>
+            <NavLink
+              to="workLog"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <BsJournalText size="18" />
+                工作日誌填報
+              </div>
+            </NavLink>
+          </nav>
+          <nav>
+            <NavLink
+              to={`workLogSearch?unit=${member.applicant_unit}`}
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <TbReportSearch size="20" />
+                工作日誌一覽表
+              </div>
+            </NavLink>
+          </nav>
+          <nav>
+            <NavLink
+              to="audit"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+            >
+              <div className="" onClick={acf}>
+                <FaHistory size="18" />
+                操作稽核紀錄
+              </div>
+            </NavLink>
+          </nav>
           <nav>
             <NavLink
               to="permissions"
@@ -312,40 +346,8 @@ function Header() {
               </div>
             </NavLink>
           </nav>
-          <nav>
-            <NavLink
-              to="workLog"
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <BsJournalText size="18" />
-                工作日誌
-              </div>
-            </NavLink>
-          </nav>
-          <nav>
-            <NavLink
-              to={`workLogSearch?unit=${member.applicant_unit}`}
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <TbReportSearch size="20" />
-                工作日誌查詢
-              </div>
-            </NavLink>
-          </nav>
-          <nav>
-            <NavLink
-              to="audit"
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <FaHistory size="18" />
-                稽核紀錄
-              </div>
-            </NavLink>
-          </nav>
         </div>
+
         {/* 桌機版 end*/}
         {/* 手機版 */}
         <HeaderMobile

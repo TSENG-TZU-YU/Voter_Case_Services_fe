@@ -662,7 +662,7 @@ function ApplicationForm({
     setEditNeed(newData);
     setEditVerifyPage(false);
   };
-  
+
   // post 處理狀態
   const handlePostVal = (e) => {
     let val = {
@@ -929,12 +929,12 @@ function ApplicationForm({
   };
 
   // 案件處理情形 checked
-  const handleStateChecked = async (needId, checked, Ind) => {
+  const handleStateChecked = async (needId, checked, Ind, caseNum) => {
     // console.log('a', needId, checked, Ind);
     if (checked === false) {
       let response = await axios.post(
         `${API_URL}/applicationData/selChecked/${needId}`,
-        { Ind },
+        { Ind, caseNum },
         {
           withCredentials: true,
         }
@@ -943,7 +943,7 @@ function ApplicationForm({
     } else {
       let response = await axios.post(
         `${API_URL}/applicationData/selUnChecked/${needId}`,
-        { Ind },
+        { Ind, caseNum },
         {
           withCredentials: true,
         }
@@ -952,6 +952,7 @@ function ApplicationForm({
     }
   };
 
+  // 民眾反饋
   const handlepopulaceMsg = async (needId) => {
     // console.log('rrr',needId);
     let response = await axios.post(
