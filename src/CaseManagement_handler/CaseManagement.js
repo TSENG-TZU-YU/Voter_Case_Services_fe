@@ -387,7 +387,7 @@ function CaseManagement() {
                                 <td data-title="案件編號">{v.case_number}</td>
                                 <td data-title="詳細資訊" className="posClick">
                                   <Link
-                                    to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
+                                    to={`/casemgmt/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
                                     <FaEye
                                       className="icons"

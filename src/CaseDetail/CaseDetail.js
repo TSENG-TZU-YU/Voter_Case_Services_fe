@@ -79,8 +79,8 @@ function CaseDetail({ setScrollPage, scrollPage }) {
       <Link
         to={
           page === 1
-            ? '/header/caseManagement'
-            : '/header/caseManagement_handler'
+            ? '/casemgmt/header/caseManagement'
+            : '/casemgmt/header/caseManagement_handler'
         }
         className="prePage"
       >
