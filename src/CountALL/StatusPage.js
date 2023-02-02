@@ -9,6 +9,7 @@ import moment from 'moment';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import SimplePieChart from './Component/SimplePieChart';
+import SimpleBarChart from './Component/SimpleBarChart';
 
 import Loader from '../Loader';
 
@@ -69,16 +70,17 @@ function StatusPage() {
   const [handlerTtl, setHandlerTtl] = useState([]);
   const [userTtl, setUserTtl] = useState([]);
 
-  //chart
+  //bar chart
   const [chart, setChart] = useState([]);
 
-  let newChart = [];
-  for (let i = 0; i < chart.length; i++) {
-    newChart.push({
-      name: chart[i].name,
-      value: chart[i].st,
-    });
-  }
+  // pie chart
+  // let newChart = [];
+  // for (let i = 0; i < chart.length; i++) {
+  //   newChart.push({
+  //     name: chart[i].name,
+  //     value: chart[i].value,
+  //   });
+  // }
 
   //TODO:
   const data = [
@@ -115,7 +117,7 @@ function StatusPage() {
     let getBar = async () => {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/chart/SimplePieChart`
+          `${process.env.REACT_APP_BASE_URL}/api/chart/StatusPage?&minDate=${minDate}&maxDate=${maxDate}`
         );
         setChart(response.data);
       } catch (err) {
@@ -228,7 +230,8 @@ function StatusPage() {
                   </tr>
                 </tbody>
               </table>
-              <SimplePieChart chart={newChart} />
+              <SimpleBarChart chart={chart} />
+              {/* <SimplePieChart chart={newChart} /> */}
             </>
           </div>
         )}

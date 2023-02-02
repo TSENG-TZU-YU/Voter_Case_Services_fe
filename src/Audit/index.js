@@ -26,9 +26,9 @@ function Audit() {
   let dateAgo = newDateString.replace(/\//g, '-');
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
-  const [minDateValue, setMinDateValue] = useState(dateAgo);
+  const [minDateValue, setMinDateValue] = useState(nowDate);
   const [maxDate, setMaxDate] = useState(nowDate);
-  const [minDate, setMinDate] = useState(dateAgo);
+  const [minDate, setMinDate] = useState(nowDate);
 
   useEffect(() => {
     async function audit() {
@@ -70,7 +70,7 @@ function Audit() {
             setMaxDateValue={setMaxDateValue}
             minDateValue={minDateValue}
             setMinDateValue={setMinDateValue}
-            dateAgo={dateAgo}
+            // dateAgo={dateAgo}
             nowDate={nowDate}
           />
         </div>

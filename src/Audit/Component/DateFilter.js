@@ -19,7 +19,7 @@ function DateFilter({
         <div className="dateFilter">
           <input
             type="date"
-            defaultValue={dateAgo}
+            defaultValue={nowDate}
             onChange={(e) => {
               let newDate = e.target.value;
               setMinDateValue(newDate);

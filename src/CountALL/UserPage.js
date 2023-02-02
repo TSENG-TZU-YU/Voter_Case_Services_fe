@@ -8,6 +8,8 @@ import moment from 'moment';
 // import '../styles/caseManagement/_caseManagement.scss';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
+import SimplePieChart from './Component/SimplePieChart';
+import SimpleBarChart from './Component/SimpleBarChart';
 
 import Loader from '../Loader';
 
@@ -68,22 +70,8 @@ function CountPage() {
   const [handlerTtl, setHandlerTtl] = useState([]);
   const [userTtl, setUserTtl] = useState([]);
 
-  // 檢查會員
-  // useEffect(() => {
-  //   async function getMember() {
-  //     try {
-  //       // console.log('檢查是否登入');
-  //       let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-  //         withCredentials: true,
-  //       });
-  //       // console.log(response.data);
-  //       setMember(response.data);
-  //     } catch (err) {
-  //       console.log(err.response.data.message);
-  //     }
-  //   }
-  //   getMember();
-  // }, []);
+  //bar chart
+  const [chart, setChart] = useState([]);
 
   // 取得所有資料
   useEffect(() => {
@@ -118,6 +106,17 @@ function CountPage() {
         setIsLoading(false);
       }, 100);
     };
+    let getBar = async () => {
+      try {
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/chart/handlerUserPage?&minDate=${minDate}&maxDate=${maxDate}`
+        );
+        setChart(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBar();
     getAllData();
   }, [
     // member.user,
@@ -261,6 +260,7 @@ function CountPage() {
                   </tr>
                 </tbody>
               </table>
+              <SimpleBarChart chart={chart} />
             </>
           </div>
         )}

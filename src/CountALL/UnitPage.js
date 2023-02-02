@@ -8,6 +8,8 @@ import moment from 'moment';
 // import '../styles/caseManagement/_caseManagement.scss';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
+import SimplePieChart from './Component/SimplePieChart';
+import SimpleBarChart from './Component/SimpleBarChart';
 
 import Loader from '../Loader';
 
@@ -30,8 +32,6 @@ function UnitPage() {
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
   const [minDateValue, setMinDateValue] = useState(dateAgo);
-  const [unitChange, setUnitChange] = useState(false);
-  const [handleChange, setHandleChange] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,40 +50,18 @@ function UnitPage() {
 
   // get data
   const [allUnit, setAllUnitData] = useState([]);
-  const [allStatusData, setAllStatusData] = useState([]);
-  const [countStatusData, setCountStatusData] = useState([]);
   const [allCategoryData, setAllCategoryData] = useState([]);
-  const [allHandlerData, setAllHandlerData] = useState([]);
-  const [handlerData, setHandlerData] = useState([]);
   const [allUserData, setAllUserData] = useState([]);
   const [userData, setuserData] = useState([]);
 
   // get total
   const [allTotal, setAllTotal] = useState('');
   const [total, setTotal] = useState('');
-  const [stateTtl, setStateTtl] = useState([]);
-  const [categoryTtl, setCategoryTtl] = useState([]);
   const [unitTtl, setUnitTtl] = useState([]);
   const [unitAppTtl, setUnitAppTtl] = useState([]);
-  const [handlerTtl, setHandlerTtl] = useState([]);
-  const [userTtl, setUserTtl] = useState([]);
 
-  // 檢查會員
-  // useEffect(() => {
-  //   async function getMember() {
-  //     try {
-  //       // console.log('檢查是否登入');
-  //       let response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/login/auth`, {
-  //         withCredentials: true,
-  //       });
-  //       // console.log(response.data);
-  //       setMember(response.data);
-  //     } catch (err) {
-  //       console.log(err.response.data.message);
-  //     }
-  //   }
-  //   getMember();
-  // }, []);
+  //bar chart
+  const [chart, setChart] = useState([]);
 
   // 取得所有資料
   useEffect(() => {
@@ -95,46 +73,33 @@ function UnitPage() {
           withCredentials: true,
         }
       );
-      setAllCategoryData(response.data.categoryResult);
       setAllUnitData(response.data.unitResult);
-      setAllStatusData(response.data.statusResult);
-      setCountStatusData(response.data.statusResult.splice(1));
-      setAllHandlerData(response.data.handlerResult);
       setAllUserData(response.data.userResult);
       setuserData(response.data.AllUserResult);
-      setHandlerData(response.data.selHandlerResult);
 
       // total
       setAllTotal(response.data.pagination.allTotal);
       setTotal(response.data.pagination.total);
-      setStateTtl(response.data.pagination.counts);
-      setCategoryTtl(response.data.pagination.categoryCounts);
       setUnitTtl(response.data.pagination.unitCounts);
       setUnitAppTtl(response.data.pagination.unitAppCounts);
-      setHandlerTtl(response.data.pagination.handlerCounts);
-      setUserTtl(response.data.pagination.userCounts);
-      // console.log('object',allStatusData);
       setTimeout(() => {
         setIsLoading(false);
       }, 100);
     };
+
+    let getBar = async () => {
+      try {
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/chart/appUnitPage?&minDate=${minDate}&maxDate=${maxDate}`
+        );
+        setChart(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBar();
     getAllData();
-  }, [
-    // member.user,
-    // member.handler,
-    // member.manage,
-    // member.director,
-    nowCategory,
-    nowStatus,
-    nowUnit,
-    minDate,
-    maxDate,
-    handler,
-    nowUser,
-    nowUserUnit,
-    nowHandlerUnit,
-    nowAppUnit,
-  ]);
+  }, [nowUnit, minDate, maxDate, handler, nowUser, nowUserUnit, nowAppUnit]);
 
   // %
   const percent = (ttl, num) => {
@@ -227,6 +192,7 @@ function UnitPage() {
                   </tr>
                 </tbody>
               </table>
+              <SimpleBarChart chart={chart} />
             </>
           </div>
         )}

@@ -16,10 +16,9 @@ function SimpleBarChart({ chart }) {
   for (let i = 0; i < chart.length; i++) {
     newData.push({
       name: chart[i].name,
-      案件量: chart[i].category,
+      案件量: chart[i].value,
     });
   }
-
 
   return (
     <ResponsiveContainer width="90%" height="60%">

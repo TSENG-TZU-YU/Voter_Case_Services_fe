@@ -81,11 +81,9 @@ function ApplicationForm({
   const [editNeed, setEditNeed] = useState([]);
   const [getFile, setGetFile] = useState([]);
   const [getDbFileTime, setGetDbFileTime] = useState([]);
-  // const radioInput = [
-  //   { title: '一次性', value: '1' },
-  //   { title: '短期', value: '2' },
-  //   { title: '長期', value: '3' },
-  // ];
+
+  let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+
   //友好程度
   const relation = [
     { name: 'VIP' },
@@ -414,11 +412,12 @@ function ApplicationForm({
             icon: 'success',
             title: '送出成功',
             confirmButtonColor: '#f2ac33',
+          }).then(() => {
+            navigate('/header/caseManagement_handler');
           });
           submitFile();
           hanleAddNeed(e, 'submit');
           submit();
-          navigate('/header/caseManagement_handler');
         } else if (result.isDenied) {
           Swal.fire({
             icon: 'info',
@@ -433,12 +432,11 @@ function ApplicationForm({
   //送出表單內容
   async function submit() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      record_appSubmit();
       let response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/submit/${num}`,
         {
           ...detailData[0],
-          // TODO: 申請狀態 主管權限是1 || 0 判斷
           status_id: 4,
           create_time: endTime,
         }
@@ -448,10 +446,21 @@ function ApplicationForm({
     }
   }
 
+  //送出稽核
+  const record_appSubmit = async () => {
+    try {
+      let res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/audit/appSubmit`,
+        { user: member.staff_code, number: num, create_time: endTime }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //儲存表單內容
   async function store() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/store/${num}`,
         {
@@ -469,7 +478,6 @@ function ApplicationForm({
   // 上傳檔案
   async function submitFile() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
       const formData = new FormData();
       // 取得刪除後端檔案的年份
