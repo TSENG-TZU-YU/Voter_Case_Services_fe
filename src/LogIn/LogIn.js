@@ -41,7 +41,7 @@ function LogIn() {
     }
 
     unit();
-  }, [isLock]);
+  }, []);
 
   // 檢查登入sweet
   function submitCheck() {
@@ -83,7 +83,7 @@ function LogIn() {
         timer: 800,
       });
       record();
-      navigate('/casemgmt/header');
+      navigate('/header');
     } catch (err) {
       console.log(err.response.data);
       record_err();

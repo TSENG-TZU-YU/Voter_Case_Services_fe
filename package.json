@@ -1,6 +1,7 @@
 {
   "name": "application_form",
   "home": "./",
+  "homepage": "/casemgmt/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+ 
   "eslintConfig": {
     "extends": [
       "react-app",
