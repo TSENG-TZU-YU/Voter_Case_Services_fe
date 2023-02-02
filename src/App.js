@@ -67,8 +67,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<LogIn />} />
-          <Route path={`header`} element={<Header />}>
+          <Route path="/casemgmt" element={<LogIn />} />
+          <Route path={`/casemgmt/header`} element={<Header />}>
             <Route index element={<HeaderLeft />} />
             <Route path={`caseManagement`} element={<CaseManagement />} />
             <Route

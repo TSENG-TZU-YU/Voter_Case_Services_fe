@@ -83,7 +83,7 @@ function LogIn() {
         timer: 800,
       });
       record();
-      navigate('/header');
+      navigate('/casemgmt/header');
     } catch (err) {
       console.log(err.response.data);
       record_err();
@@ -93,7 +93,7 @@ function LogIn() {
           title: '帳號已鎖住，請聯絡管理員處理',
         });
         setPassErr(true);
-        setIsLock(err.response.data.isLock);
+        setIsLock(4);
       }
       if (err.response.data.message === '員編或密碼錯誤') {
         Swal.fire({

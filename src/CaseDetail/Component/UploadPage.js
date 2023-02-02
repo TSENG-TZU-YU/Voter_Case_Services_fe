@@ -453,7 +453,7 @@ function UploadPage({ setAddStatus, delCheck }) {
                   handleFn2={fileSubmit}
                 />
 
-                {member.user === 1 && status === 6 && page === 1 ? (
+                {member.user === 1 && status === 6 && page === 2 ? (
                   <GenerallyBtn
                     style={{ background: '#f2ac33', color: 'white' }}
                     tit="確認補件完成"
