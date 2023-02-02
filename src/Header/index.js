@@ -91,7 +91,7 @@ function Header() {
   const logOut = async () => {
     try {
       let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
-      navigate('/');
+      navigate('/casemgmt');
       localStorage.setItem('memberID', '');
     } catch (err) {
       console.log(err);
