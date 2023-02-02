@@ -17,6 +17,7 @@ function LogIn() {
   const [unit, setUnit] = useState([]);
   const [eye, setEye] = useState(false);
   const [isLock, setIsLock] = useState('0');
+  const [passErr, setPassErr] = useState(false);
 
   // const [check, setCheck] = useState([]);
 
@@ -91,7 +92,7 @@ function LogIn() {
           icon: 'error',
           title: '帳號已鎖住，請聯絡管理員處理',
         });
-
+        setPassErr(true);
         setIsLock(err.response.data.isLock);
       }
       if (err.response.data.message === '員編或密碼錯誤') {
@@ -99,6 +100,7 @@ function LogIn() {
           icon: 'error',
           title: '單位、員編或密碼錯誤',
         });
+        setPassErr(true);
         setIsLock(err.response.data.isLock + 1);
       }
       if (err.response.data.message === '單位錯誤') {
@@ -188,7 +190,12 @@ function LogIn() {
                 />
               )}
             </div>
-            <div className="errPass">密碼錯誤次數 {isLock}/4</div>
+            {passErr ? (
+              <div className="errPass">密碼錯誤次數 {isLock}/4</div>
+            ) : (
+              ''
+            )}
+
             <button onClick={submitCheck}>登入</button>
           </div>
         </div>
