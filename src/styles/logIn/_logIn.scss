@@ -25,6 +25,9 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      .errPass {
+        color: $focusClrP;
+      }
       .inputContain {
         display: flex;
         align-items: center;

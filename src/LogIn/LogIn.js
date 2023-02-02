@@ -16,6 +16,7 @@ function LogIn() {
   const { member, setMember, isLogin, setIsLogin } = useAuth();
   const [unit, setUnit] = useState([]);
   const [eye, setEye] = useState(false);
+  const [isLock, setIsLock] = useState('0');
 
   // const [check, setCheck] = useState([]);
 
@@ -39,7 +40,7 @@ function LogIn() {
     }
 
     unit();
-  }, []);
+  }, [isLock]);
 
   // 檢查登入sweet
   function submitCheck() {
@@ -83,14 +84,24 @@ function LogIn() {
       record();
       navigate('/header');
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
       record_err();
       if (err.response.data.message === '帳號已鎖住，請聯絡管理員處理') {
         Swal.fire({
           icon: 'error',
           title: '帳號已鎖住，請聯絡管理員處理',
         });
-      } else {
+
+        setIsLock(err.response.data.isLock);
+      }
+      if (err.response.data.message === '員編或密碼錯誤') {
+        Swal.fire({
+          icon: 'error',
+          title: '單位、員編或密碼錯誤',
+        });
+        setIsLock(err.response.data.isLock + 1);
+      }
+      if (err.response.data.message === '單位錯誤') {
         Swal.fire({
           icon: 'error',
           title: '單位、員編或密碼錯誤',
@@ -177,6 +188,7 @@ function LogIn() {
                 />
               )}
             </div>
+            <div className="errPass">密碼錯誤次數 {isLock}/4</div>
             <button onClick={submitCheck}>登入</button>
           </div>
         </div>
