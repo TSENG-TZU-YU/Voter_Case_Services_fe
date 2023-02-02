@@ -103,12 +103,13 @@ function WorkLog() {
   }, [addWorkLogForm, minDate, maxDate]);
 
   //查看詳細
-  async function detail(create_time) {
+  async function detail(time, staff_code) {
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/workLog/detail`,
         {
-          create_time: create_time,
+          create_time: time,
+          staff_code: staff_code,
         },
         {
           withCredentials: true,
@@ -182,6 +183,7 @@ function WorkLog() {
       <div className="logContainer">
         <div className="sortSelect">
           <div className="logBetween">
+            <div>請選擇年月份：</div>
             <div className="me-2">
               {/* <button
                 className="addButton"
@@ -230,12 +232,12 @@ function WorkLog() {
           {log.length !== 0 ? (
             <>
               {log.map((v, i) => {
-                const { user, Job_description, time } = v;
+                const { user, staff_code, Job_description, time } = v;
                 return (
                   <tbody
                     key={i}
                     className={`bodyLog ${
-                      Job_description === '' ? 'description' : ''
+                      Job_description === '' ? 'description noText' : ''
                     }`}
                   >
                     <tr>
@@ -244,7 +246,7 @@ function WorkLog() {
                         <FaEye
                           className="icons"
                           onClick={() => {
-                            detail(time);
+                            detail(time, staff_code);
                             setAddWorkLogForm(true);
                             setDisable(true);
                             setSelectDate(time);

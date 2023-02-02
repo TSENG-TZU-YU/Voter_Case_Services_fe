@@ -15,6 +15,7 @@
   display: flex;
   justify-content: center;
   white-space: nowrap;
+  font-size: clamp(12px, 1vw, 18px);
   .mobileToggle {
     display: none;
   }
@@ -39,6 +40,7 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .addButton {
           display: block;
           margin: 0 $marage10;
@@ -92,6 +94,9 @@
       tbody :hover {
         background: #eee;
       }
+      .noText :hover {
+        background: $focusClrP;
+      }
       thead,
       tbody {
         border-bottom: 1px solid #ccc;
@@ -136,7 +141,7 @@
         }
       }
       .description {
-        background-color: red;
+        background-color: $focusClrP;
       }
     }
   }

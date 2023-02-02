@@ -71,6 +71,9 @@ function Application({ delCheck }) {
   // const [litigant, setLitigant] = useState(false);
   // const [client, setClient] = useState(false);
 
+  let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+  let number = parseInt(Date.now() / 10000);
+
   //友好程度
   const relation = [
     { name: 'VIP' },
@@ -452,16 +455,15 @@ function Application({ delCheck }) {
   //送出表單內容
   async function submit() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      record_appSubmit();
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_post`,
         {
           ...submitValue[0],
           need: addNeed,
-          number: parseInt(Date.now() / 10000),
+          number: number,
           id: member.id,
           user: member.name,
-          // TODO: 申請狀態 一般職員跟主管送出的狀態不同
           status: 4,
           create_time: endTime,
         },
@@ -469,7 +471,6 @@ function Application({ delCheck }) {
           withCredentials: true,
         }
       );
-      // record_appSubmit();
     } catch (err) {
       console.log('sub', err);
     }
@@ -479,8 +480,8 @@ function Application({ delCheck }) {
   const record_appSubmit = async () => {
     try {
       let res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/login/audit/appSubmit`
-        // { ...login[0] }
+        `${process.env.REACT_APP_BASE_URL}/api/audit/appSubmit`,
+        { user: member.staff_code, number: number, create_time: endTime }
       );
     } catch (err) {
       console.log(err);
@@ -490,7 +491,6 @@ function Application({ delCheck }) {
   // 上傳檔案
   async function submitFile() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let noTime = moment(Date.now()).format('YYYYMMDDHHmmss');
       const formData = new FormData();
       for (let i = 0; i < addFile.length; i++) {
@@ -498,7 +498,7 @@ function Application({ delCheck }) {
       }
       formData.append('fileNo', addNo + '-' + noTime);
 
-      formData.append('number', parseInt(Date.now() / 10000));
+      formData.append('number', number);
       formData.append('create_time', endTime);
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_post/file`,
@@ -517,7 +517,6 @@ function Application({ delCheck }) {
   //儲存表單內容
   async function store() {
     try {
-      let endTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_post`,
         {

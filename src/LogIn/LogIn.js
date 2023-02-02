@@ -84,12 +84,18 @@ function LogIn() {
       navigate('/header');
     } catch (err) {
       console.log(err);
-      localStorage.setItem('memberID', login[0].no);
       record_err();
-      Swal.fire({
-        icon: 'error',
-        title: '單位、員編或密碼錯誤',
-      });
+      if (err.response.data.message === '帳號已鎖住，請聯絡管理員處理') {
+        Swal.fire({
+          icon: 'error',
+          title: '帳號已鎖住，請聯絡管理員處理',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '單位、員編或密碼錯誤',
+        });
+      }
     }
   };
 
