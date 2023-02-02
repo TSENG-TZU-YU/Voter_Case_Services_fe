@@ -157,7 +157,6 @@ function WorkLogSearch() {
                           val.time === d &&
                           parseInt(val.staff_code) === parseInt(v.staff_code)
                       );
-                      console.log('v', arr);
                       return (
                         <td key={i}>
                           {arr.length !== 0 && arr[0].Job_description !== '' ? (

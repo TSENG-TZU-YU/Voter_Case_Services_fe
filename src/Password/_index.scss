@@ -2,8 +2,17 @@
 
 .passWordContainer {
   margin: $marage10 0;
-  .contents18 {
-    font-size: $contentText18;
+  // background: lemonchiffon;
+  border: 1px solid $subClrBrown;
+  padding: $marage10;
+  font-size: $contentText18;
+  .passWordContain {
+    // background: lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: $marage10;
+    @include scrollbar;
   }
   .btn {
     display: flex;
@@ -20,5 +29,174 @@
     font-size: 1.3rem;
     color: #444;
     cursor: pointer;
+  }
+}
+
+.unlockPasswordContainer {
+  // background: lemonchiffon;
+  margin: $marage10 auto 0;
+  border: 1px solid $subClrBrown;
+  padding: $marage10;
+  font-size: $contentText18;
+  width: 100%;
+  .unlockPassword {
+    @include scrollbar;
+  }
+  .unlockPasswordContain {
+    // background: lemonchiffon;
+    margin-top: $marage10;
+    .bodyHover :hover {
+      background: #eee;
+    }
+    thead,
+    .body {
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      tr,
+      th,
+      td {
+        white-space: nowrap;
+        .passwStart {
+          text-align: start;
+        }
+        .passwordInp {
+          text-align: left;
+          .center {
+            display: flex;
+            align-items: center;
+            .eye {
+              font-size: 1.3rem;
+              color: #444;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      th {
+        padding: 10px 15px;
+        .arrow {
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+      td {
+        padding: 15px;
+        .icons {
+          width: 40px;
+          height: 20px;
+          cursor: pointer;
+          color: pink;
+        }
+      }
+    }
+    .noData {
+      // background: lavenderblush;
+      font-size: $contentText18;
+      color: $focusClrG;
+      text-align: center;
+      .noTd {
+        padding: 15px;
+      }
+    }
+  }
+}
+
+.tit {
+  font-size: $contentTit;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 1px dashed $subClrBrown;
+  color: $subClrBrown;
+  // padding-bottom: $marage10;
+}
+
+@media screen and (max-width: 1000px) {
+  .passWordContainer {
+    max-width: 370px;
+    margin: $marage10 0;
+    // background: lemonchiffon;
+    border: 1px solid $subClrBrown;
+    padding: $marage10;
+    font-size: $contentText18;
+    .passWordContain {
+      // background: lightcoral;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: $marage10;
+      @include scrollbar;
+    }
+    .eye {
+      font-size: 1.3rem;
+      color: #444;
+      cursor: pointer;
+    }
+  }
+
+  .unlockPasswordContainer {
+    max-width: 370px;
+
+    margin: $marage10 auto 0;
+    border: 1px solid $subClrBrown;
+    padding: $marage10;
+    font-size: $contentText18;
+    // background: lemonchiffon;
+    .unlockPasswordContain {
+      margin-top: $marage10;
+      @include scrollbar;
+      .bodyHover :hover {
+        background: #eee;
+      }
+      thead,
+      .body {
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        tr,
+        th,
+        td {
+          white-space: nowrap;
+          .passwStart {
+            text-align: start;
+          }
+          .passwordInp {
+            text-align: left;
+            .center {
+              display: flex;
+              align-items: center;
+              .eye {
+                font-size: 1.3rem;
+                color: #444;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        th {
+          padding: 10px 15px;
+          .arrow {
+            font-size: 2rem;
+            cursor: pointer;
+          }
+        }
+        td {
+          padding: 15px;
+          .icons {
+            width: 40px;
+            height: 20px;
+            cursor: pointer;
+            color: pink;
+          }
+        }
+      }
+      .noData {
+        // background: lavenderblush;
+        font-size: $contentText18;
+        color: $focusClrG;
+        text-align: center;
+        .noTd {
+          padding: 15px;
+        }
+      }
+    }
   }
 }
