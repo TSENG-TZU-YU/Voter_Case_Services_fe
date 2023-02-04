@@ -163,6 +163,7 @@ function UploadPage({ setAddStatus, delCheck }) {
         name: fileName,
         dbTime: dbTime,
         fileNo: fileNo,
+        withCredentials: true,
       },
       method: 'POST',
       responseType: 'blob', // important 下載檔案需要轉
@@ -292,12 +293,10 @@ function UploadPage({ setAddStatus, delCheck }) {
         `${process.env.REACT_APP_BASE_URL}/api/1.0/applicationData/postHandleFile/${num}`,
         formData,
         {
-          withCredentials: true,
-        },
-        {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
+          withCredentials: true,
         }
       );
       setFilesData([{ fileName: '' }]);
@@ -340,10 +339,10 @@ function UploadPage({ setAddStatus, delCheck }) {
   }
 
   const fileSubmitStatus = async () => {
-    console.log('a');
     try {
-      let response = await axios.post(
+      let response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`,
+        { test: '' },
         {
           withCredentials: true,
         }
@@ -469,7 +468,7 @@ function UploadPage({ setAddStatus, delCheck }) {
                   handleFn2={fileSubmit}
                 />
 
-                {member.user === 1 && status === 6 && page === 2 ? (
+                {member.handler === 1 && status === 6 && page === 2 ? (
                   <GenerallyBtn
                     style={{ background: '#f2ac33', color: 'white' }}
                     tit="確認補件完成"
