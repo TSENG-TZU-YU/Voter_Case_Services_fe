@@ -79,12 +79,10 @@ function WorkLog() {
   // 日誌
   const [EyeWorkLogForm, setEyeWorkLogForm] = useState(false);
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
-  console.log('setLog', log);
   const handleChange = (val, input) => {
     let newData = [...log];
     // if (input === 'workCategory') newData[0].workCategory = val;
     if (input === 'workLog') newData[addWorkLog].Job_description = val;
-    console.log('newData', newData);
     setLog(newData);
   };
 
