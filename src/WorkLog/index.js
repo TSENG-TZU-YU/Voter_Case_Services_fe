@@ -17,7 +17,7 @@ import Loader from '../Loader';
 import { useAuth } from '../utils/use_auth';
 function WorkLog() {
   const [log, setLog] = useState([]);
-  const [addWorkLog, setAddWorkLog] = useState([{ workLog: '' }]);
+  const [addWorkLog, setAddWorkLog] = useState([]);
   const [eyeDetail, setEyeDetail] = useState([]);
   const [mobileToggle, setMobileToggle] = useState(true);
   const [disable, setDisable] = useState(false);
@@ -80,11 +80,11 @@ function WorkLog() {
   const [EyeWorkLogForm, setEyeWorkLogForm] = useState(false);
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
 
-  const handleChange = (val, input) => {
+  const handleChange = (val, input, i) => {
     let newData = [...addWorkLog];
     // if (input === 'workCategory') newData[0].workCategory = val;
-    if (input === 'workLog') newData[0].workLog = val;
-
+    if (input === 'workLog') newData[0].addWorkLog = val;
+    console.log(newData);
     setAddWorkLog(newData);
   };
 
@@ -132,7 +132,7 @@ function WorkLog() {
 
   // 送出申請表sweet
   function submitCheck(tit) {
-    if (addWorkLog[0].workLog === '') {
+    if (log[0].workLog === '') {
       Swal.fire({
         icon: 'error',
         title: '請填寫完整內容',
@@ -140,7 +140,7 @@ function WorkLog() {
       });
     }
     // addWorkLog[0].workCategory !== '' &&
-    if (addWorkLog[0].workLog !== '') {
+    if (log[0].workLog !== '') {
       Swal.fire({
         title: tit,
         showDenyButton: true,
@@ -176,7 +176,7 @@ function WorkLog() {
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/workLog/submit`,
         {
-          ...addWorkLog[0],
+          ...log[0],
           time: selectDate,
         },
         {
@@ -344,11 +344,12 @@ function WorkLog() {
                           cols="30"
                           rows="10"
                           style={{ resize: 'none', height: '120px' }}
-                          value={Job_description}
+                          value={v.Job_description}
                           onChange={(e) => {
                             handleChange(
                               (v.Job_description = e.target.value),
-                              'workLog'
+                              'workLog',
+                              i
                             );
                           }}
                         ></textarea>

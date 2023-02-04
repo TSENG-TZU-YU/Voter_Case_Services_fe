@@ -179,8 +179,8 @@ function Application({ delCheck }) {
           },
           { withCredentials: true }
         );
+        console.log('111', res.response.data.msg);
         setGetHandler(res.data);
-        // console.log('handler2222');
       } catch (err) {
         console.log(err);
       }
@@ -190,7 +190,9 @@ function Application({ delCheck }) {
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/application_get/source`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setGetSource(res.data);
         // console.log('req.session.member', res.session.data.message);
@@ -203,7 +205,9 @@ function Application({ delCheck }) {
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/application_get/category`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setGetCategory(res.data);
       } catch (err) {
@@ -216,7 +220,9 @@ function Application({ delCheck }) {
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setGetUnit(res.data);
         // console.log('object', 222);
@@ -230,7 +236,9 @@ function Application({ delCheck }) {
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/application_get/county`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setGetCounty(res.data);
       } catch (err) {
@@ -252,7 +260,9 @@ function Application({ delCheck }) {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
         { area: county },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
 
       setGetArea(res.data);
@@ -266,7 +276,9 @@ function Application({ delCheck }) {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
         { rimin: area },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
 
       setGetRimin(res.data);
@@ -281,7 +293,9 @@ function Application({ delCheck }) {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
         { area: county },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
 
       setGetClientArea(res.data);
@@ -296,7 +310,9 @@ function Application({ delCheck }) {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
         { rimin: area },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
 
       setGetclientRimin(res.data);
