@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './_index.scss';
 import moment from 'moment';
+import Loader from '../Loader';
 
 import DateFilter from './Component/DateFilter.js';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import { clearConfigCache } from 'prettier';
 function Audit() {
   const [audit, setAudit] = useState([]);
   const [nameSearch, setNameSearch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   //date
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -32,12 +34,16 @@ function Audit() {
 
   useEffect(() => {
     async function audit() {
+      setIsLoading(true);
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}&search=${nameSearch}`
         );
 
         setAudit(res.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        });
       } catch (err) {
         console.log(err);
       }
@@ -84,30 +90,41 @@ function Audit() {
             <th>時間</th>
           </tr>
         </thead>
-
-        {audit.length !== 0 ? (
-          <>
-            {audit.map((v, i) => {
-              const { user, record, time } = v;
-              return (
-                <tbody key={i}>
-                  <tr>
-                    <td>{user}</td>
-                    <td>{record}</td>
-                    <td>{time}</td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </>
-        ) : (
+        {isLoading ? (
           <tbody className="noData">
             <tr>
-              <td colSpan={3} className="noTd">
-                目前沒有資料
+              <td colSpan={10} className="noTd">
+                <Loader />
               </td>
             </tr>
           </tbody>
+        ) : (
+          <>
+            {audit.length !== 0 ? (
+              <>
+                {audit.map((v, i) => {
+                  const { user, record, time } = v;
+                  return (
+                    <tbody key={i}>
+                      <tr>
+                        <td>{user}</td>
+                        <td>{record}</td>
+                        <td>{time}</td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
+              </>
+            ) : (
+              <tbody className="noData">
+                <tr>
+                  <td colSpan={3} className="noTd">
+                    目前沒有資料
+                  </td>
+                </tr>
+              </tbody>
+            )}
+          </>
         )}
       </table>
     </div>

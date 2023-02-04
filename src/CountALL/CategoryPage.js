@@ -88,7 +88,10 @@ function CategoryPage() {
     let getBar = async () => {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/chart/CategoryPage?&minDate=${minDate}&maxDate=${maxDate}`
+          `${process.env.REACT_APP_BASE_URL}/api/chart/CategoryPage?&minDate=${minDate}&maxDate=${maxDate}`,
+          {
+            withCredentials: true,
+          }
         );
         setChart(response.data);
       } catch (err) {
