@@ -81,11 +81,11 @@ function WorkLog() {
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
 
   const handleChange = (val, input, i) => {
-    let newData = [...addWorkLog];
+    let newData = [...log];
     // if (input === 'workCategory') newData[0].workCategory = val;
-    if (input === 'workLog') newData[0].addWorkLog = val;
+    if (input === 'workLog') newData[i].Job_description = val;
     console.log(newData);
-    setAddWorkLog(newData);
+    setLog(newData);
   };
 
   useEffect(() => {
@@ -310,7 +310,7 @@ function WorkLog() {
             />
             <div className="title">新增工作日誌</div>
 
-            {/* 表單內容 */}
+            {/* 表單內容 使用中*/}
             {eyeDetail.map((v, i) => {
               const { Job_description, time } = v;
               return (
