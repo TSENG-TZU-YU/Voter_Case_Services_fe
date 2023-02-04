@@ -17,7 +17,7 @@ import Loader from '../Loader';
 import { useAuth } from '../utils/use_auth';
 function WorkLog() {
   const [log, setLog] = useState([]);
-  const [addWorkLog, setAddWorkLog] = useState([]);
+  const [addWorkLog, setAddWorkLog] = useState('');
   const [eyeDetail, setEyeDetail] = useState([]);
   const [mobileToggle, setMobileToggle] = useState(true);
   const [disable, setDisable] = useState(false);
@@ -79,14 +79,14 @@ function WorkLog() {
   // 日誌
   const [EyeWorkLogForm, setEyeWorkLogForm] = useState(false);
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
-
-  const handleChange = (val, input, i) => {
+  console.log('setLog', log);
+  const handleChange = (val, input) => {
     let newData = [...log];
     console.log('a', newData);
 
     // if (input === 'workCategory') newData[0].workCategory = val;
-    if (input === 'workLog') newData[i].Job_description = val;
-    console.log('b', newData);
+    if (input === 'workLog') newData[addWorkLog].Job_description = val;
+    console.log('newData', newData);
     setLog(newData);
   };
 
@@ -114,13 +114,14 @@ function WorkLog() {
   }, [addWorkLogForm, minDate, maxDate]);
 
   //查看詳細
-  async function detail(time, staff_code) {
+  async function detail(time, staff_code, id) {
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/workLog/detail`,
         {
           create_time: time,
           staff_code: staff_code,
+          id: id,
         },
         {
           withCredentials: true,
@@ -131,7 +132,7 @@ function WorkLog() {
       console.log('sub', err);
     }
   }
-
+  console.log('eyeDetail', eyeDetail);
   // 送出申請表sweet
   function submitCheck(tit) {
     if (log[0].workLog === '') {
@@ -171,14 +172,13 @@ function WorkLog() {
       });
     }
   }
-
   //送出表單內容
   async function submit() {
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/workLog/submit`,
         {
-          ...log[0],
+          AllData: log,
           time: selectDate,
         },
         {
@@ -251,7 +251,7 @@ function WorkLog() {
               {log.length !== 0 ? (
                 <>
                   {log.map((v, i) => {
-                    const { user, staff_code, Job_description, time } = v;
+                    const { user, id, staff_code, Job_description, time } = v;
                     return (
                       <tbody
                         key={i}
@@ -265,10 +265,11 @@ function WorkLog() {
                             <FaPencilAlt
                               className="icons"
                               onClick={() => {
-                                detail(time, staff_code);
+                                detail(time, staff_code, id);
                                 setAddWorkLogForm(true);
                                 setDisable(true);
                                 setSelectDate(time);
+                                setAddWorkLog(i);
                               }}
                             />
                           </td>
@@ -350,8 +351,7 @@ function WorkLog() {
                           onChange={(e) => {
                             handleChange(
                               (v.Job_description = e.target.value),
-                              'workLog',
-                              i
+                              'workLog'
                             );
                           }}
                         ></textarea>
