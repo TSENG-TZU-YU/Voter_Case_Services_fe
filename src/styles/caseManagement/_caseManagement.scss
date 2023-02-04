@@ -15,26 +15,15 @@
     @include scrollbar;
   }
   .sortSelect {
-    background: lemonchiffon;
+    // background: lemonchiffon;
     width: 100%;
     padding: 20px 0px 0px;
     display: flex;
     justify-content: space-between;
     // height: 0px;
     .selIcon {
-      margin-bottom: $marage10;
     }
-    .click {
-      color: $subClrBrown;
-    }
-    .selTrans {
-      z-index: -1;
-    }
-    .up {
-      transform: translateY(-200px);
-    }
-    .down {
-    }
+
     .bothFilter {
       display: flex;
       justify-content: flex-start;
@@ -43,6 +32,18 @@
       }
     }
   }
+  .click {
+    color: $subClrBrown;
+  }
+  .selTrans {
+    margin-top: $marage10;
+  }
+  .up {
+    transform: translateY(-200px);
+  }
+  .down {
+  }
+
   .inputSearch {
     margin-top: $marage10;
     .searchInput {

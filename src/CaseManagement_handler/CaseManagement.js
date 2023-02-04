@@ -21,7 +21,11 @@ import Loader from '../Loader';
 
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
-import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
+import {
+  BsToggleOff,
+  BsToggleOn,
+  BsFillFilterSquareFill,
+} from 'react-icons/bs';
 
 function CaseManagement() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -53,6 +57,8 @@ function CaseManagement() {
   const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [isLoading, setIsLoading] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
+  const [selClick, setSelClick] = useState(false);
+
   // 篩選
   const [nowStatus, setNowStatus] = useState('');
   const [nowCategory, setNowCategory] = useState('');
@@ -263,58 +269,71 @@ function CaseManagement() {
 
           <div className="m-view">
             <div className="sortSelect">
-              <div className="both">
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <CategoryFilter
-                      allCategoryData={allCategoryData}
-                      setNowCategory={setNowCategory}
-                    />
-                  </div>
-                  <div className="margeNone">
-                    <StatusFilter
-                      allStatusData={allStatusData}
-                      setNowStatus={setNowStatus}
-                    />
-                  </div>
-                </div>
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                  </div>
-                  <div className="marge5None">
-                    <UnitHandlerFilter
-                      allUnit={allUnit}
-                      setNowHUnit={setNowHUnit}
-                    />
-                  </div>
-                </div>
-              </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
+              <BsFillFilterSquareFill
+                size={25}
+                className={`selIcon ${selClick ? 'click' : ''}`}
+                onClick={() => {
+                  setSelClick(!selClick);
+                }}
               />
-              <div className="inputSearch">
-                <input
-                  className="searchInput"
-                  placeholder="Search.."
-                  type="text"
-                  maxLength={15}
-                  value={nameSearch}
-                  onChange={(e) => {
-                    let textValue = e.target.value;
-                    setNameSearch(textValue);
-                  }}
-                />
-              </div>
+              {selClick ? (
+                <div className="selTrans">
+                  <div className="both">
+                    <div className="bothFilter">
+                      <div className="marge5">
+                        <CategoryFilter
+                          allCategoryData={allCategoryData}
+                          setNowCategory={setNowCategory}
+                        />
+                      </div>
+                      <div className="margeNone">
+                        <StatusFilter
+                          allStatusData={allStatusData}
+                          setNowStatus={setNowStatus}
+                        />
+                      </div>
+                    </div>
+                    <div className="bothFilter">
+                      <div className="marge5">
+                        <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                      </div>
+                      <div className="marge5None">
+                        <UnitHandlerFilter
+                          allUnit={allUnit}
+                          setNowHUnit={setNowHUnit}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <DateFilter
+                    dateRemind={dateRemind}
+                    setDateRemind={setDateRemind}
+                    setMaxDate={setMaxDate}
+                    setMinDate={setMinDate}
+                    maxDateValue={maxDateValue}
+                    setMaxDateValue={setMaxDateValue}
+                    minDateValue={minDateValue}
+                    setMinDateValue={setMinDateValue}
+                    dateAgo={dateAgo}
+                    nowDate={nowDate}
+                  />
+                  <div className="inputSearch">
+                    <input
+                      className="searchInput"
+                      placeholder="Search.."
+                      type="text"
+                      maxLength={15}
+                      value={nameSearch}
+                      onChange={(e) => {
+                        let textValue = e.target.value;
+                        setNameSearch(textValue);
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           </div>
           <div className="mobileToggle">

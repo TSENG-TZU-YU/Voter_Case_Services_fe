@@ -304,61 +304,65 @@ function CaseManagement() {
                   setSelClick(!selClick);
                 }}
               />
-              <div className="selTrans up">
-                <div className="both">
-                  <div className="bothFilter">
-                    <div className="marge5">
-                      <CategoryFilter
-                        allCategoryData={allCategoryData}
-                        setNowCategory={setNowCategory}
-                      />
+              {selClick ? (
+                <div className="selTrans">
+                  <div className="both">
+                    <div className="bothFilter">
+                      <div className="marge5">
+                        <CategoryFilter
+                          allCategoryData={allCategoryData}
+                          setNowCategory={setNowCategory}
+                        />
+                      </div>
+                      <div className="margeNone">
+                        <StatusFilter
+                          allStatusData={allStatusData}
+                          setNowStatus={setNowStatus}
+                          member={member}
+                        />
+                      </div>
                     </div>
-                    <div className="margeNone">
-                      <StatusFilter
-                        allStatusData={allStatusData}
-                        setNowStatus={setNowStatus}
-                        member={member}
-                      />
+                    <div className="bothFilter">
+                      <div className="marge5">
+                        <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                      </div>
+                      <div className="margeNone">
+                        <UnitHandlerFilter
+                          allUnit={allUnit}
+                          setNowHUnit={setNowHUnit}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="bothFilter">
-                    <div className="marge5">
-                      <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                    </div>
-                    <div className="margeNone">
-                      <UnitHandlerFilter
-                        allUnit={allUnit}
-                        setNowHUnit={setNowHUnit}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <DateFilter
-                  dateRemind={dateRemind}
-                  setDateRemind={setDateRemind}
-                  setMaxDate={setMaxDate}
-                  setMinDate={setMinDate}
-                  maxDateValue={maxDateValue}
-                  setMaxDateValue={setMaxDateValue}
-                  minDateValue={minDateValue}
-                  setMinDateValue={setMinDateValue}
-                  dateAgo={dateAgo}
-                  nowDate={nowDate}
-                />
-                <div className="inputSearch">
-                  <input
-                    className="searchInput"
-                    placeholder="Search.."
-                    type="text"
-                    maxLength={15}
-                    value={nameSearch}
-                    onChange={(e) => {
-                      let textValue = e.target.value;
-                      setNameSearch(textValue);
-                    }}
+                  <DateFilter
+                    dateRemind={dateRemind}
+                    setDateRemind={setDateRemind}
+                    setMaxDate={setMaxDate}
+                    setMinDate={setMinDate}
+                    maxDateValue={maxDateValue}
+                    setMaxDateValue={setMaxDateValue}
+                    minDateValue={minDateValue}
+                    setMinDateValue={setMinDateValue}
+                    dateAgo={dateAgo}
+                    nowDate={nowDate}
                   />
+                  <div className="inputSearch">
+                    <input
+                      className="searchInput"
+                      placeholder="Search.."
+                      type="text"
+                      maxLength={15}
+                      value={nameSearch}
+                      onChange={(e) => {
+                        let textValue = e.target.value;
+                        setNameSearch(textValue);
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                ''
+              )}
             </div>
           </div>
 
