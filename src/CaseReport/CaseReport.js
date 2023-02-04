@@ -375,7 +375,7 @@ function CaseReport() {
                               <tr>
                                 <td data-title="詳細資訊" className="posClick">
                                   <Link
-                                    to={`/casemgmt/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
+                                    to={`/casemgmt/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1&report=1`}
                                   >
                                     <FaEye className="icons" />
                                   </Link>

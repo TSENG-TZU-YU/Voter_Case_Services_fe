@@ -19,6 +19,7 @@ function CaseDetail({ setScrollPage, scrollPage }) {
   let Sender = params.get('sender');
   let page = parseInt(params.get('page'));
   let Scroll = parseInt(params.get('scroll'));
+  let report = parseInt(params.get('report'));
   const doScrollPage = () => {
     setScrollPage(!scrollPage);
   };
@@ -79,7 +80,9 @@ function CaseDetail({ setScrollPage, scrollPage }) {
       <Link
         to={
           page === 1
-            ? '/casemgmt/header/caseManagement'
+            ? report === 1
+              ? '/casemgmt/header/caseReport'
+              : '/casemgmt/header/caseManagement'
             : '/casemgmt/header/caseManagement_handler'
         }
         className="prePage"

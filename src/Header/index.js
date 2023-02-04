@@ -56,9 +56,7 @@ function Header() {
         // console.log('檢查是否登入');
         let response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/login/auth`,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
 
         setMember(response.data);
@@ -90,7 +88,10 @@ function Header() {
   // member.user, member.handler, member.manage, member.director
   const logOut = async () => {
     try {
-      let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
+      let res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/logout`,
+        { withCredentials: true }
+      );
       navigate('/casemgmt');
       localStorage.setItem('memberID', '');
     } catch (err) {

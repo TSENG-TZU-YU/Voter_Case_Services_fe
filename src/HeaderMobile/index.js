@@ -86,7 +86,10 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
   // member.user, member.handler, member.manage, member.director
   const logOut = async () => {
     try {
-      let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
+      let res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/logout`,
+        { withCredentials: true }
+      );
       navigate('/casemgmt');
       localStorage.setItem('memberID', '');
     } catch (err) {
