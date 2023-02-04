@@ -82,9 +82,11 @@ function WorkLog() {
 
   const handleChange = (val, input, i) => {
     let newData = [...log];
+    console.log('a', newData);
+
     // if (input === 'workCategory') newData[0].workCategory = val;
     if (input === 'workLog') newData[i].Job_description = val;
-    console.log(newData);
+    console.log('b', newData);
     setLog(newData);
   };
 
