@@ -37,7 +37,10 @@ function Audit() {
       setIsLoading(true);
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}&search=${nameSearch}`
+          `${process.env.REACT_APP_BASE_URL}/api/audit?minDate=${minDate}&maxDate=${maxDate}&search=${nameSearch}`,
+          {
+            withCredentials: true,
+          }
         );
 
         setAudit(res.data);

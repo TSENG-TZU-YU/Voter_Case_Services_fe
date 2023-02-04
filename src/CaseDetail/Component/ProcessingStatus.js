@@ -217,7 +217,9 @@ function ProcessingStatus({
                           className="ms-2"
                           name="result"
                           checked={v.success === 1 ? true : false}
-                          disabled={HId !== member.name ? true : false}
+                          disabled={
+                            HId === member.name && WebPage === 2 ? false : true
+                          }
                           onChange={(e) => {
                             handleStateChecked(
                               v.id,
@@ -235,7 +237,9 @@ function ProcessingStatus({
                           className="ms-2"
                           name="result"
                           checked={v.fail === 1 ? true : false}
-                          disabled={HId !== member.name ? true : false}
+                          disabled={
+                            HId === member.name && WebPage === 2 ? false : true
+                          }
                           onChange={(e) => {
                             handleStateChecked(
                               v.id,
@@ -265,19 +269,21 @@ function ProcessingStatus({
                         placeholder="請輸入民眾反饋..."
                         rows="3"
                         name="populace"
-                        disabled={HId !== member.name ? true : false}
+                        disabled={
+                          HId === member.name && WebPage === 2 ? false : true
+                        }
                         value={selVal.populace}
                         onChange={handleChange}
                       ></textarea>
-                      {HId !== member.name ? (
-                        ''
-                      ) : (
+                      {HId === member.name && WebPage === 2 ? (
                         <FaTelegramPlane
                           className="submitIcon"
                           onClick={() => {
                             handlepopulaceMsg(v.id);
                           }}
                         />
+                      ) : (
+                        ''
                       )}
                     </div>
                   </div>

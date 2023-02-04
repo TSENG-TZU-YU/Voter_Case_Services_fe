@@ -532,6 +532,9 @@ function Application({ delCheck }) {
         `${process.env.REACT_APP_BASE_URL}/api/application_post/file`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

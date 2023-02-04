@@ -28,6 +28,21 @@
       }
     }
   }
+  .inputSearch {
+    margin-top: $marage10;
+    .searchInput {
+      width: 200px;
+      height: 32px;
+      padding: 2px;
+      border: 2px solid #444;
+      outline: none;
+      // margin-top: $marage10;
+      &:focus {
+        border: 2px solid $subClrBrown;
+      }
+    }
+  }
+
   .caseContain {
     margin: 20px auto 0;
 

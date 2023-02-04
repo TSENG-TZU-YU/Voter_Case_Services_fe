@@ -73,7 +73,10 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetUserFile() {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/files/getUserFile/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getUserFile/${num}`,
+          {
+            withCredentials: true,
+          }
         );
         setGetUserTotalFile(response.data);
       } catch (err) {
@@ -83,7 +86,10 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetHandlerFile() {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFile/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFile/${num}`,
+          {
+            withCredentials: true,
+          }
         );
         setGetHandlerTotalFile(response.data);
       } catch (err) {
@@ -93,7 +99,10 @@ function UploadPage({ setAddStatus, delCheck }) {
     async function toGetHandlerFileNo() {
       try {
         let response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFileNo/${num}`
+          `${process.env.REACT_APP_BASE_URL}/api/files/getHandlerFileNo/${num}`,
+          {
+            withCredentials: true,
+          }
         );
 
         setNo(response.data[0].application_source);
@@ -283,6 +292,9 @@ function UploadPage({ setAddStatus, delCheck }) {
         `${process.env.REACT_APP_BASE_URL}/api/1.0/applicationData/postHandleFile/${num}`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -328,11 +340,15 @@ function UploadPage({ setAddStatus, delCheck }) {
   }
 
   const fileSubmitStatus = async () => {
+    console.log('a');
     try {
-      let response = await axios.patch(
-        `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`
+      let response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/files/patchStatus/${num}`,
+        {
+          withCredentials: true,
+        }
       );
-      // console.log('fileSubmitStatus');
+      console.log('fileSubmitStatus');
     } catch (err) {
       console.log(err);
     }
