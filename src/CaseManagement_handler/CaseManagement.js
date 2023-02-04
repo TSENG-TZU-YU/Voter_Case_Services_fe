@@ -61,6 +61,7 @@ function CaseManagement() {
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
   const [order, setOrder] = useState('');
+  const [nameSearch, setNameSearch] = useState('');
 
   // get data
   const [allData, setAllData] = useState([]);
@@ -85,7 +86,7 @@ function CaseManagement() {
     let getCampingData = async () => {
       try {
         let response = await axios.get(
-          `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}`,
+          `${API_URL}/handler/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}&search=${nameSearch}`,
           {
             withCredentials: true,
           }
@@ -115,6 +116,7 @@ function CaseManagement() {
     maxDate,
     order,
     nowHUnit,
+    nameSearch,
   ]);
 
   useEffect(() => {
@@ -244,6 +246,19 @@ function CaseManagement() {
                 nowDate={nowDate}
               />
             </div>
+            <div className="inputSearch">
+              <input
+                className="searchInput"
+                placeholder="Search.."
+                type="text"
+                maxLength={15}
+                value={nameSearch}
+                onChange={(e) => {
+                  let textValue = e.target.value;
+                  setNameSearch(textValue);
+                }}
+              />
+            </div>
           </div>
 
           <div className="m-view">
@@ -287,6 +302,19 @@ function CaseManagement() {
                 dateAgo={dateAgo}
                 nowDate={nowDate}
               />
+              <div className="inputSearch">
+                <input
+                  className="searchInput"
+                  placeholder="Search.."
+                  type="text"
+                  maxLength={15}
+                  value={nameSearch}
+                  onChange={(e) => {
+                    let textValue = e.target.value;
+                    setNameSearch(textValue);
+                  }}
+                />
+              </div>
             </div>
           </div>
           <div className="mobileToggle">

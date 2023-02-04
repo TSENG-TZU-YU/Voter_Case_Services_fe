@@ -81,6 +81,8 @@ function WorkLog() {
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
   const handleChange = (val, input) => {
     let newData = [...log];
+    console.log('a', newData);
+
     // if (input === 'workCategory') newData[0].workCategory = val;
     if (input === 'workLog') newData[addWorkLog].Job_description = val;
     setLog(newData);
