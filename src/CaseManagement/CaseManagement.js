@@ -273,6 +273,19 @@ function CaseManagement() {
                 nowDate={nowDate}
               />
             </div>
+            <div className="inputSearch">
+              <input
+                className="searchInput"
+                placeholder="Search.."
+                type="text"
+                maxLength={15}
+                // value={nameSearch}
+                onChange={(e) => {
+                  let textValue = e.target.value.replace(/[, ]/g, '');
+                  // setNameSearch(textValue);
+                }}
+              />
+            </div>
           </div>
 
           <div className="m-view">

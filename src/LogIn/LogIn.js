@@ -20,7 +20,6 @@ function LogIn() {
   const [passErr, setPassErr] = useState(false);
 
   // const [check, setCheck] = useState([]);
-
   const doLogin = (val, input) => {
     let newData = [...login];
     // if (input === 'company') newData[0].company = val;
@@ -112,7 +111,6 @@ function LogIn() {
     }
   };
 
-  
   const record = async () => {
     try {
       let res = await axios.post(

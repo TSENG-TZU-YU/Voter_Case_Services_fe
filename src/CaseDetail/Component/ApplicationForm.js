@@ -219,7 +219,10 @@ function ApplicationForm({
     let source = async () => {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/application_get/source`
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/source`,
+          {
+            withCredentials: true,
+          }
         );
         setGetSource(res.data);
       } catch (err) {
@@ -230,7 +233,10 @@ function ApplicationForm({
     let category = async () => {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/application_get/category`
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/category`,
+          {
+            withCredentials: true,
+          }
         );
         setGetCategory(res.data);
       } catch (err) {
@@ -242,7 +248,10 @@ function ApplicationForm({
     let unit = async () => {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/unit`,
+          {
+            withCredentials: true,
+          }
         );
         setGetUnit(res.data);
       } catch (err) {
@@ -253,7 +262,10 @@ function ApplicationForm({
     let county = async () => {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/application_get/county`
+          `${process.env.REACT_APP_BASE_URL}/api/application_get/county`,
+          {
+            withCredentials: true,
+          }
         );
         setGetCounty(res.data);
       } catch (err) {
@@ -273,7 +285,10 @@ function ApplicationForm({
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/area`,
-        { area: county }
+        { area: county },
+        {
+          withCredentials: true,
+        }
       );
 
       setGetArea(res.data);
@@ -286,7 +301,10 @@ function ApplicationForm({
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_get/rimin`,
-        { rimin: area }
+        { rimin: area },
+        {
+          withCredentials: true,
+        }
       );
 
       setGetRimin(res.data);
@@ -440,6 +458,9 @@ function ApplicationForm({
           ...detailData[0],
           status_id: 4,
           create_time: endTime,
+        },
+        {
+          withCredentials: true,
         }
       );
     } catch (err) {
@@ -452,7 +473,10 @@ function ApplicationForm({
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/audit/appSubmit`,
-        { user: member.staff_code, number: num, create_time: endTime }
+        { user: member.staff_code, number: num, create_time: endTime },
+        {
+          withCredentials: true,
+        }
       );
     } catch (err) {
       console.log(err);
@@ -469,6 +493,9 @@ function ApplicationForm({
           // TODO: 申請狀態 主管權限是1 || 0 判斷
           status_id: 1,
           create_time: endTime,
+        },
+        {
+          withCredentials: true,
         }
       );
     } catch (err) {
@@ -504,6 +531,9 @@ function ApplicationForm({
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/file/${num}`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -521,6 +551,9 @@ function ApplicationForm({
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/deleteForm/${num}`,
         {
           ...detailData[0],
+        },
+        {
+          withCredentials: true,
         }
       );
     } catch (err) {

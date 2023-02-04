@@ -507,7 +507,10 @@ function Application({ delCheck }) {
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/audit/appSubmit`,
-        { user: member.staff_code, number: number, create_time: endTime }
+        { user: member.staff_code, number: number, create_time: endTime },
+        {
+          withCredentials: true,
+        }
       );
     } catch (err) {
       console.log(err);
@@ -529,6 +532,9 @@ function Application({ delCheck }) {
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_post/file`,
         formData,
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             'Content-Type': 'multipart/form-data',
