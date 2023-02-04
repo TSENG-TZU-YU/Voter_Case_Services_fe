@@ -83,7 +83,7 @@ function LogIn() {
         timer: 800,
       });
       record();
-      navigate('/header');
+      navigate('/casemgmt/header');
     } catch (err) {
       console.log(err.response.data);
       record_err();

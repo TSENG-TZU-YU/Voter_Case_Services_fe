@@ -1,11 +1,7 @@
 {
   "name": "application_form",
   "home": "./",
-<<<<<<< HEAD
-  "homepage": "/casemgmt/",
-=======
   "homepage": "/casemgmt",
->>>>>>> 2744df9ce814ecb408c75cc52bc2a4d3f943fd1e
   "version": "0.1.0",
   "private": true,
   "dependencies": {
