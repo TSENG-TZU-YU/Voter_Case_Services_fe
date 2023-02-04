@@ -58,13 +58,13 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
 
         setMember(response.data);
       } catch (err) {
-        navigate('/');
+        navigate('/casemgmt');
         console.log(err.response.data.message);
       }
     }
     getMember();
     if (localStorage.getItem('memberID') === null) {
-      navigate('/');
+      navigate('/casemgmt');
     }
 
     if (member.user === 1) {
@@ -87,7 +87,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
   const logOut = async () => {
     try {
       let res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/logout`);
-      navigate('/');
+      navigate('/casemgmt');
       localStorage.setItem('memberID', '');
     } catch (err) {
       console.log(err);

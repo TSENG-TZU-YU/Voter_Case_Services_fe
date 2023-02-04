@@ -6,9 +6,9 @@ import axios from 'axios';
 import './_index.scss';
 import MonthFilter from './Component/MonthFilter';
 import { GiCheckMark } from 'react-icons/gi';
-import { IoCloseSharp } from 'react-icons/io5';
 import ViewWorkLog from './Component/ViewWorkLog';
 import UnitFilter from './Component/UnitFilter';
+import Loader from '../Loader';
 
 function WorkLogSearch() {
   const location = useLocation();
@@ -22,6 +22,7 @@ function WorkLogSearch() {
   const [viewForm, setViewForm] = useState(false);
   const [allUnit, setAllUnit] = useState([]);
   const [nowUnit, setNowUnit] = useState(Unit);
+  const [isLoading, setIsLoading] = useState(false);
 
   //date
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -52,6 +53,7 @@ function WorkLogSearch() {
 
   useEffect(() => {
     async function audit() {
+      setIsLoading(true);
       try {
         let res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/workLog?unit=${nowUnit}`,
@@ -63,6 +65,9 @@ function WorkLogSearch() {
         setWorkLog(res.data.result);
         setUsers(res.data.user);
         setAllUnit(res.data.unitResult);
+        setTimeout(() => {
+          setIsLoading(false);
+        });
       } catch (err) {
         console.log(err);
       }
@@ -130,62 +135,72 @@ function WorkLogSearch() {
           </div>
         </div>
       </div>
-      <div className="workContainer">
-        <table className="workContain">
-          <thead>
-            <tr>
-              {users.length !== 0 ? <th></th> : ''}
 
-              {allDate.map((v, i) => {
-                return <th key={i}>{v}</th>;
-              })}
-            </tr>
-          </thead>
-
-          <tbody>
-            {users.length !== 0 ? (
-              users.map((v, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      {v.name} {v.staff_code}
-                    </td>
-
-                    {allDate.map((d, i) => {
-                      let arr = workLog.filter(
-                        (val) =>
-                          val.time === d &&
-                          parseInt(val.staff_code) === parseInt(v.staff_code)
-                      );
-                      return (
-                        <td key={i}>
-                          {arr.length !== 0 && arr[0].Job_description !== '' ? (
-                            <div
-                              className="write"
-                              onClick={() => {
-                                handleView(v.staff_code, arr[0].time);
-                                setViewForm(true);
-                              }}
-                            ></div>
-                          ) : (
-                            <div className="noWrite"></div>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })
-            ) : (
+      {isLoading ? (
+        <div className="workContainer">
+          <Loader />
+        </div>
+      ) : (
+        <div className="workContainer">
+          <table className="workContain">
+            <thead>
               <tr>
-                <td colSpan={32} className="noData">
-                  目前沒有資料
-                </td>
+                {users.length !== 0 ? <th>使用者</th> : ''}
+
+                {allDate.map((v, i) => {
+                  return <th key={i}>{v}</th>;
+                })}
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+
+            <tbody>
+              {users.length !== 0 ? (
+                users.map((v, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>
+                        {v.name} {v.staff_code}
+                      </td>
+
+                      {allDate.map((d, i) => {
+                        let arr = workLog.filter(
+                          (val) =>
+                            val.time === d &&
+                            parseInt(val.staff_code) === parseInt(v.staff_code)
+                        );
+                        return (
+                          <td key={i}>
+                            {arr.length !== 0 &&
+                            arr[0].Job_description !== '' ? (
+                              <div
+                                className="write"
+                                onClick={() => {
+                                  handleView(v.staff_code, arr[0].time);
+                                  setViewForm(true);
+                                }}
+                              >
+                                <GiCheckMark size="20" className="check" />
+                              </div>
+                            ) : (
+                              <div className="noWrite"></div>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={32} className="noData">
+                    目前沒有資料
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

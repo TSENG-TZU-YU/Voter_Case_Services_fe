@@ -12,11 +12,7 @@ function ActivitySelect({ allStatusData, setNowStatus, member }) {
       label: allStatusData[i].name,
     });
   }
-  const sortOption = [
-    { value: '', label: '請選擇狀態' },
-    { value: '1', label: '未送審' },
-    ...newData,
-  ];
+  const sortOption = [{ value: '', label: '請選擇狀態' }, ...newData];
   // console.log('n', sortOption);
 
   const customStyles = {

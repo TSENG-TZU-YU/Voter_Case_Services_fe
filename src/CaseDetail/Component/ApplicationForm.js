@@ -45,6 +45,7 @@ function ApplicationForm({
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
   const [addStateForm, setAddStateForm] = useState(false);
   const { member, setMember } = useAuth();
@@ -346,7 +347,7 @@ function ApplicationForm({
           title: '刪除成功',
           confirmButtonColor: '#f2ac33',
         }).then(() => {
-          navigate('/header/caseManagement_handler');
+          navigate('/casemgmt/header/caseManagement_handler');
         });
         deleteForm();
       } else if (result.isDenied) {
@@ -413,7 +414,7 @@ function ApplicationForm({
             title: '送出成功',
             confirmButtonColor: '#f2ac33',
           }).then(() => {
-            navigate('/header/caseManagement_handler');
+            navigate('/casemgmt/header/caseManagement_handler');
           });
           submitFile();
           hanleAddNeed(e, 'submit');
@@ -605,7 +606,7 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, edit]);
+  }, [num, needLoading, needState, caseId, edit, loading]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
@@ -729,7 +730,7 @@ function ApplicationForm({
         finishTime: '',
       });
 
-      navigate(`/header/caseManagement_handler`);
+      navigate(`/casemgmt/header/caseManagement_handler`);
     });
   };
 
@@ -758,7 +759,7 @@ function ApplicationForm({
 
     if (input === 'finish') {
       ViewCheck('修改成功', setNeedLoading, needLoading, setEditPage, false);
-      navigate(`/header/caseManagement_handler`);
+      navigate(`/casemgmt/header/caseManagement_handler`);
     }
 
     // if (input === 'finish') {
@@ -785,7 +786,7 @@ function ApplicationForm({
     );
 
     ViewCheck('申請案件已取消', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
 
     // Swal.fire({
     //   icon: 'success',
@@ -807,7 +808,7 @@ function ApplicationForm({
     );
 
     ViewCheck('已接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已接收此案件',
@@ -828,7 +829,7 @@ function ApplicationForm({
     );
 
     ViewCheck('已拒絕接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已拒絕接收此案件',
@@ -858,7 +859,7 @@ function ApplicationForm({
     );
 
     ViewCheck('案件已完成', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '案件已完成',
@@ -879,7 +880,7 @@ function ApplicationForm({
     );
 
     ViewCheck('已確定接收此案件', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '已確定接收此案件',
@@ -900,7 +901,7 @@ function ApplicationForm({
     );
 
     ViewCheck('該案件已完成', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件已完成',
@@ -921,7 +922,7 @@ function ApplicationForm({
     );
 
     ViewCheck('該案件未完成，案件進行中', setNeedLoading, needLoading);
-    navigate(`/header/caseManagement_handler`);
+    navigate(`/casemgmt/header/caseManagement_handler`);
     // Swal.fire({
     //   icon: 'success',
     //   title: '該案件未完成，案件進行中',
@@ -970,7 +971,12 @@ function ApplicationForm({
         withCredentials: true,
       }
     );
-    setNeedLoading(!needLoading);
+    Swal.fire({
+      icon: 'success',
+      title: '填寫完成',
+      confirmButtonColor: '#f2ac33',
+    });
+    // setNeedLoading(!needLoading);
   };
 
   return (
@@ -2225,26 +2231,30 @@ function ApplicationForm({
             )}
 
             {/* 處理情況 */}
-            <div id="dealWith" ref={scrollRef2} className="selData">
-              案件處理情形
+            <div className="dealWithBorder">
+              <div id="dealWith" ref={scrollRef2} className="selData">
+                案件處理情形
+              </div>
+              <ProcessingStatus
+                needState={needState}
+                needSumLen={needSumLen}
+                needLen={needLen}
+                selectData={selectData}
+                postVal={postVal}
+                setSelectRemind={setSelectRemind}
+                handlePostVal={handlePostVal}
+                selectRemind={selectRemind}
+                setAddStateForm={setAddStateForm}
+                handleStateChecked={handleStateChecked}
+                selCheckData={selCheckData}
+                handlepopulaceMsg={handlepopulaceMsg}
+                selVal={selVal}
+                setSelVal={setSelVal}
+                nowSelState={nowSelState}
+                loading={loading}
+                setLoading={setLoading}
+              />
             </div>
-            <ProcessingStatus
-              needState={needState}
-              needSumLen={needSumLen}
-              needLen={needLen}
-              selectData={selectData}
-              postVal={postVal}
-              setSelectRemind={setSelectRemind}
-              handlePostVal={handlePostVal}
-              selectRemind={selectRemind}
-              setAddStateForm={setAddStateForm}
-              handleStateChecked={handleStateChecked}
-              selCheckData={selCheckData}
-              handlepopulaceMsg={handlepopulaceMsg}
-              selVal={selVal}
-              setSelVal={setSelVal}
-              nowSelState={nowSelState}
-            />
           </div>
         </>
       )}

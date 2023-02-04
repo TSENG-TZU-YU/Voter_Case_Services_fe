@@ -363,7 +363,7 @@ function Application({ delCheck }) {
             title: '送出成功',
             confirmButtonColor: '#f2ac33',
           }).then(() => {
-            navigate('/header/caseManagement_handler');
+            navigate('/casemgmt/header/caseManagement_handler');
           });
           submitFile();
           submit();
@@ -441,7 +441,7 @@ function Application({ delCheck }) {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('儲存成功', '', 'success').then(() => {
-            navigate('/header/caseManagement_handler');
+            navigate('/casemgmt/header/caseManagement_handler');
           });
           submitFile();
           store();

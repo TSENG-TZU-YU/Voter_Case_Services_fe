@@ -19,7 +19,7 @@ import moment from 'moment';
 
 import Loader from '../Loader';
 
-import { FaEye } from 'react-icons/fa';
+import { FaPencilAlt } from 'react-icons/fa';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
@@ -40,7 +40,13 @@ function CaseManagement() {
 
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
+  const [accUnit, setAccUnit] = useState(true);
+  const [accPep, setAccPep] = useState(true);
+  const [handleUnit, setHandleUnit] = useState(true);
+  const [handlePep, setHandlePep] = useState(true);
+  const [source, setSource] = useState(true);
   const [time, setTime] = useState(true);
+  const [state, setState] = useState(true);
   // const [checkState, setCheckState] = useState(false);
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
@@ -332,11 +338,106 @@ function CaseManagement() {
                     )}
                   </th>
                   <th>詳細資訊</th>
-                  <th>接案單位</th>
-                  <th>接案人</th>
-                  <th>處理單位</th>
-                  <th>處理人</th>
-                  <th>請託來源</th>
+                  <th className="sortBtn">
+                    接案單位
+                    {accUnit ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(5);
+                          setAccUnit(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(6);
+                          setAccUnit(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th className="sortBtn">
+                    接案人
+                    {accPep ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(7);
+                          setAccPep(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(8);
+                          setAccPep(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th className="sortBtn">
+                    處理單位
+                    {handleUnit ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(9);
+                          setHandleUnit(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(10);
+                          setHandleUnit(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th className="sortBtn">
+                    處理人
+                    {handlePep ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(11);
+                          setHandlePep(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(12);
+                          setHandlePep(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th className="sortBtn">
+                    請託來源
+                    {source ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(13);
+                          setSource(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(14);
+                          setSource(true);
+                        }}
+                      />
+                    )}
+                  </th>
                   <th className="sortBtn">
                     接案時間
                     {time ? (
@@ -357,7 +458,26 @@ function CaseManagement() {
                       />
                     )}
                   </th>
-                  <th>案件狀態</th>
+                  <th className="sortBtn">
+                    案件狀態
+                    {state ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(15);
+                          setState(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(16);
+                          setState(true);
+                        }}
+                      />
+                    )}
+                  </th>
                 </tr>
               </thead>
               {isLoading ? (
@@ -389,7 +509,7 @@ function CaseManagement() {
                                   <Link
                                     to={`/casemgmt/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=2`}
                                   >
-                                    <FaEye
+                                    <FaPencilAlt
                                       className="icons"
                                       onClick={() => {
                                         handleRecord(v.case_number);

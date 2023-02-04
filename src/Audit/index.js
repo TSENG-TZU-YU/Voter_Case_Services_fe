@@ -84,6 +84,7 @@ function Audit() {
             <th>時間</th>
           </tr>
         </thead>
+
         {audit.length !== 0 ? (
           <>
             {audit.map((v, i) => {

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../utils/use_auth';
+
 import './_index.scss';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -6,6 +8,7 @@ import GenerallyBtn from '../Btn/GenerallyBtn';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 function CaseReport() {
+  const { member, setMember } = useAuth();
   const [getData, setGetData] = useState([]);
   const [pass, setPass] = useState('');
   const [passTow, setPassTow] = useState('');
@@ -16,6 +19,7 @@ function CaseReport() {
   // const [eyeFour, setEyeFour] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // console.log('object', member.manage);
   // 取得所有資料
   useEffect(() => {
     let getCampingData = async () => {
@@ -74,7 +78,7 @@ function CaseReport() {
 
   const submit = async () => {
     try {
-      let res = await axios.patch(
+      let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/passWord`,
         { password: pass },
         {
@@ -98,7 +102,7 @@ function CaseReport() {
 
   const handleSubmit = async (ind) => {
     try {
-      let res = await axios.patch(
+      let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/application_edit/permissionsPassWord`,
         { passThr, ind },
         {
@@ -196,43 +200,44 @@ function CaseReport() {
       </div>
 
       {/* 密碼權限 */}
-      <div className="unlockPasswordContainer">
-        <div className="tit">開啟密碼已鎖住的使用者</div>
-        <div className="unlockPassword">
-          <table className="unlockPasswordContain">
-            <thead>
-              <tr>
-                <th>使用者</th>
-                <th>員工編號</th>
-                <th>處理單位</th>
-                <th colSpan={3} className="passwStart">
-                  設置新密碼
-                </th>
-              </tr>
-            </thead>
+      {member.manage === 1 ? (
+        <div className="unlockPasswordContainer">
+          <div className="tit">已被鎖住帳號的使用者</div>
+          <div className="unlockPassword">
+            <table className="unlockPasswordContain">
+              <thead>
+                <tr>
+                  <th>使用者</th>
+                  <th>員工編號</th>
+                  <th>處理單位</th>
+                  <th colSpan={3} className="passwStart">
+                    設置新密碼
+                  </th>
+                </tr>
+              </thead>
 
-            {getData.length !== 0 ? (
-              <tbody className="bodyHover">
-                {getData.map((v, i) => {
-                  return (
-                    <tr className="body" key={i}>
-                      <td>{v.name}</td>
-                      <td>{v.code}</td>
-                      <td>{v.unit}</td>
-                      <td>
-                        <div className="passwordInp">
-                          <div>請輸入新密碼：</div>
-                          <div className="center">
-                            <input
-                              type="text"
-                              maxLength="15"
-                              placeholder="密碼至多15字"
-                              value={passThr[i].valid1}
-                              onChange={(e) => {
-                                handleVal(e.target.value, 'three', i);
-                              }}
-                            />
-                            {/* {eyeThr ? (
+              {getData.length !== 0 ? (
+                <tbody className="bodyHover">
+                  {getData.map((v, i) => {
+                    return (
+                      <tr className="body" key={i}>
+                        <td>{v.name}</td>
+                        <td>{v.code}</td>
+                        <td>{v.unit}</td>
+                        <td>
+                          <div className="passwordInp">
+                            <div>請輸入新密碼：</div>
+                            <div className="center">
+                              <input
+                                type="text"
+                                maxLength="15"
+                                placeholder="密碼至多15字"
+                                value={passThr[i].valid1}
+                                onChange={(e) => {
+                                  handleVal(e.target.value, 'three', i);
+                                }}
+                              />
+                              {/* {eyeThr ? (
                             <AiFillEye
                               className="eye"
                               onClick={() => {
@@ -247,23 +252,23 @@ function CaseReport() {
                               }}
                             />
                           )} */}
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="passwordInp">
-                          <div>請再次輸入一次新密碼：</div>
-                          <div className="center">
-                            <input
-                              type="text"
-                              maxLength="15"
-                              placeholder="密碼至多15字"
-                              value={passThr[i].valid2}
-                              onChange={(e) => {
-                                handleVal(e.target.value, 'four', i);
-                              }}
-                            />
-                            {/* {eyeFour ? (
+                        </td>
+                        <td>
+                          <div className="passwordInp">
+                            <div>請再次輸入一次新密碼：</div>
+                            <div className="center">
+                              <input
+                                type="text"
+                                maxLength="15"
+                                placeholder="密碼至多15字"
+                                value={passThr[i].valid2}
+                                onChange={(e) => {
+                                  handleVal(e.target.value, 'four', i);
+                                }}
+                              />
+                              {/* {eyeFour ? (
                             <AiFillEye
                               className="eye"
                               onClick={() => {
@@ -278,46 +283,49 @@ function CaseReport() {
                               }}
                             />
                           )} */}
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <GenerallyBtn
-                          style={{ background: '#2c75c8', color: 'white' }}
-                          tit="更改"
-                          handleFn1={(fn1) => {
-                            if (
-                              (passThr[i].valid1 === '' &&
-                                passThr[i].valid2 === '') ||
-                              passThr[i].valid1 !== passThr[i].valid2
-                            ) {
-                              Swal.fire({
-                                icon: 'error',
-                                title: '密碼欄位為空或密碼不一致',
-                              });
-                            } else {
-                              submitCheckTwo(fn1, i);
-                            }
-                          }}
-                          fn1="確認更改密碼?"
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            ) : (
-              <tbody className="noData">
-                <tr>
-                  <td colSpan={5} className="noTd">
-                    目前沒有資料
-                  </td>
-                </tr>
-              </tbody>
-            )}
-          </table>
+                        </td>
+                        <td>
+                          <GenerallyBtn
+                            style={{ background: '#2c75c8', color: 'white' }}
+                            tit="更改"
+                            handleFn1={(fn1) => {
+                              if (
+                                (passThr[i].valid1 === '' &&
+                                  passThr[i].valid2 === '') ||
+                                passThr[i].valid1 !== passThr[i].valid2
+                              ) {
+                                Swal.fire({
+                                  icon: 'error',
+                                  title: '密碼欄位為空或密碼不一致',
+                                });
+                              } else {
+                                submitCheckTwo(fn1, i);
+                              }
+                            }}
+                            fn1="確認更改密碼?"
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              ) : (
+                <tbody className="noData">
+                  <tr>
+                    <td colSpan={5} className="noTd">
+                      目前沒有資料
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+            </table>
+          </div>
         </div>
-      </div>
+      ) : (
+        ''
+      )}
     </>
   );
 }

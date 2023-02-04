@@ -11,8 +11,8 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
   }
   // console.log('n', newData);
   const sortOption = [
-    // { value: '', label: '--請選擇狀態--' },
-    { value: '', label: '全部狀態' },
+    { value: '', label: '請選擇狀態' },
+    { value: '1', label: '未送審' },
     ...newData,
   ];
 
@@ -67,7 +67,7 @@ function ActivitySelect({ allStatusData, setNowStatus }) {
   return (
     <>
       <Select
-        defaultValue={{ value: '4', label: '處理人評估中' }}
+        defaultValue={sortOption[0]}
         onChange={(e) => {
           // console.log(e.value);
           setNowStatus(e.value);

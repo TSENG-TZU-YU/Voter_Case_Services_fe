@@ -1,5 +1,13 @@
 @import '../variable';
 
+.dealWithBorder{
+  // background: lightblue;
+
+  // max-width: 90%;
+  border: 1px solid #ccc;
+  // width: fit-content;
+  // margin: $marage10 0 auto;
+}
 .userName {
   // background: lightblue;
   max-width: 85%;
@@ -20,7 +28,7 @@
   // background: lightcoral;
   margin: 0 auto;
   width: 85%;
-  height: 40%;
+  height: 250px;
   // padding: 0 10px;
   font-size: clamp(12px, 1vw, 18px);
   border-top: 1px dashed #aaa;
@@ -68,7 +76,6 @@
   margin: $marage10 auto;
   font-size: clamp(12px, 1vw, 18px);
   max-width: 85%;
-
   .dealWithContain {
     // background-color: lemonchiffon;
     margin: $marage10 0;
@@ -119,6 +126,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
+  margin-bottom: $marage10;
   @include flexCenter;
   .submitMsg {
     resize: none;

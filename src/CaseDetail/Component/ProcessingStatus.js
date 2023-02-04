@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { BsFillPersonFill } from 'react-icons/bs';
 import { FaTelegramPlane } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../../utils/use_auth';
 import axios from 'axios';
@@ -25,13 +25,14 @@ function ProcessingStatus({
   setSelVal,
   handlepopulaceMsg,
   nowSelState,
+  loading,
+  setLoading,
 }) {
   const { member, setMember } = useAuth();
   const [submitMessage, setSubmitMessage] = useState('');
   const [nowState, setNowState] = useState('');
   const [submitMsgTrue, setSubmitMsgTrue] = useState(false);
   const [handleStData, setHandleStData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { num } = useParams();
   const location = useLocation();
   // 從網址上抓到關鍵字
@@ -90,6 +91,11 @@ function ProcessingStatus({
         withCredentials: true,
       }
     );
+    Swal.fire({
+      icon: 'success',
+      title: '填寫完成',
+      confirmButtonColor: '#f2ac33',
+    });
     setSubmitMessage('');
     setLoading(!loading);
   };
@@ -121,8 +127,7 @@ function ProcessingStatus({
                         (member.manage === 1 || member.handler === 1) &&
                         HId === member.name &&
                         needState !== 1 &&
-                        needState !== 6 &&
-                        needState !== 7 &&
+                        needState !== 4 &&
                         needState !== 8 &&
                         needState !== 9 &&
                         needState !== 10 &&
@@ -152,8 +157,7 @@ function ProcessingStatus({
                         (member.manage === 1 || member.handler === 1) &&
                         HId === member.name &&
                         needState !== 1 &&
-                        needState !== 6 &&
-                        needState !== 7 &&
+                        needState !== 4 &&
                         needState !== 8 &&
                         needState !== 9 &&
                         needState !== 10 &&
@@ -289,7 +293,7 @@ function ProcessingStatus({
         {/* <BsFillPersonFill className="userIcon" /> {User} */}
         處理人處理情形
       </div>
-      <div className={`chatContainer `}>
+      <div className={`chatContainer`}>
         <div className={`handleStatus`}>
           {handleStData.length !== 0
             ? handleStData.map((v, i) => {
@@ -309,15 +313,14 @@ function ProcessingStatus({
       </div>
 
       {/* chatBar */}
-      {/* bar */}
+      {/* bar member.manage === 1 &&*/}
       {nowState !== 1 &&
       nowState !== 4 &&
       nowState !== 8 &&
       nowState !== 9 &&
       nowState !== 10 &&
-      member.handler === 1 &&
+      (member.handler === 1 || member.manage === 1) &&
       HId === member.name &&
-      member.manage === 1 &&
       WebPage === 2 ? (
         <div className="chatBarContain">
           <textarea

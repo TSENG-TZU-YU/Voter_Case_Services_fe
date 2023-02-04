@@ -6,11 +6,14 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 import { AiFillCloseSquare } from 'react-icons/ai';
-import { FaEye } from 'react-icons/fa';
+import { FaPencilAlt } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
+import { GiCheckMark } from 'react-icons/gi';
 
 import DateFilter from './Component/DateFilter.js';
 import DateFilterAll from './Component/DateFilterAll.js';
+import Loader from '../Loader';
+
 import { useAuth } from '../utils/use_auth';
 function WorkLog() {
   const [log, setLog] = useState([]);
@@ -18,6 +21,8 @@ function WorkLog() {
   const [eyeDetail, setEyeDetail] = useState([]);
   const [mobileToggle, setMobileToggle] = useState(true);
   const [disable, setDisable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   //使用者資料
   const { member } = useAuth();
 
@@ -86,6 +91,7 @@ function WorkLog() {
   useEffect(() => {
     async function audit() {
       let no = localStorage.getItem('memberID');
+      setIsLoading(true);
       try {
         let res = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/api/workLog?minDate=${minDate}&maxDate=${maxDate}`,
@@ -95,6 +101,9 @@ function WorkLog() {
           }
         );
         setLog(res.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        });
       } catch (err) {
         console.log(err);
       }
@@ -216,10 +225,7 @@ function WorkLog() {
           </div>
         </div>
 
-        <table
-          className={`logContain ${mobileToggle ? ' mobileCaseLog' : ''}
-              `}
-        >
+        <table className={`logContain ${mobileToggle ? ' mobileCaseLog' : ''}`}>
           <thead>
             <tr>
               <th>使用者</th>
@@ -227,49 +233,69 @@ function WorkLog() {
               {/* <th>工作類型</th> */}
               <th>工作說明</th>
               <th>時間</th>
+              <th></th>
             </tr>
           </thead>
-          {log.length !== 0 ? (
-            <>
-              {log.map((v, i) => {
-                const { user, staff_code, Job_description, time } = v;
-                return (
-                  <tbody
-                    key={i}
-                    className={`bodyLog ${
-                      Job_description === '' ? 'description noText' : ''
-                    }`}
-                  >
-                    <tr>
-                      <td data-title="使用者">{user}</td>
-                      <td data-title="詳細資訊">
-                        <FaEye
-                          className="icons"
-                          onClick={() => {
-                            detail(time, staff_code);
-                            setAddWorkLogForm(true);
-                            setDisable(true);
-                            setSelectDate(time);
-                          }}
-                        />
-                      </td>
-                      <td data-title="工作說明" className="overText">
-                        {Job_description}
-                      </td>
-                      <td data-title="時間">{time}</td>
-                    </tr>
-                  </tbody>
-                );
-              })}
-            </>
-          ) : (
+          {isLoading ? (
             <tbody className="noData">
               <tr>
-                <td colSpan={5} className="noTd">
-                  目前沒有資料
+                <td colSpan={10} className="noTd">
+                  <Loader />
                 </td>
               </tr>
             </tbody>
+          ) : (
+            <>
+              {log.length !== 0 ? (
+                <>
+                  {log.map((v, i) => {
+                    const { user, staff_code, Job_description, time } = v;
+                    return (
+                      <tbody
+                        key={i}
+                        className={`bodyLog ${
+                          Job_description === '' ? 'description noText' : ''
+                        }`}
+                      >
+                        <tr>
+                          <td data-title="使用者">{user}</td>
+                          <td data-title="詳細資訊">
+                            <FaPencilAlt
+                              className="icons"
+                              onClick={() => {
+                                detail(time, staff_code);
+                                setAddWorkLogForm(true);
+                                setDisable(true);
+                                setSelectDate(time);
+                              }}
+                            />
+                          </td>
+                          <td data-title="工作說明" className="overText">
+                            {Job_description}
+                          </td>
+                          <td data-title="時間">{time}</td>
+                          <td>
+                            {Job_description !== '' ? (
+                              <GiCheckMark size="20" />
+                            ) : (
+                              ''
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
+                </>
+              ) : (
+                <tbody className="noData">
+                  <tr>
+                    <td colSpan={5} className="noTd">
+                      目前沒有資料
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+            </>
           )}
         </table>
       </div>

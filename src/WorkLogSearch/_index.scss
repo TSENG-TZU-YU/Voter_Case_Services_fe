@@ -218,6 +218,10 @@
             width: 100%;
             height: 80px;
             cursor: pointer;
+            line-height: 80px;
+          }
+          .check{
+            background: #aaa;
           }
           .noWrite {
             background: $focusClrP;
@@ -285,6 +289,10 @@
           }
         }
       }
+    }
+    .workContainer {
+      @include scrollbar;
+      height: 80%;
     }
   }
 }
