@@ -330,6 +330,8 @@ function CaseReport() {
                   <th>詳細資訊</th>
                   <th>請託來源</th>
                   <th>案件類型</th>
+                  <th>當事人</th>
+                  <th>請託人</th>
                   <th className="sortBtn">
                     接案時間
                     {time ? (
@@ -373,7 +375,7 @@ function CaseReport() {
                               <tr>
                                 <td data-title="詳細資訊" className="posClick">
                                   <Link
-                                    to={`/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
+                                    to={`/casemgmt/header/caseDetail/application/${v.case_number}?id=${v.id}&HId=${v.handler}&user=${v.user}&sender=${v.sender}&page=1&scroll=1`}
                                   >
                                     <FaEye className="icons" />
                                   </Link>
@@ -386,6 +388,8 @@ function CaseReport() {
                                 <td data-title="案件類型">
                                   {v.application_category}
                                 </td>
+                                <td data-title="當事人">{v.litigant}</td>
+                                <td data-title="請託人">{v.client_name}</td>
                                 <td data-title="接案時間">{v.create_time}</td>
                                 <td data-title="案件狀態" className="view">
                                   {v.name}

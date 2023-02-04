@@ -23,7 +23,7 @@ function LogIn() {
 
   const doLogin = (val, input) => {
     let newData = [...login];
-    if (input === 'company') newData[0].company = val;
+    // if (input === 'company') newData[0].company = val;
     if (input === 'no') newData[0].no = val;
     if (input === 'password') newData[0].password = val;
   };
@@ -46,7 +46,7 @@ function LogIn() {
   // 檢查登入sweet
   function submitCheck() {
     if (
-      login[0].company === '' ||
+      // login[0].company === '' ||
       login[0].no === '' ||
       login[0].password === ''
     ) {
@@ -56,7 +56,7 @@ function LogIn() {
       });
     }
     if (
-      login[0].company !== '' &&
+      // login[0].company !== '' &&
       login[0].no !== '' &&
       login[0].password !== ''
     ) {
@@ -138,7 +138,7 @@ function LogIn() {
         <div className="container">
           <div className="title">選民服務案件管理系統</div>
           <div className="inputContainer">
-            <div className="inputContain">
+            {/* <div className="inputContain">
               <AiFillHome className="icons" />
               <select
                 name="company"
@@ -151,7 +151,7 @@ function LogIn() {
                   return <option key={v.id}>{v.name}</option>;
                 })}
               </select>
-            </div>
+            </div> */}
             <div className="inputContain">
               <BsPersonCircle className="icons" />
               <input

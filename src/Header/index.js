@@ -63,13 +63,13 @@ function Header() {
 
         setMember(response.data);
       } catch (err) {
-        navigate('/');
+        navigate('/casemgmt');
         console.log(err.response.data.message);
       }
     }
     getMember();
     if (localStorage.getItem('memberID') === null) {
-      navigate('/');
+      navigate('/casemgmt');
     }
     if (member.user === 1) {
       setUser(true);
@@ -183,12 +183,34 @@ function Header() {
                   </div>
                 </NavLink>
               </nav>
+              <nav>
+                <NavLink
+                  to="workLog"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  <div className="" onClick={acf}>
+                    <BsJournalText size="18" />
+                    工作日誌填報
+                  </div>
+                </NavLink>
+              </nav>
             </>
           ) : (
             ''
           )}
           {manage ? (
             <>
+              <nav>
+                <NavLink
+                  to={`workLogSearch?unit=${member.applicant_unit}`}
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  <div className="" onClick={acf}>
+                    <TbReportSearch size="20" />
+                    工作日誌一覽表
+                  </div>
+                </NavLink>
+              </nav>
               <nav>
                 <NavLink
                   to="countPage"
@@ -274,6 +296,29 @@ function Header() {
               ) : (
                 ''
               )}
+
+              <nav>
+                <NavLink
+                  to="caseReport"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  <div className="" onClick={acf}>
+                    <HiDocumentReport size="20" />
+                    結案報表
+                  </div>
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  to="audit"
+                  className={(nav) => (nav.isActive ? 'link' : '')}
+                >
+                  <div className="" onClick={acf}>
+                    <FaHistory size="18" />
+                    操作稽核紀錄
+                  </div>
+                </NavLink>
+              </nav>
               {/* <nav>
                 <NavLink
                   to="permissions"
@@ -290,51 +335,7 @@ function Header() {
           ) : (
             ''
           )}
-          <nav>
-            <NavLink
-              to="caseReport"
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <HiDocumentReport size="20" />
-                結案報表
-              </div>
-            </NavLink>
-          </nav>
 
-          <nav>
-            <NavLink
-              to="workLog"
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <BsJournalText size="18" />
-                工作日誌填報
-              </div>
-            </NavLink>
-          </nav>
-          <nav>
-            <NavLink
-              to={`workLogSearch?unit=${member.applicant_unit}`}
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <TbReportSearch size="20" />
-                工作日誌一覽表
-              </div>
-            </NavLink>
-          </nav>
-          <nav>
-            <NavLink
-              to="audit"
-              className={(nav) => (nav.isActive ? 'link' : '')}
-            >
-              <div className="" onClick={acf}>
-                <FaHistory size="18" />
-                操作稽核紀錄
-              </div>
-            </NavLink>
-          </nav>
           <nav>
             <NavLink
               to="permissions"

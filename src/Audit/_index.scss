@@ -3,6 +3,7 @@
 .background {
   width: 70%;
   margin-top: 3%;
+  font-size: $contentText18;
   .permissions {
     // background-color: $navBar;
     display: flex;
@@ -67,7 +68,7 @@
   width: 100%;
   height: calc(100vh - 70px);
   margin: 0 auto;
-  font-size: 12px;
+  font-size: $contentText18;
   @include scrollbar;
   .sortSelect1 {
     // background: lemonchiffon;
@@ -79,7 +80,7 @@
       justify-content: center;
       .searchInput {
         margin-right: $marage10;
-        width: 200px;
+        width: 250px;
         height: 26px;
         padding: 2px;
         border: 2px solid #444;
@@ -92,7 +93,7 @@
   }
   .caseContain {
     margin: 20px auto 0;
-    width: 60%;
+    width: 80%;
     table-layout: fixed;
     tbody :hover {
       background: #eee;
@@ -103,11 +104,6 @@
       text-align: center;
       th {
         padding: 10px 15px;
-        font-size: 14px;
-        .arrow {
-          font-size: 2rem;
-          cursor: pointer;
-        }
       }
       td {
         padding: 15px;

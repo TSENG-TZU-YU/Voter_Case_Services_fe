@@ -532,7 +532,7 @@ function UploadPage({ setAddStatus, delCheck }) {
                   setMgtUserFilesPage(false);
                 }}
               >
-                申請人上傳文件
+                接案人上傳文件
               </div>
               <div
                 className={`btnWidth borderL ${
