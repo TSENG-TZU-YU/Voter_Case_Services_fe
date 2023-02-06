@@ -29,7 +29,7 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   let params = new URLSearchParams(location.search);
-  let page = params.get('page');
+  let page = parseInt(params.get('page'));
 
   const [mobileToggle, setMobileToggle] = useState(false);
 
@@ -130,7 +130,7 @@ function Header() {
           <div>接案單位:{member.applicant_unit}</div>
           <div>姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
-          {handler || manage ? (
+          {handler ? (
             <>
               <nav>
                 <NavLink
@@ -153,7 +153,9 @@ function Header() {
               <nav>
                 <NavLink
                   to="caseManagement"
-                  className={(nav) => (nav.isActive || page == 1 ? 'link' : '')}
+                  className={(nav) =>
+                    nav.isActive || page === 1 ? 'link' : ''
+                  }
                 >
                   <div className="" onClick={acf}>
                     <RiPhoneFindFill size="20" />
@@ -170,7 +172,7 @@ function Header() {
               <nav>
                 <NavLink
                   to="caseManagement_handler"
-                  className={(nav) => (nav.isActive || page == 2 ? 'link' : '')}
+                  className={(nav) => (nav.isActive || page === 2 ? 'link' : '')}
                 >
                   {/* 處理人/協理/主管 */}
                   <div
