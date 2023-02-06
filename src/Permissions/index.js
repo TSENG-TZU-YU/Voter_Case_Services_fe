@@ -26,7 +26,10 @@ function Permissions() {
     async function getCategory() {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/permissions/category`
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/category`,
+          {
+            withCredentials: true,
+          }
         );
 
         setCategory(res.data);
@@ -37,7 +40,10 @@ function Permissions() {
     async function getUsers() {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/permissions/user`
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/user`,
+          {
+            withCredentials: true,
+          }
         );
 
         setUser(res.data);
@@ -48,7 +54,10 @@ function Permissions() {
     async function getPermissions() {
       try {
         let res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/permissions/allPermissionsData`
+          `${process.env.REACT_APP_BASE_URL}/api/permissions/allPermissionsData`,
+          {
+            withCredentials: true,
+          }
         );
 
         setPermission(res.data);
@@ -70,6 +79,9 @@ function Permissions() {
           category: nowCategory,
           user: nowUser,
           permission: nowPermission,
+        },
+        {
+          withCredentials: true,
         }
       );
     } catch (err) {
