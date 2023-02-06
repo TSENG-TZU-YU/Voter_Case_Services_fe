@@ -114,7 +114,7 @@ function ApplicationForm({
 
     // if (member.user === 1) {
     //   setAddStatus(false);
-    // }
+    // }needLoading
   }, [detailData]);
 
   // 修改申請表
@@ -639,7 +639,64 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, edit, loading]);
+  }, [num, needState, caseId, edit]);
+
+  console.log('needLoading', needLoading, loading);
+  console.log('loading', loading);
+
+  //ProcessingStatus checkbox no rendering
+  useEffect(() => {
+    let getCampingDetailData = async () => {
+      let response = await axios.post(
+        `${API_URL}/applicationData/${num}`,
+        { caseId },
+        {
+          withCredentials: true,
+        }
+      );
+      setDetailData(response.data.result);
+      setNeedData(response.data.needResult);
+      setRemarkLength(response.data.remarkResult.length);
+      setHandlerUnit(response.data.result[0].unit);
+      setSelCheckData(response.data.selCheckResult);
+      setSelVal(response.data.selCheckResult[0]);
+      setNowSelState(response.data.nowStateResult[0].name);
+      // console.log('first', response.data.nowStateResult[0].name);
+      // 修改儲存用
+      setEditNeed(response.data.needResult);
+      setHandleData(response.data.handleResult);
+      setHandlerData(response.data.handlerResult);
+      let a = response.data.getFile;
+      let newFiles = [];
+      for (let i = 0; i < a.length; i++) {
+        let data = { file: a[i] };
+        newFiles.push(data);
+      }
+
+      setGetFile(newFiles);
+
+      if (getFile.length > 0) {
+        setGetDbFileTime(response.data.getFile[0].file_no);
+      }
+
+      // selectStatus filter
+      if (member.manage === 1 && member.name !== HId) {
+        setSelectData(response.data.selectResult.splice(2, 3));
+      }
+      if (
+        member.handler === 1 ||
+        (member.manage === 1 && member.name === HId)
+      ) {
+        setSelectData(response.data.selectResult);
+      }
+
+      // 目前狀態
+      setNeedState(response.data.result[0].status_id);
+      setNeedLen(parseInt(response.data.needResult.length));
+      setNeedSumLen(parseInt(response.data.needSum[0].checked));
+    };
+    getCampingDetailData();
+  }, [needLoading]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
