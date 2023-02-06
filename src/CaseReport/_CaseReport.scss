@@ -8,7 +8,7 @@
   width: 90%;
   height: calc(100vh - 70px);
   font-size: clamp(12px, 1vw, 18px);
-  .mobileToggle {
+  .mobileToggle,.mobileClose {
     display: none;
   }
   .case {
@@ -28,6 +28,12 @@
         margin-right: 10px;
       }
     }
+  }
+  .click {
+    color: $subClrBrown;
+  }
+  .selTrans {
+    margin-top: $marage10;
   }
   .caseReport {
     margin: 20px auto 0;
@@ -94,7 +100,7 @@
   .caseContainer {
     .mobileToggle {
       display: flex;
-      justify-content: end;
+      // justify-content: end;
     }
   }
   .case {
@@ -229,6 +235,26 @@
           margin-right: 0;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .caseContainer {
+    .dnone {
+      display: none;
+    }
+    .mobileClose {
+      display: flex;
+    }
+    .dflex {
+      display: flex;
+      flex-direction: column;
+    }
+    .mobileToggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

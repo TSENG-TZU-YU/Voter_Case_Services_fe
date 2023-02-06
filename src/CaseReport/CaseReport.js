@@ -19,9 +19,10 @@ import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
 
 import { FaEye } from 'react-icons/fa';
+import { CgCloseR } from 'react-icons/cg';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
 import { GiCheckMark } from 'react-icons/gi';
-import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
+import { BsToggleOff, BsToggleOn, BsFilterSquare } from 'react-icons/bs';
 
 function CaseReport() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -49,6 +50,7 @@ function CaseReport() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(true);
+  const [selClick, setSelClick] = useState(false);
 
   // 篩選
   const [nowStatus, setNowStatus] = useState(9);
@@ -58,6 +60,7 @@ function CaseReport() {
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(dateAgo);
   const [order, setOrder] = useState('');
+  const [nameSearch, setNameSearch] = useState('');
 
   // get data
   const [allData, setAllData] = useState([]);
@@ -256,69 +259,125 @@ function CaseReport() {
                 nowDate={nowDate}
               />
             </div>
+            <div className="inputSearch">
+              <input
+                className="searchInput"
+                placeholder="Search.."
+                type="text"
+                maxLength={15}
+                value={nameSearch}
+                onChange={(e) => {
+                  let textValue = e.target.value;
+                  setNameSearch(textValue);
+                }}
+              />
+            </div>
           </div>
 
           <div className="m-view">
             <div className="sortSelect">
-              <div className="both">
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <CategoryFilter
-                      allCategoryData={allCategoryData}
-                      setNowCategory={setNowCategory}
-                    />
+              {selClick ? (
+                <div className="mobileClose">
+                  <CgCloseR
+                    size={25}
+                    className="click"
+                    onClick={() => {
+                      setSelClick(false);
+                    }}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+              <div className={`selTrans ${selClick ? 'dflex' : 'dnone'}`}>
+                <div className="both">
+                  <div className="bothFilter">
+                    <div className="marge5">
+                      <CategoryFilter
+                        allCategoryData={allCategoryData}
+                        setNowCategory={setNowCategory}
+                      />
+                    </div>
+                    <div className="margeNone">
+                      <StatusFilter
+                        allStatusData={allStatusData}
+                        setNowStatus={setNowStatus}
+                        member={member}
+                        nowStatus={nowStatus}
+                      />
+                    </div>
                   </div>
-                  <div className="margeNone">
-                    <StatusFilter
-                      allStatusData={allStatusData}
-                      setNowStatus={setNowStatus}
-                      member={member}
-                      nowStatus={nowStatus}
-                    />
+                  <div className="bothFilter">
+                    <div className="marge5">
+                      <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
+                    </div>
+                    <div className="margeNone">
+                      <UnitHandlerFilter
+                        allUnit={allUnit}
+                        setNowHUnit={setNowHUnit}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="bothFilter">
-                  <div className="marge5">
-                    <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} />
-                  </div>
-                  <div className="margeNone">
-                    <UnitHandlerFilter
-                      allUnit={allUnit}
-                      setNowHUnit={setNowHUnit}
-                    />
-                  </div>
+                <DateFilter
+                  dateRemind={dateRemind}
+                  setDateRemind={setDateRemind}
+                  setMaxDate={setMaxDate}
+                  setMinDate={setMinDate}
+                  maxDateValue={maxDateValue}
+                  setMaxDateValue={setMaxDateValue}
+                  minDateValue={minDateValue}
+                  setMinDateValue={setMinDateValue}
+                  dateAgo={dateAgo}
+                  nowDate={nowDate}
+                />
+                <div className="inputSearch">
+                  <input
+                    className="searchInput"
+                    placeholder="Search.."
+                    type="text"
+                    maxLength={15}
+                    value={nameSearch}
+                    onChange={(e) => {
+                      let textValue = e.target.value;
+                      setNameSearch(textValue);
+                    }}
+                  />
                 </div>
               </div>
-              <DateFilter
-                dateRemind={dateRemind}
-                setDateRemind={setDateRemind}
-                setMaxDate={setMaxDate}
-                setMinDate={setMinDate}
-                maxDateValue={maxDateValue}
-                setMaxDateValue={setMaxDateValue}
-                minDateValue={minDateValue}
-                setMinDateValue={setMinDateValue}
-                dateAgo={dateAgo}
-                nowDate={nowDate}
-              />
             </div>
           </div>
           <div className="mobileToggle ">
-            {mobileToggle ? (
-              <BsToggleOn
-                size="35"
-                onClick={() => {
-                  setMobileToggle(false);
-                }}
-              />
-            ) : (
-              <BsToggleOff
-                size="35"
-                onClick={() => {
-                  setMobileToggle(true);
-                }}
-              />
-            )}
+            <div>
+              {selClick ? (
+                ''
+              ) : (
+                <BsFilterSquare
+                  size={25}
+                  className="click"
+                  onClick={() => {
+                    setSelClick(true);
+                  }}
+                />
+              )}
+            </div>
+            <div>
+              {mobileToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(true);
+                  }}
+                />
+              )}{' '}
+            </div>
           </div>
           <div className="case">
             <table

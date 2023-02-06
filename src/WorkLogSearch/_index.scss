@@ -12,9 +12,6 @@
   @media only screen and (max-width: 576px) {
     width: 370px;
   }
-  // @media only screen and (min-width: 576px) {
-  //   width: 1270px;
-  // }
   background: rgba(0, 0, 0, 0.55);
   font-size: clamp(12px, 1vw, 18px);
 
@@ -159,12 +156,13 @@
   width: 1270px;
   height: calc(100vh - 70px);
   font-size: $contentText18;
-  .sortSelect1 {
+  .sortSct {
     // background: lemonchiffon;
     padding: 30px 0px 20px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .monthSelect {
       display: flex;
       .month {
@@ -220,7 +218,7 @@
             cursor: pointer;
             line-height: 80px;
           }
-          .check{
+          .check {
             background: #aaa;
           }
           .noWrite {
@@ -256,7 +254,7 @@
   }
   .workLogSearchContainer {
     width: 1000px;
-    .sortSelect1 {
+    .sortSct {
       align-items: flex-start;
       flex-direction: column;
       .monthSelect {
@@ -304,12 +302,13 @@
   }
   .workLogSearchContainer {
     width: 370px;
-    .sortSelect1 {
+    .sortSctBetween {
+      display: flex;
+      justify-content: center;
+    }
+    .sortSct {
       // background: lemonchiffon;
       margin: 0 auto;
-      // padding: 30px 0px 20px 0px;
-      // display: flex;
-      align-items: center;
       .monthSelect {
         // background: lemonchiffon;
         display: flex;
@@ -318,6 +317,9 @@
           align-items: flex-start;
           // justify-content: flex-start;
         }
+      }
+      .squareContainer {
+        align-items: flex-start;
       }
     }
   }

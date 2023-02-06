@@ -1,7 +1,7 @@
 @import '../variable';
 
 .caseWrap {
-  width: 95%;
+  width: 1260px;
   height: calc(100vh - 70px);
   // background: rgb(231, 190, 151);
   // margin: 0 auto;
@@ -30,7 +30,8 @@
       justify-content: start;
     }
   }
-  .sortSelect {
+  .sortSelect,
+  .sortSel {
     // background: lemonchiffon;
     padding: 20px 0px 0px;
     .userSort {
@@ -52,6 +53,7 @@
   .allConutContainer {
     //   background: lemonchiffon;
     @include scrollbar;
+    // width: 90%;
     height: 72%;
     padding: 0 10px;
     .countContainer {
@@ -85,6 +87,12 @@
   }
 }
 
+@media screen and (max-width: 1400px) {
+  .caseWrap {
+    width: 800px;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .m-view {
     display: flex;
@@ -94,46 +102,76 @@
   }
   .direction {
     flex-direction: column;
+    align-items: center;
   }
   .marginB {
     margin-bottom: $marage10;
   }
-  // sort
-  .sort {
-    // background: lemonchiffon;
-    // padding: 30px 0px 20px 0px;
-    // display: flex;
-    // justify-content: space-between;
-    flex-direction: column;
-    margin-bottom: 0px !important;
-    .filter {
-      // display: flex;
-      margin-bottom: $marage10;
-    }
-    .userSort {
-      // background: lightcoral;
+
+  .caseWrap {
+    width: 370px;
+    // sort
+    .sort {
       flex-direction: column;
-
-      // display: flex;
-      align-items: start !important;
-      // justify-content: start;
+      margin-bottom: 0px;
+      .filter {
+        margin-bottom: $marage10;
+        justify-content: center;
+      }
+      .userSort {
+        // background: lightcoral;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+      }
     }
-  }
-  .userFlex {
-    flex-direction: column;
-
-    // display: flex;
-    align-items: start !important;
-    // justify-content: start;
-
-    .userSort {
-      // display: flex;
+    .sortSel {
+      .userSort {
+        justify-content: center;
+      }
+    }
+    .userFlex {
       flex-direction: column;
-      align-items: start !important;
-      // justify-content: start;
-      .unitFlex {
+      align-items: start;
+      .userStart {
         display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: flex-start;
+      }
+      .userSort {
+        flex-direction: column;
+        align-items: start;
+        .unitFlex {
+          display: flex;
+        }
       }
     }
   }
+
+  // sort
+  // .sort {
+  //   flex-direction: column;
+  //   margin-bottom: 0px !important;
+  //   .filter {
+  //     margin-bottom: $marage10;
+  //   }
+  //   .userSort {
+  //     // background: lightcoral;
+  //     flex-direction: column;
+  //     align-items: start !important;
+  //   }
+  // }
+  // .userFlex {
+  //   flex-direction: column;
+  //   align-items: start !important;
+
+  //   .userSort {
+  //     flex-direction: column;
+  //     align-items: start !important;
+  //     .unitFlex {
+  //       display: flex;
+  //     }
+  //   }
+  // }
 }

@@ -31,6 +31,14 @@
     position: absolute;
     color: $focusClrG;
     font-weight: 600;
-    padding-top: 5px;
+    // padding-top: 5px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .dateFilterContainer {
+    .dateRemind{
+      position: relative;
+    }
   }
 }
