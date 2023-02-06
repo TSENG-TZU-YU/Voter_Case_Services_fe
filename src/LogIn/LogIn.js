@@ -39,7 +39,7 @@ function LogIn() {
       }
     }
 
-    unit();
+    // unit();
   }, []);
 
   // 檢查登入sweet
@@ -115,7 +115,10 @@ function LogIn() {
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/audit/login`,
-        { ...login[0] }
+        { ...login[0] },
+        {
+          withCredentials: true,
+        }
       );
     } catch (err) {
       console.log(err);
@@ -125,7 +128,10 @@ function LogIn() {
     try {
       let res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/audit/login/err`,
-        { ...login[0] }
+        { ...login[0] },
+        {
+          withCredentials: true,
+        }
       );
     } catch (err) {
       console.log(err);

@@ -120,7 +120,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
         {/* <div>職別:{member.job}</div> */}
 
         {/* 使用者/主管 */}
-        {user ? (
+        {handler ? (
           <>
             <nav className="vectorBottom">
               <NavLink

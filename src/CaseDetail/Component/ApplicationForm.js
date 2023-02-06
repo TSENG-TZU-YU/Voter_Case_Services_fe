@@ -641,8 +641,6 @@ function ApplicationForm({
   }, [num, needLoading, needState, caseId, edit]);
 
   useEffect(() => {
-    // let params = new URLSearchParams(location.search);
-    // let caseId = params.get('id');
     let getCampingDetailData = async () => {
       let response = await axios.post(
         `${API_URL}/applicationData/${num}`,

@@ -163,9 +163,9 @@ function UploadPage({ setAddStatus, delCheck }) {
         name: fileName,
         dbTime: dbTime,
         fileNo: fileNo,
-        withCredentials: true,
       },
       method: 'POST',
+      withCredentials: true,
       responseType: 'blob', // important 下載檔案需要轉
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -377,12 +377,7 @@ function UploadPage({ setAddStatus, delCheck }) {
       ) : (
         <div className="overScr">
           {/* 上傳檔案 */}
-          {(member.user === 1 && status === 2 && page === 1) ||
-          (member.user === 1 && status === 3 && page === 1) ||
-          (member.user === 1 && status === 5 && page === 1) ||
-          (member.user === 1 && status === 6 && page === 1) ||
-          (member.user === 1 && status === 7 && page === 1) ||
-          (member.handler === 1 && status === 2 && page === 2) ||
+          {(member.handler === 1 && status === 2 && page === 2) ||
           (member.handler === 1 && status === 3 && page === 2) ||
           (member.handler === 1 && status === 5 && page === 2) ||
           (member.handler === 1 && status === 6 && page === 2) ||
