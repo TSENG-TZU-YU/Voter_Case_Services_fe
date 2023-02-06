@@ -12,7 +12,13 @@ import { useAuth } from '../utils/use_auth';
 
 function LogIn() {
   const navigate = useNavigate();
-  const [login, setIogin] = useState([{ company: '', no: '', password: '' }]);
+  const [login, setIogin] = useState([
+    {
+      company: '',
+      no: localStorage.getItem('memberID'),
+      password: localStorage.getItem('memberPassword'),
+    },
+  ]);
   const { member, setMember, isLogin, setIsLogin } = useAuth();
   const [unit, setUnit] = useState([]);
   const [eye, setEye] = useState(false);
@@ -25,8 +31,8 @@ function LogIn() {
     // if (input === 'company') newData[0].company = val;
     if (input === 'no') newData[0].no = val;
     if (input === 'password') newData[0].password = val;
+    setIogin(newData);
   };
-
   useEffect(() => {
     async function unit() {
       try {
@@ -62,7 +68,6 @@ function LogIn() {
       submit();
     }
   }
-
   const submit = async () => {
     try {
       let res = await axios.post(
@@ -74,6 +79,7 @@ function LogIn() {
       );
       setMember(res.data);
       localStorage.setItem('memberID', login[0].no);
+      localStorage.setItem('memberPassword', login[0].password);
       Swal.fire({
         position: 'top-center',
         icon: 'success',
@@ -163,8 +169,9 @@ function LogIn() {
                 name="no"
                 type="text"
                 placeholder="員工編號"
+                value={login[0].no}
                 onChange={(e) => {
-                  doLogin(e.target.value, 'no');
+                  doLogin((login[0].no = e.target.value), 'no');
                 }}
               />
             </div>
@@ -175,8 +182,9 @@ function LogIn() {
                 type={eye ? 'text' : 'password'}
                 placeholder="密碼至多15字"
                 maxLength={15}
+                value={login[0].password}
                 onChange={(e) => {
-                  doLogin(e.target.value, 'password');
+                  doLogin((login[0].password = e.target.value), 'password');
                 }}
               />
               {eye ? (

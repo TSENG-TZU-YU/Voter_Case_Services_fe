@@ -84,19 +84,6 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
     //刷新後會員權限無法渲染 需要增加member.permissions_id?
   }, [member.user, member.handler, member.manage, member.director]);
   // member.user, member.handler, member.manage, member.director
-  const logOut = async () => {
-    try {
-      let res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/logout`,
-        { withCredentials: true }
-      );
-      navigate('/casemgmt');
-      localStorage.setItem('memberID', '');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {}, [page]);
 
   const mobilePage = (e) => {

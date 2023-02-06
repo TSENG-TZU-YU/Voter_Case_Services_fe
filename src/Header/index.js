@@ -94,6 +94,7 @@ function Header() {
       );
       navigate('/casemgmt');
       localStorage.setItem('memberID', '');
+      localStorage.setItem('memberPassword', '');
     } catch (err) {
       console.log(err);
     }
@@ -172,7 +173,9 @@ function Header() {
               <nav>
                 <NavLink
                   to="caseManagement_handler"
-                  className={(nav) => (nav.isActive || page === 2 ? 'link' : '')}
+                  className={(nav) =>
+                    nav.isActive || page === 2 ? 'link' : ''
+                  }
                 >
                   {/* 處理人/協理/主管 */}
                   <div
