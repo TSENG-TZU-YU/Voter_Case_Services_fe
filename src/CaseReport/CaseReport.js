@@ -38,11 +38,18 @@ function CaseReport() {
   });
 
   let dateAgo = newDateString.replace(/\//g, '-');
-  // console.log('d', handlerNull);
+  // console.log('d', handlerNull);litigant
 
   const { member, setMember } = useAuth();
   const [number, setNumber] = useState(true);
   const [time, setTime] = useState(true);
+  const [source, setSource] = useState(true);
+  const [category, setCategory] = useState(true);
+  const [litigant, setLitigant] = useState(true);
+  const [client, setClient] = useState(true);
+  const [state, setState] = useState(true);
+  const [called, setCalled] = useState(true);
+
   const [checkState, setCheckState] = useState(false);
   const [dateRemind, setDateRemind] = useState('');
   const [maxDateValue, setMaxDateValue] = useState(nowDate);
@@ -141,7 +148,7 @@ function CaseReport() {
 
     let getCampingData = async () => {
       let response = await axios.get(
-        `${API_URL}/applicationData?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}`,
+        `${API_URL}/applicationData/getReport?category=${nowCategory}&state=${nowStatus}&unit=${nowUnit}&minDate=${minDate}&maxDate=${maxDate}&order=${order}&HUnit=${nowHUnit}&search=${nameSearch}`,
         {
           withCredentials: true,
         }
@@ -168,6 +175,7 @@ function CaseReport() {
     maxDate,
     order,
     nowHUnit,
+    nameSearch,
   ]);
 
   useEffect(() => {
@@ -387,18 +395,34 @@ function CaseReport() {
               <thead>
                 <tr>
                   <th>詳細資訊</th>
-                  <th>請託來源</th>
-                  <th>案件類型</th>
-                  <th>當事人</th>
-                  <th>請託人</th>
-                  <th className="sortBtn">
-                    接案時間
-                    {time ? (
+                  <th>
+                    請託來源
+                    {source ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(1);
+                          setSource(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(2);
+                          setSource(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>
+                    案件類型
+                    {category ? (
                       <MdArrowDropDown
                         className="arrow"
                         onClick={() => {
                           setOrder(3);
-                          setTime(false);
+                          setCategory(false);
                         }}
                       />
                     ) : (
@@ -406,13 +430,111 @@ function CaseReport() {
                         className="arrow"
                         onClick={() => {
                           setOrder(4);
+                          setCategory(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>
+                    當事人
+                    {litigant ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(5);
+                          setLitigant(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(6);
+                          setLitigant(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>
+                    委託人
+                    {client ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(7);
+                          setClient(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(8);
+                          setClient(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th className="sortBtn">
+                    接案時間
+                    {time ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(9);
+                          setTime(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(10);
                           setTime(true);
                         }}
                       />
                     )}
                   </th>
-                  <th>案件狀態</th>
-                  <th>請委員/議員致電陳情人</th>
+                  <th>
+                    案件狀態
+                    {state ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(11);
+                          setState(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(12);
+                          setState(true);
+                        }}
+                      />
+                    )}
+                  </th>
+                  <th>
+                    請委員/議員致電陳情人
+                    {called ? (
+                      <MdArrowDropDown
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(13);
+                          setCalled(false);
+                        }}
+                      />
+                    ) : (
+                      <MdArrowDropUp
+                        className="arrow"
+                        onClick={() => {
+                          setOrder(14);
+                          setCalled(true);
+                        }}
+                      />
+                    )}
+                  </th>
                 </tr>
               </thead>
               {isLoading ? (

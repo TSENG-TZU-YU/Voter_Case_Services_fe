@@ -1122,7 +1122,7 @@ function ApplicationForm({
             )}
 
             {/* handler === '' 確認接收此案件 */}
-            {(member.handler === 1 || member.manage === 1) &&
+            {(member.handler === 1) &&
             HId === '' &&
             needState === 4 &&
             WebPage === 2 &&
