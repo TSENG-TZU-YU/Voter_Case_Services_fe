@@ -115,7 +115,7 @@ function ApplicationForm({
 
     // if (member.user === 1) {
     //   setAddStatus(false);
-    // }
+    // }needLoading
   }, [detailData]);
 
   // 修改申請表
@@ -597,7 +597,6 @@ function ApplicationForm({
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
       setHandlerUnit(response.data.result[0].unit);
-      setSelCheckData(response.data.selCheckResult);
       setSelVal(response.data.selCheckResult[0]);
       setNowSelState(response.data.nowStateResult[0].name);
       // console.log('first', response.data.nowStateResult[0].name);
