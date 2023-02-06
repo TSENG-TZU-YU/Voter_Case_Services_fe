@@ -124,7 +124,7 @@ function ProcessingStatus({
                       disabled={
                         WebPage === 2 &&
                         HId !== '' &&
-                        (member.manage === 1 || member.handler === 1) &&
+                        member.handler === 1 &&
                         HId === member.name &&
                         needState !== 1 &&
                         needState !== 4 &&
@@ -154,7 +154,7 @@ function ProcessingStatus({
                       disabled={
                         WebPage === 2 &&
                         HId !== '' &&
-                        (member.manage === 1 || member.handler === 1) &&
+                        member.handler === 1 &&
                         HId === member.name &&
                         needState !== 1 &&
                         needState !== 4 &&
@@ -218,7 +218,11 @@ function ProcessingStatus({
                           name="result"
                           checked={v.success === 1 ? true : false}
                           disabled={
-                            HId === member.name && WebPage === 2 ? false : true
+                            member.handler === 1 &&
+                            HId === member.name &&
+                            WebPage === 2
+                              ? false
+                              : true
                           }
                           onChange={(e) => {
                             handleStateChecked(
@@ -238,7 +242,11 @@ function ProcessingStatus({
                           name="result"
                           checked={v.fail === 1 ? true : false}
                           disabled={
-                            HId === member.name && WebPage === 2 ? false : true
+                            member.handler === 1 &&
+                            HId === member.name &&
+                            WebPage === 2
+                              ? false
+                              : true
                           }
                           onChange={(e) => {
                             handleStateChecked(
@@ -270,12 +278,18 @@ function ProcessingStatus({
                         rows="3"
                         name="populace"
                         disabled={
-                          HId === member.name && WebPage === 2 ? false : true
+                          member.handler === 1 &&
+                          HId === member.name &&
+                          WebPage === 2
+                            ? false
+                            : true
                         }
                         value={selVal.populace}
                         onChange={handleChange}
                       ></textarea>
-                      {HId === member.name && WebPage === 2 ? (
+                      {member.handler === 1 &&
+                      HId === member.name &&
+                      WebPage === 2 ? (
                         <FaTelegramPlane
                           className="submitIcon"
                           onClick={() => {
@@ -325,7 +339,7 @@ function ProcessingStatus({
       nowState !== 8 &&
       nowState !== 9 &&
       nowState !== 10 &&
-      (member.handler === 1 || member.manage === 1) &&
+      member.handler === 1 &&
       HId === member.name &&
       WebPage === 2 ? (
         <div className="chatBarContain">
