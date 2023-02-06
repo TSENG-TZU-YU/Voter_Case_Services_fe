@@ -179,7 +179,6 @@ function Application({ delCheck }) {
           },
           { withCredentials: true }
         );
-        console.log('111', res.response.data.msg);
         setGetHandler(res.data);
       } catch (err) {
         console.log(err);
