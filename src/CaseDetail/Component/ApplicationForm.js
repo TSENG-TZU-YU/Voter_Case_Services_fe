@@ -75,6 +75,7 @@ function ApplicationForm({
   const [editVerifyPage, setEditVerifyPage] = useState(false);
 
   const [needLoading, setNeedLoading] = useState(false);
+  const [proLoading, setProLoading] = useState(false);
   const [needLen, setNeedLen] = useState('');
   const [needSumLen, setNeedSumLen] = useState('');
   const [handlerUnit, setHandlerUnit] = useState('');
@@ -595,7 +596,6 @@ function ApplicationForm({
       );
       setDetailData(response.data.result);
       setNeedData(response.data.needResult);
-      setRemarkLength(response.data.remarkResult.length);
       setHandlerUnit(response.data.result[0].unit);
       setSelCheckData(response.data.selCheckResult);
       setSelVal(response.data.selCheckResult[0]);
@@ -639,7 +639,25 @@ function ApplicationForm({
     };
 
     getCampingDetailData();
-  }, [num, needLoading, needState, caseId, edit, loading]);
+  }, [num, needLoading, needState, caseId, edit]);
+
+  useEffect(() => {
+    // let params = new URLSearchParams(location.search);
+    // let caseId = params.get('id');
+    let getCampingDetailData = async () => {
+      let response = await axios.post(
+        `${API_URL}/applicationData/${num}`,
+        { caseId },
+        {
+          withCredentials: true,
+        }
+      );
+      setRemarkLength(response.data.remarkResult.length);
+      setSelCheckData(response.data.selCheckResult);
+    };
+
+    getCampingDetailData();
+  }, [proLoading, loading]);
 
   // 需求 checked
   const handleNeedChecked = async (needId, checked) => {
@@ -981,7 +999,7 @@ function ApplicationForm({
           withCredentials: true,
         }
       );
-      setNeedLoading(!needLoading);
+      setProLoading(!proLoading);
     } else {
       let response = await axios.post(
         `${API_URL}/applicationData/selUnChecked/${needId}`,
@@ -990,7 +1008,7 @@ function ApplicationForm({
           withCredentials: true,
         }
       );
-      setNeedLoading(!needLoading);
+      setProLoading(!proLoading);
     }
   };
 
