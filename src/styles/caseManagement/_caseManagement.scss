@@ -8,7 +8,7 @@
   width: 90%;
   height: calc(100vh - 70px);
   font-size: $contentText18;
-  .mobileToggle {
+  .mobileToggle,.mobileClose {
     display: none;
   }
   .case {
@@ -21,8 +21,6 @@
     display: flex;
     justify-content: space-between;
     // height: 0px;
-    .selIcon {
-    }
 
     .bothFilter {
       display: flex;
@@ -39,7 +37,6 @@
     margin-top: $marage10;
   }
   .up {
-    transform: translateY(-200px);
   }
   .down {
   }
@@ -171,9 +168,20 @@
 /* media queries */
 @media screen and (max-width: 576px) {
   .caseContainer {
+    .dnone {
+      display: none;
+    }
+    .dflex {
+      display: flex;
+      flex-direction: column;
+    }
     .mobileToggle {
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mobileClose {
+      display: flex;
     }
   }
   .case {

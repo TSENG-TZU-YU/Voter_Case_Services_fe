@@ -112,26 +112,32 @@ function WorkLogSearch() {
         ''
       )}
       {/* 篩選 */}
-      <div className="sortSelect1">
-        <div className="monthSelect">
-          <div className="month">
-            <div>請選擇年月份：</div>
-            <MonthFilter setMaxDate={setMaxDate} setMinDate={setMinDate} />
+      <div className="sortSctBetween">
+        <div className="sortSct">
+          <div className="monthSelect">
+            <div className="month">
+              <div>請選擇年月份：</div>
+              <MonthFilter setMaxDate={setMaxDate} setMinDate={setMinDate} />
+            </div>
+            <div className="month ms-2">
+              <div>請選擇單位：</div>
+              <UnitFilter
+                allUnit={allUnit}
+                setNowUnit={setNowUnit}
+                Unit={Unit}
+              />
+            </div>
           </div>
-          <div className="month ms-2">
-            <div>請選擇單位：</div>
-            <UnitFilter allUnit={allUnit} setNowUnit={setNowUnit} Unit={Unit} />
-          </div>
-        </div>
 
-        <div className="squareContainer">
-          <div className="squareContain">
-            <div className="squareB"></div>
-            <div>：已填寫</div>
-          </div>
-          <div className="squareContain">
-            <div className="squareP"></div>
-            <div>：未填寫</div>
+          <div className="squareContainer">
+            <div className="squareContain">
+              <div className="squareB"></div>
+              <div>：已填寫</div>
+            </div>
+            <div className="squareContain">
+              <div className="squareP"></div>
+              <div>：未填寫</div>
+            </div>
           </div>
         </div>
       </div>

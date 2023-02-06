@@ -136,7 +136,7 @@ function AppUserPage() {
     <>
       <div className="caseWrap">
         {/* 篩選 */}
-        <div className="sortSelect">
+        <div className="sortSel">
           {/* 日期 */}
           <div className="userSort">
             <div>申請日期：</div>

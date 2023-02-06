@@ -19,12 +19,9 @@ import PaginationBar from './Component/PaginationBar';
 import Loader from '../Loader';
 
 import { FaEye } from 'react-icons/fa';
+import { CgCloseR } from 'react-icons/cg';
 import { MdArrowDropUp, MdArrowDropDown } from 'react-icons/md';
-import {
-  BsToggleOff,
-  BsToggleOn,
-  BsFillFilterSquareFill,
-} from 'react-icons/bs';
+import { BsToggleOff, BsToggleOn, BsFilterSquare } from 'react-icons/bs';
 
 function CaseManagement() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -297,14 +294,20 @@ function CaseManagement() {
 
           <div className="m-view">
             <div className="sortSelect">
-              <BsFillFilterSquareFill
-                size={25}
-                className={`selIcon ${selClick ? 'click' : ''}`}
-                onClick={() => {
-                  setSelClick(!selClick);
-                }}
-              />
               {selClick ? (
+                <div className="mobileClose">
+                  <CgCloseR
+                    size={25}
+                    className="click"
+                    onClick={() => {
+                      setSelClick(false);
+                    }}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+              <div className={`selTrans ${selClick ? 'dflex' : 'dnone'}`}>
                 <div className="selTrans">
                   <div className="both">
                     <div className="bothFilter">
@@ -360,28 +363,41 @@ function CaseManagement() {
                     />
                   </div>
                 </div>
-              ) : (
-                ''
-              )}
+              </div>
             </div>
           </div>
 
           <div className="mobileToggle">
-            {mobileToggle ? (
-              <BsToggleOn
-                size="35"
-                onClick={() => {
-                  setMobileToggle(false);
-                }}
-              />
-            ) : (
-              <BsToggleOff
-                size="35"
-                onClick={() => {
-                  setMobileToggle(true);
-                }}
-              />
-            )}
+            <div>
+              {selClick ? (
+                ''
+              ) : (
+                <BsFilterSquare
+                  size={25}
+                  className="click"
+                  onClick={() => {
+                    setSelClick(true);
+                  }}
+                />
+              )}
+            </div>
+            <div>
+              {mobileToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setMobileToggle(true);
+                  }}
+                />
+              )}
+            </div>
           </div>
           <div className="case">
             <table
