@@ -189,6 +189,12 @@ function Header() {
                   </div>
                 </NavLink>
               </nav>
+            </>
+          ) : (
+            ''
+          )}
+          {handler ? (
+            <>
               <nav>
                 <NavLink
                   to="workLog"

@@ -73,6 +73,7 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
+        // transform="rotate(-35)"
       >{`案件量 : ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
