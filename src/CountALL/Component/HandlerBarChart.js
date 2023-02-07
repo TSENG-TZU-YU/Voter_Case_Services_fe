@@ -11,30 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// class CustomizedAxisTick extends PureComponent {
-//   render() {
-//     const { x, y, stroke, payload } = this.props;
-
-//     return (
-//       <g transform={`translate(${x},${y})`}>
-//         <text
-//           x={0}
-//           y={0}
-//           dy={16}
-//           textAnchor="middle"
-//           fill="#666"
-//           // transform="rotate(-35)"
-//           // whiteSpace="normal"
-//         >
-//           {payload.value}
-//         </text>
-//       </g>
-//     );
-//   }
-// }
-// tick={<CustomizedAxisTick />}
-
-function SimpleBarChart({ chart }) {
+function SimpleBarChart({ chart, noHandler }) {
   let newData = [];
   for (let i = 0; i < chart.length; i++) {
     newData.push({
@@ -42,15 +19,16 @@ function SimpleBarChart({ chart }) {
       案件量: chart[i].value,
     });
   }
-  // const sortOption = [{ value: '', 案件量: '尚無處理人' }, ...newData];
+
+  const sortOption = [{ name: '尚無處理人', 案件量: noHandler }, ...newData];
 
   return (
-    <div style={{ width: '100%', height: '120%' }}>
+    <div style={{ width: '100%', height: '130%' }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
           height={300}
-          data={newData}
+          data={sortOption}
           margin={{
             top: 5,
             right: 30,
