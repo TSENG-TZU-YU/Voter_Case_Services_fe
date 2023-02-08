@@ -176,7 +176,7 @@ function HandlerUnitPage() {
           <Loader />
         ) : (
           <div className="allConutContainer">
-            <div className="d-flex">
+            <div className="d-flex align-items-center">
               {/* <div className="allTit">總申請案件 ： {allTotal} 件</div> */}
               <div className="allTit">
                 篩選結果件數 ： {total} 件 / {allTotal} 件

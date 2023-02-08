@@ -387,7 +387,7 @@ function CaseReport() {
               )}{' '}
             </div>
           </div>
-          <div className="case">
+          <div className={`case ${selClick ? 'hightCalc' : 'pcCalc'}`}>
             <table
               className={`caseReport ${mobileToggle ? ' mobileCaseReport' : ''}
               `}

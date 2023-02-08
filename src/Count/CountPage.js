@@ -17,6 +17,8 @@ import UserHandlerFilter from './Component/UserHandlerFilter.js';
 
 import Loader from '../Loader';
 
+import { CgCloseR } from 'react-icons/cg';
+import { BsFilterSquare } from 'react-icons/bs';
 // function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 function CountPage() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -38,6 +40,7 @@ function CountPage() {
   const [minDateValue, setMinDateValue] = useState(dateAgo);
   const [unitChange, setUnitChange] = useState(false);
   const [handleChange, setHandleChange] = useState(false);
+  const [selClick, setSelClick] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -175,7 +178,9 @@ function CountPage() {
 
   return (
     <>
-      <div className="caseWrap">
+      <div
+        className={`caseWrap ${selClick ? 'containHightH' : 'containHightL'}`}
+      >
         {/* 篩選 */}
         <div className="p-view direction">
           <div className="sort">
@@ -266,10 +271,29 @@ function CountPage() {
             </div>
           </div>
         </div>
-
         {/* m */}
+        <div className="mobileC">
+          {selClick ? (
+            <CgCloseR
+              size={25}
+              className="click"
+              onClick={() => {
+                setSelClick(false);
+              }}
+            />
+          ) : (
+            <BsFilterSquare
+              size={25}
+              className="click"
+              onClick={() => {
+                setSelClick(true);
+              }}
+            />
+          )}
+        </div>
+
         <div className="m-view direction">
-          <div>
+          <div className={`${selClick ? 'mobileF' : 'mobileN'}`}>
             <div className="sort">
               <div className="filter">
                 {/* 類別 */}
@@ -367,12 +391,11 @@ function CountPage() {
         </div>
         {/* ------ */}
         <hr />
-
         {/* 統計 */}
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="allConutContainer">
+          <div className={`allConutContainer `}>
             <div className="d-flex">
               {/* <div className="allTit">總申請案件 ： 件</div> */}
               <div className="allTit">

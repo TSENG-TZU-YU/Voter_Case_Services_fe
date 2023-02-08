@@ -10,16 +10,14 @@
 //   transform: rotate(-35);
 // }
 
+.mobileC {
+  display: none;
+}
 .caseWrap {
-  max-width: 1260px;
-  height: calc(100vh - 70px);
   // background: rgb(231, 190, 151);
-  // margin: 0 auto;
+  max-width: 1260px;
   font-size: clamp(12px, 1vw, 18px);
-  // padding-bottom: 30px;
-  // .m-view {
-  //   display: none;
-  // }
+  height: calc(100vh - 70px);
   width: 100%;
   .direction {
     flex-direction: column;
@@ -62,7 +60,7 @@
     }
   }
   .allConutContainer {
-    //   background: lemonchiffon;
+    // background: lemonchiffon;
     @include scrollbar;
     // width: 90%;
     height: 72%;
@@ -97,7 +95,13 @@
     }
   }
 }
-
+.containHightL {
+  height: calc(100vh - 70px);
+}
+.containHightH {
+  // background: lightblue;
+  height: calc(100vh - 280px);
+}
 @media screen and (max-width: 1500px) {
   .marginB {
     margin-bottom: $marage10;
@@ -130,7 +134,22 @@
   .marginB {
     margin-bottom: $marage10;
   }
-
+  .mobileC {
+    display: flex;
+    margin-top: $marage10;
+    padding: 0 $marage10;
+    .click {
+      cursor: pointer;
+      color: $subClrBrown;
+    }
+  }
+  .mobileF {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobileN {
+    display: none;
+  }
   .caseWrap {
     max-width: 370px;
     // sort
@@ -170,5 +189,14 @@
         }
       }
     }
+    // .containHightL {
+    //   height: 85%;
+    // }
+    // .containHightH {
+    //   height: 72%;
+    // }
+    // .countAllHight {
+    //   height: 100%;
+    // }
   }
 }

@@ -97,95 +97,95 @@
 }
 
 /* media queries */
-@media screen and (max-width: 576px) {
-  .caseContainer {
-    .mobileToggle {
-      display: flex;
-      // justify-content: end;
-    }
-  }
-  .case {
-    max-width: 576px;
-    margin: 0 auto;
-  }
+// @media screen and (max-width: 576px) {
+//   // .caseContainer {
+//   //   .mobileToggle {
+//   //     display: flex;
+//   //     // justify-content: end;
+//   //   }
+//   // }
+//   // .case {
+//   //   max-width: 576px;
+//   //   margin: 0 auto;
+//   // }
 
-  table.mobileCaseReport {
-    width: 100%;
-  }
-  table.mobileCaseReport tr.hide-mobile,
-  table.mobileCaseReport th.hide-mobile,
-  table.mobileCaseReport td.hide-mobile {
-    display: none;
-  }
-  table.mobileCaseReport thead {
-    display: none;
-  }
-  table.mobileCaseReport tbody {
-    width: 100%;
-  }
-  .caseContainer .mobileCaseReport .bodyMobile {
-    border-bottom: none;
-  }
-  table.mobileCaseReport tr,
-  table.mobileCaseReport th,
-  table.mobileCaseReport td {
-    display: block;
-    padding: 0;
-  }
-  table.mobileCaseReport tr {
-    // border-bottom: none;
-    // border-top: none;
-    border: 1px solid #ccc;
-    margin: 0 0 1em 0;
-    padding: 0 0.5em;
-  }
-  .caseContainer .mobileCaseReport .noData tr {
-    border: 0px;
-  }
-  .caseContainer .mobileCaseReport .noData td {
-    text-align: center;
-  }
-  table.mobileCaseReport tr.highlight {
-    background-color: inherit !important;
-  }
-  table.mobileCaseReport.zebra tr:nth-child(even) {
-    background-color: transparent;
-  }
-  table.mobileCaseReport.zebra td:nth-child(even) {
-    background-color: #f6f6f6;
-  }
-  table.mobileCaseReport tr:nth-child(even) {
-    background-color: transparent;
-  }
-  table.mobileCaseReport td {
-    padding: 0.5em 0 0.25em 0;
-    border-bottom: 1px dotted #ccc;
-    text-align: right;
-  }
-  table.mobileCaseContain td:last-child {
-    border-bottom: 0px;
-  }
-  table.mobileCaseReport td[data-title]:before {
-    content: attr(data-title);
-    font-weight: bold;
-    display: inline-block;
-    content: attr(data-title);
-    float: left;
-    margin-right: 0.5em;
-    font-size: 0.95em;
-  }
-  table.mobileCaseReport td:last-child {
-    padding-right: 0;
-    // border-bottom: 2px solid #ccc;
-  }
-  table.mobileCaseReport td:empty {
-    display: none;
-  }
-  table.mobileCaseReport .highlight td {
-    background-color: inherit;
-    font-weight: normal;
-  }
-}
+//   // table.mobileCaseReport {
+//   //   width: 100%;
+//   // }
+//   // table.mobileCaseReport tr.hide-mobile,
+//   // table.mobileCaseReport th.hide-mobile,
+//   // table.mobileCaseReport td.hide-mobile {
+//   //   display: none;
+//   // }
+//   // table.mobileCaseReport thead {
+//   //   display: none;
+//   // }
+//   // table.mobileCaseReport tbody {
+//   //   width: 100%;
+//   // }
+//   // .caseContainer .mobileCaseReport .bodyMobile {
+//   //   border-bottom: none;
+//   // }
+//   // table.mobileCaseReport tr,
+//   // table.mobileCaseReport th,
+//   // table.mobileCaseReport td {
+//   //   display: block;
+//   //   padding: 0;
+//   // }
+//   // table.mobileCaseReport tr {
+//   //   // border-bottom: none;
+//   //   // border-top: none;
+//   //   border: 1px solid #ccc;
+//   //   margin: 0 0 1em 0;
+//   //   padding: 0 0.5em;
+//   // }
+//   // .caseContainer .mobileCaseReport .noData tr {
+//   //   border: 0px;
+//   // }
+//   // .caseContainer .mobileCaseReport .noData td {
+//   //   text-align: center;
+//   // }
+//   // table.mobileCaseReport tr.highlight {
+//   //   background-color: inherit !important;
+//   // }
+//   // table.mobileCaseReport.zebra tr:nth-child(even) {
+//   //   background-color: transparent;
+//   // }
+//   // table.mobileCaseReport.zebra td:nth-child(even) {
+//   //   background-color: #f6f6f6;
+//   // }
+//   // table.mobileCaseReport tr:nth-child(even) {
+//   //   background-color: transparent;
+//   // }
+//   // table.mobileCaseReport td {
+//   //   padding: 0.5em 0 0.25em 0;
+//   //   border-bottom: 1px dotted #ccc;
+//   //   text-align: right;
+//   // }
+//   // table.mobileCaseContain td:last-child {
+//   //   border-bottom: 0px;
+//   // }
+//   // table.mobileCaseReport td[data-title]:before {
+//   //   content: attr(data-title);
+//   //   font-weight: bold;
+//   //   display: inline-block;
+//   //   content: attr(data-title);
+//   //   float: left;
+//   //   margin-right: 0.5em;
+//   //   font-size: 0.95em;
+//   // }
+//   // table.mobileCaseReport td:last-child {
+//   //   padding-right: 0;
+//   //   // border-bottom: 2px solid #ccc;
+//   // }
+//   // table.mobileCaseReport td:empty {
+//   //   display: none;
+//   // }
+//   // table.mobileCaseReport .highlight td {
+//   //   background-color: inherit;
+//   //   font-weight: normal;
+//   // }
+// }
 
 @media screen and (max-width: 1400px) {
   .m-view {
@@ -267,5 +267,92 @@
       justify-content: space-between;
       align-items: center;
     }
+  }
+  // .caseContainer {
+  //   .mobileToggle {
+  //     display: flex;
+  //     // justify-content: end;
+  //   }
+  // }
+  .case {
+    max-width: 576px;
+    margin: 0 auto;
+  }
+
+  table.mobileCaseReport {
+    width: 100%;
+  }
+  table.mobileCaseReport tr.hide-mobile,
+  table.mobileCaseReport th.hide-mobile,
+  table.mobileCaseReport td.hide-mobile {
+    display: none;
+  }
+  table.mobileCaseReport thead {
+    display: none;
+  }
+  table.mobileCaseReport tbody {
+    width: 100%;
+  }
+  .caseContainer .mobileCaseReport .bodyMobile {
+    border-bottom: none;
+  }
+  table.mobileCaseReport tr,
+  table.mobileCaseReport th,
+  table.mobileCaseReport td {
+    display: block;
+    padding: 0;
+  }
+  table.mobileCaseReport tr {
+    // border-bottom: none;
+    // border-top: none;
+    border: 1px solid #ccc;
+    margin: 0 0 1em 0;
+    padding: 0 0.5em;
+  }
+  .caseContainer .mobileCaseReport .noData tr {
+    border: 0px;
+  }
+  .caseContainer .mobileCaseReport .noData td {
+    text-align: center;
+  }
+  table.mobileCaseReport tr.highlight {
+    background-color: inherit !important;
+  }
+  table.mobileCaseReport.zebra tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseReport.zebra td:nth-child(even) {
+    background-color: #f6f6f6;
+  }
+  table.mobileCaseReport tr:nth-child(even) {
+    background-color: transparent;
+  }
+  table.mobileCaseReport td {
+    padding: 0.5em 0 0.25em 0;
+    border-bottom: 1px dotted #ccc;
+    text-align: right;
+  }
+  table.mobileCaseContain td:last-child {
+    border-bottom: 0px;
+  }
+  table.mobileCaseReport td[data-title]:before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: inline-block;
+    content: attr(data-title);
+    float: left;
+    margin-right: 0.5em;
+    font-size: 0.95em;
+  }
+  table.mobileCaseReport td:last-child {
+    padding-right: 0;
+    // border-bottom: 2px solid #ccc;
+  }
+  table.mobileCaseReport td:empty {
+    display: none;
+  }
+  table.mobileCaseReport .highlight td {
+    background-color: inherit;
+    font-weight: normal;
   }
 }

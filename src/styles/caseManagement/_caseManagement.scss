@@ -4,7 +4,7 @@
   display: none;
 }
 .caseContainer {
-  background: rgb(231, 190, 151);
+  // background: rgb(231, 190, 151);
   width: 90%;
   // height: calc(100% - 70px);
   font-size: $contentText18;
@@ -13,7 +13,7 @@
     display: none;
   }
   .case {
-    height: calc(100% - 70px);
+    // height: calc(100% - 70px);
     @include scrollbar;
   }
   .sortSelect {
@@ -53,7 +53,7 @@
 
   .caseContain {
     margin: 20px auto 0;
-
+    // background: lemonchiffon;
     .body :hover {
       background: #eee;
     }
@@ -185,8 +185,11 @@
     max-width: 576px;
     margin: 0 auto;
   }
+  .pcCalc {
+    height: calc(100% - 70px);
+  }
   .hightCalc {
-    height: calc(100% - 285px);
+    height: calc(100% - 270px);
   }
   table.mobileCaseContain {
     width: 100%;
