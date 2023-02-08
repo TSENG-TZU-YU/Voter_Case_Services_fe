@@ -1122,7 +1122,7 @@ function ApplicationForm({
             )}
 
             {/* handler === '' 確認接收此案件 */}
-            {(member.handler === 1) &&
+            {member.handler === 1 &&
             HId === '' &&
             needState === 4 &&
             WebPage === 2 &&
@@ -1193,8 +1193,7 @@ function ApplicationForm({
                           <div className="d-flex mb-2">
                             <span>&emsp;&emsp;&emsp;&emsp;備註：</span>
                             <textarea
-                              name=""
-                              cols="40"
+                              // cols="40"
                               rows="3"
                               placeholder={v.remark}
                               disabled
@@ -2006,11 +2005,7 @@ function ApplicationForm({
                       }}
                       className="clearIcon"
                     /> */}
-                      <MdOutlineAddBox
-                        size="20"
-                        onClick={addF}
-                        className="addIcon"
-                      />
+                      <MdOutlineAddBox size="20" onClick={addF} />
                     </div>
                   </div>
                 )}
@@ -2065,6 +2060,7 @@ function ApplicationForm({
                           />
                           <IoMdCloseCircle
                             size="20"
+                            className="cursor"
                             onClick={() => {
                               delCheck('確定要刪除此上傳檔案?', deleteFile, i);
                             }}

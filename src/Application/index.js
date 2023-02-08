@@ -982,6 +982,7 @@ function Application({ delCheck }) {
                   {i !== 0 ? (
                     <IoMdCloseCircle
                       size="20"
+                      className="cursor"
                       onClick={() => {
                         delCheck('確定要刪除此需求?', deleteNeed, i);
                       }}
@@ -1047,7 +1048,7 @@ function Application({ delCheck }) {
                 }}
                 className="clearIcon"
               /> */}
-              <MdOutlineAddBox size="20" onClick={addF} className="addIcon" />
+              <MdOutlineAddBox size="20" onClick={addF} />
             </div>
           </div>
           {addFile.map((v, i) => {
@@ -1082,6 +1083,7 @@ function Application({ delCheck }) {
                 />
                 <IoMdCloseCircle
                   size="20"
+                  className="cursor"
                   onClick={() => {
                     delCheck('確定要刪除此上傳檔案?', deleteFile, i);
                   }}

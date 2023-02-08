@@ -16,6 +16,7 @@ import { IoBarChartSharp } from 'react-icons/io5';
 import { FaHistory } from 'react-icons/fa';
 import { BsJournalText } from 'react-icons/bs';
 import { TbReportSearch } from 'react-icons/tb';
+import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -32,6 +33,7 @@ function Header() {
   let page = parseInt(params.get('page'));
 
   const [mobileToggle, setMobileToggle] = useState(false);
+  const [down, setDown] = useState(false);
 
   //使用者資料
   const { member, setMember } = useAuth();
@@ -127,9 +129,9 @@ function Header() {
       </div>
       <div className="between ">
         {/* 桌機版 */}
-        <div className="navLeft d-none  d-md-block  ">
-          <div>接案單位:{member.applicant_unit}</div>
-          <div>姓名:{member.name}</div>
+        <div className="navLeft d-none  d-md-block">
+          <div className="marginTit">接案單位:{member.applicant_unit}</div>
+          <div className="marginTit mb-2">姓名:{member.name}</div>
           {/* <div>職別:{member.job}</div> */}
           {handler ? (
             <>
@@ -138,8 +140,8 @@ function Header() {
                   to="application"
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <div>
-                    <HiPencilAlt size="20" />
+                  <div className="center marginTB borT">
+                    <HiPencilAlt size="20" className="me-1" />
                     選服案件新增
                   </div>
                 </NavLink>
@@ -158,8 +160,8 @@ function Header() {
                     nav.isActive || page === 1 ? 'link' : ''
                   }
                 >
-                  <div className="" onClick={acf}>
-                    <RiPhoneFindFill size="20" />
+                  <div className="center marginTB borT" onClick={acf}>
+                    <RiPhoneFindFill size="20" className="me-1" />
                     選服案件查詢
                   </div>
                 </NavLink>
@@ -179,12 +181,13 @@ function Header() {
                 >
                   {/* 處理人/協理/主管 */}
                   <div
+                    className="center marginTB borT"
                     onClick={() => {
                       // tri();
                       acf();
                     }}
                   >
-                    <RiFileTextLine size="20" />
+                    <RiFileTextLine size="20" className="me-1" />
                     選服案件處理
                   </div>
                 </NavLink>
@@ -200,8 +203,8 @@ function Header() {
                   to="workLog"
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <div className="" onClick={acf}>
-                    <BsJournalText size="18" />
+                  <div className="center marginTB borT" onClick={acf}>
+                    <BsJournalText size="18" className="me-1" />
                     工作日誌填報
                   </div>
                 </NavLink>
@@ -217,8 +220,8 @@ function Header() {
                   to={`workLogSearch?unit=${member.applicant_unit}`}
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <div className="" onClick={acf}>
-                    <TbReportSearch size="20" />
+                  <div className="center marginTB borT" onClick={acf}>
+                    <TbReportSearch size="20" className="me-1" />
                     工作日誌一覽表
                   </div>
                 </NavLink>
@@ -229,9 +232,31 @@ function Header() {
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
                   {/* 處理人/協理/主管 */}
-                  <div className="navFlex" onClick={actoggle}>
-                    <IoBarChartSharp size="20" />
-                    <span>選服案件統計</span>
+                  <div
+                    className="navFlex iconBetw marginTB borT"
+                    onClick={actoggle}
+                  >
+                    <div className="iconSt">
+                      <IoBarChartSharp size="20" className="me-1" />
+                      <span>選服案件統計</span>
+                    </div>
+                    {down ? (
+                      <VscTriangleUp
+                        size="18"
+                        color="#aaa"
+                        onClick={() => {
+                          setDown(false);
+                        }}
+                      />
+                    ) : (
+                      <VscTriangleDown
+                        size="18"
+                        color="#aaa"
+                        onClick={() => {
+                          setDown(true);
+                        }}
+                      />
+                    )}
                   </div>
                 </NavLink>
               </nav>
@@ -314,8 +339,8 @@ function Header() {
                   to="caseReport"
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <div className="" onClick={acf}>
-                    <HiDocumentReport size="20" />
+                  <div className="center marginTB borT" onClick={acf}>
+                    <HiDocumentReport size="20" className="me-1" />
                     結案報表
                   </div>
                 </NavLink>
@@ -325,8 +350,8 @@ function Header() {
                   to="audit"
                   className={(nav) => (nav.isActive ? 'link' : '')}
                 >
-                  <div className="" onClick={acf}>
-                    <FaHistory size="18" />
+                  <div className="center marginTB borT" onClick={acf}>
+                    <FaHistory size="16" className="me-1" />
                     操作稽核紀錄
                   </div>
                 </NavLink>
@@ -353,8 +378,8 @@ function Header() {
               to="permissions"
               className={(nav) => (nav.isActive ? 'link' : '')}
             >
-              <div className="" onClick={acf}>
-                <AiFillUnlock size="20" />
+              <div className="center marginTB borTB" onClick={acf}>
+                <AiFillUnlock size="20" className="me-1" />
                 密碼更改
               </div>
             </NavLink>

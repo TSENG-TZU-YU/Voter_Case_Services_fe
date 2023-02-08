@@ -347,7 +347,7 @@ function UploadPage({ setAddStatus, delCheck }) {
           withCredentials: true,
         }
       );
-      console.log('fileSubmitStatus');
+      // console.log('fileSubmitStatus');
     } catch (err) {
       console.log(err);
     }

@@ -14,7 +14,6 @@ function EditNeedPage({
   editVerifyPage,
   delCheck,
 }) {
-  console.log(editNeed);
   return (
     <div className="editNeedContainer">
       <div className="editNeedContain">

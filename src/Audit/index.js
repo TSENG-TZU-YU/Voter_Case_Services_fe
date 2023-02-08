@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './_index.scss';
 import moment from 'moment';
 import Loader from '../Loader';
+import _ from 'lodash';
 
 import DateFilter from './Component/DateFilter.js';
+import PaginationBar from './Component/PaginationBar';
 import axios from 'axios';
 import { clearConfigCache } from 'prettier';
 
@@ -32,6 +34,12 @@ function Audit() {
   const [maxDate, setMaxDate] = useState(nowDate);
   const [minDate, setMinDate] = useState(nowDate);
 
+  // 分頁
+  const [pageCase, setPageCase] = useState([]);
+  const [pageNow, setPageNow] = useState(1);
+  const [perPage] = useState(7);
+  const [pageTotal, setPageTotal] = useState(5);
+
   useEffect(() => {
     async function audit() {
       setIsLoading(true);
@@ -53,6 +61,13 @@ function Audit() {
     }
     audit();
   }, [minDate, maxDate, nameSearch]);
+
+  useEffect(() => {
+    const newPageCase = _.chunk(audit, perPage);
+    setPageNow(1);
+    setPageTotal(newPageCase.length);
+    setPageCase(newPageCase);
+  }, [audit]);
 
   return (
     <div className="auditContainer">
@@ -105,18 +120,35 @@ function Audit() {
           <>
             {audit.length !== 0 ? (
               <>
-                {audit.map((v, i) => {
-                  const { user, record, time } = v;
-                  return (
-                    <tbody key={i}>
-                      <tr>
-                        <td>{user}</td>
-                        <td>{record}</td>
-                        <td>{time}</td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
+                {pageCase.length > 0 &&
+                  pageCase[pageNow - 1].map((v, i) => {
+                    const { user, record, time } = v;
+                    return (
+                      <tbody key={i} className="auditBody">
+                        <tr>
+                          <td>{user}</td>
+                          <td>{record}</td>
+                          <td>{time}</td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
+
+                {/* 頁碼 */}
+                <tbody className="noData">
+                  <tr className="noBorder">
+                    <td colSpan={3} className="noTd">
+                      <div className="page">
+                        <PaginationBar
+                          pageNow={pageNow}
+                          setPageNow={setPageNow}
+                          pageTotal={pageTotal}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                {/* 頁碼 end */}
               </>
             ) : (
               <tbody className="noData">

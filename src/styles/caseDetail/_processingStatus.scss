@@ -1,6 +1,6 @@
 @import '../variable';
 
-.dealWithBorder{
+.dealWithBorder {
   // background: lightblue;
 
   // max-width: 90%;
@@ -157,7 +157,8 @@
     // padding: 0 5px;
     // @include scrollbar;
     .handleStatus {
-      height: 95%;
+      width: 95%;
+      height: 250px;
     }
   }
   .dealWithContainer {

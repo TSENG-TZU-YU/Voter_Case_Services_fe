@@ -153,32 +153,38 @@ function CaseReport() {
                 />
               )}
             </div>
-            <div>請再次輸入新密碼:</div>
-            <div>
-              <input
-                type={eyeTwo ? 'text' : 'password'}
-                maxLength="15"
-                placeholder="密碼至多15字"
-                value={passTow}
-                onChange={(e) => {
-                  setPassTow(e.target.value);
-                }}
-              />
-              {eyeTwo ? (
-                <AiFillEye
-                  className="eye"
-                  onClick={() => {
-                    setEyeTwo(false);
-                  }}
-                />
-              ) : (
-                <AiFillEyeInvisible
-                  className="eye"
-                  onClick={() => {
-                    setEyeTwo(true);
-                  }}
-                />
-              )}
+
+            <div className="repassW">
+              <div>
+                <div>請再次輸入新密碼:</div>
+                <div>
+                  <input
+                    type={eyeTwo ? 'text' : 'password'}
+                    maxLength="15"
+                    placeholder="密碼至多15字"
+                    value={passTow}
+                    onChange={(e) => {
+                      setPassTow(e.target.value);
+                    }}
+                  />
+                  {eyeTwo ? (
+                    <AiFillEye
+                      className="eye"
+                      onClick={() => {
+                        setEyeTwo(false);
+                      }}
+                    />
+                  ) : (
+                    <AiFillEyeInvisible
+                      className="eye"
+                      onClick={() => {
+                        setEyeTwo(true);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+
               <GenerallyBtn
                 style={{ background: '#2c75c8', color: 'white' }}
                 tit="更改"
