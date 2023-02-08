@@ -10,6 +10,7 @@ import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import SimplePieChart from './Component/SimplePieChart';
 import HandlerBarChart from './Component/HandlerBarChart';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import Loader from '../Loader';
 
@@ -73,6 +74,17 @@ function CountPage() {
   //bar chart
   const [chart, setChart] = useState([]);
   const [noHandler, setNoHandler] = useState([]);
+  const [chartToggle, setChartToggle] = useState(false);
+
+  // pie chart
+  let newChart = [];
+  for (let i = 0; i < chart.length; i++) {
+    newChart.push({
+      name: chart[i].name,
+      value: chart[i].value,
+    });
+  }
+  const sortOption = [{ name: '尚無處理人', value: noHandler }, ...newChart];
 
   // 取得所有資料
   useEffect(() => {
@@ -152,7 +164,6 @@ function CountPage() {
     nowHandlerUnit,
     nowAppUnit,
   ]);
-  console.log('noHandler0000', noHandler);
 
   // %
   const percent = (ttl, num) => {
@@ -220,6 +231,21 @@ function CountPage() {
               <div className="allTit">
                 篩選結果件數 ： {total} 件 / {allTotal} 件
               </div>
+              {chartToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(true);
+                  }}
+                />
+              )}
             </div>
 
             {/* 處理人% */}
@@ -279,7 +305,12 @@ function CountPage() {
                   </tr>
                 </tbody>
               </table>
-              <HandlerBarChart chart={chart} noHandler={noHandler} />
+
+              {chartToggle ? (
+                <SimplePieChart chart={sortOption} />
+              ) : (
+                <HandlerBarChart chart={chart} noHandler={noHandler} />
+              )}
             </>
           </div>
         )}

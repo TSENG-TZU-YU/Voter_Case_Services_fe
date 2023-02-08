@@ -12,29 +12,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-
-// class CustomizedAxisTick extends PureComponent {
-//   render() {
-//     const { x, y, stroke, payload } = this.props;
-
-//     return (
-//       <g transform={`translate(${x},${y})`}>
-//         <text
-//           x={0}
-//           y={0}
-//           dy={16}
-//           textAnchor="middle"
-//           fill="#666"
-//           // transform="rotate(-35)"
-//           // whiteSpace="normal"
-//         >
-//           {payload.value}
-//         </text>
-//       </g>
-//     );
-//   }
-// }
-// tick={<CustomizedAxisTick />}
+const COLORS = [
+  '#2c75c8',
+  '#c09e82',
+  '#1f9998',
+  '#f2ac33',
+  '#e77979',
+  '#817161',
+];
 
 function SimpleBarChart({ chart }) {
   const location = useLocation();
@@ -89,7 +74,14 @@ function SimpleBarChart({ chart }) {
             fill="#817161"
             // style={{ whiteSpace: 'normal' }}
             // label={CustomizedLabel}
-          />
+          >
+            {chart.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

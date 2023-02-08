@@ -10,6 +10,7 @@ import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import SimplePieChart from './Component/SimplePieChart';
 import SimpleBarChart from './Component/SimpleBarChart';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import Loader from '../Loader';
 
@@ -72,17 +73,18 @@ function StatusPage() {
 
   //bar chart
   const [chart, setChart] = useState([]);
+  const [chartToggle, setChartToggle] = useState(false);
 
   // pie chart
   let newChart = [];
   for (let i = 0; i < chart.length; i++) {
+    // if (chart[i].value === 0) continue;
+    //filter((item) => item.value !== 0)
     newChart.push({
       name: chart[i].name,
       value: chart[i].value,
     });
   }
-
-
 
   // 取得所有資料
   useEffect(() => {
@@ -177,6 +179,21 @@ function StatusPage() {
               <div className="allTit">
                 篩選結果件數 ： {total} 件 / {allTotal} 件
               </div>
+              {chartToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(true);
+                  }}
+                />
+              )}
             </div>
 
             {/* 申請狀態% */}
@@ -227,8 +244,11 @@ function StatusPage() {
                   </tr>
                 </tbody>
               </table>
-              <SimpleBarChart chart={chart} />
-              <SimplePieChart chart={newChart} />
+              {chartToggle ? (
+                <SimplePieChart chart={newChart} />
+              ) : (
+                <SimpleBarChart chart={chart} />
+              )}
             </>
           </div>
         )}

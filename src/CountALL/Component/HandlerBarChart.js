@@ -23,7 +23,14 @@ function SimpleBarChart({ chart, noHandler }) {
   }
 
   const sortOption = [{ name: '尚無處理人', 案件量: noHandler }, ...newData];
-
+  const COLORS = [
+    '#2c75c8',
+    '#c09e82',
+    '#1f9998',
+    '#f2ac33',
+    '#e77979',
+    '#817161',
+  ];
   return (
     <div className="UserPageChart" style={{ width: '100%', height: '130%' }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -50,7 +57,14 @@ function SimpleBarChart({ chart, noHandler }) {
             fill="#817161"
             // style={{ whiteSpace: 'normal' }}
             // label={CustomizedLabel}
-          />
+          >
+            {chart.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -44,9 +44,22 @@
 }
 .UserPageChart {
   @media only screen and (max-width: 576px) {
-    margin-left: -20%;
+    margin-left: -2%;
   }
   @media only screen and (min-width: 576px) {
     margin-left: -5%;
   }
 }
+.pieCharts {
+  @media only screen and (max-width: 576px) {
+    margin-left: 3%;
+    width: 140%;
+    height: 100%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -40%;
+    width: 100%;
+    height: 50%;
+  }
+}
+

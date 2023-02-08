@@ -12,6 +12,8 @@ import Loader from '../Loader';
 import SimpleBarChart from './Component/SimpleBarChart';
 import SimplePieChart from './Component/SimplePieChart';
 
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
+
 // function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 function CategoryPage() {
   let nowDate = moment().format(`YYYY-MM-DD`);
@@ -60,6 +62,7 @@ function CategoryPage() {
 
   //chart
   const [chart, setChart] = useState([]);
+  const [chartToggle, setChartToggle] = useState(false);
 
   // pie chart
   let newChart = [];
@@ -160,6 +163,21 @@ function CategoryPage() {
               <div className="allTit">
                 篩選結果件數 ： {total} 件 / {allTotal} 件
               </div>
+              {chartToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(true);
+                  }}
+                />
+              )}
             </div>
 
             <>
@@ -214,8 +232,11 @@ function CategoryPage() {
                     </tr>
                   </tbody>
                 </table>
-                <SimpleBarChart chart={chart} />
-                <SimplePieChart chart={newChart} />
+                {chartToggle ? (
+                  <SimplePieChart chart={newChart} />
+                ) : (
+                  <SimpleBarChart chart={chart} />
+                )}
               </>
             </>
           </div>

@@ -10,6 +10,7 @@ import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import SimplePieChart from './Component/SimplePieChart';
 import SimpleBarChart from './Component/SimpleBarChart';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import Loader from '../Loader';
 
@@ -72,6 +73,16 @@ function HandlerUnitPage() {
 
   //bar chart
   const [chart, setChart] = useState([]);
+  const [chartToggle, setChartToggle] = useState(false);
+
+  // pie chart
+  let newChart = [];
+  for (let i = 0; i < chart.length; i++) {
+    newChart.push({
+      name: chart[i].name,
+      value: chart[i].value,
+    });
+  }
 
   // 取得所有資料
   useEffect(() => {
@@ -170,6 +181,21 @@ function HandlerUnitPage() {
               <div className="allTit">
                 篩選結果件數 ： {total} 件 / {allTotal} 件
               </div>
+              {chartToggle ? (
+                <BsToggleOn
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(false);
+                  }}
+                />
+              ) : (
+                <BsToggleOff
+                  size="35"
+                  onClick={() => {
+                    setChartToggle(true);
+                  }}
+                />
+              )}
             </div>
 
             {/* 處理單位% */}
@@ -220,7 +246,11 @@ function HandlerUnitPage() {
                   </tr>
                 </tbody>
               </table>
-              <SimpleBarChart chart={chart} />
+              {chartToggle ? (
+                <SimplePieChart chart={newChart} />
+              ) : (
+                <SimpleBarChart chart={chart} />
+              )}
             </>
           </div>
         )}
