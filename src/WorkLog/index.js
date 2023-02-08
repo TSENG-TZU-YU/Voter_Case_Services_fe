@@ -81,7 +81,7 @@ function WorkLog() {
   const [addWorkLogForm, setAddWorkLogForm] = useState(false);
   const handleChange = (val, input) => {
     let newData = [...log];
-    console.log('a', newData);
+    // console.log('a', newData);
 
     // if (input === 'workCategory') newData[0].workCategory = val;
     if (input === 'workLog') newData[addWorkLog].Job_description = val;
@@ -130,7 +130,7 @@ function WorkLog() {
       console.log('sub', err);
     }
   }
-  console.log('eyeDetail', eyeDetail);
+  // console.log('eyeDetail', eyeDetail);
   // 送出申請表sweet
   function submitCheck(tit) {
     if (log[0].workLog === '') {

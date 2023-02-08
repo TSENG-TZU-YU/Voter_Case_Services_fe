@@ -69,7 +69,7 @@ function ActivitySelect({ category, setNowCategory }) {
         className="me-2"
         defaultValue={sortOption[0]}
         onChange={(e) => {
-          console.log(e.value);
+          // console.log(e.value);
           setNowCategory(e.value);
         }}
         options={sortOption}

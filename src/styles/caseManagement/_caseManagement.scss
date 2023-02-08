@@ -6,12 +6,15 @@
 .caseContainer {
   // background: rgb(231, 190, 151);
   width: 90%;
-  height: calc(100vh - 70px);
+  // height: calc(100% - 70px);
   font-size: $contentText18;
-  .mobileToggle,.mobileClose {
+  .mobileToggle,
+  .mobileClose {
     display: none;
   }
   .case {
+    // background: lemonchiffon;
+    height: calc(100% - 70px);
     @include scrollbar;
   }
   .sortSelect {
@@ -20,8 +23,6 @@
     padding: 20px 0px 0px;
     display: flex;
     justify-content: space-between;
-    // height: 0px;
-
     .bothFilter {
       display: flex;
       justify-content: flex-start;
@@ -45,7 +46,6 @@
       padding: 2px;
       border: 2px solid #444;
       outline: none;
-      // margin-top: $marage10;
       &:focus {
         border: 2px solid $subClrBrown;
       }

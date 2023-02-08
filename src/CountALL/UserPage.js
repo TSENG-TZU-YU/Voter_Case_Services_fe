@@ -152,7 +152,7 @@ function CountPage() {
     nowHandlerUnit,
     nowAppUnit,
   ]);
-  console.log('noHandler0000', noHandler);
+  // console.log('noHandler0000', noHandler);
 
   // %
   const percent = (ttl, num) => {
