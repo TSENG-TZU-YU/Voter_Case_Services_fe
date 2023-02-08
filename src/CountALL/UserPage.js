@@ -9,7 +9,7 @@ import moment from 'moment';
 import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import SimplePieChart from './Component/SimplePieChart';
-import SimpleBarChart from './Component/SimpleBarChart';
+import HandlerBarChart from './Component/HandlerBarChart';
 
 import Loader from '../Loader';
 
@@ -72,6 +72,7 @@ function CountPage() {
 
   //bar chart
   const [chart, setChart] = useState([]);
+  const [noHandler, setNoHandler] = useState([]);
 
   // 取得所有資料
   useEffect(() => {
@@ -119,7 +120,21 @@ function CountPage() {
         console.log(err);
       }
     };
+    let getNoHandlerBar = async () => {
+      try {
+        let response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/chart/getNoHandlerUserPage?&minDate=${minDate}&maxDate=${maxDate}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setNoHandler(response.data[0].value);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getBar();
+    getNoHandlerBar();
     getAllData();
   }, [
     // member.user,
@@ -137,6 +152,7 @@ function CountPage() {
     nowHandlerUnit,
     nowAppUnit,
   ]);
+  console.log('noHandler0000', noHandler);
 
   // %
   const percent = (ttl, num) => {
@@ -263,7 +279,7 @@ function CountPage() {
                   </tr>
                 </tbody>
               </table>
-              <SimpleBarChart chart={chart} />
+              <HandlerBarChart chart={chart} noHandler={noHandler} />
             </>
           </div>
         )}
