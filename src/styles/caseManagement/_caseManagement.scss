@@ -4,7 +4,7 @@
   display: none;
 }
 .caseContainer {
-  // background: rgb(231, 190, 151);
+  background: rgb(231, 190, 151);
   width: 90%;
   // height: calc(100% - 70px);
   font-size: $contentText18;
@@ -13,7 +13,6 @@
     display: none;
   }
   .case {
-    // background: lemonchiffon;
     height: calc(100% - 70px);
     @include scrollbar;
   }
@@ -186,7 +185,9 @@
     max-width: 576px;
     margin: 0 auto;
   }
-
+  .hightCalc {
+    height: calc(100% - 285px);
+  }
   table.mobileCaseContain {
     width: 100%;
   }
