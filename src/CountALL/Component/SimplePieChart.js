@@ -1,3 +1,4 @@
+import '../../styles/chart/_chart.scss';
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
@@ -35,55 +36,40 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      {/* <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
-      </text> */}
-      {/* <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      /> */}
-      {/* <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      /> */}
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      {/* <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`${payload.name}`}</text> */}
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-        // transform="rotate(-35)"
-      >{`案件量 : ${value}`}</text>
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={18}
-        textAnchor={textAnchor}
-        fill="#999"
-      >
-        {`(案件% : ${(percent * 100).toFixed(2)}%)`}
-      </text>
+      {value == 0 ? (
+        ''
+      ) : (
+        <>
+          <path
+            d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+            stroke={fill}
+            fill="none"
+          />
+          <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+          <text
+            x={ex + (cos >= 0 ? 1 : -1) * 12}
+            y={ey + -16}
+            textAnchor={textAnchor}
+            fill="#333"
+          >{`${payload.name}`}</text>
+          <text
+            x={ex + (cos >= 0 ? 1 : -1) * 12}
+            y={ey}
+            textAnchor={textAnchor}
+            fill="#333"
+            // transform="rotate(-35)"
+          >{`案件量 : ${value}`}</text>
+          <text
+            x={ex + (cos >= 0 ? 1 : -1) * 12}
+            y={ey}
+            dy={18}
+            textAnchor={textAnchor}
+            fill="#999"
+          >
+            {`案件% : (${(percent * 100).toFixed(2)}%)`}
+          </text>
+        </>
+      )}
     </g>
   );
 };
@@ -101,7 +87,7 @@ class SimplePieChart extends PureComponent {
 
   render() {
     return (
-      <ResponsiveContainer width="60%" height="50%">
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={400}>
           <Pie
             // activeIndex={this.state.activeIndex}

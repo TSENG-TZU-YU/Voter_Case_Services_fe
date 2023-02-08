@@ -1,3 +1,5 @@
+import '../../styles/chart/_chart.scss';
+import { useLocation } from 'react-router-dom';
 import React, { PureComponent } from 'react';
 import {
   BarChart,
@@ -35,6 +37,10 @@ import {
 // tick={<CustomizedAxisTick />}
 
 function SimpleBarChart({ chart }) {
+  const location = useLocation();
+  let params = new URLSearchParams(location.search);
+  let chartPage = parseInt(params.get('chartPage'));
+
   let newData = [];
   for (let i = 0; i < chart.length; i++) {
     newData.push({
@@ -42,10 +48,23 @@ function SimpleBarChart({ chart }) {
       案件量: chart[i].value,
     });
   }
-  // const sortOption = [{ value: '', 案件量: '尚無處理人' }, ...newData];
-
   return (
-    <div style={{ width: '100%', height: '120%' }}>
+    <div
+      className={
+        chartPage === 1
+          ? 'CategoryPageChart'
+          : chartPage === 2
+          ? 'StatusPageChart'
+          : chartPage === 3
+          ? 'appUnitPageChart'
+          : chartPage === 4
+          ? 'appUserPage'
+          : chartPage === 5
+          ? 'handlerUnitPage'
+          : 'UserPageChart'
+      }
+      style={{ width: '100%', height: '120%' }}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
@@ -53,7 +72,7 @@ function SimpleBarChart({ chart }) {
           data={newData}
           margin={{
             top: 5,
-            right: 30,
+            right: 5,
             left: 100,
             bottom: 5,
           }}
@@ -67,7 +86,7 @@ function SimpleBarChart({ chart }) {
 
           <Bar
             dataKey="案件量"
-            fill="#8884d8"
+            fill="#817161"
             // style={{ whiteSpace: 'normal' }}
             // label={CustomizedLabel}
           />

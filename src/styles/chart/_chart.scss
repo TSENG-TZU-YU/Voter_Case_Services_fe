@@ -1,0 +1,52 @@
+@import '../variable';
+
+.CategoryPageChart {
+  @media only screen and (max-width: 576px) {
+    margin-left: -25%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -7%;
+  }
+}
+
+.StatusPageChart {
+  @media only screen and (max-width: 576px) {
+    margin-left: -12%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -2%;
+  }
+}
+
+.appUnitPageChart {
+  @media only screen and (max-width: 576px) {
+    margin-left: -28%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -7%;
+  }
+}
+.appUserPage {
+  @media only screen and (max-width: 576px) {
+    margin-left: -20%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -5%;
+  }
+}
+.handlerUnitPage {
+  @media only screen and (max-width: 576px) {
+    margin-left: -28%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -7%;
+  }
+}
+.UserPageChart {
+  @media only screen and (max-width: 576px) {
+    margin-left: -20%;
+  }
+  @media only screen and (min-width: 576px) {
+    margin-left: -5%;
+  }
+}

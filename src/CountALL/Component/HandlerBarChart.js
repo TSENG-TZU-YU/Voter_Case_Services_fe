@@ -1,3 +1,5 @@
+import '../../styles/chart/_chart.scss';
+
 import React, { PureComponent } from 'react';
 import {
   BarChart,
@@ -23,7 +25,7 @@ function SimpleBarChart({ chart, noHandler }) {
   const sortOption = [{ name: '尚無處理人', 案件量: noHandler }, ...newData];
 
   return (
-    <div style={{ width: '100%', height: '130%' }}>
+    <div className="UserPageChart" style={{ width: '100%', height: '130%' }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
@@ -31,7 +33,7 @@ function SimpleBarChart({ chart, noHandler }) {
           data={sortOption}
           margin={{
             top: 5,
-            right: 30,
+            right: 5,
             left: 100,
             bottom: 5,
           }}
@@ -45,7 +47,7 @@ function SimpleBarChart({ chart, noHandler }) {
 
           <Bar
             dataKey="案件量"
-            fill="#8884d8"
+            fill="#817161"
             // style={{ whiteSpace: 'normal' }}
             // label={CustomizedLabel}
           />

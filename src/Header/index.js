@@ -239,7 +239,7 @@ function Header() {
                 <div className="count">
                   <nav>
                     <NavLink
-                      to="categoryPage"
+                      to="categoryPage?chartPage=1"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
@@ -250,7 +250,7 @@ function Header() {
                   </nav>
                   <nav>
                     <NavLink
-                      to="statusPage"
+                      to="statusPage?chartPage=2"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
@@ -261,7 +261,7 @@ function Header() {
                   </nav>
                   <nav>
                     <NavLink
-                      to="unitPage"
+                      to="unitPage?chartPage=3"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
@@ -272,7 +272,7 @@ function Header() {
                   </nav>
                   <nav>
                     <NavLink
-                      to="AppUserPage"
+                      to="AppUserPage?chartPage=4"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">
@@ -284,7 +284,7 @@ function Header() {
 
                   <nav>
                     <NavLink
-                      to="HandlerUnitPage"
+                      to="HandlerUnitPage?chartPage=5"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="d-flex align-items-center">
@@ -295,7 +295,7 @@ function Header() {
                   </nav>
                   <nav>
                     <NavLink
-                      to="UserPage"
+                      to="UserPage?chartPage=6"
                       className={(nav) => (nav.isActive ? 'link' : '')}
                     >
                       <div className="">

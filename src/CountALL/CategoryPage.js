@@ -10,6 +10,7 @@ import '../styles/count/_countPage.scss';
 import DateFilter from './Component/DateFilter.js';
 import Loader from '../Loader';
 import SimpleBarChart from './Component/SimpleBarChart';
+import SimplePieChart from './Component/SimplePieChart';
 
 // function CountPage({ setCaseNum, setCaseId, setHandlerNull, setSender }) {
 function CategoryPage() {
@@ -60,9 +61,14 @@ function CategoryPage() {
   //chart
   const [chart, setChart] = useState([]);
 
-  // console.log('categoryTtl', categoryTtl);
-  // console.log('total', total);
-  // console.log('chart', chart);
+  // pie chart
+  let newChart = [];
+  for (let i = 0; i < chart.length; i++) {
+    newChart.push({
+      name: chart[i].name,
+      value: chart[i].value,
+    });
+  }
 
   // 取得所有資料
   useEffect(() => {
@@ -209,6 +215,7 @@ function CategoryPage() {
                   </tbody>
                 </table>
                 <SimpleBarChart chart={chart} />
+                <SimplePieChart chart={newChart} />
               </>
             </>
           </div>
