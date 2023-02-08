@@ -14,7 +14,7 @@ import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
 import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
-import PaginationBar from './Component/PaginationBar';
+import PaginationBar from '../PaginationBar/PaginationBar';
 import moment from 'moment';
 
 import Loader from '../Loader';

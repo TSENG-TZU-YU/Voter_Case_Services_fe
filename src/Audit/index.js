@@ -5,7 +5,7 @@ import Loader from '../Loader';
 import _ from 'lodash';
 
 import DateFilter from './Component/DateFilter.js';
-import PaginationBar from './Component/PaginationBar';
+import PaginationBar from '../PaginationBar/PaginationBar';
 import axios from 'axios';
 import { clearConfigCache } from 'prettier';
 

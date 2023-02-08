@@ -15,7 +15,7 @@ import DateFilter from './Component/DateFilter.js';
 import UnitFilter from './Component/UnitFilter.js';
 import UnitHandlerFilter from './Component/UnitHandlerFilter.js';
 // import CheckStatePage from './Component/CheckStatePage.js';
-import PaginationBar from './Component/PaginationBar';
+import PaginationBar from '../PaginationBar/PaginationBar';
 import Loader from '../Loader';
 
 import { FaEye } from 'react-icons/fa';
