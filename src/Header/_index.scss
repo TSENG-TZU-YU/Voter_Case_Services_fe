@@ -31,6 +31,7 @@
   .logOut {
     color: $mainClrW;
     font-size: $icon35;
+    cursor: pointer;
   }
 }
 .between {
@@ -44,9 +45,22 @@
     align-items: flex-start;
     justify-content: start;
     flex-direction: column;
-// transition: count .6s;
-    & div {
-      margin-top: 10px;
+    .borT {
+      border-top: 1px solid #aaa;
+    }
+    .borTB {
+      border-top: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+    }
+    // transition: count .6s;
+    .marginTB {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin: 0 10px;
+      font-size: $navbarLeft;
+    }
+    .marginTit {
+      padding-top: 10px;
       margin-left: 10px;
       font-size: $navbarLeft;
     }
@@ -63,20 +77,31 @@
     .link {
       color: $focusClrG;
     }
-    .count {
-      // transform: translateX(-300px);
-      div {
-        margin-top: 0px;
-        margin-left: 20px;
+    .iconBetw {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // margin-left: 0px;
+      .iconSt {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
       }
     }
-    // .countDown {
-    //   transform: translateX(0);
-    //   div {
-    //     margin-top: 0px;
-    //     margin-left: 20px;
-    //   }
-    // }
+    .iconRinht {
+      margin-right: $marage10;
+    }
+    .center {
+      display: flex;
+      align-items: center;
+    }
+    .count {
+      div {
+        margin: 0px 10px;
+        padding: 5px 0 5px 20px;
+        border-top: 1px solid #aaa;
+      }
+    }
   }
   .navFlex {
     display: flex;

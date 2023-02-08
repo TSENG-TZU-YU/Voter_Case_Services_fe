@@ -12,11 +12,13 @@
     box-shadow: 0.2px 0.2px 4px #8a8a8aa5;
   }
 }
-
+.cursor {
+  cursor: pointer;
+}
 .m-view {
   display: none;
 }
-.dealWithBorder{
+.dealWithBorder {
   // background: lightblue;
   border: 1px solid #ccc;
 }
@@ -77,6 +79,7 @@
       padding: 5px;
       textarea {
         resize: none;
+        width: 70%;
         @include scrollbarContain;
       }
     }
@@ -110,7 +113,7 @@
         align-items: center;
         justify-content: space-between;
       }
-  
+
       // gap: 120px;
       input {
         width: $columW;
@@ -226,6 +229,7 @@
         padding-left: 5px;
         .fileIcon {
           align-items: center;
+          cursor: pointer;
           .clearIcon {
             margin-right: 10px;
           }

@@ -95,11 +95,11 @@
     margin: 20px auto 0;
     width: 80%;
     table-layout: fixed;
-    tbody :hover {
+    .auditBody :hover {
       background: #eee;
     }
     thead,
-    tbody {
+    .auditBody {
       border-bottom: 1px solid #ccc;
       text-align: center;
       th {
@@ -141,6 +141,15 @@
     justify-content: center;
     align-items: end;
     margin-top: 20px;
+  }
+  .noData {
+    // background: lavenderblush;
+    font-size: $contentText18;
+    color: $focusClrG;
+    text-align: center;
+    .noTd {
+      padding: 15px;
+    }
   }
 }
 

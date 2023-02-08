@@ -3,6 +3,9 @@
 .contents18 {
   font-size: $contentText18;
 }
+.cursor {
+  cursor: pointer;
+}
 .scroll {
   width: 100%;
   height: calc(100vh - 70px);
@@ -32,7 +35,7 @@
     .box {
       // display: flex;
       justify-content: space-between;
-   
+
       @media only screen and (min-width: 576px) {
         width: 85%;
       }
@@ -96,6 +99,10 @@
       .view {
         opacity: 1;
       }
+      .addIcon {
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
     }
 
     .needs {
@@ -151,6 +158,7 @@
         white-space: nowrap;
         .fileIcon {
           align-items: center;
+          cursor: pointer;
           .clearIcon {
             margin-right: $marage10;
           }
@@ -200,6 +208,7 @@
           .addIcon {
             font-size: 1rem;
             color: $focusClrG;
+            cursor: pointer;
           }
           span {
             padding: 1px 0 0 5px;

@@ -633,7 +633,7 @@ function CaseManagement() {
 
                       {/* 頁碼 */}
                       <tbody className="noData">
-                        <tr className="noBorder">
+                        <tr>
                           <td colSpan={10} className="noTd">
                             <div className="page">
                               <PaginationBar

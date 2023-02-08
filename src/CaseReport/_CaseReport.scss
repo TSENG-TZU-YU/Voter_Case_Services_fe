@@ -8,7 +8,8 @@
   width: 90%;
   height: calc(100vh - 70px);
   font-size: clamp(12px, 1vw, 18px);
-  .mobileToggle,.mobileClose {
+  .mobileToggle,
+  .mobileClose {
     display: none;
   }
   .case {
@@ -132,10 +133,17 @@
     padding: 0;
   }
   table.mobileCaseReport tr {
-    border-bottom: none;
-    border-top: none;
+    // border-bottom: none;
+    // border-top: none;
+    border: 1px solid #ccc;
     margin: 0 0 1em 0;
-    padding: 0.5em;
+    padding: 0 0.5em;
+  }
+  .caseContainer .mobileCaseReport .noData tr {
+    border: 0px;
+  }
+  .caseContainer .mobileCaseReport .noData td {
+    text-align: center;
   }
   table.mobileCaseReport tr.highlight {
     background-color: inherit !important;
@@ -154,6 +162,9 @@
     border-bottom: 1px dotted #ccc;
     text-align: right;
   }
+  table.mobileCaseContain td:last-child {
+    border-bottom: 0px;
+  }
   table.mobileCaseReport td[data-title]:before {
     content: attr(data-title);
     font-weight: bold;
@@ -165,7 +176,7 @@
   }
   table.mobileCaseReport td:last-child {
     padding-right: 0;
-    border-bottom: 2px solid #ccc;
+    // border-bottom: 2px solid #ccc;
   }
   table.mobileCaseReport td:empty {
     display: none;

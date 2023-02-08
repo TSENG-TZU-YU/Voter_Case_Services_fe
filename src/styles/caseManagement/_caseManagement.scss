@@ -36,10 +36,6 @@
   .selTrans {
     margin-top: $marage10;
   }
-  .up {
-  }
-  .down {
-  }
 
   .inputSearch {
     margin-top: $marage10;
@@ -120,6 +116,7 @@
     display: none;
   }
   .caseContainer {
+    max-width: 800px;
     .sortSelect {
       justify-content: center;
       flex-direction: column;
@@ -149,6 +146,7 @@
   }
 
   .caseContainer {
+    max-width: 550px;
     .sortSelect {
       align-items: flex-start;
       .both {
