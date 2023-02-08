@@ -399,7 +399,7 @@ function CaseManagement() {
               )}
             </div>
           </div>
-          <div className="case">
+          <div className={`case ${selClick ? 'hightCalc': ''}`}>
             <table
               className={`caseContain ${
                 mobileToggle ? ' mobileCaseContain' : ''
