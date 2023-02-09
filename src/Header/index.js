@@ -123,7 +123,7 @@ function Header() {
             className="titleH3 "
             style={{ cursor: ' pointer' }}
             onClick={() => {
-              navigate('/casemgmt');
+              navigate('/casemgmt/header');
             }}
           >
             選民服務案件管理系統
