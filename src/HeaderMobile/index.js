@@ -16,6 +16,7 @@ import { FaHistory } from 'react-icons/fa';
 import { BsJournalText } from 'react-icons/bs';
 import { IoBarChartSharp } from 'react-icons/io5';
 import { TbReportSearch } from 'react-icons/tb';
+import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc';
 
 //hook
 import { useAuth } from '../utils/use_auth';
@@ -91,8 +92,8 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
   };
 
   //顯示統計
-  const act = () => {
-    setActive(true);
+  const actoggle = () => {
+    setActive(!active);
   };
   const acf = () => {
     setActive(false);
@@ -116,8 +117,8 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 onClick={mobilePage}
               >
                 <div>
-                  <HiPencilAlt size="20" />
-                  申請表新增
+                  <HiPencilAlt size="20" className="me-1" />
+                  選服案件新增
                 </div>
               </NavLink>
             </nav>
@@ -128,8 +129,8 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 onClick={mobilePage}
               >
                 <div className="" onClick={acf}>
-                  <RiPhoneFindFill size="20" />
-                  案件紀錄查詢
+                  <RiPhoneFindFill size="20" className="me-1" />
+                  選服案件查詢
                 </div>
               </NavLink>
             </nav>
@@ -152,8 +153,8 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                     acf();
                   }}
                 >
-                  <RiFileTextLine size="20" />
-                  案件處理作業
+                  <RiFileTextLine size="20" className="me-1" />
+                  選服案件處理
                 </div>
               </NavLink>
             </nav>
@@ -161,8 +162,36 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
         ) : (
           ''
         )}
+        {handler ? (
+          <nav className="vectorBottom">
+            <NavLink
+              to="workLog"
+              className={(nav) => (nav.isActive ? 'link' : '')}
+              onClick={mobilePage}
+            >
+              <div className="" onClick={acf}>
+                <BsJournalText size="18" className="me-1" />
+                工作日誌填報
+              </div>
+            </NavLink>
+          </nav>
+        ) : (
+          ''
+        )}
         {manage ? (
           <>
+            <nav className="vectorBottom">
+              <NavLink
+                to={`workLogSearch?unit=${member.applicant_unit}`}
+                className={(nav) => (nav.isActive ? 'link' : '')}
+                onClick={mobilePage}
+              >
+                <div className="" onClick={acf}>
+                  <TbReportSearch size="20" className="me-1" />
+                  工作日誌一覽表
+                </div>
+              </NavLink>
+            </nav>
             <nav className="vectorBottom">
               <NavLink
                 to="countPage"
@@ -170,9 +199,28 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 onClick={mobilePage}
               >
                 {/* 處理人/協理/主管 */}
-                <div className="" onClick={act}>
-                  <IoBarChartSharp size="20" />
-                  案件統計
+                <div className=" iconBetw " onClick={actoggle}>
+                  <div className="">
+                    <IoBarChartSharp size="20" className="me-1" />
+                    案件統計
+                  </div>
+                  {active ? (
+                    <VscTriangleUp
+                      size="18"
+                      color="#aaa"
+                      onClick={() => {
+                        setActive(false);
+                      }}
+                    />
+                  ) : (
+                    <VscTriangleDown
+                      size="18"
+                      color="#aaa"
+                      onClick={() => {
+                        setActive(true);
+                      }}
+                    />
+                  )}
                 </div>
               </NavLink>
             </nav>
@@ -180,7 +228,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
               <div className="count">
                 <nav className="vectorBottom">
                   <NavLink
-                    to="categoryPage"
+                    to="categoryPage?chartPage=1"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -189,7 +237,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 </nav>
                 <nav className="vectorBottom">
                   <NavLink
-                    to="statusPage"
+                    to="statusPage?chartPage=2"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -198,7 +246,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 </nav>
                 <nav className="vectorBottom">
                   <NavLink
-                    to="unitPage"
+                    to="unitPage?chartPage=3"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -207,7 +255,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 </nav>
                 <nav className="vectorBottom">
                   <NavLink
-                    to="AppUserPage"
+                    to="AppUserPage?chartPage=4"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -217,7 +265,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
 
                 <nav className="vectorBottom">
                   <NavLink
-                    to="HandlerUnitPage"
+                    to="HandlerUnitPage?chartPage=5"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -226,7 +274,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
                 </nav>
                 <nav className="vectorBottom">
                   <NavLink
-                    to="UserPage"
+                    to="UserPage?chartPage=6"
                     className={(nav) => (nav.isActive ? 'link' : '')}
                     onClick={mobilePage}
                   >
@@ -261,7 +309,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             onClick={mobilePage}
           >
             <div className="" onClick={acf}>
-              <HiDocumentReport size="20" />
+              <HiDocumentReport size="20" className="me-1" />
               結案報表
             </div>
           </NavLink>
@@ -269,37 +317,13 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
 
         <nav className="vectorBottom">
           <NavLink
-            to="workLog"
-            className={(nav) => (nav.isActive ? 'link' : '')}
-            onClick={mobilePage}
-          >
-            <div className="" onClick={acf}>
-              <BsJournalText size="18" />
-              工作日誌
-            </div>
-          </NavLink>
-        </nav>
-        <nav className="vectorBottom">
-          <NavLink
-            to={`workLogSearch?unit=${member.applicant_unit}`}
-            className={(nav) => (nav.isActive ? 'link' : '')}
-            onClick={mobilePage}
-          >
-            <div className="" onClick={acf}>
-              <TbReportSearch size="20" />
-              工作日誌查詢
-            </div>
-          </NavLink>
-        </nav>
-        <nav className="vectorBottom">
-          <NavLink
             to="audit"
             className={(nav) => (nav.isActive ? 'link' : '')}
             onClick={mobilePage}
           >
             <div className="" onClick={acf}>
-              <FaHistory size="18" />
-              稽核紀錄
+              <FaHistory size="18" className="me-1" />
+              操作稽核紀錄
             </div>
           </NavLink>
         </nav>
@@ -310,7 +334,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
             onClick={mobilePage}
           >
             <div className="" onClick={acf}>
-              <AiFillUnlock size="20" />
+              <AiFillUnlock size="20" className="me-1" />
               密碼更改
             </div>
           </NavLink>

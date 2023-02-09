@@ -626,6 +626,11 @@ function ApplicationForm({
       if (member.handler === 1 && member.name === HId) {
         setSelectData(response.data.selectResult);
       }
+      if (member.handler === 1 && member.name === HId) {
+        setSelectData(response.data.selectResult);
+        console.log('111');
+      }
+      console.log('selectData', selectData);
 
       // 目前狀態
       setNeedState(response.data.result[0].status_id);
