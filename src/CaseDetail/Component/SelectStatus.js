@@ -47,7 +47,7 @@ function SelectStatus({
     <>
       {WebPage === 2 &&
       HId !== '' &&
-      (member.manage === 1 || member.handler === 1) &&
+      (member.manage === 1 || (member.handler === 1 && HId === member.name)) &&
       needState !== 1 &&
       needState !== 6 &&
       needState !== 7 &&
