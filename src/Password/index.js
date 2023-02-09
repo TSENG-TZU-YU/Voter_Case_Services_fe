@@ -134,7 +134,7 @@ function CaseReport() {
                 placeholder="密碼至多15字"
                 value={pass}
                 onChange={(e) => {
-                  setPass(e.target.value);
+                  setPass(e.target.value.replace(/[, ]/g, ''));
                 }}
               />
               {eye ? (
@@ -164,7 +164,7 @@ function CaseReport() {
                     placeholder="密碼至多15字"
                     value={passTow}
                     onChange={(e) => {
-                      setPassTow(e.target.value);
+                      setPassTow(e.target.value.replace(/[, ]/g, ''));
                     }}
                   />
                   {eyeTwo ? (
@@ -240,7 +240,11 @@ function CaseReport() {
                                 placeholder="密碼至多15字"
                                 value={passThr[i].valid1}
                                 onChange={(e) => {
-                                  handleVal(e.target.value, 'three', i);
+                                  handleVal(
+                                    e.target.value.replace(/[, ]/g, ''),
+                                    'three',
+                                    i
+                                  );
                                 }}
                               />
                               {/* {eyeThr ? (
@@ -271,7 +275,11 @@ function CaseReport() {
                                 placeholder="密碼至多15字"
                                 value={passThr[i].valid2}
                                 onChange={(e) => {
-                                  handleVal(e.target.value, 'four', i);
+                                  handleVal(
+                                    e.target.value.replace(/[, ]/g, ''),
+                                    'four',
+                                    i
+                                  );
                                 }}
                               />
                               {/* {eyeFour ? (

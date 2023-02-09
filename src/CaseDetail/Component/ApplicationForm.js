@@ -616,15 +616,14 @@ function ApplicationForm({
       if (getFile.length > 0) {
         setGetDbFileTime(response.data.getFile[0].file_no);
       }
-
       // selectStatus filter
-      if (member.manage === 1 && member.name !== HId) {
-        setSelectData(response.data.selectResult.splice(2, 3));
-      }
       if (
-        member.handler === 1 ||
-        (member.manage === 1 && member.name === HId)
+        member.manage === 1 &&
+        (member.handler === 0 || (member.handler === 1 && member.name !== HId))
       ) {
+        setSelectData(response.data.selectResult.splice(5, 3));
+      }
+      if (member.handler === 1 && member.name === HId) {
         setSelectData(response.data.selectResult);
       }
 

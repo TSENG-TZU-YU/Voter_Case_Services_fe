@@ -17,16 +17,16 @@ function ViewWorkLog({ setViewForm, viewData }) {
         {/* 表單內容 */}
         <div className="viewContain">
           {viewData.map((v, i) => {
-            const { job_category, Job_description, create_time } = v;
+            const { job_category, Job_description, time } = v;
             return (
               <div className="viewWorkLogFormContainer" key={i}>
                 <div className="box">
                   <div className="gap">
                     <div className="contents18">填寫日期：</div>
-                    <input type="text" value={create_time} disabled />
+                    <input type="text" value={time} disabled />
                   </div>
                 </div>
-                <div className="box">
+                {/* <div className="box">
                   <div className="gap">
                     <div className="contents18">工作類別：</div>
                     <input
@@ -36,7 +36,7 @@ function ViewWorkLog({ setViewForm, viewData }) {
                       disabled
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="needs">
                   <div className="need">
                     <div className="one">
