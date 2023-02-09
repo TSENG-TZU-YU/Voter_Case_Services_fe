@@ -103,8 +103,8 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
     <>
       {/* TODO:另作手機板元件 */}
       <div className={`navCenter  d-md-none ${mobileToggle ? ' down' : 'up'}`}>
-        <div>接案單位:{member.applicant_unit}</div>
-        <div>姓名:{member.name}</div>
+        <div className="mt-1">接案單位:{member.applicant_unit}</div>
+        <div className="mt-1">姓名:{member.name}</div>
         {/* <div>職別:{member.job}</div> */}
 
         {/* 使用者/主管 */}

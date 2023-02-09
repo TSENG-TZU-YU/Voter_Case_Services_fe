@@ -171,7 +171,10 @@ function LogIn() {
                 placeholder="員工編號"
                 value={login[0].no}
                 onChange={(e) => {
-                  doLogin((login[0].no = e.target.value), 'no');
+                  doLogin(
+                    (login[0].no = e.target.value.replace(/[, ]/g, '')),
+                    'no'
+                  );
                 }}
               />
             </div>
@@ -184,7 +187,10 @@ function LogIn() {
                 maxLength={15}
                 value={login[0].password}
                 onChange={(e) => {
-                  doLogin((login[0].password = e.target.value), 'password');
+                  doLogin(
+                    (login[0].password = e.target.value.replace(/[, ]/g, '')),
+                    'password'
+                  );
                 }}
               />
               {eye ? (
