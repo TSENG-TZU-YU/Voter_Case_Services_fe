@@ -26,9 +26,7 @@ function HeaderLeft() {
         console.log(err.response.data.message);
       }
     }
-    // getMember();
-
-    //刷新後會員權限無法渲染 需要增加member.permissions_id?
+    getMember();
   }, [member.user, member.handler, member.manage, member.director]);
   return <div className="background"></div>;
 }

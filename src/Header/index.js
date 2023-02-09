@@ -23,9 +23,6 @@ import { useAuth } from '../utils/use_auth';
 
 import HeaderMobile from '../HeaderMobile';
 
-// 圖檔
-import navTop from '../assets/call-center-2537390_1920.jpg';
-
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();

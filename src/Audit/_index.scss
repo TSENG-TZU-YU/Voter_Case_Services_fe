@@ -1,68 +1,68 @@
 @import '../styles/variable';
 
-.background {
-  width: 70%;
-  margin-top: 3%;
-  font-size: $contentText18;
-  .permissions {
-    // background-color: $navBar;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    // height: 30px;
-    .container {
-      display: flex;
-      align-items: center;
+// .background {
+//   width: 70%;
+//   margin-top: 3%;
+//   font-size: $contentText18;
+//   .permissions {
+//     // background-color: $navBar;
+//     display: flex;
+//     gap: 10px;
+//     justify-content: center;
+//     // height: 30px;
+//     .container {
+//       display: flex;
+//       align-items: center;
 
-      .select {
-        margin-right: 5px;
-        width: 46px;
-        display: flex;
-        justify-content: end;
-        white-space: nowrap;
-      }
-    }
-    .btn {
-      border: 1px solid $subClrBrown;
-      background-color: $header;
-      border-radius: 10px;
-      margin: 0 15px;
-      padding: 4px 5px;
-      white-space: nowrap;
-      cursor: pointer;
-      color: aliceblue;
-    }
-  }
-  .container1 {
-    margin: 20px 0;
-    padding-left: 0;
-    padding-right: 0;
-    .vector {
-      width: 100%;
-      border-top: 2px solid black;
-    }
-    .mt {
-      margin: 15px 0;
-    }
-    .row {
-      background-color: #29d7d7;
-      align-items: center;
-      .getPermissions {
-        white-space: nowrap;
-      }
-      .btn {
-        border: 1px solid $subClrBrown;
-        background-color: $header;
-        border-radius: 10px;
-        margin: 0 15px;
-        padding: 4px 5px;
-        white-space: nowrap;
-        cursor: pointer;
-        color: aliceblue;
-      }
-    }
-  }
-}
+//       .select {
+//         margin-right: 5px;
+//         width: 46px;
+//         display: flex;
+//         justify-content: end;
+//         white-space: nowrap;
+//       }
+//     }
+//     .btn {
+//       border: 1px solid $subClrBrown;
+//       background-color: $header;
+//       border-radius: 10px;
+//       margin: 0 15px;
+//       padding: 4px 5px;
+//       white-space: nowrap;
+//       cursor: pointer;
+//       color: aliceblue;
+//     }
+//   }
+//   .container1 {
+//     margin: 20px 0;
+//     padding-left: 0;
+//     padding-right: 0;
+//     .vector {
+//       width: 100%;
+//       border-top: 2px solid black;
+//     }
+//     .mt {
+//       margin: 15px 0;
+//     }
+//     .row {
+//       background-color: #29d7d7;
+//       align-items: center;
+//       .getPermissions {
+//         white-space: nowrap;
+//       }
+//       .btn {
+//         border: 1px solid $subClrBrown;
+//         background-color: $header;
+//         border-radius: 10px;
+//         margin: 0 15px;
+//         padding: 4px 5px;
+//         white-space: nowrap;
+//         cursor: pointer;
+//         color: aliceblue;
+//       }
+//     }
+//   }
+// }
 
 .auditContainer {
   width: 100%;

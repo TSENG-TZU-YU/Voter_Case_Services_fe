@@ -21,9 +21,6 @@ import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc';
 //hook
 import { useAuth } from '../utils/use_auth';
 
-// 圖檔
-import navTop from '../assets/call-center-2537390_1920.jpg';
-
 function HeaderMobile({ mobileToggle, setMobileToggle }) {
   const navigate = useNavigate();
   const location = useLocation();
