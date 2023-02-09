@@ -261,80 +261,76 @@ function Header() {
                   </div>
                 </NavLink>
               </nav>
-              {active ? (
-                <div className="count">
-                  <nav>
-                    <NavLink
-                      to="categoryPage?chartPage=1"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        案件類別統計
-                      </div>
-                    </NavLink>
-                  </nav>
-                  <nav>
-                    <NavLink
-                      to="statusPage?chartPage=2"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        案件狀態統計
-                      </div>
-                    </NavLink>
-                  </nav>
-                  <nav>
-                    <NavLink
-                      to="unitPage?chartPage=3"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        申請單位統計
-                      </div>
-                    </NavLink>
-                  </nav>
-                  <nav>
-                    <NavLink
-                      to="AppUserPage?chartPage=4"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        申請人統計
-                      </div>
-                    </NavLink>
-                  </nav>
 
-                  <nav>
-                    <NavLink
-                      to="HandlerUnitPage?chartPage=5"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="d-flex align-items-center">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        處理單位統計
-                      </div>
-                    </NavLink>
-                  </nav>
-                  <nav>
-                    <NavLink
-                      to="UserPage?chartPage=6"
-                      className={(nav) => (nav.isActive ? 'link' : '')}
-                    >
-                      <div className="">
-                        {/* <RiPhoneFindFill size="20" /> */}
-                        處理人統計
-                      </div>
-                    </NavLink>
-                  </nav>
-                </div>
-              ) : (
-                ''
-              )}
+              <div className={`count ${active ? 'countUp' : 'countDown'}`}>
+                <nav>
+                  <NavLink
+                    to="categoryPage?chartPage=1"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      案件類別統計
+                    </div>
+                  </NavLink>
+                </nav>
+                <nav>
+                  <NavLink
+                    to="statusPage?chartPage=2"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      案件狀態統計
+                    </div>
+                  </NavLink>
+                </nav>
+                <nav>
+                  <NavLink
+                    to="unitPage?chartPage=3"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      申請單位統計
+                    </div>
+                  </NavLink>
+                </nav>
+                <nav>
+                  <NavLink
+                    to="AppUserPage?chartPage=4"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      申請人統計
+                    </div>
+                  </NavLink>
+                </nav>
 
+                <nav>
+                  <NavLink
+                    to="HandlerUnitPage?chartPage=5"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="d-flex align-items-center">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      處理單位統計
+                    </div>
+                  </NavLink>
+                </nav>
+                <nav>
+                  <NavLink
+                    to="UserPage?chartPage=6"
+                    className={(nav) => (nav.isActive ? 'link' : '')}
+                  >
+                    <div className="">
+                      {/* <RiPhoneFindFill size="20" /> */}
+                      處理人統計
+                    </div>
+                  </NavLink>
+                </nav>
+              </div>
               <nav>
                 <NavLink
                   to="caseReport"
