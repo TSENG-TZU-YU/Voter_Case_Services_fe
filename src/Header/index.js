@@ -119,7 +119,15 @@ function Header() {
       <div className="navTop">
         <div className="mobile">
           <AiOutlineMenu className="d-block d-md-none menu" onClick={mobile} />
-          <div className="titleH3 ">選民服務案件管理系統</div>
+          <div
+            className="titleH3 "
+            style={{ cursor: ' pointer' }}
+            onClick={() => {
+              navigate('/casemgmt');
+            }}
+          >
+            選民服務案件管理系統
+          </div>
         </div>
         <MdOutlineLogout className="logOut" onClick={logOut} />
       </div>
