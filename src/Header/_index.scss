@@ -25,6 +25,7 @@
     .menu {
       color: $mainClrW;
       font-size: $icon35;
+      cursor: pointer;
     }
   }
 
@@ -96,7 +97,7 @@
       align-items: center;
     }
     .count {
-      transition: height 0.3s ease, opacity 0.6s ease;
+      transition:opacity 0.3s ease,height 0.3s ease;
       div {
         margin: 0px 10px;
         padding: 5px 0 5px 20px;
