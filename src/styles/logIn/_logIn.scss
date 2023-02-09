@@ -2,8 +2,10 @@
 
 .logInContainer {
   background: #c09e82;
-  // background-image: url('../../assets/q-and-a-2453376_1920.jpg');
-  // background-position: center;
+  background-image: url('../../assets/6829202.jpg');
+  // background-image: url('../../assets/6823741.jpg');
+  background-position: center;
+  background-size: 100% 100%;
   width: 100vw;
   height: 100vh;
   @include flexCenter;
@@ -11,7 +13,7 @@
     position: relative;
     max-width: 60%;
     height: 67%;
-    background: $bcgBlock;
+    background: #000000a4;
     @include flexCenter;
     flex-direction: column;
     .title {
