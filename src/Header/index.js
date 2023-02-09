@@ -116,7 +116,7 @@ function Header() {
   const acf = () => {
     setActive(false);
   };
-
+  console.log('active', active);
   return (
     <>
       <div className="navTop">
@@ -262,7 +262,7 @@ function Header() {
                 </NavLink>
               </nav>
 
-              <div className={`count ${active ? 'countUp' : 'countDown'}`}>
+              <div className={`count ${active ? 'countDown' : 'countUp'}`}>
                 <nav>
                   <NavLink
                     to="categoryPage?chartPage=1"

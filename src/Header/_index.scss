@@ -96,7 +96,6 @@
       align-items: center;
     }
     .count {
-      transition: height 0.3s ease, opacity 0.6s ease;
       div {
         margin: 0px 10px;
         padding: 5px 0 5px 20px;
@@ -106,10 +105,16 @@
     .countUp {
       opacity: 0;
       height: 0;
+      visibility: hidden;
+      background-color: transparent;
+      transition: all 0.2s ease-in;
     }
     .countDown {
       opacity: 1;
       height: 210px;
+      visibility: visible;
+      transition: all 0.2s ease-in;
+      background-color: rgba(0,0,0, .1);
     }
   }
   .navFlex {
