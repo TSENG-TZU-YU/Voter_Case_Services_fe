@@ -33,7 +33,6 @@ function Header() {
   let page = parseInt(params.get('page'));
 
   const [mobileToggle, setMobileToggle] = useState(false);
-  const [down, setDown] = useState(false);
 
   //使用者資料
   const { member, setMember } = useAuth();
@@ -226,7 +225,11 @@ function Header() {
                   </div>
                 </NavLink>
               </nav>
-              <nav>
+              <nav
+                onClick={() => {
+                  setActive(!active);
+                }}
+              >
                 <NavLink
                   to="countPage"
                   className={(nav) => (nav.isActive ? 'link' : '')}
@@ -240,12 +243,12 @@ function Header() {
                       <IoBarChartSharp size="20" className="me-1" />
                       <span>選服案件統計</span>
                     </div>
-                    {down ? (
+                    {active ? (
                       <VscTriangleUp
                         size="18"
                         color="#aaa"
                         onClick={() => {
-                          setDown(false);
+                          setActive(false);
                         }}
                       />
                     ) : (
@@ -253,7 +256,7 @@ function Header() {
                         size="18"
                         color="#aaa"
                         onClick={() => {
-                          setDown(true);
+                          setActive(true);
                         }}
                       />
                     )}
