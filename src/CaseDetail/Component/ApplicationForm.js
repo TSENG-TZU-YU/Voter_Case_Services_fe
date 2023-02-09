@@ -618,15 +618,18 @@ function ApplicationForm({
       }
 
       // selectStatus filter
-      if (member.manage === 1 && member.name !== HId) {
-        setSelectData(response.data.selectResult.splice(2, 3));
-      }
       if (
-        member.handler === 1 ||
-        (member.manage === 1 && member.name === HId)
+        (member.manage === 1 && member.handler !== 1) ||
+        (member.manage === 1 && member.handler === 1 && member.name !== HId)
       ) {
-        setSelectData(response.data.selectResult);
+        setSelectData(response.data.selectResult.splice(5, 3));
+        console.log('222');
       }
+      if (member.handler === 1 && member.name === HId) {
+        setSelectData(response.data.selectResult);
+        console.log('111');
+      }
+      console.log('selectData', selectData);
 
       // 目前狀態
       setNeedState(response.data.result[0].status_id);

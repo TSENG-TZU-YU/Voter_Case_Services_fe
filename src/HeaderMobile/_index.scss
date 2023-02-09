@@ -12,12 +12,25 @@
   .vectorBottom {
     border-bottom: 2px solid #aaa;
     padding: $padding5 0;
-  }
-  color: aliceblue;
-  & div {
     margin-top: 10px;
     margin-left: 10px;
+    .iconBetw {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // margin-left: 0px;
+      .iconSt {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
   }
+  color: aliceblue;
+  // & div {
+  //   margin-top: 10px;
+  //   margin-left: 10px;
+  // }
   .bold {
     font-weight: bold;
   }

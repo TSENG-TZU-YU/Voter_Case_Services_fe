@@ -196,19 +196,17 @@ function Header() {
             ''
           )}
           {handler ? (
-            <>
-              <nav>
-                <NavLink
-                  to="workLog"
-                  className={(nav) => (nav.isActive ? 'link' : '')}
-                >
-                  <div className="center marginTB borT" onClick={acf}>
-                    <BsJournalText size="18" className="me-1" />
-                    工作日誌填報
-                  </div>
-                </NavLink>
-              </nav>
-            </>
+            <nav>
+              <NavLink
+                to="workLog"
+                className={(nav) => (nav.isActive ? 'link' : '')}
+              >
+                <div className="center marginTB borT" onClick={acf}>
+                  <BsJournalText size="18" className="me-1" />
+                  工作日誌填報
+                </div>
+              </NavLink>
+            </nav>
           ) : (
             ''
           )}
