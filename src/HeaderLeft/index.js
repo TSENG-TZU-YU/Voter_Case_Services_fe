@@ -26,7 +26,7 @@ function HeaderLeft() {
         console.log(err.response.data.message);
       }
     }
-    getMember();
+    // getMember();
   }, [member.user, member.handler, member.manage, member.director]);
   return <div className="background"></div>;
 }

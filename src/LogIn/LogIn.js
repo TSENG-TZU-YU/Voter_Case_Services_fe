@@ -79,7 +79,6 @@ function LogIn() {
       );
       setMember(res.data);
       localStorage.setItem('memberID', login[0].no);
-      localStorage.setItem('memberPassword', login[0].password);
       Swal.fire({
         position: 'top-center',
         icon: 'success',
@@ -185,12 +184,8 @@ function LogIn() {
                 type={eye ? 'text' : 'password'}
                 placeholder="密碼至多15字"
                 maxLength={15}
-                value={login[0].password}
                 onChange={(e) => {
-                  doLogin(
-                    (login[0].password = e.target.value.replace(/[, ]/g, '')),
-                    'password'
-                  );
+                  doLogin(e.target.value.replace(/[, ]/g, ''), 'password');
                 }}
               />
               {eye ? (

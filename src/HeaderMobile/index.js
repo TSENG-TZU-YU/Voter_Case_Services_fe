@@ -60,7 +60,7 @@ function HeaderMobile({ mobileToggle, setMobileToggle }) {
         console.log(err.response.data.message);
       }
     }
-    getMember();
+    // getMember();
     if (localStorage.getItem('memberID') === null) {
       navigate('/casemgmt');
     }

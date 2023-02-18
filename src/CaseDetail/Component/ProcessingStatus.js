@@ -58,7 +58,7 @@ function ProcessingStatus({
         console.log(err.response.data.message);
       }
     }
-    getMember();
+    // getMember();
   }, []);
 
   // get

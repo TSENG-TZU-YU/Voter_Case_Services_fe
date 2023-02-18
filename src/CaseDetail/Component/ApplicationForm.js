@@ -111,7 +111,7 @@ function ApplicationForm({
         console.log(err.response.data.message);
       }
     }
-    getMember();
+    // getMember();
 
     // if (member.user === 1) {
     //   setAddStatus(false);

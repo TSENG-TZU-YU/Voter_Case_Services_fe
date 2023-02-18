@@ -40,7 +40,7 @@ function SelectStatus({
         console.log(err.response.data.message);
       }
     }
-    getMember();
+    // getMember();
   }, []);
 
   return (
