@@ -113,7 +113,7 @@ function Header() {
   const acf = () => {
     setActive(false);
   };
-  console.log('active', active);
+  // console.log('active', active);
   return (
     <>
       <div className="navTop">
