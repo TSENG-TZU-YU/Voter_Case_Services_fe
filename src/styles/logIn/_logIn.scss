@@ -2,8 +2,7 @@
 
 .logInContainer {
   background: #c09e82;
-  background-image: url('../../assets/6829202.jpg');
-  // background-image: url('../../assets/6823741.jpg');
+  background-image: url('../../assets/6829202-1.jpg');
   background-position: center;
   background-size: 100% 100%;
   width: 100vw;
@@ -106,13 +105,9 @@
 @media screen and (max-width: 768px) {
   .logInContainer {
     .container {
-      max-width: 80%;
+      max-width: 95%;
       .inputContainer {
         .inputContain {
-          input,
-          select {
-            width: 210px;
-          }
           .icons {
             color: $mainClrW;
             margin: 10px 20px 10px 10px;
